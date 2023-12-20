@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "955870033341",
+    "project_id": "mudarribe-fitness",
+    "storage_bucket": "mudarribe-fitness.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:955870033341:android:fe98f77eaf6e5d6c8c4ed4",
+        "android_client_info": {
+          "package_name": "com.mudarribe.trainee"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbTtOQ1czNPWEljEtx9gn62vJbXrCxzsQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

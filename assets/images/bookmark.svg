@@ -1,0 +1,11 @@
+<svg width="25" height="23" viewBox="0 0 25 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="iconamoon:bookmark-light">
+<path id="Vector" d="M16.4167 2H8.08333C7.5308 2 7.00089 2.20193 6.61019 2.56138C6.21949 2.92082 6 3.40834 6 3.91667V19.25L12.25 16.375L18.5 19.25V3.91667C18.5 3.40834 18.2805 2.92082 17.8898 2.56138C17.4991 2.20193 16.9692 2 16.4167 2Z" stroke="url(#paint0_linear_174_6203)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_174_6203" x1="12.25" y1="2" x2="12.25" y2="19.25" gradientUnits="userSpaceOnUse">
+<stop stop-color="#58E1FF"/>
+<stop offset="1" stop-color="#727DCD"/>
+</linearGradient>
+</defs>
+</svg>
