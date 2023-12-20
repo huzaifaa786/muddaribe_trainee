@@ -15,11 +15,11 @@ class AppRoutes {
   static const editProfile = '/editProfile';
   static const saved = '/saved';
   static const packagecheckout = '/packagecheckout';
-  static const exercises = '/exercises';
-  static const exercises2 = '/exercises2';
+  static const packagePlans = '/packagePlans';
+  static const mypackages = '/mypackages';
   static const report = '/report';
   static const ordercard = '/ordercard';
-  static const mornningworkout = '/Mornningworkout';
+  static const planFiles = '/planFiles';
   static const nutritionplan = '/Nutritionplan';
   static const videoplay = '/Videoplay';
   static const changepassword = '/changepassword';

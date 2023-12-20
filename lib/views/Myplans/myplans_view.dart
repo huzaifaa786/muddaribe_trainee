@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:get/get.dart';
 import 'package:mudarribe_trainee/components/plancontainer.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
@@ -85,15 +85,25 @@ class _MyplansViewState extends State<MyplansView> {
         body: TabBarView(
           children: [
             Plancontainer(
-              viewcontent: AppRoutes.mornningworkout,
+              onButtonTap: () {
+                Get.toNamed(AppRoutes.mypackages, parameters: {
+                  "category": "excercise",
+                });
+              },
+              viewcontent: AppRoutes.mypackages,
               planimage: Image.asset(
                 'assets/images/exerciseplans.png',
                 fit: BoxFit.fill,
               ),
-              mytext: 'Exercis Plan',
+              mytext: 'Exercise Plan',
             ),
             Plancontainer(
-              viewcontent: AppRoutes.nutritionplan,
+              onButtonTap: () {
+                    Get.toNamed(AppRoutes.mypackages, parameters: {
+                  "category": "nutrition",
+                });
+              },
+              viewcontent: AppRoutes.mypackages,
               planimage: Image.asset(
                 'assets/images/nutritionplan.png',
                 fit: BoxFit.fill,

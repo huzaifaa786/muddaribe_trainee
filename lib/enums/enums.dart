@@ -7,7 +7,15 @@ enum TrainerStatus {
   @JsonValue(2)
   approved
 }
+enum FileType{
 
+  @JsonValue('mp4')
+  mp4,
+  @JsonValue('pdf')
+  pdf
+
+
+}
 enum MediaType {
   @JsonValue('image')
   image,

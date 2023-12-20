@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:mudarribe_trainee/components/bodyworkplan.dart';
 import 'package:mudarribe_trainee/components/nutritionworkoutvideocard.dart';
-import 'package:mudarribe_trainee/components/workoutvideocard.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/views/Myplans/NutritionPlan/nutrition_plan_controller.dart';
 

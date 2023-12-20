@@ -1205,6 +1205,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  video_thumbnail:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: "734a2d5"
+      resolved-ref: "734a2d5a05656ab93e9dab79d3b6d32b54e40e83"
+      url: "https://github.com/julek-kal/video_thumbnail"
+    source: git
+    version: "0.4.3"
   wakelock_plus:
     dependency: transitive
     description:

@@ -53,15 +53,22 @@ class SignInController extends GetxController {
       );
 
       if (user.uid.isNotEmpty) {
-        await _userService.syncOrCreateUser(
-          user: AppUser(
-              id: user.uid,
-              userType: 'trainee',
-              email: user.email,
-              name: user.displayName),
-        );
+        AppUser? appUser = await _userService.getAuthUser();
 
-        Get.offNamed(AppRoutes.footer);
+        if (appUser != null && appUser.userType == 'trainee') {
+          await _userService.syncOrCreateUser(
+            user: AppUser(
+                id: user.uid,
+                userType: 'trainee',
+                email: user.email,
+                name: user.displayName),
+          );
+
+          Get.offNamed(AppRoutes.footer);
+        } else {
+          UiUtilites.errorSnackbar(
+              'Invalid Credentials', 'Please Provide Correct Credentials');
+        }
       }
     } on AuthApiException catch (e) {
       UiUtilites.errorSnackbar('Signin Failed', e.toString());

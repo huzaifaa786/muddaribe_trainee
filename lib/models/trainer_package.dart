@@ -23,8 +23,8 @@ class TrainerPackage {
     trainerId = json['trainerId'];
     name = json['name'];
     price = json['price'];
-    duration = json['duration'];
-    discription = json['discription'];
+    duration = json['duration'] ?? '';
+    discription = json['discription'] ?? '';
     category = json['category'];
   }
 

@@ -10,11 +10,13 @@ class Plancontainer extends StatelessWidget {
     this.planimage,
     this.mytext,
     this.viewcontent,
+    this.onButtonTap,
   }) : super(key: key);
 
   final planimage;
   final mytext;
   final viewcontent;
+  final onButtonTap;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -70,9 +72,7 @@ class Plancontainer extends StatelessWidget {
                           top: 80,
                           left: 100,
                           child: GestureDetector(
-                            onTap: () {
-                              Get.toNamed(viewcontent);
-                            },
+                            onTap: onButtonTap,
                             child: Container(
                               padding: EdgeInsets.only(top: 8),
                               width: 135,

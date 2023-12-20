@@ -5,6 +5,10 @@ import 'package:mudarribe_trainee/views/Myplans/Morningworkout/morning_workout_b
 import 'package:mudarribe_trainee/views/Myplans/Morningworkout/morning_workout_view.dart';
 import 'package:mudarribe_trainee/views/Myplans/NutritionPlan/nutrition_plan_binding.dart';
 import 'package:mudarribe_trainee/views/Myplans/NutritionPlan/nutrition_plan_view.dart';
+import 'package:mudarribe_trainee/views/Myplans/PacakgePlan/package_binding.dart';
+import 'package:mudarribe_trainee/views/Myplans/myPackages/my_packages_binding.dart';
+import 'package:mudarribe_trainee/views/Myplans/planFiles/plan_files.dart';
+import 'package:mudarribe_trainee/views/Myplans/planFiles/plan_files_binding.dart';
 import 'package:mudarribe_trainee/views/authentication/change_password/change_password_binding.dart';
 import 'package:mudarribe_trainee/views/authentication/change_password/change_password_view.dart';
 import 'package:mudarribe_trainee/views/authentication/forgot_password/forgot_password_binding.dart';
@@ -16,8 +20,8 @@ import 'package:mudarribe_trainee/views/authentication/signup/signup_view.dart';
 import 'package:mudarribe_trainee/views/categories/categories_binding.dart';
 import 'package:mudarribe_trainee/views/categories/categories_result_view.dart';
 import 'package:mudarribe_trainee/views/events/eventsdetail/eventsDetail_view.dart';
-import 'package:mudarribe_trainee/views/exesrcontent/exercises.dart';
-import 'package:mudarribe_trainee/views/exesrcontent/exercises2.dart';
+import 'package:mudarribe_trainee/views/Myplans/PacakgePlan/package_plan.dart';
+import 'package:mudarribe_trainee/views/Myplans/myPackages/my_packages.dart';
 import 'package:mudarribe_trainee/views/footer/footer_binding.dart';
 import 'package:mudarribe_trainee/views/home/home_binding.dart';
 import 'package:mudarribe_trainee/views/home/home_view.dart';
@@ -129,14 +133,14 @@ class AppPages {
       binding: PackagecheckoutBinding(),
     ),
     GetPage(
-      name: AppRoutes.exercises,
-      page: () => const ExercisesScreen(),
-      binding: PackagecheckoutBinding(),
+      name: AppRoutes.packagePlans,
+      page: () => const PackagePlans(),
+      binding: PackagePlanBinding(),
     ),
     GetPage(
-      name: AppRoutes.exercises2,
-      page: () => const ExercisesScreen2(),
-      binding: PackagecheckoutBinding(),
+      name: AppRoutes.mypackages,
+      page: () => const MyPackages(),
+      binding: MyPackagesBinding(),
     ),
     GetPage(
       name: AppRoutes.ordercard,
@@ -144,9 +148,9 @@ class AppPages {
       // binding: PackagecheckoutBinding(),
     ),
     GetPage(
-      name: AppRoutes.mornningworkout,
-      page: () => const MornningworkoutView(),
-      binding: MornningworkoutBinding(),
+      name: AppRoutes.planFiles,
+      page: () => const PlanFiles(),
+      binding: PlanFilesBinding(),
     ),
     GetPage(
       name: AppRoutes.nutritionplan,
@@ -158,11 +162,7 @@ class AppPages {
       page: () => const SerachView(),
       binding: SearchBinding(),
     ),
-     GetPage(
-      name: AppRoutes.videoplay,
-      page: () => const VideoPlay(),
-      binding: VideoPlayBinding(),
-     ),
+  
      GetPage(
       name: AppRoutes.reports,
       page: () => const ReportProblemView(),
