@@ -70,6 +70,7 @@ dependencies:
     git:
       url: https://github.com/julek-kal/video_thumbnail
       ref: 734a2d5
+  flutter_launcher_icons: ^0.13.1
 
 flutter_icons:
   android: true
