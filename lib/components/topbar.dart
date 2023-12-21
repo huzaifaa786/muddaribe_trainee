@@ -17,8 +17,11 @@ class TopBar extends StatelessWidget {
             onTap: () {
               Get.back();
             },
-            child: SvgPicture.asset(
-              'assets/images/nevigate.svg',
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: SvgPicture.asset(
+                'assets/images/nevigate.svg',
+              ),
             ),
           ),
           SizedBox(

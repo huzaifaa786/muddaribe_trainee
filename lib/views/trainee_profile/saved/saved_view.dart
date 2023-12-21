@@ -110,22 +110,22 @@ class _SavedViewsState extends State<SavedViews> {
                             children: [
                               Column(
                                 children: [
-                                  BoxingTrainersCard(
-                                      title: title,
-                                      description: 'Boxing Trainer',
-                                      imgpath1: imgpath1),
-                                  BoxingTrainersCard(
-                                      title: title,
-                                      description: 'Boxing Trainer',
-                                      imgpath1: imgpath1),
-                                  BoxingTrainersCard(
-                                      title: title,
-                                      description: 'Boxing Trainer',
-                                      imgpath1: imgpath1),
-                                  BoxingTrainersCard(
-                                      title: title,
-                                      description: 'Boxing Trainer',
-                                      imgpath1: imgpath1),
+                                  // BoxingTrainersCard(
+                                  //     title: title,
+                                  //     description: 'Boxing Trainer',
+                                  //     imgpath1: imgpath1),
+                                  // BoxingTrainersCard(
+                                  //     title: title,
+                                  //     description: 'Boxing Trainer',
+                                  //     imgpath1: imgpath1),
+                                  // BoxingTrainersCard(
+                                  //     title: title,
+                                  //     description: 'Boxing Trainer',
+                                  //     imgpath1: imgpath1),
+                                  // BoxingTrainersCard(
+                                  //     title: title,
+                                  //     description: 'Boxing Trainer',
+                                  //     imgpath1: imgpath1),
                                 ],
                               )
                             ],

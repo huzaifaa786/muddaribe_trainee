@@ -12,12 +12,14 @@ class BoxingTrainersCard extends StatelessWidget {
     required this.imgpath1,
     this.isSaved = false,
     this.ontap,
+    this.onProfileTap,
   });
 
   final String title;
   final String description;
   final String imgpath1;
   final bool isSaved;
+  final onProfileTap;
   final ontap;
 
   @override
@@ -106,16 +108,19 @@ class BoxingTrainersCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5),
                     ),
                   ),
-                  child: Center(
-                    child: Text(
-                      'View Profile',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 10,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w700,
-                        height: 0,
+                  child: InkWell(
+                    onTap: onProfileTap,
+                    child: Center(
+                      child: Text(
+                        'View Profile',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w700,
+                          height: 0,
+                        ),
                       ),
                     ),
                   ),

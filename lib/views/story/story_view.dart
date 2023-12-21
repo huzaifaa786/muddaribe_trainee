@@ -87,17 +87,17 @@ class _StoriesViewState extends State<StoriesView> {
                                             fontWeight: FontWeight.w600),
                                       ),
                                   
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 3),
-                                        child: Text(
-                                          controller.extractTimeAgo(
-                                              controller.time.value),
-                                          style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      )
+                                      // Padding(
+                                      //   padding: const EdgeInsets.only(left: 3),
+                                      //   child: Text(
+                                      //     controller.extractTimeAgo(
+                                      //         controller.time.value),
+                                      //     style: const TextStyle(
+                                      //         color: Colors.grey,
+                                      //         fontSize: 14,
+                                      //         fontWeight: FontWeight.w600),
+                                      //   ),
+                                      // )
                                     ],
                                   ),
                                 ],

@@ -243,6 +243,19 @@ class ChatPageState extends State<ChatPage> {
     }
   }
 
+  
+  get_text_between(text, start, end) {
+    var index = text.indexOf(start);
+    if (index == -1) {
+      return "";
+    }
+    var index2 = text.indexOf(end, index + start.length);
+    if (index2 == -1) {
+      return "";
+    }
+    return text.substring(index + start.length, index2);
+  }
+
   Widget buildItem(int index, DocumentSnapshot? document) {
     if (document != null) {
       MessageChat messageChat = MessageChat.fromDocument(document);
@@ -388,8 +401,7 @@ class ChatPageState extends State<ChatPage> {
                                           )),
                                       SizedBox(
                                         width: 200,
-                                        child: Text(
-                                          messageChat.content,
+                                        child: Text(get_text_between(messageChat.content, "/o/", "?"),
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
@@ -597,7 +609,7 @@ class ChatPageState extends State<ChatPage> {
                                         SizedBox(
                                           width: 200,
                                           child: Text(
-                                            messageChat.content,
+                                            get_text_between(messageChat.content, "/o/", "?"),
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(color: white),
                                           ),

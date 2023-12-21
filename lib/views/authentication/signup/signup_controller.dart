@@ -83,4 +83,24 @@ class SignUpController extends GetxController {
       UiUtilites.errorSnackbar('Signup Failed', e.toString());
     }
   }
+
+   Future signInGoogle() async {
+    try {
+      final User user = await _authApi.signInWithGoogle();
+
+      if (user.uid.isNotEmpty) {
+        await _userService.syncOrCreateUser(
+          user: AppUser(
+              id: user.uid,
+              userType: 'trainee',
+              email: user.email,
+              name: user.displayName),
+        );
+
+        Get.offNamed(AppRoutes.footer);
+      }
+    } on AuthApiException catch (e) {
+      UiUtilites.errorSnackbar('Signin Failed', e.toString());
+    }
+  }
 }

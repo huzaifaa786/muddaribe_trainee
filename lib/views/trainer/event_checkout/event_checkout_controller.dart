@@ -34,8 +34,9 @@ class EventcheckoutController extends GetxController {
     super.onInit();
   }
 
-  void payEventCharges() async {
-    bool isPayment = await _paymentService.makePayment(int.parse(total));
+  void payEventCharges(pricetotal) async {
+    
+    bool isPayment = await _paymentService.makePayment(int.parse(pricetotal));
 
     if (isPayment) {
       await _eventApi.joinEvent(eventId);

@@ -87,94 +87,98 @@ class _HomeViewState extends State<HomeView> {
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 12),
                       constraints: BoxConstraints(minHeight: 0, maxHeight: 100),
-                      child: FirestorePagination(
-                        shrinkWrap: true,
-                        isLive: true,
-                        limit: 6,
-                        onEmpty: Text('', style: TextStyle(color: white)),
-                        viewType: ViewType.list,
-                        physics: BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        query: HomeApi.trainerquery,
-                        bottomLoader:
-                            Center(child: CircularProgressIndicator()),
-                        itemBuilder: (context, documentSnapshot, index) {
-                          final trainerData =
-                              documentSnapshot.data() as Map<String, dynamic>;
+                      child: Row(
+                        children: [
+                          FirestorePagination(
+                            shrinkWrap: true,
+                            isLive: true,
+                            limit: 6,
+                            onEmpty: Text('', style: TextStyle(color: white)),
+                            viewType: ViewType.list,
+                            physics: BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            query: HomeApi.trainerquery,
+                            bottomLoader:
+                                Center(child: CircularProgressIndicator()),
+                            itemBuilder: (context, documentSnapshot, index) {
+                              final trainerData =
+                                  documentSnapshot.data() as Map<String, dynamic>;
 
-                          Trainer trainer = Trainer.fromMap(trainerData);
-                          return FutureBuilder<TrainerStory?>(
-                              future: HomeApi.fetchTrainerStoryData(trainer.id),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasError) {
-                                  return Text('');
-                                }
-                                if (!snapshot.hasData) {
-                                  return Text('');
-                                }
-                                return InkWell(
-                                  onTap: () {
-                                    Get.toNamed(AppRoutes.stories,
-                                        arguments: trainer.id);
-                                  },
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        height: 70,
-                                        width: 80,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          border: const GradientBoxBorder(
-                                            gradient: LinearGradient(colors: [
-                                              Color(4290773187),
-                                              Color(4285693389),
-                                              Color(4278253801),
-                                              Color(4278253801)
-                                            ]),
-                                            width: 1,
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(3.5),
-                                          child: Container(
+                              Trainer trainer = Trainer.fromMap(trainerData);
+                              return FutureBuilder<TrainerStory?>(
+                                  future: HomeApi.fetchTrainerStoryData(trainer.id),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasError) {
+                                      return Text('');
+                                    }
+                                    if (!snapshot.hasData) {
+                                      return Text('');
+                                    }
+                                    return InkWell(
+                                      onTap: () {
+                                        Get.toNamed(AppRoutes.stories,
+                                            arguments: trainer.id);
+                                      },
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            height: 70,
+                                            width: 80,
                                             decoration: BoxDecoration(
                                               shape: BoxShape.circle,
-                                              image: DecorationImage(
-                                                image: NetworkImage(
-                                                    trainer.profileImageUrl),
-                                                fit: BoxFit.cover,
+                                              border: const GradientBoxBorder(
+                                                gradient: LinearGradient(colors: [
+                                                  Color(4290773187),
+                                                  Color(4285693389),
+                                                  Color(4278253801),
+                                                  Color(4278253801)
+                                                ]),
+                                                width: 1,
+                                              ),
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(3.5),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  image: DecorationImage(
+                                                    image: NetworkImage(
+                                                        trainer.profileImageUrl),
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 80,
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                            left: 12.0,
+                                          SizedBox(
+                                            width: 80,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                left: 12.0,
+                                              ),
+                                              child: Text(
+                                                trainer.name,
+                                                style: const TextStyle(
+                                                    color: white,
+                                                    fontSize: 12,
+                                                    fontFamily: 'Poppins',
+                                                    fontWeight: weight500,
+                                                    overflow:
+                                                        TextOverflow.ellipsis),
+                                              ),
+                                            ),
                                           ),
-                                          child: Text(
-                                            trainer.name,
-                                            style: const TextStyle(
-                                                color: white,
-                                                fontSize: 12,
-                                                fontFamily: 'Poppins',
-                                                fontWeight: weight500,
-                                                overflow:
-                                                    TextOverflow.ellipsis),
-                                          ),
-                                        ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                );
-                              });
-                        },
+                                    );
+                                  });
+                            },
+                          ),
+                        ],
                       ),
                     ),
                     Container(

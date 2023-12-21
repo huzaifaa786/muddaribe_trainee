@@ -10,6 +10,7 @@ import 'package:mudarribe_trainee/components/boxing_trainers_card.dart';
 import 'package:mudarribe_trainee/components/color_button.dart';
 import 'package:mudarribe_trainee/components/topbar.dart';
 import 'package:mudarribe_trainee/models/trainer.dart';
+import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/views/home/home_controller.dart';
 import 'package:mudarribe_trainee/views/search_trainer/search_trianer_binding.dart';
@@ -134,6 +135,11 @@ class _SerachViewState extends State<SerachView> {
                                     itemBuilder: (context, index) {
                                       Trainer item = controller.items[index];
                                       return BoxingTrainersCard(
+                                        onProfileTap: () {
+                                          Get.toNamed(AppRoutes.trainerprofile,
+                                              arguments:
+                                                  controller.items[index].id);
+                                        },
                                         title: item.name,
                                         description: item.category.join('\n'),
                                         imgpath1: item.profileImageUrl,

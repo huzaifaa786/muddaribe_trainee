@@ -113,7 +113,9 @@ class _SignUpViewState extends State<SignUpView> {
                         IconButtons(
                             title: 'Sign in with Google',
                             icon: 'assets/images/google.png',
-                            onPressed: () {},
+                            onPressed: () {
+                              controller.signInGoogle();
+                            },
                             textcolor: Colors.black,
                             gradientColors: [white, white]),
                         SizedBox(height: 30)
@@ -136,7 +138,7 @@ class _SignUpViewState extends State<SignUpView> {
                   title: 'Next',
                   onPressed: controller.areFieldsFilled.value
                       ? () {
-                          // signUpController.signUpTrainee();
+                          controller.signUpTrainee();
                         }
                       : (){
                          UiUtilites.errorSnackbar('Fill out all fields','Please fill all above fields');

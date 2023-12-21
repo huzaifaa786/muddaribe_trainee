@@ -56,7 +56,7 @@ class TrainerStoryContoller extends GetxController {
   void onStoryShow(story) async {
     time = story.view.key.toString().obs;
 
-    update();
+    // update();
   }
 
   String extractTimeAgo(String input) {

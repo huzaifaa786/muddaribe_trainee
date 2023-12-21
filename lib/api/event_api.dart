@@ -18,6 +18,9 @@ class EventApi {
 
   static Future<CombinedEventData?> fetchEventData(String eventId) async {
     final attendeeApi = AttendeeApi();
+    if (eventId.isNotEmpty) {
+      
+    
     DocumentSnapshot eventSnapshot = await FirebaseFirestore.instance
         .collection('trainer_events')
         .doc(eventId)
@@ -41,6 +44,7 @@ class EventApi {
         return CombinedEventData(
             trainer: trainer, event: event, eventOtherData: eventOtherData);
       }
+    }
     }
     return null;
   }

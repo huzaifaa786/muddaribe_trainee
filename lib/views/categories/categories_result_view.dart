@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:mudarribe_trainee/api/trainer_saved.dart';
 import 'package:mudarribe_trainee/components/boxing_trainers_card.dart';
 import 'package:mudarribe_trainee/components/topbar.dart';
+import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/views/categories/categories_result_%20controller.dart';
 
@@ -78,6 +79,11 @@ class _CategoriesResultViewState extends State<CategoriesResultView> {
                         itemCount: controller.trainersList.length,
                         itemBuilder: (context, index) {
                           return BoxingTrainersCard(
+                              onProfileTap: () {
+                                Get.toNamed(AppRoutes.trainerprofile,
+                                    arguments:
+                                        controller.trainersList[index].id);
+                              },
                               title: controller.trainersList[index].name,
                               description: controller
                                   .trainersList[index].category
