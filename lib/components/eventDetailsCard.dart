@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, unused_import, prefer_typing_uninitialized_variables
 
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -14,7 +16,7 @@ class EventDetailsCard extends StatelessWidget {
   const EventDetailsCard(
       {super.key,
       this.address,
-      this.capcity,
+      this.capacity,
       this.image,
       this.date,
       this.endTime,
@@ -25,13 +27,14 @@ class EventDetailsCard extends StatelessWidget {
       this.name,
       this.eventimg,
       this.isSaved,
+      this.attendees,
       this.onSave});
   final address;
   final startTime;
   final endTime;
   final image;
   final date;
-  final capcity;
+  final capacity;
   final price;
   final name;
   final category;
@@ -39,6 +42,7 @@ class EventDetailsCard extends StatelessWidget {
   final isSaved;
   final onSave;
   final eventId;
+  final attendees;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -147,12 +151,13 @@ class EventDetailsCard extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 8, bottom: 3),
                         child: Text(
                           address,
-                          maxLines: 2,
+                          maxLines: 1,
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w600,
                             fontSize: 14,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ),
@@ -203,7 +208,7 @@ class EventDetailsCard extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 8, bottom: 6),
                         child: Text(
-                          'Total People amount: 0/$capcity',
+                          'Total People amount: $attendees / $capacity',
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'Montserrat',
@@ -236,23 +241,25 @@ class EventDetailsCard extends StatelessWidget {
                       )
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 25),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Get.toNamed(AppRoutes.eventcheckout,
-                                arguments: eventId);
-                          },
-                          child: GradientText1(
-                            text: 'Join Event',
+                  int.parse(attendees) < int.parse(capacity)
+                      ? Padding(
+                          padding: const EdgeInsets.only(right: 25),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(AppRoutes.eventcheckout,
+                                      arguments: eventId);
+                                },
+                                child: GradientText1(
+                                  text: 'Join Event',
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                  )
+                        )
+                      : Text('')
                 ],
               ),
             ),

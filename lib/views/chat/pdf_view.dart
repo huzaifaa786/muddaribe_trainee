@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:mudarribe_trainee/components/topbar.dart';
 
 class PDFScreen extends StatefulWidget {
   final String? path;
@@ -25,9 +26,8 @@ class _PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Document"),
-      ),
+      
+      appBar: AppBar(forceMaterialTransparency: true, title: TopBar(text: "Document",),automaticallyImplyLeading: false,),
       body: Stack(
         children: <Widget>[
           PDFView(

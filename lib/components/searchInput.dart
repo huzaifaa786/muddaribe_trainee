@@ -27,7 +27,7 @@ class SearchInput extends StatelessWidget {
               width: 10.0,
             ),
             Text(
-              'Search about trainer, catigory',
+              'Search about trainer, category',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white.withOpacity(0.4000000059604645),

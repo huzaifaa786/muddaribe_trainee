@@ -189,8 +189,9 @@ class _SavedViewsState extends State<SavedViews> {
                                               endTime:
                                                   combineEvent.event.endTime,
                                               date: combineEvent.event.date,
-                                              capcity:
+                                              capacity:
                                                   combineEvent.event.capacity,
+                                              attendees: combineEvent.eventOtherData.totalAttendees,
                                               price: combineEvent.event.price,
                                               isSaved: saved,
                                               onSave: () {

@@ -16,6 +16,7 @@ import 'package:mudarribe_trainee/components/main_topbar.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:mudarribe_trainee/components/post_card.dart';
 import 'package:mudarribe_trainee/components/searchInput.dart';
+import 'package:mudarribe_trainee/components/textgradient.dart';
 
 import 'package:mudarribe_trainee/models/event.dart';
 import 'package:mudarribe_trainee/models/event_data_combined.dart';
@@ -28,6 +29,7 @@ import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/utils/fontWeight.dart';
 import 'package:mudarribe_trainee/views/categories/categories_result_view.dart';
 import 'package:mudarribe_trainee/views/home/home_controller.dart';
+import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -89,6 +91,29 @@ class _HomeViewState extends State<HomeView> {
                       constraints: BoxConstraints(minHeight: 0, maxHeight: 100),
                       child: Row(
                         children: [
+                          Container(
+                            height: 70,
+                            width: 80,
+                            margin: EdgeInsets.only(bottom: 20),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: const GradientBoxBorder(
+                                gradient: LinearGradient(colors: [
+                                  Color(4290773187),
+                                  Color(4285693389),
+                                  Color(4278253801),
+                                  Color(4278253801)
+                                ]),
+                                width: 1,
+                              ),
+                              color: Colors.grey.withOpacity(0.1),
+                            ),
+                            child: Center(
+                                child: GradientText(
+                              'Stories',
+                              colors: [borderTop, borderDown],
+                            )),
+                          ),
                           FirestorePagination(
                             shrinkWrap: true,
                             isLive: true,
@@ -101,12 +126,12 @@ class _HomeViewState extends State<HomeView> {
                             bottomLoader:
                                 Center(child: CircularProgressIndicator()),
                             itemBuilder: (context, documentSnapshot, index) {
-                              final trainerData =
-                                  documentSnapshot.data() as Map<String, dynamic>;
+                              final trainerData = documentSnapshot.data()
+                                  as Map<String, dynamic>;
 
-                              Trainer trainer = Trainer.fromMap(trainerData);
-                              return FutureBuilder<TrainerStory?>(
-                                  future: HomeApi.fetchTrainerStoryData(trainer.id),
+                              return FutureBuilder<Trainer?>(
+                                  future: HomeApi.fetchTrainerStoryData(
+                                      trainerData['trainerId']),
                                   builder: (context, snapshot) {
                                     if (snapshot.hasError) {
                                       return Text('');
@@ -114,6 +139,8 @@ class _HomeViewState extends State<HomeView> {
                                     if (!snapshot.hasData) {
                                       return Text('');
                                     }
+                                    Trainer trainer = snapshot.data!;
+
                                     return InkWell(
                                       onTap: () {
                                         Get.toNamed(AppRoutes.stories,
@@ -131,23 +158,25 @@ class _HomeViewState extends State<HomeView> {
                                             decoration: BoxDecoration(
                                               shape: BoxShape.circle,
                                               border: const GradientBoxBorder(
-                                                gradient: LinearGradient(colors: [
-                                                  Color(4290773187),
-                                                  Color(4285693389),
-                                                  Color(4278253801),
-                                                  Color(4278253801)
-                                                ]),
+                                                gradient: LinearGradient(
+                                                    colors: [
+                                                      Color(4290773187),
+                                                      Color(4285693389),
+                                                      Color(4278253801),
+                                                      Color(4278253801)
+                                                    ]),
                                                 width: 1,
                                               ),
                                             ),
                                             child: Padding(
-                                              padding: const EdgeInsets.all(3.5),
+                                              padding:
+                                                  const EdgeInsets.all(3.5),
                                               child: Container(
                                                 decoration: BoxDecoration(
                                                   shape: BoxShape.circle,
                                                   image: DecorationImage(
-                                                    image: NetworkImage(
-                                                        trainer.profileImageUrl),
+                                                    image: NetworkImage(trainer
+                                                        .profileImageUrl),
                                                     fit: BoxFit.cover,
                                                   ),
                                                 ),
@@ -198,10 +227,15 @@ class _HomeViewState extends State<HomeView> {
                               documentSnapshot.data() as Map<String, dynamic>;
                           Events banners = Events.fromMap(eventData);
                           return BannerCard(
+                              joinTap: () {
+                                 Get.toNamed(AppRoutes.eventcheckout,
+                                arguments: banners.eventId);
+                              },
                               endTime: banners.endTime,
                               image: banners.imageUrl,
                               price: banners.price,
                               startTime: banners.startTime,
+                              date: banners.date,
                               title: banners.title);
                         },
                       ),
@@ -279,17 +313,17 @@ class _HomeViewState extends State<HomeView> {
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Text(
-                            'View all',
-                            style: TextStyle(
-                              color: Color(0xFF727DCD),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
+                        // GestureDetector(
+                        //   onTap: () {},
+                        //   child: Text(
+                        //     'View all',
+                        //     style: TextStyle(
+                        //       color: Color(0xFF727DCD),
+                        //       fontSize: 14,
+                        //       fontWeight: FontWeight.w600,
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                     Gap(8),
@@ -357,7 +391,8 @@ class _HomeViewState extends State<HomeView> {
                                         startTime: combineEvent.event.startTime,
                                         endTime: combineEvent.event.endTime,
                                         date: combineEvent.event.date,
-                                        capcity: combineEvent.event.capacity,
+                                        capacity: combineEvent.event.capacity,
+                                        attendees: combineEvent.eventOtherData.totalAttendees,
                                         price: combineEvent.event.price,
                                         isSaved: saved,
                                         eventId: combineEvent.event.eventId,

@@ -14,8 +14,8 @@ class HomeApi {
       .orderBy('id', descending: true);
 
   static var trainerquery = FirebaseFirestore.instance
-      .collection('users')
-      .where('userType', isEqualTo: 'trainer');
+      .collection('followed_trainers')
+      .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid);
 
   static Future<Trainer> fetchTrainerData(String trainerId) async {
     final trainerSnapshot = await FirebaseFirestore.instance
@@ -26,7 +26,8 @@ class HomeApi {
     final trainerData = trainerSnapshot.data() as Map<String, dynamic>;
     return Trainer.fromMap(trainerData);
   }
-    static Future<CombinedEventData> fetchCombineEventData(
+
+  static Future<CombinedEventData> fetchCombineEventData(
       String trainerId, Events event) async {
     final attendeeApi = AttendeeApi();
     final trainerSnapshot = await FirebaseFirestore.instance
@@ -42,7 +43,7 @@ class HomeApi {
         trainer: trainer, event: event, eventOtherData: eventOtherData);
   }
 
-  static Future<TrainerStory?> fetchTrainerStoryData(String trainerId) async {
+  static Future<Trainer?> fetchTrainerStoryData(String trainerId) async {
     final storySnapshot = await FirebaseFirestore.instance
         .collection('trainer_stories')
         .where('trainerId', isEqualTo: trainerId)
@@ -50,9 +51,16 @@ class HomeApi {
         .get();
     if (storySnapshot.docs.isNotEmpty) {
       final storyData = storySnapshot.docs[0];
+      final trainerSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(trainerId)
+          .get();
 
-      print(storyData);
-      return TrainerStory.fromJson(storyData.data() as Map<String, dynamic>);
+      final trainerData = trainerSnapshot.data() as Map<String, dynamic>;
+
+      Trainer trainer = Trainer.fromMap(trainerData);
+
+      return trainer;
     }
   }
 
@@ -60,7 +68,8 @@ class HomeApi {
       .collection('trainer_events')
       .where('date',
           isGreaterThan:
-              DateFormat('dd/MM/y').format(DateTime.now()).toString()).where('eventStatus', isEqualTo: 'open')
+              DateFormat('dd/MM/y').format(DateTime.now()).toString())
+      .where('eventStatus', isEqualTo: 'open')
       .orderBy('date', descending: true)
       .limit(6);
 
@@ -97,6 +106,7 @@ class HomeApi {
           .delete();
     }
   }
+
   static eventSaved(eventId) async {
     String id = DateTime.now().millisecondsSinceEpoch.toString();
     await FirebaseFirestore.instance.collection('savedEvent').doc(id).set({

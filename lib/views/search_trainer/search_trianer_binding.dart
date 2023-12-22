@@ -2,11 +2,13 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:mudarribe_trainee/helper/loading_helper.dart';
 import 'package:mudarribe_trainee/models/trainer.dart';
 import 'package:mudarribe_trainee/views/home/home_controller.dart';
 
 class TSearchController extends GetxController {
   static TSearchController get instance => Get.find();
+  final BusyController busyController = Get.find();
   List<Trainer> allItems = []; // Store all trainers
   List<Trainer> items = []; // Current displayed trainers
   Languages lang = Languages.English;
@@ -15,6 +17,7 @@ class TSearchController extends GetxController {
   bool show = false;
 
   Future<void> fetchTrainers({String? query}) async {
+    busyController.setBusy(true);
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot;
       querySnapshot = await FirebaseFirestore.instance
@@ -42,6 +45,7 @@ class TSearchController extends GetxController {
     } catch (e) {
       print("Error fetching trainers: $e");
     }
+    busyController.setBusy(false);
   }
 
   void toggleShow() {

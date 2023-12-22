@@ -366,7 +366,7 @@ class ChatPageState extends State<ChatPage> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              PDFScreen(path: remotePDFpath),
+                                              PDFScreen(path: remotePDFpath,),
                                         ),
                                       );
                                     });

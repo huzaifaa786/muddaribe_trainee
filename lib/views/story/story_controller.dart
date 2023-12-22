@@ -48,7 +48,7 @@ class TrainerStoryContoller extends GetxController {
         update();
       }
     }
-    // if(stories.length != 0)
+    if(stories.length != 0)
     time = stories.first.view.key.toString().obs;
     update();
   }

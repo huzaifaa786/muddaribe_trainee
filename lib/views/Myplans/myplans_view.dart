@@ -22,10 +22,7 @@ class _MyplansViewState extends State<MyplansView> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,
-          leading: Icon(
-            Icons.arrow_back_ios_new,
-            color: white,
-          ),
+         
           title: Text(
             'My Plans',
             style: TextStyle(

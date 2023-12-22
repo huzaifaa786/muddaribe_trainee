@@ -9,18 +9,23 @@ class BannerCard extends StatelessWidget {
       {super.key,
       this.image,
       this.endTime,
+      this.date,
       this.price,
       this.startTime,
+      this.joinTap,
       this.title});
   final image;
   final title;
+  final date;
   final startTime;
   final endTime;
   final price;
+  final joinTap;
   @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.9,
+      margin: EdgeInsets.only(right: 8),
       decoration: BoxDecoration(
         image: DecorationImage(
           image: NetworkImage(image),
@@ -70,7 +75,7 @@ class BannerCard extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 15.0),
                     child: Text(
-                      '$startTime',
+                      '$date',
                       style: TextStyle(
                         color: white,
                         fontSize: 16,
@@ -121,10 +126,10 @@ class BannerCard extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 15.0),
                     child: Text(
-                      '$endTime',
+                      '$startTime - $endTime',
                       style: TextStyle(
                         color: white,
-                        fontSize: 16,
+                        fontSize: 13,
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w600,
                       ),
@@ -135,7 +140,7 @@ class BannerCard extends StatelessWidget {
               Row(
                 children: [
                   CustomeButton(
-                    onPressed: () {},
+                    onPressed:joinTap,
                     title: 'Join Event',
                   ),
                 ],

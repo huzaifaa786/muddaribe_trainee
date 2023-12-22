@@ -102,7 +102,8 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                       GradientButton(
                         title: 'Subscribe',
                         onPressed: () {
-                          Get.offNamed(AppRoutes.packagecheckout,arguments: controller.selectedPlan);
+                          Get.offNamed(AppRoutes.packagecheckout,
+                              arguments: controller.selectedPlan);
                         },
                         selected: true,
                         buttonHeight: MediaQuery.of(context).size.height * 0.07,
@@ -424,6 +425,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                   isEqualTo: events.eventId)
                                               .get(),
                                           builder: (context, snapshot) {
+                                        
                                             if (!snapshot.hasData) {
                                               return Text('');
                                             } else if (snapshot.hasError) {
@@ -452,8 +454,11 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                 endTime:
                                                     combineEvent.event.endTime,
                                                 date: combineEvent.event.date,
-                                                capcity:
+                                                capacity:
                                                     combineEvent.event.capacity,
+                                                attendees: combineEvent
+                                                    .eventOtherData
+                                                    .totalAttendees,
                                                 price: combineEvent.event.price,
                                                 isSaved: saved,
                                                 onSave: () {

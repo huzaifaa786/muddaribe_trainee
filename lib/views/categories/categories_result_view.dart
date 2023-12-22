@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mudarribe_trainee/api/trainer_saved.dart';
 import 'package:mudarribe_trainee/components/boxing_trainers_card.dart';
+import 'package:mudarribe_trainee/components/loading_indicator.dart';
 import 'package:mudarribe_trainee/components/topbar.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
@@ -31,81 +32,83 @@ class _CategoriesResultViewState extends State<CategoriesResultView> {
         state.controller!.fetchDataFromFirebase(args.category);
       },
       autoRemove: false,
-      builder: (controller) => Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          forceMaterialTransparency: true,
-          title: TopBar(
-            text: args.category,
-          ),
-        ),
-        body: SingleChildScrollView(
-          child: SafeArea(
-              child: Container(
-            padding: EdgeInsets.only(left: 10, right: 10),
-            child: Column(
-              children: [
-                controller.trainersList.isEmpty
-                    ? Align(
-                        alignment: Alignment.topLeft,
-                        child: Text("",
-                            style: TextStyle(
-                              color: white.withOpacity(0.3),
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                            )),
-                      )
-                    : Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                            "${controller.trainersList.length.toString()} Results",
-                            style: TextStyle(
-                              color: white.withOpacity(0.3),
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                            )),
-                      ),
-                controller.trainersList.isEmpty
-                    ? Container(
-                        height: MediaQuery.of(context).size.height * 0.6,
-                        alignment: Alignment.center,
-                        child: Text(
-                          'No Trainer With This Category Exist.',
-                          style: TextStyle(color: white.withOpacity(0.5)),
-                        ))
-                    : ListView.builder(
-                        shrinkWrap: true,
-                        physics: BouncingScrollPhysics(),
-                        itemCount: controller.trainersList.length,
-                        itemBuilder: (context, index) {
-                          return BoxingTrainersCard(
-                              onProfileTap: () {
-                                Get.toNamed(AppRoutes.trainerprofile,
-                                    arguments:
-                                        controller.trainersList[index].id);
-                              },
-                              title: controller.trainersList[index].name,
-                              description: controller
-                                  .trainersList[index].category
-                                  .join('\n'),
-                              imgpath1: controller
-                                  .trainersList[index].profileImageUrl,
-                              isSaved: controller.trainersList[index].isSaved,
-                              ontap: () {
-                                controller.trainersList[index].isSaved =
-                                    !controller.trainersList[index].isSaved;
-                                setState(() {});
-                                controller.trainersList[index].isSaved == false
-                                    ? TrainerSaved.trainerUnsaved(
-                                        controller.trainersList[index].id)
-                                    : TrainerSaved.trainerSaved(
-                                        controller.trainersList[index].id);
-                              });
-                        },
-                      ),
-              ],
+      builder: (controller) => BusyIndicator(
+        child: Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            forceMaterialTransparency: true,
+            title: TopBar(
+              text: args.category,
             ),
-          )),
+          ),
+          body: SingleChildScrollView(
+            child: SafeArea(
+                child: Container(
+              padding: EdgeInsets.only(left: 10, right: 10),
+              child: Column(
+                children: [
+                  controller.trainersList.isEmpty
+                      ? Align(
+                          alignment: Alignment.topLeft,
+                          child: Text("",
+                              style: TextStyle(
+                                color: white.withOpacity(0.3),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              )),
+                        )
+                      : Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                              "${controller.trainersList.length.toString()} Results",
+                              style: TextStyle(
+                                color: white.withOpacity(0.3),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              )),
+                        ),
+                  controller.trainersList.isEmpty
+                      ? Container(
+                          height: MediaQuery.of(context).size.height * 0.6,
+                          alignment: Alignment.center,
+                          child: Text(
+                            'No Trainer With This Category Exist.',
+                            style: TextStyle(color: white.withOpacity(0.5)),
+                          ))
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          physics: BouncingScrollPhysics(),
+                          itemCount: controller.trainersList.length,
+                          itemBuilder: (context, index) {
+                            return BoxingTrainersCard(
+                                onProfileTap: () {
+                                  Get.toNamed(AppRoutes.trainerprofile,
+                                      arguments:
+                                          controller.trainersList[index].id);
+                                },
+                                title: controller.trainersList[index].name,
+                                description: controller
+                                    .trainersList[index].category
+                                    .join('\n'),
+                                imgpath1: controller
+                                    .trainersList[index].profileImageUrl,
+                                isSaved: controller.trainersList[index].isSaved,
+                                ontap: () {
+                                  controller.trainersList[index].isSaved =
+                                      !controller.trainersList[index].isSaved;
+                                  setState(() {});
+                                  controller.trainersList[index].isSaved == false
+                                      ? TrainerSaved.trainerUnsaved(
+                                          controller.trainersList[index].id)
+                                      : TrainerSaved.trainerSaved(
+                                          controller.trainersList[index].id);
+                                });
+                          },
+                        ),
+                ],
+              ),
+            )),
+          ),
         ),
       ),
     );
