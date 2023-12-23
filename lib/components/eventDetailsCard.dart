@@ -28,6 +28,7 @@ class EventDetailsCard extends StatelessWidget {
       this.eventimg,
       this.isSaved,
       this.attendees,
+      this.isJoined = false,
       this.onSave});
   final address;
   final startTime;
@@ -43,6 +44,7 @@ class EventDetailsCard extends StatelessWidget {
   final onSave;
   final eventId;
   final attendees;
+  final bool isJoined;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -241,7 +243,8 @@ class EventDetailsCard extends StatelessWidget {
                       )
                     ],
                   ),
-                  int.parse(attendees) < int.parse(capacity)
+                  int.parse(attendees) < int.parse(capacity) &&
+                          isJoined == false
                       ? Padding(
                           padding: const EdgeInsets.only(right: 25),
                           child: Row(

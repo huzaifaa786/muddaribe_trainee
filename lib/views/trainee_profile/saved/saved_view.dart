@@ -8,6 +8,7 @@ import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:intl/intl.dart';
 import 'package:mudarribe_trainee/api/post_api.dart';
 import 'package:mudarribe_trainee/api/save_api.dart';
+import 'package:mudarribe_trainee/api/trainer_saved.dart';
 import 'package:mudarribe_trainee/components/boxing_trainers_card.dart';
 // ignore: unused_import
 import 'package:mudarribe_trainee/components/eventDetailsCard.dart';
@@ -15,6 +16,8 @@ import 'package:mudarribe_trainee/components/eventDetailsCard1.dart';
 import 'package:mudarribe_trainee/components/post_card.dart';
 import 'package:mudarribe_trainee/models/event_data_combined.dart';
 import 'package:mudarribe_trainee/models/post_data_combined.dart';
+import 'package:mudarribe_trainee/models/trainer.dart';
+import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/views/trainee_profile/saved/saved_controller.dart';
 
@@ -56,7 +59,7 @@ class _SavedViewsState extends State<SavedViews> {
         ),
         body: SafeArea(
           child: DefaultTabController(
-            length: PackageType.values.length,
+            length: 3,
             child: Column(
               children: [
                 TabBar(
@@ -104,116 +107,230 @@ class _SavedViewsState extends State<SavedViews> {
                     padding: const EdgeInsets.only(top: 26),
                     child: TabBarView(
                       children: [
-                        Container(
-                            child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              Column(
-                                children: [
-                                  // BoxingTrainersCard(
-                                  //     title: title,
-                                  //     description: 'Boxing Trainer',
-                                  //     imgpath1: imgpath1),
-                                  // BoxingTrainersCard(
-                                  //     title: title,
-                                  //     description: 'Boxing Trainer',
-                                  //     imgpath1: imgpath1),
-                                  // BoxingTrainersCard(
-                                  //     title: title,
-                                  //     description: 'Boxing Trainer',
-                                  //     imgpath1: imgpath1),
-                                  // BoxingTrainersCard(
-                                  //     title: title,
-                                  //     description: 'Boxing Trainer',
-                                  //     imgpath1: imgpath1),
-                                ],
-                              )
-                            ],
-                          ),
-                        )),
+                        StreamBuilder<QuerySnapshot>(
+                          stream: SaveApi.trainerStream,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return Center(
+                                  child: Text(
+                                'Error: ${snapshot.error}',
+                                style: TextStyle(color: white),
+                              ));
+                            } else if (!snapshot.hasData) {
+                              return SizedBox(
+                                height: Get.height,
+                                width: Get.width,
+                                child: Center(
+                                    child: Text(
+                                  'No Saved Trainer',
+                                  style: TextStyle(color: white),
+                                )),
+                              );
+                            } else {
+                              final saveTrainerSnapshot = snapshot.data;
+
+                              return snapshot.data!.docs.isNotEmpty
+                                  ? FutureBuilder<List<Trainer>>(
+                                      future: SaveApi.fetchTrainerData(
+                                          saveTrainerSnapshot!),
+                                      builder: (context, trainers) {
+                                        if (trainers.hasError) {
+                                          return Center(
+                                              child: Text(
+                                                  'Error: ${trainers.error}'));
+                                        } else if (!trainers.hasData) {
+                                          return SizedBox(
+                                            height: Get.height,
+                                            width: Get.width,
+                                            child: Center(
+                                                child: Text(
+                                              'No Saved Trainer',
+                                              style: TextStyle(color: white),
+                                            )),
+                                          );
+                                        } else {
+                                          List<Trainer> trainerss =
+                                              trainers.data!;
+
+                                          return SizedBox(
+                                            height: MediaQuery.of(context)
+                                                .size
+                                                .height,
+                                            child: ListView.builder(
+                                                itemCount: trainerss.length,
+                                                itemBuilder: (context, index) {
+                                                  Trainer trainer =
+                                                      trainerss[index];
+                                                  final docs =
+                                                      saveTrainerSnapshot.docs;
+                                                  bool saved = docs.isNotEmpty
+                                                      ? true
+                                                      : false;
+                                                  return BoxingTrainersCard(
+                                                      onProfileTap: () {
+                                                        Get.toNamed(
+                                                            AppRoutes
+                                                                .trainerprofile,
+                                                            arguments:
+                                                                trainer.id);
+                                                      },
+                                                      title: trainer.name,
+                                                      description: trainer
+                                                          .category
+                                                          .join('\n'),
+                                                      imgpath1: trainer
+                                                          .profileImageUrl,
+                                                      isSaved: saved,
+                                                      ontap: () {
+                                                        setState(() {
+                                                          saved = !saved;
+                                                        });
+                                                        if (saved) {
+                                                          TrainerSaved
+                                                              .trainerSaved(
+                                                                  trainer.id);
+                                                        } else {
+                                                          TrainerSaved
+                                                              .trainerUnsaved(
+                                                                  trainer.id);
+                                                        }
+                                                      });
+                                                }),
+                                          );
+                                        }
+                                      },
+                                    )
+                                  : SizedBox(
+                                      height: Get.height,
+                                      width: Get.width,
+                                      child: Center(
+                                          child: Text(
+                                        'No Saved Trainer',
+                                        style: TextStyle(color: white),
+                                      )),
+                                    );
+                            }
+                          },
+                        ),
                         StreamBuilder<QuerySnapshot>(
                           stream: SaveApi.eventStream,
                           builder: (context, snapshot) {
                             if (snapshot.hasError) {
                               return Center(
-                                  child: Text('Error: ${snapshot.error}',style: TextStyle(color: white),));
-                            } else if (!snapshot.hasData) {
-                              return Center(
                                   child: Text(
-                                'No Saved Event',
+                                'Error: ${snapshot.error}',
                                 style: TextStyle(color: white),
                               ));
+                            } else if (!snapshot.hasData) {
+                              print('no event data');
+                              return SizedBox(
+                                height: Get.height * 0.1,
+                                width: Get.width * 0.5,
+                                child: Center(
+                                    child: Text(
+                                  'No Saved Event',
+                                  style: TextStyle(color: white),
+                                )),
+                              );
                             } else {
                               final saveEventSnapshot = snapshot.data;
-                              return FutureBuilder<List<CombinedEventData>>(
-                                future:
-                                    SaveApi.fetchEventsData(saveEventSnapshot!),
-                                builder: (context, combinedEventData) {
-                                  if (combinedEventData.hasError) {
-                                    return Center(
-                                        child: Text(
-                                            'Error: ${combinedEventData.error}'));
-                                  } else if (!combinedEventData.hasData) {
-                                    return Text(
-                                      'No Saved Event',
-                                      style: TextStyle(color: white),
+                              return snapshot.data!.docs.isNotEmpty
+                                  ? FutureBuilder<List<CombinedEventData>>(
+                                      future: SaveApi.fetchEventsData(
+                                          saveEventSnapshot!),
+                                      builder: (context, combinedEventData) {
+                                        if (combinedEventData.hasError) {
+                                          return Center(
+                                              child: Text(
+                                                  'Error: ${combinedEventData.error}'));
+                                        } else if (!combinedEventData.hasData) {
+                                          return SizedBox(
+                                            height: Get.height,
+                                            width: Get.width,
+                                            child: Center(
+                                                child: Text(
+                                              'No Saved Event',
+                                              style: TextStyle(color: white),
+                                            )),
+                                          );
+                                        } else {
+                                          List<CombinedEventData> events =
+                                              combinedEventData.data!;
+                                          return SizedBox(
+                                            height: MediaQuery.of(context)
+                                                .size
+                                                .height,
+                                            child: ListView.builder(
+                                                itemCount: events.length,
+                                                itemBuilder: (context, index) {
+                                                  CombinedEventData
+                                                      combineEvent =
+                                                      events[index];
+                                                  final docs =
+                                                      saveEventSnapshot.docs;
+                                                  bool saved = docs.isNotEmpty
+                                                      ? true
+                                                      : false;
+                                                  return EventDetailsCard(
+                                                    eventId: combineEvent
+                                                        .event.eventId,
+                                                    category: combineEvent
+                                                        .trainer.category
+                                                        .join(' & '),
+                                                    name: combineEvent
+                                                        .trainer.name,
+                                                    image: combineEvent.trainer
+                                                        .profileImageUrl,
+                                                    eventimg: combineEvent
+                                                        .event.imageUrl,
+                                                    address: combineEvent
+                                                        .event.address,
+                                                    startTime: combineEvent
+                                                        .event.startTime,
+                                                    endTime: combineEvent
+                                                        .event.endTime,
+                                                    date:
+                                                        combineEvent.event.date,
+                                                    capacity: combineEvent
+                                                        .event.capacity,
+                                                    attendees: combineEvent
+                                                        .eventOtherData
+                                                        .totalAttendees,
+                                                    isJoined: combineEvent
+                                                        .eventOtherData
+                                                        .isCurrentUserAttendee,
+                                                    price: combineEvent
+                                                        .event.price,
+                                                    isSaved: saved,
+                                                    onSave: () {
+                                                      setState(() {
+                                                        saved = !saved;
+                                                      });
+                                                      if (saved) {
+                                                        HomeApi.eventSaved(
+                                                            combineEvent
+                                                                .event.eventId);
+                                                      } else {
+                                                        HomeApi.eventUnsaved(
+                                                            combineEvent
+                                                                .event.eventId);
+                                                      }
+                                                    },
+                                                  );
+                                                }),
+                                          );
+                                        }
+                                      },
+                                    )
+                                  : SizedBox(
+                                      height: Get.height,
+                                      width: Get.width,
+                                      child: Center(
+                                          child: Text(
+                                        'No Saved Event',
+                                        style: TextStyle(color: white),
+                                      )),
                                     );
-                                  } else {
-                                    List<CombinedEventData> events =
-                                        combinedEventData.data!;
-                                    return SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height,
-                                      child: ListView.builder(
-                                          itemCount: events.length,
-                                          itemBuilder: (context, index) {
-                                            CombinedEventData combineEvent =
-                                                events[index];
-                                            final docs = saveEventSnapshot.docs;
-                                            bool saved =
-                                                docs.isNotEmpty ? true : false;
-                                            return EventDetailsCard(
-                                              eventId: combineEvent.event.eventId,
-                                              category: combineEvent
-                                                  .trainer.category
-                                                  .join(' & '),
-                                              name: combineEvent.trainer.name,
-                                              image: combineEvent
-                                                  .trainer.profileImageUrl,
-                                              eventimg:
-                                                  combineEvent.event.imageUrl,
-                                              address:
-                                                  combineEvent.event.address,
-                                              startTime:
-                                                  combineEvent.event.startTime,
-                                              endTime:
-                                                  combineEvent.event.endTime,
-                                              date: combineEvent.event.date,
-                                              capacity:
-                                                  combineEvent.event.capacity,
-                                              attendees: combineEvent.eventOtherData.totalAttendees,
-                                              price: combineEvent.event.price,
-                                              isSaved: saved,
-                                              onSave: () {
-                                                setState(() {
-                                                  saved = !saved;
-                                                });
-                                                if (saved) {
-                                                  HomeApi.eventSaved(
-                                                      combineEvent
-                                                          .event.eventId);
-                                                } else {
-                                                  HomeApi.eventUnsaved(
-                                                      combineEvent
-                                                          .event.eventId);
-                                                }
-                                              },
-                                            );
-                                          }),
-                                    );
-                                  }
-                                },
-                              );
                             }
                           },
                         ),
@@ -222,27 +339,42 @@ class _SavedViewsState extends State<SavedViews> {
                           builder: (context, snapshot) {
                             if (snapshot.hasError) {
                               return Center(
-                                  child: Text('Error: ${snapshot.error}'));
-                            } else if (!snapshot.hasData) {
-                              return Center(
                                   child: Text(
-                                'No Saved Posts',
+                                'Error: ${snapshot.error}',
                                 style: TextStyle(color: white),
                               ));
+                            } else if (!snapshot.hasData) {
+                              return SizedBox(
+                                height: Get.height,
+                                width: Get.width,
+                                child: Center(
+                                    child: Text(
+                                  'No Saved Posts',
+                                  style: TextStyle(color: white),
+                                )),
+                              );
                             } else {
                               final savePostSnapshot = snapshot.data;
-                              return FutureBuilder<List<CombinedData>>(
+                              return snapshot.data!.docs.isNotEmpty
+                                  ?  FutureBuilder<List<CombinedData>>(
                                 future:
                                     SaveApi.fetchPostsData(savePostSnapshot!),
                                 builder: (context, combinedPostData) {
                                   if (combinedPostData.hasError) {
                                     return Center(
                                         child: Text(
-                                            'Error: ${combinedPostData.error}'));
-                                  } else if (!combinedPostData.hasData) {
-                                    return Text(
-                                      'No Saved Posts',
+                                      'Error: ${combinedPostData.error}',
                                       style: TextStyle(color: white),
+                                    ));
+                                  } else if (!combinedPostData.hasData) {
+                                    return SizedBox(
+                                      height: Get.height,
+                                      width: Get.width,
+                                      child: Center(
+                                          child: Text(
+                                        'No Saved Posts',
+                                        style: TextStyle(color: white),
+                                      )),
                                     );
                                   } else {
                                     List<CombinedData> posts =
@@ -308,6 +440,14 @@ class _SavedViewsState extends State<SavedViews> {
                                     );
                                   }
                                 },
+                              ): SizedBox(
+                                height: Get.height,
+                                width: Get.width,
+                                child: Center(
+                                    child: Text(
+                                  'No Saved Posts',
+                                  style: TextStyle(color: white),
+                                )),
                               );
                             }
                           },

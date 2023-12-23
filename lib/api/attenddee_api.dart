@@ -17,4 +17,18 @@ class AttendeeApi {
     bool isUserAttendee = userSnapshot.docs.isNotEmpty ? true : false;
     return EventOtherData.fromMap(eventSnapshot.docs.length.toString(), isUserAttendee);
   }
+ static Future<EventOtherData> getAttendees(eventId) async {
+    QuerySnapshot eventSnapshot = await FirebaseFirestore.instance
+        .collection('event_attendees')
+        .where('eventId', isEqualTo: eventId)
+        .get();
+    QuerySnapshot userSnapshot = await FirebaseFirestore.instance
+        .collection('event_attendees')
+        .where('eventId', isEqualTo: eventId)
+        .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    bool isUserAttendee = userSnapshot.docs.isNotEmpty ? true : false;
+    return EventOtherData.fromMap(eventSnapshot.docs.length.toString(), isUserAttendee);
+  }
 }

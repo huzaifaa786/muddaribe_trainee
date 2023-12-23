@@ -1,17 +1,34 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:gradient_borders/gradient_borders.dart';
+import 'package:mudarribe_trainee/models/order.dart';
+import 'package:mudarribe_trainee/models/trainer.dart';
+import 'package:mudarribe_trainee/models/trainer_package.dart';
+import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
+import 'package:intl/intl.dart';
 
 class OrderCard extends StatelessWidget {
-  const OrderCard({super.key});
+  const OrderCard({
+    Key? key,
+    required this.trainer,
+    required this.package,
+    required this.order,
+  }) : super(
+          key: key,
+        );
+  final Trainer trainer;
+  final TrainerPackage package;
+  final TrainerOrder order;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 15, right: 15,top: 15),
+      padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
       child: Container(
         height: 344,
         width: MediaQuery.sizeOf(context).width,
@@ -43,7 +60,8 @@ class OrderCard extends StatelessWidget {
                           width: 2,
                         ),
                         image: DecorationImage(
-                          image: AssetImage('assets/images/profile.jpg'),
+                          image: CachedNetworkImageProvider(
+                              trainer.profileImageUrl),
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -55,7 +73,7 @@ class OrderCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Salim Ahmed',
+                          trainer.name,
                           style: TextStyle(
                             fontSize: 16,
                             fontFamily: 'Montserrat',
@@ -64,7 +82,7 @@ class OrderCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Body Building& lifting trainer',
+                          trainer.category.join('& '),
                           style: TextStyle(
                             fontSize: 12,
                             fontFamily: 'Montserrat',
@@ -79,7 +97,7 @@ class OrderCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 5, right: 5, top: 15),
+              padding: const EdgeInsets.only(left: 5, top: 15),
               child: Container(
                 height: 201,
                 width: MediaQuery.of(context).size.width,
@@ -95,14 +113,16 @@ class OrderCard extends StatelessWidget {
                           width: MediaQuery.sizeOf(context).width * 0.31,
                           decoration: BoxDecoration(
                               border: Border(
-                            bottom: BorderSide(width: 1, color: dividercolor),
-                            right: BorderSide(width: 1, color: dividercolor),
+                            bottom: BorderSide(
+                                width: 1.0, color: borderdividercolor),
+                            right: BorderSide(
+                                width: 1.0, color: borderdividercolor),
                           )),
                           child: Text(
                             textAlign: TextAlign.center,
                             'Package',
                             style: TextStyle(
-                                color: white,
+                                color: white.withOpacity(0.5),
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -112,52 +132,101 @@ class OrderCard extends StatelessWidget {
                           width: MediaQuery.sizeOf(context).width * 0.31,
                           decoration: BoxDecoration(
                               border: Border(
-                            bottom: BorderSide(width: 1, color: dividercolor),
-                            right: BorderSide(width: 1, color: dividercolor),
+                            bottom: BorderSide(
+                                width: 1.0, color: borderdividercolor),
+                            right: BorderSide(
+                                width: 1.0, color: borderdividercolor),
                           )),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    'assets/images/packageplanimage.png',
-                                    height: 19,
-                                    width: 20,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 5, right: 5),
-                                    child: Text(
-                                      '+',
-                                      style: TextStyle(
-                                          color: white,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w700),
+                              package.category == 'excercise&nutrition'
+                                  ? Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          'assets/images/packageplanimage.png',
+                                          height: 19,
+                                          width: 20,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 5, right: 5),
+                                          child: Text(
+                                            '+',
+                                            style: TextStyle(
+                                                color: white,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                        ),
+                                        Image.asset(
+                                            'assets/images/packageplanimage1.png',
+                                            height: 18,
+                                            width: 20),
+                                      ],
+                                    )
+                                  : Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 20, right: 20, bottom: 10),
+                                      child: package.category == 'excercise'
+                                          ? Image.asset(
+                                              'assets/images/packageplanimage.png',
+                                              height: 18,
+                                              width: 20)
+                                          : Image.asset(
+                                              'assets/images/packageplanimage1.png',
+                                              height: 18,
+                                              width: 20),
                                     ),
-                                  ),
-                                  Image.asset(
-                                      'assets/images/packageplanimage1.png',
-                                      height: 18,
-                                      width: 20),
-                                ],
-                              ),
-                              Text(
-                                '1 month Plan',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w700,
-                                    color: whitewithopacity1),
+
+                              // Row(
+                              //   mainAxisAlignment: MainAxisAlignment.center,
+                              //   crossAxisAlignment: CrossAxisAlignment.center,
+                              //   children: [
+                              //     Image.asset(
+                              //       'assets/images/packageplanimage.png',
+                              //       height: 19,
+                              //       width: 20,
+                              //     ),
+                              //     Padding(
+                              //       padding: const EdgeInsets.only(
+                              //           left: 5, right: 5),
+                              //       child: Text(
+                              //         '+',
+                              //         style: TextStyle(
+                              //             color: white,
+                              //             fontSize: 20,
+                              //             fontWeight: FontWeight.w700),
+                              //       ),
+                              //     ),
+                              //     Image.asset(
+                              //         'assets/images/packageplanimage1.png',
+                              //         height: 18,
+                              //         width: 20),
+                              //   ],
+                              // ),
+
+                              Padding(
+                                padding: const EdgeInsets.only(left: 2.0),
+                                child: Text(
+                                  package.name!,
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w700,
+                                      color: whitewithopacity1),
+                                ),
                               ),
                               Padding(
                                 padding:
                                     const EdgeInsets.only(top: 5, bottom: 10),
                                 child: Text(
                                     textAlign: TextAlign.center,
-                                    'Included Exercise & Nutrition Plan',
+                                    package.discription!,
                                     style: TextStyle(
                                         fontSize: 11,
                                         fontWeight: FontWeight.w500,
@@ -176,14 +245,16 @@ class OrderCard extends StatelessWidget {
                           width: MediaQuery.sizeOf(context).width * 0.31,
                           decoration: BoxDecoration(
                               border: Border(
-                            bottom: BorderSide(width: 1, color: dividercolor),
-                            right: BorderSide(width: 1, color: dividercolor),
+                            bottom: BorderSide(
+                                width: 1.0, color: borderdividercolor),
+                            right: BorderSide(
+                                width: 1.0, color: borderdividercolor),
                           )),
                           child: Text(
                             textAlign: TextAlign.center,
                             'Check out Date',
                             style: TextStyle(
-                                color: white,
+                                color: white.withOpacity(0.5),
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -193,13 +264,17 @@ class OrderCard extends StatelessWidget {
                           width: MediaQuery.sizeOf(context).width * 0.31,
                           decoration: BoxDecoration(
                               border: Border(
-                            bottom: BorderSide(width: 1, color: dividercolor),
-                            right: BorderSide(width: 1, color: dividercolor),
+                            bottom: BorderSide(
+                                width: 1.0, color: borderdividercolor),
+                            right: BorderSide(
+                                width: 1.0, color: borderdividercolor),
                           )),
                           child: Center(
                             child: Text(
                               textAlign: TextAlign.center,
-                              '23 / 11 /2023',
+                              DateFormat("dd/MM/yyyy").format(
+                                  DateTime.fromMillisecondsSinceEpoch(
+                                      int.parse(order.id))),
                               style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w700,
@@ -217,13 +292,14 @@ class OrderCard extends StatelessWidget {
                           width: MediaQuery.sizeOf(context).width * 0.281,
                           decoration: BoxDecoration(
                               border: Border(
-                            bottom: BorderSide(width: 1, color: dividercolor),
+                            bottom: BorderSide(
+                                width: 1.0, color: borderdividercolor),
                           )),
                           child: Text(
                             textAlign: TextAlign.center,
                             'Price',
                             style: TextStyle(
-                                color: white,
+                                color: white.withOpacity(0.5),
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -233,7 +309,8 @@ class OrderCard extends StatelessWidget {
                           width: MediaQuery.sizeOf(context).width * 0.281,
                           decoration: BoxDecoration(
                               border: Border(
-                            bottom: BorderSide(width: 1, color: dividercolor),
+                            bottom: BorderSide(
+                                width: 1.0, color: borderdividercolor),
                           )),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -241,11 +318,11 @@ class OrderCard extends StatelessWidget {
                             children: [
                               GradientText(
                                 textAlign: TextAlign.center,
-                                '150.44',
+                                package.price!,
                                 style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                ),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                    overflow: TextOverflow.clip),
                                 colors: [borderTop, gradientblue],
                               ),
                               Padding(
@@ -268,20 +345,25 @@ class OrderCard extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 15, right: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  GradientText(
-                    'View Profile',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
+            InkWell(
+              onTap: () {
+                Get.toNamed(AppRoutes.trainerprofile, arguments: trainer.id);
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(top: 15, right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    GradientText(
+                      'View Profile',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      colors: [borderTop, gradientblue],
                     ),
-                    colors: [borderTop, gradientblue],
-                  ),
-                ],
+                  ],
+                ),
               ),
             )
           ],

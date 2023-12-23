@@ -46,12 +46,12 @@ class EventcheckoutController extends GetxController {
     }
   }
 
-  void applyPromoCode() async {
+  void applyPromoCode(String trainerId) async {
     if (promoCode.text.isEmpty) {
       UiUtilites.errorSnackbar('Empty Promo Code', 'Please enter code first');
       return;
     }
-    CouponCode? couponCode = await _couponCodeApi.getCouponCode(promoCode.text);
+    CouponCode? couponCode = await _couponCodeApi.getPromoCode(promoCode.text,trainerId);
     if (couponCode != null) {
       discount =
           (int.parse(price) * int.parse(couponCode.percentage) / 100).toInt();

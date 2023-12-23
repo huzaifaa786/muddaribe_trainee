@@ -113,7 +113,9 @@ class TraineeProfileView extends StatelessWidget {
                                       ),
                                       ProfileTile(
                                         img: 'assets/images/order.svg',
-                                        ontap: () {},
+                                        ontap: () {
+                                          Get.toNamed(AppRoutes.orderHistory);
+                                        },
                                         text: 'Order History',
                                       ),
                                       ProfileTile(

@@ -5,6 +5,9 @@ import 'package:mudarribe_trainee/models/trainer_package.dart';
 
 class PackageApi {
   static Future<CombinedPackageData?> fetchPackageData(String packageId) async {
+    if (packageId.isNotEmpty) {
+      
+    
     DocumentSnapshot packageSnapshot = await FirebaseFirestore.instance
         .collection('packages')
         .doc(packageId)
@@ -25,6 +28,7 @@ class PackageApi {
         Trainer trainer = Trainer.fromMap(trainerData);
         return CombinedPackageData(trainer: trainer, package: package);
       }
+    }
     }
     return null;
   }

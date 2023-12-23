@@ -37,8 +37,8 @@ class TrainerProfileCard extends StatelessWidget {
               ),
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(25),
-              child: CachedNetworkImage(imageUrl: userimg),
+              borderRadius: BorderRadius.circular(45),
+              child: CachedNetworkImage(imageUrl: userimg,fit: BoxFit.cover,),
               // Image.network(userimg),
             )),
         Padding(

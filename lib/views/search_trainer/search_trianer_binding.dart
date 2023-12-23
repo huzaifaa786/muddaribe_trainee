@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:mudarribe_trainee/helper/loading_helper.dart';
 import 'package:mudarribe_trainee/models/trainer.dart';
@@ -29,13 +30,12 @@ class TSearchController extends GetxController {
           querySnapshot.docs.map((doc) => Trainer.fromMap(doc.data())).toList();
 
       for (var trainer in trainers) {
-        DocumentSnapshot<Map<String, dynamic>> savedTrainerSnapshot =
-            await FirebaseFirestore.instance
-                .collection('savedTrainer')
-                .doc(trainer.id)
-                .get();
-
-        if (savedTrainerSnapshot.exists) {
+        QuerySnapshot savedTrainerSnapshot = await FirebaseFirestore.instance
+            .collection('savedTrainer')
+            .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+            .where('tarinerId', isEqualTo: trainer.id)
+            .get();
+        if (savedTrainerSnapshot.docs.isNotEmpty) {
           trainer.isSaved = true;
         }
       }

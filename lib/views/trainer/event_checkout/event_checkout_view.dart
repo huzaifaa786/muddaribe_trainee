@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mudarribe_trainee/api/event_api.dart';
 import 'package:mudarribe_trainee/components/Eventcheckoutcontainer.dart';
+import 'package:mudarribe_trainee/components/basic_loader%20copy.dart';
 import 'package:mudarribe_trainee/components/checkbox.dart';
 import 'package:mudarribe_trainee/components/inputfield.dart';
 import 'package:mudarribe_trainee/components/textgradient.dart';
@@ -49,8 +50,8 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
             () => GestureDetector(
                 onTap: () {
                   controller.payEventCharges(controller.total == ''
-                                          ? controller.price
-                                          : controller.total);
+                      ? controller.price
+                      : controller.total);
                 },
                 child: Container(
                   padding: EdgeInsets.only(top: 17),
@@ -85,6 +86,15 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
               child: FutureBuilder<CombinedEventData?>(
                   future: EventApi.fetchEventData(controller.eventId),
                   builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting && snapshot.data == null) {
+                      return SizedBox(height: Get.height * 0.8,
+                        child: Center(
+                          child: BasicLoader(
+                            background: false,
+                          ),
+                        ),
+                      );
+                    }
                     if (snapshot.hasError) {
                       return Text('');
                     }
@@ -163,7 +173,7 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                                   child: InkWell(
                                                     onTap: () {
                                                       controller
-                                                          .applyPromoCode();
+                                                          .applyPromoCode(combinedEventData.trainer.id);
                                                     },
                                                     child: GradientText1(
                                                       text: 'Apply',
@@ -296,7 +306,7 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                     ),
                                     GradientText(
                                       controller.total == ''
-                                          ? controller.price
+                                          ? controller.price + ' AED'
                                           : controller.total + ' AED',
                                       style: TextStyle(
                                         fontSize: 18,

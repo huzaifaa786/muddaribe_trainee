@@ -228,14 +228,16 @@ class _HomeViewState extends State<HomeView> {
                           Events banners = Events.fromMap(eventData);
                           return BannerCard(
                               joinTap: () {
-                                 Get.toNamed(AppRoutes.eventcheckout,
-                                arguments: banners.eventId);
+                                Get.toNamed(AppRoutes.eventcheckout,
+                                    arguments: banners.eventId);
                               },
                               endTime: banners.endTime,
                               image: banners.imageUrl,
                               price: banners.price,
                               startTime: banners.startTime,
+                              eventId: banners.eventId,
                               date: banners.date,
+                              capacity: banners.capacity,
                               title: banners.title);
                         },
                       ),
@@ -360,6 +362,8 @@ class _HomeViewState extends State<HomeView> {
                               }
 
                               CombinedEventData combineEvent = snapshot.data!;
+                              print(combineEvent
+                                  .eventOtherData.isCurrentUserAttendee);
 
                               return FutureBuilder<QuerySnapshot>(
                                   future: FirebaseFirestore.instance
@@ -392,7 +396,10 @@ class _HomeViewState extends State<HomeView> {
                                         endTime: combineEvent.event.endTime,
                                         date: combineEvent.event.date,
                                         capacity: combineEvent.event.capacity,
-                                        attendees: combineEvent.eventOtherData.totalAttendees,
+                                        attendees: combineEvent
+                                            .eventOtherData.totalAttendees,
+                                        isJoined: combineEvent.eventOtherData
+                                            .isCurrentUserAttendee,
                                         price: combineEvent.event.price,
                                         isSaved: saved,
                                         eventId: combineEvent.event.eventId,

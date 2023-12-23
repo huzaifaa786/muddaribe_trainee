@@ -17,5 +17,6 @@ const bgcontainer1 = Color(0x872C2723);
 
 // const dividercolor = Colors.white.withOpacity(0.2);
 const dividercolor = Color(0x33FFFFFF);
+const borderdividercolor = Color.fromARGB(51, 90, 85, 85);
 
 const whitewithopacity1 = Color.fromRGBO(255, 255, 255, 1);

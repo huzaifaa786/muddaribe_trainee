@@ -83,10 +83,7 @@ class _AllEventsViewState extends State<AllEventsView> {
                           .where('eventId', isEqualTo: events.eventId)
                           .get(),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return SizedBox(height: Get.width * 0.5, child: Center(child: CircularProgressIndicator()));
-                        }
+                      
                         if (!snapshot.hasData) {
                           return Text('');
                         } else if (snapshot.hasError) {
@@ -106,6 +103,7 @@ class _AllEventsViewState extends State<AllEventsView> {
                             date: combineEvent.event.date,
                             capacity: combineEvent.event.capacity,
                             attendees: combineEvent.eventOtherData.totalAttendees,
+                            isJoined: combineEvent.eventOtherData.isCurrentUserAttendee,
                             price: combineEvent.event.price,
                             isSaved: saved,
                             eventId: combineEvent.event.eventId,

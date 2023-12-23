@@ -77,6 +77,67 @@ class OrderApi {
     return combineOrders;
   }
 
+  static Future<List<CombinedOrderData>> fetchOrders() async {
+    final traineeId = FirebaseAuth.instance.currentUser!.uid;
+
+    List<CombinedOrderData> combineOrders = [];
+    QuerySnapshot orders = await FirebaseFirestore.instance
+        .collection('orders')
+        .where("userId", isEqualTo: traineeId)
+        .get();
+
+    if (orders.docs.isNotEmpty) {
+      for (var orderDoc in orders.docs) {
+        if (orderDoc.exists) {
+          Map<String, dynamic> orderData =
+              orderDoc.data()! as Map<String, dynamic>;
+          TrainerOrder order = TrainerOrder.fromJson(orderData);
+          DocumentSnapshot trainerSnapshot = await FirebaseFirestore.instance
+              .collection('users')
+              .doc(order.trainerId)
+              .get();
+          Map<String, dynamic> trainerData =
+              trainerSnapshot.data()! as Map<String, dynamic>;
+          Trainer trainer = Trainer.fromMap(trainerData);
+
+          if (order.type == 'My_Plan') {
+            DocumentSnapshot personalPlanSnapshot = await FirebaseFirestore
+                .instance
+                .collection('personalplans')
+                .doc(order.planId)
+                .get();
+            Map<String, dynamic> personalPlanData =
+                personalPlanSnapshot.data()! as Map<String, dynamic>;
+
+            TrainerPackage personalPlan =
+                TrainerPackage.fromJson(personalPlanData);
+
+            combineOrders.add(CombinedOrderData(
+                order: order,
+                combinedPackageData: CombinedPackageData(
+                    trainer: trainer, package: personalPlan)));
+          } else {
+            DocumentSnapshot pacakageSnapshot = await FirebaseFirestore.instance
+                .collection('packages')
+                .doc(order.planId)
+                .get();
+
+            Map<String, dynamic> pacakageData =
+                pacakageSnapshot.data()! as Map<String, dynamic>;
+
+            TrainerPackage package = TrainerPackage.fromJson(pacakageData);
+
+            combineOrders.add(CombinedOrderData(
+                order: order,
+                combinedPackageData:
+                    CombinedPackageData(trainer: trainer, package: package)));
+          }
+        }
+      }
+    }
+    return combineOrders;
+  }
+
   static Future<List<Plan>> getPlansByOrder(orderId, category) async {
     final _firestore = FirebaseFirestore.instance;
     final CollectionReference _trainerplanCollection =

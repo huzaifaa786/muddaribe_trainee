@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mudarribe_trainee/api/auth_api.dart';
 import 'package:mudarribe_trainee/exceptions/auth_api_exception.dart';
+import 'package:mudarribe_trainee/helper/loading_helper.dart';
 import 'package:mudarribe_trainee/models/app_user.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/services/user_service.dart';
@@ -12,6 +13,7 @@ import 'package:mudarribe_trainee/utils/ui_utils.dart';
 
 class SignInController extends GetxController {
   static SignInController instance = Get.find();
+  final BusyController busyController = Get.find();
   final _authApi = AuthApi();
   final _userService = UserService();
   TextEditingController emailController = TextEditingController();
@@ -46,6 +48,7 @@ class SignInController extends GetxController {
   }
 
   Future signInTrainee() async {
+    busyController.setBusy(true);
     try {
       final User user = await _authApi.loginWithEmail(
         email: emailController.text,
@@ -73,6 +76,7 @@ class SignInController extends GetxController {
     } on AuthApiException catch (e) {
       UiUtilites.errorSnackbar('Signin Failed', e.toString());
     }
+    busyController.setBusy(false);
   }
 
   Future signInGoogle() async {

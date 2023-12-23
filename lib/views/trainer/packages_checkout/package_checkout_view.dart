@@ -354,7 +354,7 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                                         child: InkWell(
                                                           onTap: () {
                                                             controller
-                                                                .applyPromoCode();
+                                                                .applyPromoCode(combinedPackagetData.trainer.id);
                                                           },
                                                           child: GradientText1(
                                                             text: 'Apply',

@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
+import 'package:mudarribe_trainee/api/attenddee_api.dart';
 import 'package:mudarribe_trainee/components/button.dart';
+import 'package:mudarribe_trainee/models/event_other_data.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
 class BannerCard extends StatelessWidget {
@@ -13,13 +15,17 @@ class BannerCard extends StatelessWidget {
       this.price,
       this.startTime,
       this.joinTap,
+      this.eventId,
+      this.capacity,
       this.title});
   final image;
   final title;
   final date;
+  final capacity;
   final startTime;
   final endTime;
   final price;
+  final eventId;
   final joinTap;
   @override
   Widget build(BuildContext context) {
@@ -137,14 +143,28 @@ class BannerCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  CustomeButton(
-                    onPressed:joinTap,
-                    title: 'Join Event',
-                  ),
-                ],
-              )
+              FutureBuilder<EventOtherData>(
+                  future: AttendeeApi.getAttendees(eventId),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return Text('');
+                    } else if (snapshot.hasError) {
+                      return Text('');
+                    } else {
+                      EventOtherData otherData = snapshot.data!;
+                      return   int.parse(otherData.totalAttendees) < int.parse(capacity) &&
+                          otherData.isCurrentUserAttendee == false
+                      ?
+                      Row(
+                        children: [
+                          CustomeButton(
+                            onPressed: joinTap,
+                            title: 'Join Event',
+                          ),
+                        ],
+                      ):Text('');
+                    }
+                  }),
             ],
           )
         ]),

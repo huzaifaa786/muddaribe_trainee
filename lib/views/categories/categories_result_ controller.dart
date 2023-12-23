@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:mudarribe_trainee/helper/loading_helper.dart';
 import 'package:mudarribe_trainee/models/trainer.dart';
@@ -25,14 +26,17 @@ class CategoriesController extends GetxController {
 
       for (var doc in querySnapshot.docs) {
         Trainer trainer = Trainer.fromMap(doc.data());
-        DocumentSnapshot<Map<String, dynamic>> savedTrainerSnapshot =
+        QuerySnapshot savedTrainerSnapshot =
             await FirebaseFirestore.instance
                 .collection('savedTrainer')
-                .doc(trainer.id)
+                .where('userId',
+                    isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+                .where('tarinerId', isEqualTo: trainer.id)
                 .get();
-        if (savedTrainerSnapshot.exists) {
+        if (savedTrainerSnapshot.docs.isNotEmpty) {
           trainer.isSaved = true;
         }
+    
         fetchedTrainers.add(trainer);
       }
 

@@ -33,6 +33,7 @@ import 'package:mudarribe_trainee/views/splash/splash_binding.dart';
 import 'package:mudarribe_trainee/views/splash/splash_view.dart';
 import 'package:mudarribe_trainee/views/story/story_binding.dart';
 import 'package:mudarribe_trainee/views/story/story_view.dart';
+import 'package:mudarribe_trainee/views/trainee_profile/order_history/order_history_view.dart';
 import 'package:mudarribe_trainee/views/trainee_profile/report/report_problem_binding.dart';
 import 'package:mudarribe_trainee/views/trainee_profile/report/report_problem_view.dart';
 import 'package:mudarribe_trainee/views/trainee_profile/saved/saved_binding.dart';
@@ -143,8 +144,8 @@ class AppPages {
       binding: MyPackagesBinding(),
     ),
     GetPage(
-      name: AppRoutes.ordercard,
-      page: () => const OrderCard(),
+      name: AppRoutes.orderHistory,
+      page: () => const OrderhistoryView(),
       // binding: PackagecheckoutBinding(),
     ),
     GetPage(

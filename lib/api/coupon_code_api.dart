@@ -13,4 +13,14 @@ class CouponCodeApi {
           querySnapshot.docs[0].data() as Map<String, dynamic>);
     }
   }
+  Future<CouponCode?> getPromoCode(String couponCode,String trainerId) async {
+    final querySnapshot = await FirebaseFirestore.instance
+        .collection('promocodes')
+        .where('name', isEqualTo: couponCode).where('trainerId',isEqualTo:trainerId )
+        .get();
+    if (querySnapshot.docs.isNotEmpty) {
+      return CouponCode.fromMap(
+          querySnapshot.docs[0].data() as Map<String, dynamic>);
+    }
+  }
 }

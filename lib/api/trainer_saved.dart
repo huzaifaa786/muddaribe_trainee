@@ -20,12 +20,14 @@ class TrainerSaved {
         .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .where('tarinerId', isEqualTo: trainerId)
         .get();
+   
     if (querySnapshot.docs.isNotEmpty) {
       final docId = querySnapshot.docs[0].id;
       await FirebaseFirestore.instance
           .collection('savedTrainer')
           .doc(docId)
-          .delete().then((value) => print('delete'));
+          .delete()
+          .then((value) => print('delete'));
     }
   }
 }

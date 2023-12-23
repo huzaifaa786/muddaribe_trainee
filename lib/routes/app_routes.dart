@@ -18,7 +18,7 @@ class AppRoutes {
   static const packagePlans = '/packagePlans';
   static const mypackages = '/mypackages';
   static const report = '/report';
-  static const ordercard = '/ordercard';
+  static const orderHistory = '/orderHistory';
   static const planFiles = '/planFiles';
   static const nutritionplan = '/Nutritionplan';
   static const videoplay = '/Videoplay';

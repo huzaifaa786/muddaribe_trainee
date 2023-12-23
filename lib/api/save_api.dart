@@ -23,6 +23,12 @@ class SaveApi {
       .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
       .orderBy('id', descending: true)
       .snapshots();
+  static Stream<QuerySnapshot<Object?>>? trainerStream = FirebaseFirestore
+      .instance
+      .collection('savedTrainer')
+      .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+      .orderBy('id', descending: true)
+      .snapshots();
 
   Future<List<TrainerStory>> fetchTrainerStoryData(String trainerId) async {
     final trainerSnapshot = await FirebaseFirestore.instance
@@ -98,5 +104,24 @@ class SaveApi {
       }
     }
     return combinedData;
+  }
+
+  static Future<List<Trainer>> fetchTrainerData(
+      QuerySnapshot saveTrainerSnapshot) async {
+    List<Trainer> trainers = [];
+    for (var saveTrainer in saveTrainerSnapshot.docs) {
+      DocumentSnapshot trainerSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(saveTrainer['tarinerId'])
+          .get();
+      if (trainerSnapshot.exists) {
+        Map<String, dynamic> trainerData =
+            trainerSnapshot.data() as Map<String, dynamic>;
+
+        Trainer trainer = Trainer.fromMap(trainerData);
+        trainers.add(trainer);
+      }
+    }
+    return trainers;
   }
 }

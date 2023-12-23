@@ -335,6 +335,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                       color: Colors.grey,
                       selectedColor: Colors.white,
                       selectedBorderColor: Colors.transparent,
+                      fillColor: Colors.transparent,
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
@@ -356,7 +357,8 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                               );
                             }
                             List<Post> posts = snapshot.data!;
-                            return GridView.builder(
+                            
+                            return posts.isNotEmpty ? GridView.builder(
                               physics: BouncingScrollPhysics(),
                               shrinkWrap: true,
                               gridDelegate:
@@ -370,7 +372,14 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                   fit: BoxFit.cover,
                                 );
                               },
-                            );
+                            ):Center(
+                                          heightFactor: 12,
+                                          child: Text(
+                                            'No Post Found !',
+                                            style: TextStyle(
+                                                color: white.withOpacity(0.7)),
+                                          ),
+                                        );
                           })
                       : controller.indexs == 1
                           ? Container(
@@ -398,6 +407,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                     (context, documentSnapshot, index) {
                                   final eventData = documentSnapshot.data()
                                       as Map<String, dynamic>;
+
                                   final trainerId = eventData['trainerId'];
                                   Events events = Events.fromMap(eventData);
                                   return FutureBuilder<CombinedEventData>(
@@ -408,7 +418,14 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                         return Text('');
                                       }
                                       if (!snapshot.hasData) {
-                                        return Text('');
+                                        return Center(
+                                            heightFactor: 15,
+                                            child: Text(
+                                              'No Events Found !',
+                                              style: TextStyle(
+                                                  color:
+                                                      white.withOpacity(0.7)),
+                                            ));
                                       }
 
                                       CombinedEventData combineEvent =
@@ -425,7 +442,6 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                   isEqualTo: events.eventId)
                                               .get(),
                                           builder: (context, snapshot) {
-                                        
                                             if (!snapshot.hasData) {
                                               return Text('');
                                             } else if (snapshot.hasError) {
@@ -459,6 +475,9 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                 attendees: combineEvent
                                                     .eventOtherData
                                                     .totalAttendees,
+                                                isJoined: combineEvent
+                                                    .eventOtherData
+                                                    .isCurrentUserAttendee,
                                                 price: combineEvent.event.price,
                                                 isSaved: saved,
                                                 onSave: () {
@@ -504,7 +523,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                       List<TrainerPackage> packages =
                                           snapshot.data!;
 
-                                      return ListView.builder(
+                                      return snapshot.data!.isNotEmpty ?  ListView.builder(
                                         physics: BouncingScrollPhysics(),
                                         shrinkWrap: true,
                                         itemCount: packages.length,
@@ -527,7 +546,14 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                             },
                                           );
                                         },
-                                      );
+                                      ):Center(
+                                          heightFactor: 12,
+                                          child: Text(
+                                            'No Package Found !',
+                                            style: TextStyle(
+                                                color: white.withOpacity(0.7)),
+                                          ),
+                                        );
                                     }),
                                 controller.indexs == 2 &&
                                         controller.selectedPlan != null &&
@@ -562,37 +588,38 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                               dividercolor))),
                                             ]),
                                           ),
-                                          FutureBuilder<Trainer?>(
-                                              future: TrainerProfileApi
-                                                  .fetchTrainerData(trainerId),
-                                              builder: (context, snapshot) {
-                                                if (snapshot.hasError) {
-                                                  return Text('');
-                                                }
-                                                if (!snapshot.hasData) {
-                                                  return Text('');
-                                                }
-                                                Trainer trainer =
-                                                    snapshot.data!;
-                                                return ChatMeCard(
-                                                  userimg:
-                                                      trainer.profileImageUrl,
-                                                  username: trainer.name,
-                                                  chatText:
-                                                      'Chat With me for a personal plan',
-                                                  onChatClick: () {
-                                                    Get.off(() => ChatPage(
-                                                        arguments: ChatPageArguments(
-                                                            peerId: trainer.id,
-                                                            peerAvatar: trainer
-                                                                .profileImageUrl,
-                                                            peerNickname:
-                                                                trainer.name)));
-                                                  },
-                                                );
-                                              }),
                                         ],
                                       )
+                                    : Text(''),
+                                controller.indexs == 2
+                                    ? FutureBuilder<Trainer?>(
+                                        future:
+                                            TrainerProfileApi.fetchTrainerData(
+                                                trainerId),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasError) {
+                                            return Text('');
+                                          }
+                                          if (!snapshot.hasData) {
+                                            return Text('');
+                                          }
+                                          Trainer trainer = snapshot.data!;
+                                          return ChatMeCard(
+                                            userimg: trainer.profileImageUrl,
+                                            username: trainer.name,
+                                            chatText:
+                                                'Chat With me for a personal plan',
+                                            onChatClick: () {
+                                              Get.off(() => ChatPage(
+                                                  arguments: ChatPageArguments(
+                                                      peerId: trainer.id,
+                                                      peerAvatar: trainer
+                                                          .profileImageUrl,
+                                                      peerNickname:
+                                                          trainer.name)));
+                                            },
+                                          );
+                                        })
                                     : Text(''),
                               ],
                             ),

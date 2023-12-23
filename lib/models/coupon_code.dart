@@ -12,8 +12,8 @@ class CouponCode {
   factory CouponCode.fromMap(Map<String, dynamic> map) {
     return CouponCode(
       id: map['id'],
-      code: map['CouponCode'],
-      percentage: map['DiscountPercentage'],
+      code: map['name'],
+      percentage: map['discount'],
     );
   }
 }
