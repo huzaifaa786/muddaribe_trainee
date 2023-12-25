@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:mudarribe_trainee/exceptions/database_api_exception.dart';
 import 'package:mudarribe_trainee/models/event.dart';
 import 'package:mudarribe_trainee/models/post.dart';
+import 'package:mudarribe_trainee/models/post_data_combined.dart';
 import 'package:mudarribe_trainee/models/trainer.dart';
 import 'package:mudarribe_trainee/models/trainer_package.dart';
 
@@ -52,6 +53,37 @@ class TrainerProfileApi {
     return posts;
   }
 
+  static Future<List<CombinedData>> fetchTrainerPostsData(trainerId) async {
+    final savePostSnapshot = await FirebaseFirestore.instance
+        .collection('trainer_posts')
+        .where("trainerId", isEqualTo: trainerId)
+        .get();
+    List<CombinedData> combinedData = [];
+    for (var savePost in savePostSnapshot.docs) {
+      DocumentSnapshot postSnapshot = await FirebaseFirestore.instance
+          .collection('trainer_posts')
+          .doc(savePost['id'])
+          .get();
+      if (postSnapshot.exists) {
+        Map<String, dynamic> postData =
+            postSnapshot.data()! as Map<String, dynamic>;
+
+        Post post = Post.fromMap(postData);
+        DocumentSnapshot trainerSnapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(post.trainerId)
+            .get();
+        if (trainerSnapshot.exists) {
+          Map<String, dynamic> trainerData =
+              trainerSnapshot.data()! as Map<String, dynamic>;
+          Trainer trainer = Trainer.fromMap(trainerData);
+          combinedData.add(CombinedData(trainer: trainer, post: post));
+        }
+      }
+    }
+    return combinedData;
+  }
+
   static Future<List<TrainerPackage>> getTrainerPackages(trainerId) async {
     final result =
         await FirebaseFirestore.instance.collection('packages').get();
@@ -66,11 +98,12 @@ class TrainerProfileApi {
     return packages;
   }
 
-
-
-   static followTrainer(trainerId) async {
+  static followTrainer(trainerId) async {
     String id = DateTime.now().millisecondsSinceEpoch.toString();
-    await FirebaseFirestore.instance.collection('followed_trainers').doc(id).set({
+    await FirebaseFirestore.instance
+        .collection('followed_trainers')
+        .doc(id)
+        .set({
       "id": id,
       'trainerId': trainerId,
       "userId": FirebaseAuth.instance.currentUser!.uid,
