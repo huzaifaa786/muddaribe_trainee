@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mudarribe_trainee/helper/loading_helper.dart';
 import 'package:mudarribe_trainee/routes/app_pages.dart';
+import 'package:mudarribe_trainee/services/notification_service.dart';
 import 'package:mudarribe_trainee/services/payment_service.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/views/authentication/change_password/change_password_binding.dart';
@@ -40,6 +41,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   Get.put(PaymentService());
+  Get.put(NotificationService());
   Get.put<BusyController>(BusyController());
   await GetStorage.init();
   Stripe.publishableKey =

@@ -29,7 +29,11 @@ class UserService {
     await syncUser().then((value) async {
       if (/*_currentUser == null*/ value == false) {
         await _databaseApi.createUser(user);
-      } else {}
+      } else {
+        updateUser(
+            id: user.id,
+            user: {"firebaseToken": user.firebaseToken});
+      }
     });
   }
 

@@ -71,6 +71,8 @@ dependencies:
       url: https://github.com/julek-kal/video_thumbnail
       ref: 734a2d5
   flutter_launcher_icons: ^0.13.1
+  flutter_local_notifications: ^16.2.0
+  firebase_messaging: ^14.7.9
 
 flutter_icons:
   android: true

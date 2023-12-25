@@ -6,12 +6,14 @@ class AppUser {
   String? name;
   String? email;
   String? imageUrl;
+  String? firebaseToken;
   AppUser(
       {required this.id,
       this.name,
       this.email,
       required this.userType,
-      this.imageUrl});
+      this.imageUrl,this.firebaseToken,
+      });
 
   AppUser.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -19,6 +21,7 @@ class AppUser {
     email = json['email'];
     userType = json['userType'];
     imageUrl = json['profileImageUrl'];
+    firebaseToken = json['firebaseToken'] ?? '';
   }
 
   Map<String, dynamic> toJson() {
@@ -27,6 +30,7 @@ class AppUser {
     data['name'] = this.name;
     data['email'] = this.email;
     data['userType'] = this.userType;
+    data['firebaseToken'] = this.firebaseToken;
 
     return data;
   }
@@ -38,6 +42,7 @@ class AppUser {
       name: map['name'],
       email: map['email'],
       imageUrl: map['profileImageUrl'],
+      firebaseToken: map['firebaseToken'] ?? '',
     );
   }
 }

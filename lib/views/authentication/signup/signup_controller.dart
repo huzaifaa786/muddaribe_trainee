@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mudarribe_trainee/api/auth_api.dart';
@@ -72,12 +73,14 @@ class SignUpController extends GetxController {
       );
 
       if (user.uid.isNotEmpty) {
+        var token = await FirebaseMessaging.instance.getToken();
         await _userService.syncOrCreateUser(
           user: AppUser(
               id: user.uid,
               userType: 'trainee',
               email: user.email,
-              name: usernameController.text),
+              name: usernameController.text,
+              firebaseToken: token),
         );
         // UiUtilites.successSnackbar(
         //     'Register User', 'User registered successfully');
@@ -94,8 +97,10 @@ class SignUpController extends GetxController {
       final User user = await _authApi.signInWithGoogle();
 
       if (user.uid.isNotEmpty) {
+        var token = await FirebaseMessaging.instance.getToken();
         await _userService.syncOrCreateUser(
           user: AppUser(
+              firebaseToken: token,
               id: user.uid,
               userType: 'trainee',
               email: user.email,
