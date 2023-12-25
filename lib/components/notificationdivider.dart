@@ -14,7 +14,7 @@ class _DividerNotificationState extends State<DividerNotification> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 35, right: 25),
+      padding: const EdgeInsets.only(left: 20, right: 20),
       child: Divider(
         thickness: 1,
         color: dividercolor,

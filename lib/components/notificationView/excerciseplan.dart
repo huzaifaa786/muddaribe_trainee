@@ -5,8 +5,11 @@ import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class ExcercisePlan extends StatefulWidget {
-  const ExcercisePlan({Key? key}) : super(key: key);
-
+  const ExcercisePlan({Key? key, this.name, this.content, this.ontap, this.img}) : super(key: key);
+final img;
+final name;
+final content;
+final ontap;
   @override
   State<ExcercisePlan> createState() => _ExcercisePlanState();
 }
@@ -25,11 +28,11 @@ class _ExcercisePlanState extends State<ExcercisePlan> {
               child: Container(
                 width: 55,
                 height: 55,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                    image: AssetImage('assets/images/profile.jpg'),
-                    fit: BoxFit.fill,
+                    image: NetworkImage(widget.img),
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
@@ -42,7 +45,7 @@ class _ExcercisePlanState extends State<ExcercisePlan> {
                   Row(
                     children: [
                       Text(
-                        'Ahmed Khaled',
+                        widget.name,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -57,7 +60,7 @@ class _ExcercisePlanState extends State<ExcercisePlan> {
                     child: Column(
                       children: [
                         Text(
-                          'You have received new exercises plan',
+                          widget.content,
                           style: TextStyle(
                             color: white,
                             fontWeight: FontWeight.w400,
@@ -67,31 +70,34 @@ class _ExcercisePlanState extends State<ExcercisePlan> {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, bottom: 8),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 8,
-                          height: 8,
-                          decoration: ShapeDecoration(
-                            color: Color(0xFF58E0FF),
-                            shape: OvalBorder(),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: GradientText(
-                            'View Plan',
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w600,
+                  InkWell(
+                    onTap: widget.ontap,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10, bottom: 8),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 8,
+                            height: 8,
+                            decoration: ShapeDecoration(
+                              color: Color(0xFF58E0FF),
+                              shape: OvalBorder(),
                             ),
-                            colors: [gradientpurple1, gradientblue1],
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: GradientText(
+                              'View Plan',
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w600,
+                              ),
+                              colors: [gradientpurple1, gradientblue1],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

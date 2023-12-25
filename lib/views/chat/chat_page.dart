@@ -1,8 +1,8 @@
-// ignore_for_file: prefer_final_fields, sort_child_properties_last, prefer_const_constructors, avoid_unnecessary_containers, prefer_is_empty, prefer_interpolation_to_compose_strings, avoid_print, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_final_fields, sort_child_properties_last, prefer_const_constructors, avoid_unnecessary_containers, prefer_is_empty, prefer_interpolation_to_compose_strings, avoid_print, prefer_const_literals_to_create_immutables, depend_on_referenced_packages
 
 import 'dart:async';
 import 'dart:io';
-import 'package:mudarribe_trainee/services/payment_service.dart';
+import 'package:mudarribe_trainee/services/notification_service.dart';
 import 'package:mudarribe_trainee/utils/controller_initlization.dart';
 import 'package:mudarribe_trainee/views/chat/chat_plan_card.dart';
 import 'package:path_provider/path_provider.dart';
@@ -45,7 +45,7 @@ class ChatPageState extends State<ChatPage> {
   int _limit = 20;
   int _limitIncrement = 20;
   String groupChatId = "";
-
+  final notificationService = NotificationService();
   File? imageFile;
   File? pdfFile;
   bool isLoading = false;
@@ -57,7 +57,7 @@ class ChatPageState extends State<ChatPage> {
 
   late final ChatProvider chatProvider = context.read<ChatProvider>();
 
-  String adminToken = '';
+  String trainerToken = '';
   bool isDeleted = false;
 
   @override
@@ -66,10 +66,10 @@ class ChatPageState extends State<ChatPage> {
     focusNode.addListener(onFocusChange);
     listScrollController.addListener(_scrollListener);
     readLocal();
-    fetchadminToken();
+    fetchtrainerToken();
   }
 
-  void fetchadminToken() async {
+  void fetchtrainerToken() async {
     try {
       DocumentSnapshot snapshot = await FirebaseFirestore.instance
           .collection('users')
@@ -78,7 +78,7 @@ class ChatPageState extends State<ChatPage> {
 
       if (snapshot.exists) {
         setState(() {
-          adminToken = snapshot['token'];
+          trainerToken = snapshot['firebaseToken'];
         });
       } else {
         print('User not found');
@@ -228,10 +228,10 @@ class ChatPageState extends State<ChatPage> {
   void onSendMessage(String content, int type) {
     if (content.trim().isNotEmpty) {
       textEditingController.clear();
-      // notificationService.postNotification(
-      //     title: 'Messages',
-      //     body: 'New Message Received',
-      //     receiverToken: adminToken);
+      notificationService.postNotification(
+          title: 'Messages',
+          body: 'New Message Received',
+          receiverToken: trainerToken);
       chatProvider.sendMessage(
           content, type, groupChatId, currentUserId, widget.arguments.peerId);
       if (listScrollController.hasClients) {
@@ -243,7 +243,6 @@ class ChatPageState extends State<ChatPage> {
     }
   }
 
-  
   get_text_between(text, start, end) {
     var index = text.indexOf(start);
     if (index == -1) {
@@ -365,8 +364,9 @@ class ChatPageState extends State<ChatPage> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) =>
-                                              PDFScreen(path: remotePDFpath,),
+                                          builder: (context) => PDFScreen(
+                                            path: remotePDFpath,
+                                          ),
                                         ),
                                       );
                                     });
@@ -401,7 +401,9 @@ class ChatPageState extends State<ChatPage> {
                                           )),
                                       SizedBox(
                                         width: 200,
-                                        child: Text(get_text_between(messageChat.content, "/o/", "?"),
+                                        child: Text(
+                                          get_text_between(
+                                              messageChat.content, "/o/", "?"),
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
@@ -609,7 +611,10 @@ class ChatPageState extends State<ChatPage> {
                                         SizedBox(
                                           width: 200,
                                           child: Text(
-                                            get_text_between(messageChat.content, "/o/", "?"),
+                                            get_text_between(
+                                                messageChat.content,
+                                                "/o/",
+                                                "?"),
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(color: white),
                                           ),
@@ -876,80 +881,85 @@ class ChatPageState extends State<ChatPage> {
                                                                       .toString());
                                                           print(
                                                               '*************************** $i');
-                                                          // if (i == true) {
-                                                          // notificationService.postNotification(
-                                                          //     title:
-                                                          //         'New order placed',
-                                                          //     body:
-                                                          //         'Order placed with an Order Id #$orderId',
-                                                          //     receiverToken:
-                                                          //         adminToken);
-                                                          String content =
-                                                              'Order has been created with Order Id # ' +
-                                                                  orderId;
-                                                          onSendMessage(content,
-                                                              TypeMessage.text);
-                                                          // String noti =
-                                                          //     'Your order has been confirmed.';
-                                                          String notiId = DateTime
-                                                                  .now()
-                                                              .millisecondsSinceEpoch
-                                                              .toString();
-                                                          String plan = 'PlanTitle:' +
-                                                              messageChat
-                                                                  .content
-                                                                  .split(
-                                                                      "~~")[0]
-                                                                  .split(
-                                                                      ":")[1] +
-                                                              '~~AMOUNT:' +
-                                                              messageChat
-                                                                  .content
-                                                                  .split(
-                                                                      "~~")[1]
-                                                                  .split(
-                                                                      ":")[1] +
-                                                              '~~PlanCategory:' +
-                                                              messageChat
-                                                                  .content
-                                                                  .split(
-                                                                      "~~")[2]
-                                                                  .split(
-                                                                      ":")[1] +
-                                                              '~~pay:' +
-                                                              'true' +
-                                                              '~~PlanId:' +
-                                                              messageChat
-                                                                  .content
-                                                                  .split(
-                                                                      "~~")[4]
-                                                                  .split(
-                                                                      ":")[1];
-                                                          print(messageChat
-                                                              .timestamp);
-                                                          print(groupChatId);
-                                                          await FirebaseFirestore
-                                                              .instance
-                                                              .collection(
-                                                                  'messages')
-                                                              .doc(groupChatId)
-                                                              .collection(
-                                                                  groupChatId)
-                                                              .doc(messageChat
-                                                                  .timestamp)
-                                                              .update({
-                                                            'content': plan,
-                                                          });
-                                                          // chatProvider
-                                                          //     .notificationCreated(
-                                                          //         noti,
-                                                          //         currentUserId,
-                                                          //         widget
-                                                          //             .arguments
-                                                          //             .peerId,
-                                                          //         notiId,
-                                                          //         orderId);
-                                                          // }
+                                                          if (i == true) {
+                                                            notificationService.postNotification(
+                                                                title:
+                                                                    'New order placed',
+                                                                body:
+                                                                    'Order placed with an Order Id #$orderId',
+                                                                receiverToken:
+                                                                    trainerToken);
+                                                            String content =
+                                                                'Order has been created with Order Id # ' +
+                                                                    orderId;
+                                                            onSendMessage(
+                                                                content,
+                                                                TypeMessage
+                                                                    .text);
+                                                            // String noti =
+                                                            //     'Your order has been confirmed.';
+                                                            String notiId =
+                                                                DateTime.now()
+                                                                    .millisecondsSinceEpoch
+                                                                    .toString();
+                                                            String plan = 'PlanTitle:' +
+                                                                messageChat
+                                                                        .content
+                                                                        .split(
+                                                                            "~~")[0]
+                                                                        .split(":")[
+                                                                    1] +
+                                                                '~~AMOUNT:' +
+                                                                messageChat
+                                                                        .content
+                                                                        .split(
+                                                                            "~~")[1]
+                                                                        .split(
+                                                                            ":")[
+                                                                    1] +
+                                                                '~~PlanCategory:' +
+                                                                messageChat
+                                                                        .content
+                                                                        .split(
+                                                                            "~~")[2]
+                                                                        .split(
+                                                                            ":")[
+                                                                    1] +
+                                                                '~~pay:' +
+                                                                'true' +
+                                                                '~~PlanId:' +
+                                                                messageChat
+                                                                    .content
+                                                                    .split(
+                                                                        "~~")[4]
+                                                                    .split(
+                                                                        ":")[1];
+                                                            print(messageChat
+                                                                .timestamp);
+                                                            print(groupChatId);
+                                                            await FirebaseFirestore
+                                                                .instance
+                                                                .collection(
+                                                                    'messages')
+                                                                .doc(
+                                                                    groupChatId)
+                                                                .collection(
+                                                                    groupChatId)
+                                                                .doc(messageChat
+                                                                    .timestamp)
+                                                                .update({
+                                                              'content': plan,
+                                                            });
+                                                            // chatProvider
+                                                            //     .notificationCreated(
+                                                            //         noti,
+                                                            //         currentUserId,
+                                                            //         widget
+                                                            //             .arguments
+                                                            //             .peerId,
+                                                            //         notiId,
+                                                            //         orderId);
+                                                          }
                                                         }
                                                       },
                                                       child: Text(

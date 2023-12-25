@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mudarribe_trainee/views/chat/chat_view.dart';
+import 'package:mudarribe_trainee/views/notifications/notifications_view.dart';
 
 class MainTopBar extends StatelessWidget {
   const MainTopBar({super.key});
@@ -25,8 +26,13 @@ class MainTopBar extends StatelessWidget {
                     },
                     child: SvgPicture.asset('assets/images/msg.svg',
                         fit: BoxFit.scaleDown)),
-                SvgPicture.asset('assets/images/notification.svg',
-                    fit: BoxFit.scaleDown)
+                GestureDetector(
+                   onTap: () {
+                      Get.to(() => const NotificationsView());
+                    },
+                  child: SvgPicture.asset('assets/images/notification.svg',
+                      fit: BoxFit.scaleDown),
+                )
                 // Icon(Icons.abc,color: white,)
               ],
             ),

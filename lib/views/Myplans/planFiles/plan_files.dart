@@ -197,7 +197,7 @@ class _PlanFilesState extends State<PlanFiles> {
                                       Align(
                                         alignment: Alignment.topLeft,
                                         child: Text(
-                                          'Discription',
+                                          'Description',
                                           style: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w700,

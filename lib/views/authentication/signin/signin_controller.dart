@@ -51,9 +51,6 @@ class SignInController extends GetxController {
   }
 
   Future signInTrainee() async {
-
-  
-
     busyController.setBusy(true);
     try {
       final User user = await _authApi.loginWithEmail(
@@ -65,13 +62,14 @@ class SignInController extends GetxController {
         AppUser? appUser = await _userService.getAuthUser();
 
         if (appUser != null && appUser.userType == 'trainee') {
-              var token = await FirebaseMessaging.instance.getToken();
+          var token = await FirebaseMessaging.instance.getToken();
           await _userService.syncOrCreateUser(
             user: AppUser(
                 id: user.uid,
                 userType: 'trainee',
                 email: user.email,
-                name: user.displayName,firebaseToken: token),
+                name: user.displayName,
+                firebaseToken: token),
           );
 
           Get.offNamed(AppRoutes.footer);
@@ -91,13 +89,14 @@ class SignInController extends GetxController {
       final User user = await _authApi.signInWithGoogle();
 
       if (user.uid.isNotEmpty) {
-           var token = await FirebaseMessaging.instance.getToken();
+        var token = await FirebaseMessaging.instance.getToken();
         await _userService.syncOrCreateUser(
           user: AppUser(
               id: user.uid,
               userType: 'trainee',
               email: user.email,
-              name: user.displayName,firebaseToken: token),
+              name: user.displayName,
+              firebaseToken: token),
         );
 
         Get.offNamed(AppRoutes.footer);

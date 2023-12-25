@@ -2,16 +2,12 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:mudarribe_trainee/api/package_api.dart';
-import 'package:mudarribe_trainee/components/Eventcheckoutcontainer.dart';
-import 'package:mudarribe_trainee/components/checkbox.dart';
 import 'package:mudarribe_trainee/components/textgradient.dart';
 import 'package:mudarribe_trainee/models/package_data_combined.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
-import 'package:mudarribe_trainee/views/trainer/event_checkout/event_checkout_view.dart';
 import 'package:mudarribe_trainee/views/trainer/packages_checkout/package_checkout_controller.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
@@ -354,7 +350,10 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                                         child: InkWell(
                                                           onTap: () {
                                                             controller
-                                                                .applyPromoCode(combinedPackagetData.trainer.id);
+                                                                .applyPromoCode(
+                                                                    combinedPackagetData
+                                                                        .trainer
+                                                                        .id);
                                                           },
                                                           child: GradientText1(
                                                             text: 'Apply',
@@ -514,10 +513,14 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                         String orderId = DateTime.now()
                                             .millisecondsSinceEpoch
                                             .toString();
+
                                         controller.payPackageCharges(
                                             combinedPackagetData.trainer.id,
                                             uid,
-                                            orderId);
+                                            orderId,
+                                            combinedPackagetData
+                                                .trainer.firebaseToken
+                                                .toString());
                                       },
                                       child: Container(
                                         padding: EdgeInsets.only(top: 17),

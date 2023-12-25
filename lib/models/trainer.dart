@@ -6,6 +6,7 @@ class Trainer {
   final List category;
   final List languages;
   final String gender;
+  final String? firebaseToken;
   bool isSaved;
 
   Trainer({
@@ -17,6 +18,7 @@ class Trainer {
     required this.languages,
     this.isSaved = false,
     required this.bio,
+    this.firebaseToken,
   });
 
   factory Trainer.fromMap(Map<String, dynamic> map) {
@@ -27,6 +29,7 @@ class Trainer {
       category: map['categories'],
       gender: map['gender'] ?? '',
       languages: map['languages'] ?? [],
+      firebaseToken: map['firebaseToken'] ?? '',
       bio: map['bio'] ?? '',
     );
   }

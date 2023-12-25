@@ -1,17 +1,18 @@
+// ignore_for_file: division_optimization
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mudarribe_trainee/api/coupon_code_api.dart';
-import 'package:mudarribe_trainee/api/event_api.dart';
 import 'package:mudarribe_trainee/api/package_api.dart';
 import 'package:mudarribe_trainee/models/coupon_code.dart';
+import 'package:mudarribe_trainee/services/notification_service.dart';
 import 'package:mudarribe_trainee/services/payment_service.dart';
 import 'package:mudarribe_trainee/utils/ui_utils.dart';
-import 'package:mudarribe_trainee/views/trainer/event_checkout/event_checkout_view.dart';
 import 'package:mudarribe_trainee/views/trainer/packages_checkout/package_checkout_view.dart';
 
 class Packagecheckoutcontroller extends GetxController {
   static Packagecheckoutcontroller instance = Get.find();
-
+  final notificationService = NotificationService();
   final _paymentService = PaymentService();
   final _couponCodeApi = CouponCodeApi();
   final _packageApi = PackageApi();
@@ -35,7 +36,7 @@ class Packagecheckoutcontroller extends GetxController {
     super.onInit();
   }
 
-  void payPackageCharges(trainerId, userid, orderId) async {
+  void payPackageCharges(trainerId, userid, orderId, firebaseToken) async {
     bool isPayment;
     total == ''
         ? isPayment = await _paymentService.makePayment(int.parse(price))
@@ -45,7 +46,10 @@ class Packagecheckoutcontroller extends GetxController {
     if (isPayment) {
       await _packageApi.orderPlacement(
           packageId, trainerId, userid, orderId, intent);
-
+      notificationService.postNotification(
+          title: 'New order placed',
+          body: 'Order placed with an Order Id #$orderId',
+          receiverToken: firebaseToken);
       Get.back();
       UiUtilites.successAlert(Get.context, 'Package Subscribed Successfully');
     }
@@ -56,7 +60,8 @@ class Packagecheckoutcontroller extends GetxController {
       UiUtilites.errorSnackbar('Empty Promo Code', 'Please enter code first');
       return;
     }
-    CouponCode? couponCode = await _couponCodeApi.getPromoCode(promoCode.text,trainerId);
+    CouponCode? couponCode =
+        await _couponCodeApi.getPromoCode(promoCode.text, trainerId);
     if (couponCode != null) {
       discount =
           (int.parse(price) * int.parse(couponCode.percentage) / 100).toInt();
