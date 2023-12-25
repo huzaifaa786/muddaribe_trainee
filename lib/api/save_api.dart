@@ -106,6 +106,7 @@ class SaveApi {
     return combinedData;
   }
 
+
   static Future<List<Trainer>> fetchTrainerData(
       QuerySnapshot saveTrainerSnapshot) async {
     List<Trainer> trainers = [];

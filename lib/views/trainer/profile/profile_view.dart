@@ -8,17 +8,20 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:gradient_borders/gradient_borders.dart';
+import 'package:intl/intl.dart';
 import 'package:mudarribe_trainee/api/post_api.dart';
 import 'package:mudarribe_trainee/api/trainer_profile_api.dart';
 import 'package:mudarribe_trainee/components/chat_me_card.dart';
 import 'package:mudarribe_trainee/components/color_button.dart';
 import 'package:mudarribe_trainee/components/eventDetailsCard.dart';
 import 'package:mudarribe_trainee/components/packagecheckbox.dart';
+import 'package:mudarribe_trainee/components/post_screen_card.dart';
 import 'package:mudarribe_trainee/components/trainer_package_card.dart';
 import 'package:mudarribe_trainee/components/trainer_profile_card.dart';
 import 'package:mudarribe_trainee/models/event.dart';
 import 'package:mudarribe_trainee/models/event_data_combined.dart';
 import 'package:mudarribe_trainee/models/post.dart';
+import 'package:mudarribe_trainee/models/post_data_combined.dart';
 import 'package:mudarribe_trainee/models/trainer.dart';
 import 'package:mudarribe_trainee/models/trainer_package.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
@@ -340,8 +343,9 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                     ),
                   ),
                   controller.indexs == 0
-                      ? FutureBuilder<List<Post>>(
-                          future: TrainerProfileApi.getTrainerPosts(trainerId),
+                      ? FutureBuilder<List<CombinedData>>(
+                          future: TrainerProfileApi.fetchTrainerPostsData(
+                              trainerId),
                           builder: (context, snapshot) {
                             if (snapshot.hasError) {
                               return Text('');
@@ -356,30 +360,75 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                 ),
                               );
                             }
-                            List<Post> posts = snapshot.data!;
-                            
-                            return posts.isNotEmpty ? GridView.builder(
-                              physics: BouncingScrollPhysics(),
-                              shrinkWrap: true,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
-                              ),
-                              itemCount: posts.length,
-                              itemBuilder: (context, index) {
-                                return CachedNetworkImage(
-                                  imageUrl: posts[index].imageUrl,
-                                  fit: BoxFit.cover,
-                                );
-                              },
-                            ):Center(
-                                          heightFactor: 12,
-                                          child: Text(
-                                            'No Post Found !',
-                                            style: TextStyle(
-                                                color: white.withOpacity(0.7)),
-                                          ),
-                                        );
+                            List<CombinedData> posts = snapshot.data!;
+
+                            return posts.isNotEmpty
+                                ? GridView.builder(
+                                    physics: BouncingScrollPhysics(),
+                                    shrinkWrap: true,
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3,
+                                    ),
+                                    itemCount: posts.length,
+                                    itemBuilder: (context, index) {
+                                      String time;
+                                      int timestamp =
+                                          int.parse(posts[index].post.postId);
+                                      DateTime dateTime =
+                                          DateTime.fromMillisecondsSinceEpoch(
+                                              timestamp);
+                                      DateTime now = DateTime.now();
+                                      Duration difference =
+                                          now.difference(dateTime);
+                                      if (difference.inSeconds < 60) {
+                                        time = 'just now';
+                                      } else if (difference.inMinutes < 60) {
+                                        time = '${difference.inMinutes}m ago';
+                                      } else if (difference.inHours < 24) {
+                                        time = '${difference.inHours}h ago';
+                                      } else {
+                                        time = DateFormat('dd MMM yyyy')
+                                            .format(dateTime);
+                                      }
+                                      return InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PostScreenCard(
+                                                        userimg: posts[index]
+                                                            .trainer
+                                                            .profileImageUrl,
+                                                        username: posts[index]
+                                                            .trainer
+                                                            .name,
+                                                        postdescription:
+                                                            posts[index]
+                                                                .post
+                                                                .caption,
+                                                        postimg: posts[index]
+                                                            .post
+                                                            .imageUrl,
+                                                        time: time,
+                                                      )));
+                                        },
+                                        child: CachedNetworkImage(
+                                          imageUrl: posts[index].post.imageUrl,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      );
+                                    },
+                                  )
+                                : Center(
+                                    heightFactor: 12,
+                                    child: Text(
+                                      'No Post Found !',
+                                      style: TextStyle(
+                                          color: white.withOpacity(0.7)),
+                                    ),
+                                  );
                           })
                       : controller.indexs == 1
                           ? Container(
@@ -523,37 +572,43 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                       List<TrainerPackage> packages =
                                           snapshot.data!;
 
-                                      return snapshot.data!.isNotEmpty ?  ListView.builder(
-                                        physics: BouncingScrollPhysics(),
-                                        shrinkWrap: true,
-                                        itemCount: packages.length,
-                                        itemBuilder: (context, index) {
-                                          return TrainerPackageCard(
-                                            name: packages[index].name,
-                                            description:
-                                                packages[index].discription,
-                                            price: packages[index].price,
-                                            category: packages[index].category,
-                                            id: packages[index].id,
-                                            selectedPlan:
-                                                controller.selectedPlan,
-                                            onTap: () async {
-                                              await controller.toggleplan(
-                                                  packages[index].id);
-                                              await controller.toggleprice(
-                                                  packages[index].price);
-                                              setState(() {});
-                                            },
-                                          );
-                                        },
-                                      ):Center(
-                                          heightFactor: 12,
-                                          child: Text(
-                                            'No Package Found !',
-                                            style: TextStyle(
-                                                color: white.withOpacity(0.7)),
-                                          ),
-                                        );
+                                      return snapshot.data!.isNotEmpty
+                                          ? ListView.builder(
+                                              physics: BouncingScrollPhysics(),
+                                              shrinkWrap: true,
+                                              itemCount: packages.length,
+                                              itemBuilder: (context, index) {
+                                                return TrainerPackageCard(
+                                                  name: packages[index].name,
+                                                  description: packages[index]
+                                                      .discription,
+                                                  price: packages[index].price,
+                                                  category:
+                                                      packages[index].category,
+                                                  id: packages[index].id,
+                                                  selectedPlan:
+                                                      controller.selectedPlan,
+                                                  onTap: () async {
+                                                    await controller.toggleplan(
+                                                        packages[index].id);
+                                                    await controller
+                                                        .toggleprice(
+                                                            packages[index]
+                                                                .price);
+                                                    setState(() {});
+                                                  },
+                                                );
+                                              },
+                                            )
+                                          : Center(
+                                              heightFactor: 12,
+                                              child: Text(
+                                                'No Package Found !',
+                                                style: TextStyle(
+                                                    color:
+                                                        white.withOpacity(0.7)),
+                                              ),
+                                            );
                                     }),
                                 controller.indexs == 2 &&
                                         controller.selectedPlan != null &&

@@ -38,9 +38,14 @@ class _ReportProblemViewState extends State<ReportProblemView> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     // ignore: prefer_const_literals_to_create_immutables
                     children: [
-                      Icon(
-                        Icons.arrow_back_ios_new,
-                        color: Colors.white,
+                      InkWell(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: Icon(
+                          Icons.arrow_back_ios_new,
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   ),
