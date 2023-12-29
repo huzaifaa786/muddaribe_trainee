@@ -262,7 +262,17 @@ class EventDetailsCard extends StatelessWidget {
                             ],
                           ),
                         )
-                      : Text('')
+                      : Padding(
+                          padding: const EdgeInsets.only(right: 25),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              GradientText1(
+                                text: 'Joined',
+                              ),
+                            ],
+                          ),
+                        )
                 ],
               ),
             ),

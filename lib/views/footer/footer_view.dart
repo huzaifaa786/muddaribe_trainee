@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/views/Myplans/myplans_view.dart';
-import 'package:mudarribe_trainee/views/events/allevents/allevents_view.dart';
+import 'package:mudarribe_trainee/views/events/myevents/myEvents_view.dart';
 import 'dart:ui' as ui;
 import 'package:mudarribe_trainee/views/home/home_view.dart';
 import 'package:mudarribe_trainee/views/trainee_profile/profile/profile_view.dart';
@@ -27,7 +27,7 @@ class _FooterViewState extends State<FooterView> with RouteAware {
     var _fragments = [
       const HomeView(),
       const MyplansView(),
-      const AllEventsView(),
+      const MyEventsView(),
       const TraineeProfileView(),
     ];
     return Directionality(

@@ -185,13 +185,13 @@ class _SavedViewsState extends State<SavedViews> {
                                                         setState(() {
                                                           saved = !saved;
                                                         });
-                                                        if (saved) {
+                                                        if (saved == false) {
                                                           TrainerSaved
-                                                              .trainerSaved(
+                                                              .trainerUnsaved(
                                                                   trainer.id);
                                                         } else {
                                                           TrainerSaved
-                                                              .trainerUnsaved(
+                                                              .trainerSaved(
                                                                   trainer.id);
                                                         }
                                                       });
@@ -356,18 +356,104 @@ class _SavedViewsState extends State<SavedViews> {
                             } else {
                               final savePostSnapshot = snapshot.data;
                               return snapshot.data!.docs.isNotEmpty
-                                  ?  FutureBuilder<List<CombinedData>>(
-                                future:
-                                    SaveApi.fetchPostsData(savePostSnapshot!),
-                                builder: (context, combinedPostData) {
-                                  if (combinedPostData.hasError) {
-                                    return Center(
-                                        child: Text(
-                                      'Error: ${combinedPostData.error}',
-                                      style: TextStyle(color: white),
-                                    ));
-                                  } else if (!combinedPostData.hasData) {
-                                    return SizedBox(
+                                  ? FutureBuilder<List<CombinedData>>(
+                                      future: SaveApi.fetchPostsData(
+                                          savePostSnapshot!),
+                                      builder: (context, combinedPostData) {
+                                        if (combinedPostData.hasError) {
+                                          return Center(
+                                              child: Text(
+                                            'Error: ${combinedPostData.error}',
+                                            style: TextStyle(color: white),
+                                          ));
+                                        } else if (!combinedPostData.hasData) {
+                                          return SizedBox(
+                                            height: Get.height,
+                                            width: Get.width,
+                                            child: Center(
+                                                child: Text(
+                                              'No Saved Posts',
+                                              style: TextStyle(color: white),
+                                            )),
+                                          );
+                                        } else {
+                                          List<CombinedData> posts =
+                                              combinedPostData.data!;
+                                          return SizedBox(
+                                            height: MediaQuery.of(context)
+                                                .size
+                                                .height,
+                                            child: ListView.builder(
+                                                itemCount: posts.length,
+                                                itemBuilder: (context, index) {
+                                                  CombinedData postdata =
+                                                      posts[index];
+                                                  String time;
+                                                  int timestamp = int.parse(
+                                                      postdata.post.postId);
+                                                  DateTime dateTime = DateTime
+                                                      .fromMillisecondsSinceEpoch(
+                                                          timestamp);
+                                                  DateTime now = DateTime.now();
+                                                  Duration difference =
+                                                      now.difference(dateTime);
+                                                  if (difference.inSeconds <
+                                                      60) {
+                                                    time = 'just now';
+                                                  } else if (difference
+                                                          .inMinutes <
+                                                      60) {
+                                                    time =
+                                                        '${difference.inMinutes}m ago';
+                                                  } else if (difference
+                                                          .inHours <
+                                                      24) {
+                                                    time =
+                                                        '${difference.inHours}h ago';
+                                                  } else {
+                                                    time = DateFormat(
+                                                            'dd MMM yyyy')
+                                                        .format(dateTime);
+                                                  }
+                                                  final docs =
+                                                      savePostSnapshot.docs;
+                                                  bool saved = docs.isNotEmpty
+                                                      ? true
+                                                      : false;
+                                                  return PostCard(
+                                                    userimg: postdata.trainer
+                                                        .profileImageUrl,
+                                                    username:
+                                                        postdata.trainer.name,
+                                                    postimg:
+                                                        postdata.post.imageUrl,
+                                                    postdescription:
+                                                        postdata.post.caption,
+                                                    time: time,
+                                                    save: saved,
+                                                    postId:
+                                                        postdata.post.postId,
+                                                    onsaved: () {
+                                                      setState(() {
+                                                        saved = !saved;
+                                                      });
+                                                      if (saved) {
+                                                        HomeApi.postSaved(
+                                                            postdata
+                                                                .post.postId);
+                                                      } else {
+                                                        HomeApi.postUnsaved(
+                                                            postdata
+                                                                .post.postId);
+                                                      }
+                                                    },
+                                                  );
+                                                }),
+                                          );
+                                        }
+                                      },
+                                    )
+                                  : SizedBox(
                                       height: Get.height,
                                       width: Get.width,
                                       child: Center(
@@ -376,79 +462,6 @@ class _SavedViewsState extends State<SavedViews> {
                                         style: TextStyle(color: white),
                                       )),
                                     );
-                                  } else {
-                                    List<CombinedData> posts =
-                                        combinedPostData.data!;
-                                    return SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height,
-                                      child: ListView.builder(
-                                          itemCount: posts.length,
-                                          itemBuilder: (context, index) {
-                                            CombinedData postdata =
-                                                posts[index];
-                                            String time;
-                                            int timestamp =
-                                                int.parse(postdata.post.postId);
-                                            DateTime dateTime = DateTime
-                                                .fromMillisecondsSinceEpoch(
-                                                    timestamp);
-                                            DateTime now = DateTime.now();
-                                            Duration difference =
-                                                now.difference(dateTime);
-                                            if (difference.inSeconds < 60) {
-                                              time = 'just now';
-                                            } else if (difference.inMinutes <
-                                                60) {
-                                              time =
-                                                  '${difference.inMinutes}m ago';
-                                            } else if (difference.inHours <
-                                                24) {
-                                              time =
-                                                  '${difference.inHours}h ago';
-                                            } else {
-                                              time = DateFormat('dd MMM yyyy')
-                                                  .format(dateTime);
-                                            }
-                                            final docs = savePostSnapshot.docs;
-                                            bool saved =
-                                                docs.isNotEmpty ? true : false;
-                                            return PostCard(
-                                              userimg: postdata
-                                                  .trainer.profileImageUrl,
-                                              username: postdata.trainer.name,
-                                              postimg: postdata.post.imageUrl,
-                                              postdescription:
-                                                  postdata.post.caption,
-                                              time: time,
-                                              save: saved,
-                                              postId: postdata.post.postId,
-                                              onsaved: () {
-                                                setState(() {
-                                                  saved = !saved;
-                                                });
-                                                if (saved) {
-                                                  HomeApi.postSaved(
-                                                      postdata.post.postId);
-                                                } else {
-                                                  HomeApi.postUnsaved(
-                                                      postdata.post.postId);
-                                                }
-                                              },
-                                            );
-                                          }),
-                                    );
-                                  }
-                                },
-                              ): SizedBox(
-                                height: Get.height,
-                                width: Get.width,
-                                child: Center(
-                                    child: Text(
-                                  'No Saved Posts',
-                                  style: TextStyle(color: white),
-                                )),
-                              );
                             }
                           },
                         ),

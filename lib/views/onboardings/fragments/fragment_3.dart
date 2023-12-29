@@ -56,7 +56,7 @@ class _FragmentThreeState extends State<FragmentThree> {
                   padding:
                       EdgeInsets.only(top: 10, right: 8, left: 8, bottom: 40),
                   child: Text(
-                    "Prepair Your tools and\nLets Started !",
+                    "We provide you with workouts and exercising routine that suits your goals!",
                     style: const TextStyle(
                       fontFamily: "Poppins",
                       fontSize: 28,

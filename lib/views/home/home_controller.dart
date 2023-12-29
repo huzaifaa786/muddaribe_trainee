@@ -1,4 +1,5 @@
 // ignore_for_file: unused_field, constant_identifier_names
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 enum Languages {
@@ -32,6 +33,30 @@ class HomeController extends GetxController {
   showAllCategory() {
     showAllCards = !showAllCards;
     update();
+  }
+
+  bool follewed = false;
+  checkIfDocumentExists(String userId) async {
+    try {
+      // Reference to the "followed_trainers" collection
+      final CollectionReference followedTrainersRef =
+          FirebaseFirestore.instance.collection('followed_trainers');
+      final QuerySnapshot querySnapshot = await followedTrainersRef
+          .where('userId', isEqualTo: userId)
+          .limit(1)
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        follewed = true;
+        update();
+      } else {
+        follewed = false;
+        update();
+      }
+    } catch (e) {
+      follewed = false;
+      update();
+      // return false;
+    }
   }
 
   List<Map<String, String>> cards = [

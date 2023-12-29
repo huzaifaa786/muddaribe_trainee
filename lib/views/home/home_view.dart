@@ -28,6 +28,7 @@ import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/utils/fontWeight.dart';
 import 'package:mudarribe_trainee/views/categories/categories_result_view.dart';
+import 'package:mudarribe_trainee/views/events/allevents/allevents_view.dart';
 import 'package:mudarribe_trainee/views/home/home_controller.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
@@ -43,6 +44,12 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
       autoRemove: false,
+      initState: (state) {
+        Future.delayed(Duration(milliseconds: 100), () {
+          state.controller!
+              .checkIfDocumentExists(FirebaseAuth.instance.currentUser!.uid);
+        });
+      },
       builder: (controller) => Scaffold(
           body: SingleChildScrollView(
         child: SafeArea(
@@ -59,7 +66,10 @@ class _HomeViewState extends State<HomeView> {
                       children: [
                         SearchInput(
                           ontap: () {
-                            Get.toNamed(AppRoutes.search);
+                            Get.toNamed(AppRoutes.search)!.then((value) {
+                              controller.checkIfDocumentExists(
+                                  FirebaseAuth.instance.currentUser!.uid);
+                            });
                           },
                         ),
                         // InkWell(
@@ -75,141 +85,158 @@ class _HomeViewState extends State<HomeView> {
                         //     ))
                       ],
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 20.0),
-                      child: Text(
-                        'Followed trainers',
-                        style: TextStyle(
-                          color: white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 12),
-                      constraints: BoxConstraints(minHeight: 0, maxHeight: 100),
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 70,
-                            width: 80,
-                            margin: EdgeInsets.only(bottom: 20),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: const GradientBoxBorder(
-                                gradient: LinearGradient(colors: [
-                                  Color(4290773187),
-                                  Color(4285693389),
-                                  Color(4278253801),
-                                  Color(4278253801)
-                                ]),
-                                width: 1,
+                    controller.follewed != false
+                        ? const Padding(
+                            padding: EdgeInsets.only(top: 20.0),
+                            child: Text(
+                              'Followed trainers',
+                              style: TextStyle(
+                                color: white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w800,
                               ),
-                              color: Colors.grey.withOpacity(0.1),
                             ),
-                            child: Center(
-                                child: GradientText(
-                              'Stories',
-                              colors: [borderTop, borderDown],
-                            )),
-                          ),
-                          FirestorePagination(
-                            shrinkWrap: true,
-                            isLive: true,
-                            limit: 6,
-                            onEmpty: Text('', style: TextStyle(color: white)),
-                            viewType: ViewType.list,
-                            physics: BouncingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            query: HomeApi.trainerquery,
-                            bottomLoader:
-                                Center(child: CircularProgressIndicator()),
-                            itemBuilder: (context, documentSnapshot, index) {
-                              final trainerData = documentSnapshot.data()
-                                  as Map<String, dynamic>;
+                          )
+                        : Container(),
+                    controller.follewed != false
+                        ? Container(
+                            margin: const EdgeInsets.symmetric(vertical: 12),
+                            constraints:
+                                BoxConstraints(minHeight: 0, maxHeight: 100),
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: 70,
+                                  width: 80,
+                                  margin: EdgeInsets.only(bottom: 20),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: const GradientBoxBorder(
+                                      gradient: LinearGradient(colors: [
+                                        Color(4290773187),
+                                        Color(4285693389),
+                                        Color(4278253801),
+                                        Color(4278253801)
+                                      ]),
+                                      width: 1,
+                                    ),
+                                    color: Colors.grey.withOpacity(0.1),
+                                  ),
+                                  child: Center(
+                                      child: GradientText(
+                                    'Stories',
+                                    colors: [borderTop, borderDown],
+                                  )),
+                                ),
+                                FirestorePagination(
+                                  shrinkWrap: true,
+                                  isLive: true,
+                                  limit: 6,
+                                  onEmpty:
+                                      Text('', style: TextStyle(color: white)),
+                                  viewType: ViewType.list,
+                                  physics: BouncingScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  query: HomeApi.trainerquery,
+                                  bottomLoader: Center(
+                                      child: CircularProgressIndicator()),
+                                  itemBuilder:
+                                      (context, documentSnapshot, index) {
+                                    final trainerData = documentSnapshot.data()
+                                        as Map<String, dynamic>;
 
-                              return FutureBuilder<Trainer?>(
-                                  future: HomeApi.fetchTrainerStoryData(
-                                      trainerData['trainerId']),
-                                  builder: (context, snapshot) {
-                                    if (snapshot.hasError) {
-                                      return Text('');
-                                    }
-                                    if (!snapshot.hasData) {
-                                      return Text('');
-                                    }
-                                    Trainer trainer = snapshot.data!;
+                                    return FutureBuilder<Trainer?>(
+                                        future: HomeApi.fetchTrainerStoryData(
+                                            trainerData['trainerId']),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasError) {
+                                            return Text('');
+                                          }
+                                          if (!snapshot.hasData) {
+                                            return Text('');
+                                          }
+                                          Trainer trainer = snapshot.data!;
 
-                                    return InkWell(
-                                      onTap: () {
-                                        Get.toNamed(AppRoutes.stories,
-                                            arguments: trainer.id);
-                                      },
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            height: 70,
-                                            width: 80,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              border: const GradientBoxBorder(
-                                                gradient: LinearGradient(
-                                                    colors: [
-                                                      Color(4290773187),
-                                                      Color(4285693389),
-                                                      Color(4278253801),
-                                                      Color(4278253801)
-                                                    ]),
-                                                width: 1,
-                                              ),
-                                            ),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(3.5),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  image: DecorationImage(
-                                                    image: NetworkImage(trainer
-                                                        .profileImageUrl),
-                                                    fit: BoxFit.cover,
+                                          return InkWell(
+                                            onTap: () {
+                                              Get.toNamed(AppRoutes.stories,
+                                                      arguments: trainer.id)!
+                                                  .then((value) {
+                                                controller
+                                                    .checkIfDocumentExists(
+                                                        FirebaseAuth.instance
+                                                            .currentUser!.uid);
+                                              });
+                                            },
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  height: 70,
+                                                  width: 80,
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    border:
+                                                        const GradientBoxBorder(
+                                                      gradient: LinearGradient(
+                                                          colors: [
+                                                            Color(4290773187),
+                                                            Color(4285693389),
+                                                            Color(4278253801),
+                                                            Color(4278253801)
+                                                          ]),
+                                                      width: 1,
+                                                    ),
+                                                  ),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            3.5),
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        image: DecorationImage(
+                                                          image: NetworkImage(
+                                                              trainer
+                                                                  .profileImageUrl),
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
+                                                SizedBox(
+                                                  width: 80,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                      left: 12.0,
+                                                    ),
+                                                    child: Text(
+                                                      trainer.name,
+                                                      style: const TextStyle(
+                                                          color: white,
+                                                          fontSize: 12,
+                                                          fontFamily: 'Poppins',
+                                                          fontWeight: weight500,
+                                                          overflow: TextOverflow
+                                                              .ellipsis),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ),
-                                          SizedBox(
-                                            width: 80,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                left: 12.0,
-                                              ),
-                                              child: Text(
-                                                trainer.name,
-                                                style: const TextStyle(
-                                                    color: white,
-                                                    fontSize: 12,
-                                                    fontFamily: 'Poppins',
-                                                    fontWeight: weight500,
-                                                    overflow:
-                                                        TextOverflow.ellipsis),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  });
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
+                                          );
+                                        });
+                                  },
+                                ),
+                              ],
+                            ),
+                          )
+                        : Container(),
                     Container(
                       constraints: BoxConstraints(minHeight: 0, maxHeight: 220),
                       child: FirestorePagination(
@@ -221,7 +248,8 @@ class _HomeViewState extends State<HomeView> {
                         physics: BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         query: HomeApi.posterEventQuery,
-                        bottomLoader: CircularProgressIndicator(),
+                        bottomLoader:
+                            Center(child: CircularProgressIndicator()),
                         itemBuilder: (context, documentSnapshot, index) {
                           final eventData =
                               documentSnapshot.data() as Map<String, dynamic>;
@@ -229,7 +257,11 @@ class _HomeViewState extends State<HomeView> {
                           return BannerCard(
                               joinTap: () {
                                 Get.toNamed(AppRoutes.eventcheckout,
-                                    arguments: banners.eventId);
+                                        arguments: banners.eventId)!
+                                    .then((value) {
+                                  controller.checkIfDocumentExists(
+                                      FirebaseAuth.instance.currentUser!.uid);
+                                });
                               },
                               endTime: banners.endTime,
                               image: banners.imageUrl,
@@ -284,8 +316,12 @@ class _HomeViewState extends State<HomeView> {
                         return GestureDetector(
                           onTap: () {
                             Get.toNamed(AppRoutes.catigories,
-                                arguments: MyArguments(
-                                    controller.cards[index]['title']!));
+                                    arguments: MyArguments(
+                                        controller.cards[index]['title']!))!
+                                .then((value) {
+                              controller.checkIfDocumentExists(
+                                  FirebaseAuth.instance.currentUser!.uid);
+                            });
                           },
                           child: CategoryCard(
                             title: controller.cards[index]['title'],
@@ -308,24 +344,29 @@ class _HomeViewState extends State<HomeView> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'New Events',
+                          'Events',
                           style: TextStyle(
                             color: white,
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        // GestureDetector(
-                        //   onTap: () {},
-                        //   child: Text(
-                        //     'View all',
-                        //     style: TextStyle(
-                        //       color: Color(0xFF727DCD),
-                        //       fontSize: 14,
-                        //       fontWeight: FontWeight.w600,
-                        //     ),
-                        //   ),
-                        // ),
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(() => AllEventsView())!.then((value) {
+                              controller.checkIfDocumentExists(
+                                  FirebaseAuth.instance.currentUser!.uid);
+                            });
+                          },
+                          child: Text(
+                            'View all',
+                            style: TextStyle(
+                              color: Color(0xFF727DCD),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                     Gap(8),
@@ -344,7 +385,8 @@ class _HomeViewState extends State<HomeView> {
                         physics: BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         query: HomeApi.eventquery,
-                        bottomLoader: CircularProgressIndicator(),
+                        bottomLoader:
+                            Center(child: CircularProgressIndicator()),
                         itemBuilder: (context, documentSnapshot, index) {
                           final eventData =
                               documentSnapshot.data() as Map<String, dynamic>;
@@ -439,7 +481,7 @@ class _HomeViewState extends State<HomeView> {
                       physics: BouncingScrollPhysics(),
                       scrollDirection: Axis.vertical,
                       query: HomeApi.postquery,
-                      bottomLoader: CircularProgressIndicator(),
+                      bottomLoader: Center(child: CircularProgressIndicator()),
                       itemBuilder: (context, documentSnapshot, index) {
                         final postDatas =
                             documentSnapshot.data() as Map<String, dynamic>;
@@ -492,7 +534,12 @@ class _HomeViewState extends State<HomeView> {
                                   return PostCard(
                                     onProfileImageTap: () {
                                       Get.toNamed(AppRoutes.trainerprofile,
-                                          arguments: postdata.trainer.id);
+                                              arguments: postdata.trainer.id)!
+                                          .then((value) {
+                                        controller.checkIfDocumentExists(
+                                            FirebaseAuth
+                                                .instance.currentUser!.uid);
+                                      });
                                     },
                                     userimg: postdata.trainer.profileImageUrl,
                                     username: postdata.trainer.name,

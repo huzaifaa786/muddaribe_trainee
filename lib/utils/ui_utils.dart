@@ -39,8 +39,12 @@ class UiUtilites {
 
   static successAlert(context,title) {
     return showDialog(
+
         context: context,
         builder: (BuildContext context) {
+          Future.delayed(Duration(seconds: 2),(){
+            Get.back();
+          });
           return AlertDialog(
             backgroundColor: Colors.transparent,
             shape: RoundedRectangleBorder(

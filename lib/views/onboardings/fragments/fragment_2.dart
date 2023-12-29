@@ -55,7 +55,7 @@ class _FragmentTwoState extends State<FragmentTwo> {
                   padding:
                       EdgeInsets.only(top: 10, right: 8, left: 8, bottom: 40),
                   child: Text(
-                    'Dont Worry about the food! it included a food plan',
+                    'We provide meal plans\nthat suits your goals!',
                     style: const TextStyle(
                       fontFamily: "Poppins",
                       fontSize: 28,

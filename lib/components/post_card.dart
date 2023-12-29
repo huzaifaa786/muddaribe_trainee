@@ -72,17 +72,20 @@ class PostCard extends StatelessWidget {
                             // Image.network(userimg),
                           )),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: 8,
-                      ),
-                      child: Text(
-                        username,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w500,
+                    InkWell(
+                      onTap: onProfileImageTap,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          left: 8,
+                        ),
+                        child: Text(
+                          username,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ),

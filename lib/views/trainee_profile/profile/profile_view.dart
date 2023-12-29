@@ -59,7 +59,7 @@ class TraineeProfileView extends StatelessWidget {
                                               borderRadius:
                                                   BorderRadius.circular(5),
                                               child: Image.asset(
-                                                'assets/images/cardimg1.png',
+                                                'assets/images/dummyUser.png',
                                                 fit: BoxFit.cover,
                                                 height: 90,
                                                 width: 90,

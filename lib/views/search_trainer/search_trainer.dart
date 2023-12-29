@@ -130,15 +130,16 @@ class _SerachViewState extends State<SerachView> {
                         controller.items.isNotEmpty
                             ? Flexible(
                                 child: SizedBox(
-                                    height:
-                                        MediaQuery.of(context).size.height * 0.85,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.85,
                                     child: ListView.builder(
                                       itemCount: controller.items.length,
                                       itemBuilder: (context, index) {
                                         Trainer item = controller.items[index];
                                         return BoxingTrainersCard(
                                           onProfileTap: () {
-                                            Get.toNamed(AppRoutes.trainerprofile,
+                                            Get.toNamed(
+                                                AppRoutes.trainerprofile,
                                                 arguments:
                                                     controller.items[index].id);
                                           },
@@ -150,9 +151,9 @@ class _SerachViewState extends State<SerachView> {
                                             item.isSaved = !item.isSaved;
                                             setState(() {});
                                             item.isSaved
-                                                ? TrainerSaved.trainerUnsaved(
+                                                ? TrainerSaved.trainerSaved(
                                                     item.id)
-                                                : TrainerSaved.trainerSaved(
+                                                : TrainerSaved.trainerUnsaved(
                                                     item.id);
                                           },
                                         );
@@ -190,7 +191,8 @@ class _SerachViewState extends State<SerachView> {
                                       color: white),
                                 ),
                                 Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: _buildCategoryButtons()),
                                 Text(
                                   'Languages',
@@ -200,7 +202,8 @@ class _SerachViewState extends State<SerachView> {
                                       color: white),
                                 ),
                                 Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: _buildRadioButtons()),
                                 Text(
                                   'Gender',
@@ -210,7 +213,8 @@ class _SerachViewState extends State<SerachView> {
                                       color: white),
                                 ),
                                 Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: _buildGenderButtons()),
                                 Align(
                                   alignment: Alignment.centerRight,

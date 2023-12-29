@@ -24,12 +24,18 @@ class EditProfileContoller extends GetxController {
   List<String> selectedCategories = [];
   RxBool areFieldsFilled = false.obs;
   File? profileImage;
+  List<String>? providerNames;
+
   @override
   void onInit() {
     super.onInit();
     nameController.addListener(() {
       checkFields();
     });
+    providerNames =
+        FirebaseAuth.instance.currentUser!.providerData.map((provider) {
+      return provider.providerId;
+    }).toList();
     getAppUser();
   }
 

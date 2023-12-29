@@ -79,7 +79,7 @@ class TraineeEditProfileView extends StatelessWidget {
                                                     .currentUser!.imageUrl!);
                                               } else {
                                                 return AssetImage(
-                                                    "assets/images/logo.png");
+                                                    "assets/images/dummyUser.png");
                                               }
                                             }(),
                                           ),
@@ -155,19 +155,27 @@ class TraineeEditProfileView extends StatelessWidget {
                                       readOnly: true,
                                     ),
                                     Gap(25),
-                                    GestureDetector(
-                                      onTap: (){
-                                        Get.toNamed(AppRoutes.changepassword);
-                                      },
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: GradientText('Change password?',
-                                            style: TextStyle(
-                                                fontSize: 14.0,
-                                                fontFamily: "Poppins"),
-                                            colors: [borderDown, borderTop]),
-                                      ),
-                                    ),
+                                    controller.providerNames!
+                                            .contains('password')
+                                        ? GestureDetector(
+                                            onTap: () {
+                                              Get.toNamed(
+                                                  AppRoutes.changepassword);
+                                            },
+                                            child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: GradientText(
+                                                  'Change password?',
+                                                  style: TextStyle(
+                                                      fontSize: 14.0,
+                                                      fontFamily: "Poppins"),
+                                                  colors: [
+                                                    borderDown,
+                                                    borderTop
+                                                  ]),
+                                            ),
+                                          )
+                                        : Container(),
                                     Gap(40),
                                     GradientButton(
                                         title: 'Save',

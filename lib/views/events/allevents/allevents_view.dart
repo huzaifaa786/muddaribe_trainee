@@ -32,13 +32,21 @@ class _AllEventsViewState extends State<AllEventsView> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text(
-          'All Events',
+          'All  Events',
           style: TextStyle(
               fontSize: 20,
               color: white,
               fontWeight: FontWeight.w800,
               fontFamily: 'Poppins'),
         ),
+        leading: GestureDetector(
+            onTap: () {
+              Get.back();
+            },
+            child: Icon(
+              Icons.arrow_back_ios_new,
+              color: white,
+            )),
       ),
       body: SafeArea(
         child: Container(
@@ -83,7 +91,6 @@ class _AllEventsViewState extends State<AllEventsView> {
                           .where('eventId', isEqualTo: events.eventId)
                           .get(),
                       builder: (context, snapshot) {
-                      
                         if (!snapshot.hasData) {
                           return Text('');
                         } else if (snapshot.hasError) {
@@ -91,7 +98,6 @@ class _AllEventsViewState extends State<AllEventsView> {
                         } else {
                           final docs = snapshot.data!.docs;
                           bool saved = docs.isNotEmpty ? true : false;
-
                           return EventDetailsCard(
                             category: combineEvent.trainer.category.join(' & '),
                             name: combineEvent.trainer.name,
@@ -102,8 +108,10 @@ class _AllEventsViewState extends State<AllEventsView> {
                             endTime: combineEvent.event.endTime,
                             date: combineEvent.event.date,
                             capacity: combineEvent.event.capacity,
-                            attendees: combineEvent.eventOtherData.totalAttendees,
-                            isJoined: combineEvent.eventOtherData.isCurrentUserAttendee,
+                            attendees:
+                                combineEvent.eventOtherData.totalAttendees,
+                            isJoined: combineEvent
+                                .eventOtherData.isCurrentUserAttendee,
                             price: combineEvent.event.price,
                             isSaved: saved,
                             eventId: combineEvent.event.eventId,

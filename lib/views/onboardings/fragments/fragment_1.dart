@@ -58,7 +58,7 @@ class _FragmentOneState extends State<FragmentOne> {
                   padding:
                       EdgeInsets.only(top: 10, right: 8, left: 8, bottom: 40),
                   child: Text(
-                    "Find The best Personal\nTrainer",
+                    "Find the best trainers",
                     style: const TextStyle(
                       fontFamily: "Poppins",
                       fontSize: 28,

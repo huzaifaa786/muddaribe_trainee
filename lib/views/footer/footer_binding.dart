@@ -9,6 +9,5 @@ class FooterBinding extends Bindings {
     Get.lazyPut(() => HomeController());
     Get.lazyPut(() => MyplansController());
     Get.lazyPut(() => ProfileController());
-
   }
 }

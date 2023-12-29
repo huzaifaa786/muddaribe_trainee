@@ -27,7 +27,6 @@ class AttendeeApi {
         .where('eventId', isEqualTo: eventId)
         .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .get();
-
     bool isUserAttendee = userSnapshot.docs.isNotEmpty ? true : false;
     return EventOtherData.fromMap(eventSnapshot.docs.length.toString(), isUserAttendee);
   }

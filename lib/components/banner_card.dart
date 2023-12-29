@@ -162,7 +162,10 @@ class BannerCard extends StatelessWidget {
                             title: 'Join Event',
                           ),
                         ],
-                      ):Text('');
+                      ):CustomeButton(
+                            onPressed: (){},
+                            title: 'Joined',
+                          );
                     }
                   }),
             ],
