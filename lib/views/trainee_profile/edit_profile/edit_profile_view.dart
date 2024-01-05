@@ -66,57 +66,43 @@ class TraineeEditProfileView extends StatelessWidget {
                                         fit: StackFit.expand,
                                         children: [
                                           CircleAvatar(
-                                            backgroundImage: () {
-                                              if (controller.profileImage !=
-                                                  null) {
-                                                return Image.file(controller
-                                                        .profileImage!)
-                                                    .image;
-                                              } else if (controller
-                                                      .currentUser!.imageUrl !=
-                                                  null) {
-                                                return NetworkImage(controller
-                                                    .currentUser!.imageUrl!);
-                                              } else {
-                                                return AssetImage(
-                                                    "assets/images/dummyUser.png");
-                                              }
-                                            }(),
+                                            backgroundImage: AssetImage(
+                                                    "assets/images/dummyUser.png"),
                                           ),
-                                          Positioned(
-                                              bottom: 23,
-                                              right: 17,
-                                              child: RawMaterialButton(
-                                                onPressed: () {
-                                                  controller
-                                                      .selectProfileImage();
-                                                },
-                                                elevation: 2.0,
-                                                // fillColor: Color(0xFFF5F6F9),
-                                                // ignore: sort_child_properties_last
-                                                child:
-                                                    controller.profileImage !=
-                                                            null
-                                                        ? Text('')
-                                                        : Icon(
-                                                            Icons
-                                                                .camera_alt_outlined,
-                                                            color: Colors.blue,
-                                                            size: 39,
-                                                          ),
-                                                padding: EdgeInsets.all(15.0),
-                                                shape: CircleBorder(),
-                                              )),
+                                          // Positioned(
+                                          //     bottom: 23,
+                                          //     right: 17,
+                                          //     child: RawMaterialButton(
+                                          //       onPressed: () {
+                                          //         controller
+                                          //             .selectProfileImage();
+                                          //       },
+                                          //       elevation: 2.0,
+                                          //       // fillColor: Color(0xFFF5F6F9),
+                                          //       // ignore: sort_child_properties_last
+                                          //       child:
+                                          //           controller.profileImage !=
+                                          //                   null
+                                          //               ? Text('')
+                                          //               : Icon(
+                                          //                   Icons
+                                          //                       .camera_alt_outlined,
+                                          //                   color: Colors.blue,
+                                          //                   size: 39,
+                                          //                 ),
+                                          //       padding: EdgeInsets.all(15.0),
+                                          //       shape: CircleBorder(),
+                                          //     )),
                                         ],
                                       ),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        'Choose from library',
-                                        style: TextStyle(color: white),
-                                      ),
-                                    ),
+                                    // Padding(
+                                    //   padding: const EdgeInsets.all(8.0),
+                                    //   child: Text(
+                                    //     'Choose from library',
+                                    //     style: TextStyle(color: white),
+                                    //   ),
+                                    // ),
                                     Divider(color: white.withOpacity(0.04)),
                                     Gap(16),
                                     Align(

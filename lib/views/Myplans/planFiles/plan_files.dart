@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:mudarribe_trainee/api/order_api.dart';
 import 'package:mudarribe_trainee/api/trainer_profile_api.dart';
+import 'package:mudarribe_trainee/components/basic_loader%20copy.dart';
 import 'package:mudarribe_trainee/components/bodyworkplan.dart';
 import 'package:mudarribe_trainee/components/topbar.dart';
 import 'package:mudarribe_trainee/components/workoutvideocard.dart';
@@ -55,6 +56,14 @@ class _PlanFilesState extends State<PlanFiles> {
                   child: FutureBuilder<Trainer>(
                       future: TrainerProfileApi.fetchTrainerData(trainerId),
                       builder: (context, snapshot) {
+                        if(snapshot.connectionState == ConnectionState.waiting){
+                    return SizedBox(
+                      height: Get.height*0.7,
+                      child: BasicLoader(
+                        background: false,
+                      ),
+                    );
+                  }
                         if (!snapshot.hasData) {
                           return Text('');
                         }

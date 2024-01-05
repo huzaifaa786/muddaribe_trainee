@@ -13,7 +13,7 @@ class TopBar extends StatelessWidget {
     return Container(
       child: Row(
         children: [
-          GestureDetector(
+          InkWell(
             onTap: () {
               Get.back();
             },

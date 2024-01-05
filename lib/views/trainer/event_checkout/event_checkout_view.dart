@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mudarribe_trainee/api/event_api.dart';
@@ -11,6 +12,7 @@ import 'package:mudarribe_trainee/components/inputfield.dart';
 import 'package:mudarribe_trainee/components/textgradient.dart';
 import 'package:mudarribe_trainee/components/topbar.dart';
 import 'package:mudarribe_trainee/models/event_data_combined.dart';
+import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/views/trainer/event_checkout/event_checkout_controller.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
@@ -107,6 +109,10 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                     return Column(
                       children: [
                         EventcheckoutContainer(
+                          onProfileTap: () {
+                              Get.toNamed(AppRoutes.trainerprofile,
+                                  arguments: combinedEventData.trainer.id);
+                            },
                           userimg: combinedEventData.trainer.profileImageUrl,
                           username: combinedEventData.trainer.name,
                           categories:
@@ -196,6 +202,54 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                             ),
                           ),
                         ),
+                        Container(
+                            padding: const EdgeInsets.only(top: 12,left: 12,right: 12),
+                            child: Row(
+                              children: [
+                                SvgPicture.asset('assets/images/location.svg'),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, bottom: 0),
+                                  child: Container(
+                                    width: Get.width*0.7,
+                                    child: Text(
+                                      combinedEventData.event.address,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(top: 12,left: 12,right: 12),
+                            child: Row(
+                              children: [
+                                SvgPicture.asset('assets/images/clock.svg',color: white),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, bottom: 0),
+                                  child: SizedBox(
+                                    width: Get.width*0.7,
+                                    child: Text(
+                                      '${combinedEventData.event.startTime} to ${combinedEventData.event.endTime}' ,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
                         Padding(
                           padding: const EdgeInsets.only(
                               top: 35, left: 5, bottom: 20),

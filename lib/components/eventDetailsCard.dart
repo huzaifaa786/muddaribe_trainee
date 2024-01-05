@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, unused_import, prefer_typing_uninitialized_variables
 
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -29,7 +27,8 @@ class EventDetailsCard extends StatelessWidget {
       this.isSaved,
       this.attendees,
       this.isJoined = false,
-      this.onSave});
+      this.onSave,
+      this.onProfileTap});
   final address;
   final startTime;
   final endTime;
@@ -37,6 +36,7 @@ class EventDetailsCard extends StatelessWidget {
   final date;
   final capacity;
   final price;
+  final onProfileTap;
   final name;
   final category;
   final eventimg;
@@ -64,26 +64,29 @@ class EventDetailsCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ClipOval(
-                        child: Container(
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: const GradientBoxBorder(
-                              gradient: LinearGradient(
-                                colors: [
-                                  Color.fromARGB(255, 184, 66, 186),
-                                  Color.fromARGB(255, 111, 127, 247),
-                                  borderDown,
-                                  borderDown
-                                ],
+                      GestureDetector(
+                        onTap: onProfileTap,
+                        child: ClipOval(
+                          child: Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: const GradientBoxBorder(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Color.fromARGB(255, 184, 66, 186),
+                                    Color.fromARGB(255, 111, 127, 247),
+                                    borderDown,
+                                    borderDown
+                                  ],
+                                ),
+                                width: 1,
                               ),
-                              width: 1,
-                            ),
-                            image: DecorationImage(
-                              image: NetworkImage(image),
-                              fit: BoxFit.contain,
+                              image: DecorationImage(
+                                image: NetworkImage(image),
+                                fit: BoxFit.contain,
+                              ),
                             ),
                           ),
                         ),
@@ -96,13 +99,16 @@ class EventDetailsCard extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                name,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white,
+                              GestureDetector(
+                                onTap: onProfileTap,
+                                child: Text(
+                                  name,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                               Text(

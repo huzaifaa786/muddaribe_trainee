@@ -16,6 +16,7 @@ import 'package:mudarribe_trainee/components/topbar.dart';
 import 'package:mudarribe_trainee/models/event.dart';
 import 'package:mudarribe_trainee/models/event_data_combined.dart';
 import 'package:mudarribe_trainee/models/trainer.dart';
+import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
 class MyEventsView extends StatefulWidget {
@@ -119,6 +120,10 @@ class _MyEventsViewState extends State<MyEventsView> {
                             price: combineEvent.event.price,
                             isSaved: saved,
                             eventId: combineEvent.event.eventId,
+                            onProfileTap: () {
+                              Get.toNamed(AppRoutes.trainerprofile,
+                                  arguments: combineEvent.trainer.id);
+                            },
                             onSave: () {
                               setState(() {
                                 saved = !saved;

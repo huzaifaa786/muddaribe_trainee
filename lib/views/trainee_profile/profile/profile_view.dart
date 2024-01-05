@@ -54,27 +54,15 @@ class TraineeProfileView extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      controller.currentUser!.imageUrl == null
-                                          ? ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              child: Image.asset(
-                                                'assets/images/dummyUser.png',
-                                                fit: BoxFit.cover,
-                                                height: 90,
-                                                width: 90,
-                                              ))
-                                          : ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              child: CachedNetworkImage(
-                                                imageUrl: controller
-                                                    .currentUser!.imageUrl
-                                                    .toString(),
-                                                fit: BoxFit.cover,
-                                                height: 90,
-                                                width: 90,
-                                              )),
+                                      ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          child: Image.asset(
+                                            'assets/images/dummyUser.png',
+                                            fit: BoxFit.cover,
+                                            height: 90,
+                                            width: 90,
+                                          )),
                                       Text(
                                         controller.currentUser!.name!,
                                         style: const TextStyle(

@@ -132,8 +132,8 @@ class _HomeViewState extends State<HomeView> {
                                   shrinkWrap: true,
                                   isLive: true,
                                   limit: 6,
-                                  onEmpty:
-                                      Text('', style: TextStyle(color: white)),
+                                  onEmpty: Text('',
+                                      style: TextStyle(color: white)),
                                   viewType: ViewType.list,
                                   physics: BouncingScrollPhysics(),
                                   scrollDirection: Axis.horizontal,
@@ -142,8 +142,8 @@ class _HomeViewState extends State<HomeView> {
                                       child: CircularProgressIndicator()),
                                   itemBuilder:
                                       (context, documentSnapshot, index) {
-                                    final trainerData = documentSnapshot.data()
-                                        as Map<String, dynamic>;
+                                    final trainerData = documentSnapshot
+                                        .data() as Map<String, dynamic>;
 
                                     return FutureBuilder<Trainer?>(
                                         future: HomeApi.fetchTrainerStoryData(
@@ -164,13 +164,16 @@ class _HomeViewState extends State<HomeView> {
                                                   .then((value) {
                                                 controller
                                                     .checkIfDocumentExists(
-                                                        FirebaseAuth.instance
-                                                            .currentUser!.uid);
+                                                        FirebaseAuth
+                                                            .instance
+                                                            .currentUser!
+                                                            .uid);
                                               });
                                             },
                                             child: Column(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
+                                                  MainAxisAlignment
+                                                      .spaceEvenly,
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
                                               children: [
@@ -181,8 +184,9 @@ class _HomeViewState extends State<HomeView> {
                                                     shape: BoxShape.circle,
                                                     border:
                                                         const GradientBoxBorder(
-                                                      gradient: LinearGradient(
-                                                          colors: [
+                                                      gradient:
+                                                          LinearGradient(
+                                                              colors: [
                                                             Color(4290773187),
                                                             Color(4285693389),
                                                             Color(4278253801),
@@ -196,9 +200,12 @@ class _HomeViewState extends State<HomeView> {
                                                         const EdgeInsets.all(
                                                             3.5),
                                                     child: Container(
-                                                      decoration: BoxDecoration(
-                                                        shape: BoxShape.circle,
-                                                        image: DecorationImage(
+                                                      decoration:
+                                                          BoxDecoration(
+                                                        shape:
+                                                            BoxShape.circle,
+                                                        image:
+                                                            DecorationImage(
                                                           image: NetworkImage(
                                                               trainer
                                                                   .profileImageUrl),
@@ -220,10 +227,13 @@ class _HomeViewState extends State<HomeView> {
                                                       style: const TextStyle(
                                                           color: white,
                                                           fontSize: 12,
-                                                          fontFamily: 'Poppins',
-                                                          fontWeight: weight500,
-                                                          overflow: TextOverflow
-                                                              .ellipsis),
+                                                          fontFamily:
+                                                              'Poppins',
+                                                          fontWeight:
+                                                              weight500,
+                                                          overflow:
+                                                              TextOverflow
+                                                                  .ellipsis),
                                                     ),
                                                   ),
                                                 ),

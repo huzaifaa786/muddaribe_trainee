@@ -3,6 +3,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
@@ -13,6 +14,7 @@ class EventcheckoutContainer extends StatelessWidget {
     this.username,
     this.eventDate,
     this.categories,
+    this.onProfileTap,
     this.price,
   });
   final userimg;
@@ -20,11 +22,13 @@ class EventcheckoutContainer extends StatelessWidget {
   final eventDate;
   final price;
   final categories;
+  final onProfileTap;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 130,
+      // height: 130,
+      padding: EdgeInsets.only(bottom: 20),
       width: MediaQuery.sizeOf(context).width,
       decoration: BoxDecoration(
         color: bgContainer,
@@ -38,24 +42,27 @@ class EventcheckoutContainer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ClipOval(
-                  child: Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: const GradientBoxBorder(
-                        gradient: LinearGradient(
-                          colors: [
-                            Color.fromARGB(255, 184, 66, 186),
-                            Color.fromARGB(255, 111, 127, 247),
-                          ],
+                GestureDetector(
+                  onTap: onProfileTap,
+                  child: ClipOval(
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: const GradientBoxBorder(
+                          gradient: LinearGradient(
+                            colors: [
+                              Color.fromARGB(255, 184, 66, 186),
+                              Color.fromARGB(255, 111, 127, 247),
+                            ],
+                          ),
+                          width: 2,
                         ),
-                        width: 2,
-                      ),
-                      image: DecorationImage(
-                        image: CachedNetworkImageProvider(userimg),
-                        fit: BoxFit.contain,
+                        image: DecorationImage(
+                          image: CachedNetworkImageProvider(userimg),
+                          fit: BoxFit.contain,
+                        ),
                       ),
                     ),
                   ),
@@ -67,23 +74,29 @@ class EventcheckoutContainer extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            username,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
+                          GestureDetector(
+                            onTap: onProfileTap,
+                            child: Text(
+                              username,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
-                          Text(
-                            categories,
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w400,
-                              color:
-                                  Colors.white.withOpacity(0.6000000238418579),
+                          SizedBox(
+                            width: Get.width *0.5,
+                            child: Text(
+                              categories,
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w400,
+                                color:
+                                    Colors.white.withOpacity(0.6000000238418579),
+                              ),
                             ),
                           ),
                           Padding(

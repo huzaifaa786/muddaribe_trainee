@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mudarribe_trainee/api/order_api.dart';
+import 'package:mudarribe_trainee/components/basic_loader%20copy.dart';
 import 'package:mudarribe_trainee/components/exercises_card2.dart';
 import 'package:mudarribe_trainee/components/topbar.dart';
 import 'package:mudarribe_trainee/models/combine_order.dart';
@@ -40,6 +41,14 @@ class _MyPackagesState extends State<MyPackages> {
             child: FutureBuilder<List<CombinedOrderData>>(
                 future: OrderApi.fetchTraineeOrders(category),
                 builder: (context, snapshot) {
+                  if(snapshot.connectionState == ConnectionState.waiting){
+                    return SizedBox(
+                      height: Get.height*0.7,
+                      child: BasicLoader(
+                        background: false,
+                      ),
+                    );
+                  }
                   if (snapshot.hasError) {
                     return Text('');
                   }

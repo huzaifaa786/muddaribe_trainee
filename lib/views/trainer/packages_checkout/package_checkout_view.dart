@@ -7,6 +7,7 @@ import 'package:gradient_borders/gradient_borders.dart';
 import 'package:mudarribe_trainee/api/package_api.dart';
 import 'package:mudarribe_trainee/components/textgradient.dart';
 import 'package:mudarribe_trainee/models/package_data_combined.dart';
+import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/views/trainer/packages_checkout/package_checkout_controller.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
@@ -93,27 +94,33 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          ClipOval(
-                                            child: Container(
-                                              width: 36,
-                                              height: 36,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                border: const GradientBoxBorder(
-                                                  gradient: LinearGradient(
-                                                    colors: [
-                                                      Color.fromARGB(
-                                                          255, 184, 66, 186),
-                                                      Color.fromARGB(
-                                                          255, 111, 127, 247),
-                                                    ],
+                                          GestureDetector(
+                                            onTap: () {
+                              Get.toNamed(AppRoutes.trainerprofile,
+                                  arguments: combinedPackagetData.trainer.id);
+                            },
+                                            child: ClipOval(
+                                              child: Container(
+                                                width: 36,
+                                                height: 36,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  border: const GradientBoxBorder(
+                                                    gradient: LinearGradient(
+                                                      colors: [
+                                                        Color.fromARGB(
+                                                            255, 184, 66, 186),
+                                                        Color.fromARGB(
+                                                            255, 111, 127, 247),
+                                                      ],
+                                                    ),
+                                                    width: 2,
                                                   ),
-                                                  width: 2,
-                                                ),
-                                                image: DecorationImage(
-                                                  image: AssetImage(
-                                                      'assets/images/profile.jpg'),
-                                                  fit: BoxFit.contain,
+                                                  image: DecorationImage(
+                                                    image: NetworkImage(
+                                                        combinedPackagetData.trainer.profileImageUrl),
+                                                    fit: BoxFit.contain,
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -127,31 +134,40 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
-                                                    Text(
-                                                      combinedPackagetData
-                                                          .trainer.name,
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontFamily:
-                                                            'Montserrat',
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: Colors.white,
+                                                    GestureDetector(
+                                                       onTap: () {
+                              Get.toNamed(AppRoutes.trainerprofile,
+                                  arguments: combinedPackagetData.trainer.id);
+                            },
+                                                      child: Text(
+                                                        combinedPackagetData
+                                                            .trainer.name,
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color: Colors.white,
+                                                        ),
                                                       ),
                                                     ),
-                                                    Text(
-                                                      combinedPackagetData
-                                                          .trainer.category
-                                                          .join('& '),
-                                                      style: TextStyle(
-                                                        fontSize: 10,
-                                                        fontFamily:
-                                                            'Montserrat',
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        color: Colors.white
-                                                            .withOpacity(
-                                                                0.6000000238418579),
+                                                    SizedBox(
+                                                      width: Get.width *0.5,
+                                                      child: Text(
+                                                        combinedPackagetData
+                                                            .trainer.category
+                                                            .join('& '),
+                                                        style: TextStyle(
+                                                          fontSize: 10,
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color: Colors.white
+                                                              .withOpacity(
+                                                                  0.6000000238418579),
+                                                        ),
                                                       ),
                                                     ),
                                                     Padding(
