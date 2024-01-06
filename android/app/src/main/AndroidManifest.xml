@@ -3,10 +3,17 @@
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 <uses-permission android:name="android.permission.INTERNET"/>
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <application
         android:label="Mudarribe"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:enableOnBackInvokedCallback="true">
+         <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyB8nRxHRnBw9rzrWFcVA45CmtDq7FzLb4A"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

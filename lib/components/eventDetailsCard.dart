@@ -2,12 +2,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gap/gap.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:mudarribe_trainee/components/appbar.dart';
+import 'package:mudarribe_trainee/components/location.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/components/textgradient.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class EventDetailsCard extends StatelessWidget {
@@ -47,6 +52,40 @@ class EventDetailsCard extends StatelessWidget {
   final bool isJoined;
   @override
   Widget build(BuildContext context) {
+    Future<bool> getpermission() async {
+      bool serviceEnabled;
+      LocationPermission permission;
+
+      // Test if location services are enabled.
+      serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        await Permission.location;
+        // Location services are not enabled don't continue
+        // accessing the position and request users of the
+        // App to enable the location services.
+        permission = await Geolocator.requestPermission();
+        // return Future.error('Location services are disabled.');
+      }
+
+      permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          return false;
+        }
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        // Permissions are denied forever, handle appropriately.
+        return false;
+      }
+
+      // When we reach here, permissions are granted and we can
+      // continue accessing the position of the device.
+      await Geolocator.getCurrentPosition();
+      return true;
+    }
+
     return Card(
       color: bgContainer,
       child: Container(
@@ -249,36 +288,65 @@ class EventDetailsCard extends StatelessWidget {
                       )
                     ],
                   ),
-                  int.parse(attendees) < int.parse(capacity) &&
-                          isJoined == false
-                      ? Padding(
-                          padding: const EdgeInsets.only(right: 25),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Get.toNamed(AppRoutes.eventcheckout,
-                                      arguments: eventId);
-                                },
-                                child: GradientText1(
-                                  text: 'Join Event',
-                                ),
+                  // Gap(5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        onTap: () async {
+                          if (await getpermission() == true) {
+                            List<Location> locations =
+                                await locationFromAddress(address);
+                            if (locations.isNotEmpty) {
+                              Location location = locations.first;
+                              double latitude = location.latitude;
+                              double longitude = location.longitude;
+                              Get.to(() => MapView(
+                                  latitude: latitude, longitude: longitude));
+                            }
+                          }
+                        },
+                        child: Text(
+                          ' View Location ',
+                          style: TextStyle(
+                              color: white,
+                              decoration: TextDecoration.underline,
+                              decorationStyle: TextDecorationStyle.dashed,
+                              decorationColor: white),
+                        ),
+                      ),
+                      int.parse(attendees) < int.parse(capacity) &&
+                              isJoined == false
+                          ? Padding(
+                              padding: const EdgeInsets.only(right: 25),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.toNamed(AppRoutes.eventcheckout,
+                                          arguments: eventId);
+                                    },
+                                    child: GradientText1(
+                                      text: 'Join Event',
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        )
-                      : Padding(
-                          padding: const EdgeInsets.only(right: 25),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              GradientText1(
-                                text: 'Joined',
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.only(right: 25),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  GradientText1(
+                                    text: 'Joined',
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        )
+                            ),
+                    ],
+                  )
                 ],
               ),
             ),
