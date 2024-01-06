@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
@@ -38,7 +39,10 @@ class TrainerProfileCard extends StatelessWidget {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(45),
-              child: CachedNetworkImage(imageUrl: userimg,fit: BoxFit.cover,),
+              child: CachedNetworkImage(
+                imageUrl: userimg,
+                fit: BoxFit.cover,
+              ),
               // Image.network(userimg),
             )),
         Padding(
@@ -48,12 +52,16 @@ class TrainerProfileCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Text(
-                    username,
-                    style: TextStyle(
-                        color: white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600),
+                  Container(
+                    constraints: BoxConstraints(maxWidth: Get.width * 0.45),
+                    child: Text(
+                      username,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          color: white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 7),

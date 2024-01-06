@@ -32,6 +32,8 @@ class _MyEventsViewState extends State<MyEventsView> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
+        automaticallyImplyLeading: false,
+        centerTitle: true,
         title: Text(
           'My  Events',
           style: TextStyle(
@@ -40,14 +42,6 @@ class _MyEventsViewState extends State<MyEventsView> {
               fontWeight: FontWeight.w800,
               fontFamily: 'Poppins'),
         ),
-        leading: GestureDetector(
-            onTap: () {
-              Get.back();
-            },
-            child: Icon(
-              Icons.arrow_back_ios_new,
-              color: white,
-            )),
       ),
       body: SafeArea(
         child: Container(

@@ -1,7 +1,8 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mudarribe_trainee/api/event_api.dart';
@@ -9,6 +10,7 @@ import 'package:mudarribe_trainee/components/Eventcheckoutcontainer.dart';
 import 'package:mudarribe_trainee/components/basic_loader%20copy.dart';
 import 'package:mudarribe_trainee/components/checkbox.dart';
 import 'package:mudarribe_trainee/components/inputfield.dart';
+import 'package:mudarribe_trainee/components/location.dart';
 import 'package:mudarribe_trainee/components/textgradient.dart';
 import 'package:mudarribe_trainee/components/topbar.dart';
 import 'package:mudarribe_trainee/models/event_data_combined.dart';
@@ -16,6 +18,10 @@ import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/views/trainer/event_checkout/event_checkout_controller.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
+import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:geolocator/geolocator.dart';
 
 class EventcheckoutView extends StatefulWidget {
   const EventcheckoutView({super.key});
@@ -27,6 +33,40 @@ class EventcheckoutView extends StatefulWidget {
 enum PaymentMethod { visa, googlePay, applePay }
 
 class _EventcheckoutViewState extends State<EventcheckoutView> {
+  Future<bool> getpermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      await Permission.location;
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      permission = await Geolocator.requestPermission();
+      // return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return false;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return false;
+    }
+
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
+    await Geolocator.getCurrentPosition();
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     String eventId = Get.arguments;
@@ -88,8 +128,10 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
               child: FutureBuilder<CombinedEventData?>(
                   future: EventApi.fetchEventData(controller.eventId),
                   builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting && snapshot.data == null) {
-                      return SizedBox(height: Get.height * 0.8,
+                    if (snapshot.connectionState == ConnectionState.waiting &&
+                        snapshot.data == null) {
+                      return SizedBox(
+                        height: Get.height * 0.8,
                         child: Center(
                           child: BasicLoader(
                             background: false,
@@ -111,9 +153,9 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                       children: [
                         EventcheckoutContainer(
                           onProfileTap: () {
-                              Get.toNamed(AppRoutes.trainerprofile,
-                                  arguments: combinedEventData.trainer.id);
-                            },
+                            Get.toNamed(AppRoutes.trainerprofile,
+                                arguments: combinedEventData.trainer.id);
+                          },
                           userimg: combinedEventData.trainer.profileImageUrl,
                           username: combinedEventData.trainer.name,
                           categories:
@@ -179,8 +221,9 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                                           left: 8.0),
                                                   child: InkWell(
                                                     onTap: () {
-                                                      controller
-                                                          .applyPromoCode(combinedEventData.trainer.id);
+                                                      controller.applyPromoCode(
+                                                          combinedEventData
+                                                              .trainer.id);
                                                     },
                                                     child: GradientText1(
                                                       text: 'Apply',
@@ -203,8 +246,24 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                             ),
                           ),
                         ),
-                        Container(
-                            padding: const EdgeInsets.only(top: 12,left: 12,right: 12),
+                        InkWell(
+                          onTap: () async {
+                            if (await getpermission() == true) {
+                              List<Location> locations =
+                                  await locationFromAddress(
+                                      combinedEventData.event.address);
+                              if (locations.isNotEmpty) {
+                                Location location = locations.first;
+                                double latitude = location.latitude;
+                                double longitude = location.longitude;
+                                Get.to(() => MapView(
+                                    latitude: latitude, longitude: longitude));
+                              }
+                            }
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.only(
+                                top: 12, left: 12, right: 12),
                             child: Row(
                               children: [
                                 SvgPicture.asset('assets/images/location.svg'),
@@ -212,7 +271,7 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                   padding: const EdgeInsets.only(
                                       left: 10, bottom: 0),
                                   child: Container(
-                                    width: Get.width*0.7,
+                                    width: Get.width * 0.7,
                                     child: Text(
                                       combinedEventData.event.address,
                                       style: TextStyle(
@@ -227,30 +286,33 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                               ],
                             ),
                           ),
-                          Container(
-                            padding: const EdgeInsets.only(top: 12,left: 12,right: 12),
-                            child: Row(
-                              children: [
-                                SvgPicture.asset('assets/images/clock.svg',color: white),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10, bottom: 0),
-                                  child: SizedBox(
-                                    width: Get.width*0.7,
-                                    child: Text(
-                                      '${combinedEventData.event.startTime} to ${combinedEventData.event.endTime}' ,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Montserrat',
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 12,
-                                      ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(
+                              top: 12, left: 12, right: 12),
+                          child: Row(
+                            children: [
+                              SvgPicture.asset('assets/images/clock.svg',
+                                  color: white),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 10, bottom: 0),
+                                child: SizedBox(
+                                  width: Get.width * 0.7,
+                                  child: Text(
+                                    '${combinedEventData.event.startTime} to ${combinedEventData.event.endTime}',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Montserrat',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12,
                                     ),
                                   ),
-                                )
-                              ],
-                            ),
+                                ),
+                              )
+                            ],
                           ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.only(
                               top: 35, left: 5, bottom: 20),

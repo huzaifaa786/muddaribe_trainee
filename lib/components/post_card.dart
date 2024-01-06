@@ -2,6 +2,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
@@ -137,7 +138,8 @@ class PostCard extends StatelessWidget {
           ),
           Row(
             children: [
-              Padding(
+              Container(
+                constraints: BoxConstraints(maxWidth: Get.width * 0.9),
                 padding: EdgeInsets.only(
                   left: 10,
                   right: 10,
