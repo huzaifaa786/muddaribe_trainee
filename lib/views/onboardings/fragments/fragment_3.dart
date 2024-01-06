@@ -55,12 +55,7 @@ class _FragmentThreeState extends State<FragmentThree> {
               Container(
                   padding:
                       EdgeInsets.only(top: 10, right: 8, left: 8, bottom: 40),
-                  child: Text(
-<<<<<<< HEAD
-                    "Provides you the best exercides that suits your goals!",
-=======
-                    "Provides you with the best exercises that suit your goals !",
->>>>>>> 548441add953d65883d9f453f327036d04c583be
+                  child: Text("Provides you with the best exercises that suit your goals !",
                     style: const TextStyle(
                       fontFamily: "Poppins",
                       fontSize: 28,
