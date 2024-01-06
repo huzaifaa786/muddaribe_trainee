@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mudarribe_trainee/api/notification_api.dart';
 import 'package:mudarribe_trainee/components/appbar.dart';
+import 'package:mudarribe_trainee/components/basic_loader%20copy.dart';
 import 'package:mudarribe_trainee/components/notificationView/excerciseplan.dart';
 import 'package:mudarribe_trainee/components/notificationView/newmessage.dart';
 import 'package:mudarribe_trainee/components/notificationView/nutritionplan.dart';
@@ -35,6 +36,14 @@ class _NotificationsViewState extends State<NotificationsView> {
         child: FutureBuilder<List<CombinedTrainerNotification>>(
             future: NotificationApi.fetchCombinedTrainerNotifications(),
             builder: (context, snapshot) {
+              if(snapshot.connectionState == ConnectionState.waiting){
+                    return SizedBox(
+                      height: Get.height*0.7,
+                      child: BasicLoader(
+                        background: false,
+                      ),
+                    );
+                  }
               if (snapshot.hasError) {
                 return Text('');
               }

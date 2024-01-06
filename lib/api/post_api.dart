@@ -75,12 +75,12 @@ class HomeApi {
 
   static var posterEventQuery = FirebaseFirestore.instance
       .collection('trainer_events')
-      .where('eventType', isEqualTo: 'paid')
-      .where('eventStatus', isEqualTo: 'open')
-      .where('paymentStatus', isEqualTo: 'paid')
       .where('date',
           isGreaterThanOrEqualTo:
               DateFormat('dd/MM/y').format(DateTime.now()).toString())
+      .where('eventType', isEqualTo: 'paid')
+      .where('eventStatus', isEqualTo: 'open')
+      .where('paymentStatus', isEqualTo: 'paid')
       .orderBy('date', descending: false);
 
   static postSaved(postId) async {

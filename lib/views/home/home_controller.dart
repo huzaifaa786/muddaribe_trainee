@@ -1,6 +1,8 @@
 // ignore_for_file: unused_field, constant_identifier_names
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:mudarribe_trainee/api/post_api.dart';
+import 'package:mudarribe_trainee/models/event.dart';
 
 enum Languages {
   English,
@@ -32,6 +34,27 @@ class HomeController extends GetxController {
   bool showAllCards = false;
   showAllCategory() {
     showAllCards = !showAllCards;
+    update();
+  }
+
+@override
+  void onInit() async {
+    print("call onInit");  // this line not printing
+    fetchDataFromFirestore();
+    super.onInit();
+  }
+
+  List<Events> bannersList = [];
+  Future<void> fetchDataFromFirestore() async {
+    List<DocumentSnapshot> documentSnapshots = [];
+    QuerySnapshot querySnapshot = await HomeApi.posterEventQuery.get();
+    documentSnapshots = querySnapshot.docs;
+    bannersList = documentSnapshots
+        .map((documentSnapshot) =>
+            Events.fromMap(documentSnapshot.data() as Map<String, dynamic>))
+        .toList();
+    print("BAnner Fetched");
+
     update();
   }
 

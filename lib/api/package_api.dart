@@ -34,7 +34,7 @@ class PackageApi {
   }
 
   Future orderPlacement(String planId, String trainerID, String userID,
-      String orderId, String intent) async {
+      String orderId, String intent, int amount) async {
     try {
       await FirebaseFirestore.instance.collection('orders').doc(orderId).set({
         'planId': planId,
@@ -43,6 +43,7 @@ class PackageApi {
         'orderId': orderId,
         'type': 'Package',
         'intent': intent,
+        'amount': amount,
       });
       return true;
     } catch (e) {

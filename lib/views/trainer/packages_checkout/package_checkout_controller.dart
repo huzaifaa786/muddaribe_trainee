@@ -44,14 +44,25 @@ class Packagecheckoutcontroller extends GetxController {
     String intent = _paymentService.paymentID.toString();
 
     if (isPayment) {
-      await _packageApi.orderPlacement(
-          packageId, trainerId, userid, orderId, intent);
-      notificationService.postNotification(
-          title: 'New order placed',
-          body: 'Order placed with an Order Id #$orderId',
-          receiverToken: firebaseToken);
-      Get.back();
-      UiUtilites.successAlert(Get.context, 'Package Subscribed Successfully');
+      if (total == '') {
+        await _packageApi.orderPlacement(
+            packageId, trainerId, userid, orderId, intent, int.parse(price));
+        notificationService.postNotification(
+            title: 'New order placed',
+            body: 'Order placed with an Order Id #$orderId',
+            receiverToken: firebaseToken);
+        Get.back();
+        UiUtilites.successAlert(Get.context, 'Package Subscribed Successfully');
+      } else {
+        await _packageApi.orderPlacement(
+            packageId, trainerId, userid, orderId, intent, int.parse(total));
+        notificationService.postNotification(
+            title: 'New order placed',
+            body: 'Order placed with an Order Id #$orderId',
+            receiverToken: firebaseToken);
+        Get.back();
+        UiUtilites.successAlert(Get.context, 'Package Subscribed Successfully');
+      }
     }
   }
 

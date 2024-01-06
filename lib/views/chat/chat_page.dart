@@ -878,7 +878,7 @@ class ChatPageState extends State<ChatPage> {
                                                                   orderId,
                                                                   paymentService
                                                                       .paymentID
-                                                                      .toString());
+                                                                      .toString(),int.parse(amount));
                                                           print(
                                                               '*************************** $i');
                                                           if (i == true) {

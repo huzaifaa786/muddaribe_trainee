@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mudarribe_trainee/api/coupon_code_api.dart';
 import 'package:mudarribe_trainee/api/event_api.dart';
 import 'package:mudarribe_trainee/models/coupon_code.dart';
+import 'package:mudarribe_trainee/services/notification_service.dart';
 import 'package:mudarribe_trainee/services/payment_service.dart';
 import 'package:mudarribe_trainee/utils/ui_utils.dart';
 import 'package:mudarribe_trainee/views/trainer/event_checkout/event_checkout_view.dart';
@@ -11,11 +12,13 @@ class EventcheckoutController extends GetxController {
   static EventcheckoutController instance = Get.find();
   final _paymentService = PaymentService();
   final _couponCodeApi = CouponCodeApi();
+  final notificationService = NotificationService();
   final _eventApi = EventApi();
   TextEditingController promoCode = TextEditingController();
   String eventId = '';
   String price = '';
   String total = '';
+  String firebaseToken = '';
   int discount = 0;
   bool isCode = false;
 
@@ -33,12 +36,14 @@ class EventcheckoutController extends GetxController {
   }
 
   void payEventCharges(pricetotal) async {
-    
     bool isPayment = await _paymentService.makePayment(int.parse(pricetotal));
 
     if (isPayment) {
       await _eventApi.joinEvent(eventId);
-
+      notificationService.postNotification(
+          title: 'Event Joined!',
+          body: 'Event joined Succesfully!',
+          receiverToken: firebaseToken);
       Get.back();
       UiUtilites.successAlert(Get.context, 'Event Joined Successfully');
     }
@@ -49,7 +54,8 @@ class EventcheckoutController extends GetxController {
       UiUtilites.errorSnackbar('Empty Promo Code', 'Please enter code first');
       return;
     }
-    CouponCode? couponCode = await _couponCodeApi.getPromoCode(promoCode.text,trainerId);
+    CouponCode? couponCode =
+        await _couponCodeApi.getPromoCode(promoCode.text, trainerId);
     if (couponCode != null) {
       discount =
           (int.parse(price) * int.parse(couponCode.percentage) / 100).toInt();

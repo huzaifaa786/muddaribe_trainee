@@ -4,6 +4,7 @@ class TrainerOrder {
   String? planId;
   String? userId;
   String? type;
+  int? amount;
 
   TrainerOrder({
     required this.id,
@@ -11,6 +12,7 @@ class TrainerOrder {
     this.planId,
     this.type,
     this.userId,
+    required this.amount,
   });
 
   TrainerOrder.fromJson(Map<String, dynamic> json) {
@@ -19,6 +21,7 @@ class TrainerOrder {
     planId = json['planId'];
     type = json['type'];
     userId = json['userId'];
+    amount= json['amount'];
   }
 
   Map<String, dynamic> toJson() {
@@ -28,6 +31,7 @@ class TrainerOrder {
     data['planId'] = planId;
     data['type'] = type;
     data['userId'] = userId;
+    data['amount'] = amount;
     return data;
   }
 }

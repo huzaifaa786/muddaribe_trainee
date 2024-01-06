@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_typing_uninitialized_variables
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mudarribe_trainee/api/attenddee_api.dart';
 import 'package:mudarribe_trainee/components/button.dart';
 import 'package:mudarribe_trainee/models/event_other_data.dart';
@@ -30,147 +32,163 @@ class BannerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.9,
-      margin: EdgeInsets.only(right: 8),
       decoration: BoxDecoration(
-        image: DecorationImage(
-          image: NetworkImage(image),
-          fit: BoxFit.fill,
-        ),
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: Padding(
-        padding:
-            const EdgeInsets.only(left: 20.0, top: 25, bottom: 25, right: 15),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.6,
-            child: Text(
-              title,
-              maxLines: 2,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 30,
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w700,
-                shadows: <Shadow>[
-                  Shadow(
-                    offset: Offset(2.0, 6.0),
-                    blurRadius: 1.0,
-                    color: shadowBlack,
-                  ),
-                ],
+          borderRadius: BorderRadius.circular(10), color: bgContainer),
+      child: Column(
+        children: [
+          CachedNetworkImage(
+            imageUrl: image,
+            height: 150,
+            width: Get.width,
+            fit: BoxFit.cover,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.9,
+            margin: EdgeInsets.only(right: 8),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 0.0, right: 0),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.85,
+                        child: Text(
+                          title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w600,
+                            shadows: <Shadow>[
+                              Shadow(
+                                offset: Offset(2.0, 6.0),
+                                blurRadius: 1.0,
+                                color: shadowBlack,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                height: 15,
+                                width: 15,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                        "assets/images/calender.png"),
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 15.0),
+                                child: Text(
+                                  '$date',
+                                  style: TextStyle(
+                                    color: white,
+                                    fontSize: 14,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                '$price AED',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 30,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w700,
+                                  shadows: <Shadow>[
+                                    Shadow(
+                                      offset: Offset(2.0, 6.0),
+                                      blurRadius: 1.0,
+                                      color: shadowBlack,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                height: 15,
+                                width: 15,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image:
+                                        AssetImage("assets/images/clock.png"),
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 15.0),
+                                child: Text(
+                                  '$startTime - $endTime',
+                                  style: TextStyle(
+                                    color: white,
+                                    fontSize: 11,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          FutureBuilder<EventOtherData>(
+                              future: AttendeeApi.getAttendees(eventId),
+                              builder: (context, snapshot) {
+                                if (!snapshot.hasData) {
+                                  return Text('');
+                                } else if (snapshot.hasError) {
+                                  return Text('');
+                                } else {
+                                  EventOtherData otherData = snapshot.data!;
+                                  return int.parse(otherData.totalAttendees) <
+                                              int.parse(capacity) &&
+                                          otherData.isCurrentUserAttendee ==
+                                              false
+                                      ? Row(
+                                          children: [
+                                            CustomeButton(
+                                              onPressed: joinTap,
+                                              title: 'Join Event',
+                                            ),
+                                          ],
+                                        )
+                                      : CustomeButton(
+                                          onPressed: () {},
+                                          title: 'Joined',
+                                        );
+                                }
+                              }),
+                        ],
+                      )
+                    ]),
               ),
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    height: 15,
-                    width: 15,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("assets/images/calender.png"),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15.0),
-                    child: Text(
-                      '$date',
-                      style: TextStyle(
-                        color: white,
-                        fontSize: 16,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Text(
-                    '$price AED',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w700,
-                      shadows: <Shadow>[
-                        Shadow(
-                          offset: Offset(2.0, 6.0),
-                          blurRadius: 1.0,
-                          color: shadowBlack,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    height: 15,
-                    width: 15,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("assets/images/clock.png"),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15.0),
-                    child: Text(
-                      '$startTime - $endTime',
-                      style: TextStyle(
-                        color: white,
-                        fontSize: 13,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              FutureBuilder<EventOtherData>(
-                  future: AttendeeApi.getAttendees(eventId),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return Text('');
-                    } else if (snapshot.hasError) {
-                      return Text('');
-                    } else {
-                      EventOtherData otherData = snapshot.data!;
-                      return   int.parse(otherData.totalAttendees) < int.parse(capacity) &&
-                          otherData.isCurrentUserAttendee == false
-                      ?
-                      Row(
-                        children: [
-                          CustomeButton(
-                            onPressed: joinTap,
-                            title: 'Join Event',
-                          ),
-                        ],
-                      ):CustomeButton(
-                            onPressed: (){},
-                            title: 'Joined',
-                          );
-                    }
-                  }),
-            ],
-          )
-        ]),
+        ],
       ),
     );
   }

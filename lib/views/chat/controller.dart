@@ -70,7 +70,7 @@ class ChatProvider {
   }
 
   orderPlacement(String planId, String trainerID, String userID, String orderId,
-      String intent) async {
+      String intent, int amount) async {
     try {
       await FirebaseFirestore.instance.collection('orders').doc(orderId).set({
         'planId': planId,
@@ -79,6 +79,7 @@ class ChatProvider {
         'orderId': orderId,
         'type': 'My_Plan',
         'intent': intent,
+        'amount': amount
       });
       return true;
     } catch (e) {

@@ -72,6 +72,11 @@ class _AllEventsViewState extends State<AllEventsView> {
               return FutureBuilder<CombinedEventData>(
                 future: HomeApi.fetchCombineEventData(trainerId, events),
                 builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return SizedBox(
+                        height: Get.height * 0.5,
+                        child: Center(child: CircularProgressIndicator()));
+                  }
                   if (snapshot.hasError) {
                     return Text(
                       snapshot.error.toString(),
@@ -79,7 +84,7 @@ class _AllEventsViewState extends State<AllEventsView> {
                     );
                   }
                   if (!snapshot.hasData) {
-                    return Text('');
+                    return Text('1234567890');
                   }
 
                   CombinedEventData combineEvent = snapshot.data!;

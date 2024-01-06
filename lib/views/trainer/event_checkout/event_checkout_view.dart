@@ -105,6 +105,7 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                     }
                     CombinedEventData combinedEventData = snapshot.data!;
                     controller.price = combinedEventData.event.price;
+                    controller.firebaseToken = combinedEventData.trainer.firebaseToken!;
 
                     return Column(
                       children: [

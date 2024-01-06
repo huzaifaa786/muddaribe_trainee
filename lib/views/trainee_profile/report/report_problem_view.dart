@@ -95,19 +95,35 @@ class _ReportProblemViewState extends State<ReportProblemView> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      Image.asset(
-                                        'assets/images/image.png',
-                                        height: 15,
-                                        width: 20,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 8,
-                                        ),
-                                        child: GradientText1(
-                                          text: 'Upload Photo',
-                                        ),
-                                      )
+                                      controller.reportImage == null
+                                          ? Image.asset(
+                                              'assets/images/image.png',
+                                              height: 15,
+                                              width: 20,
+                                            )
+                                          : Container(
+                                              child: Icon(
+                                                Icons.check_circle,
+                                                color: Colors.green,
+                                              ),
+                                            ),
+                                      controller.reportImage != null
+                                          ? Padding(
+                                              padding: const EdgeInsets.only(
+                                                left: 8,
+                                              ),
+                                              child: GradientText1(
+                                                text: 'Uploaded',
+                                              ),
+                                            )
+                                          : Padding(
+                                              padding: const EdgeInsets.only(
+                                                left: 8,
+                                              ),
+                                              child: GradientText1(
+                                                text: 'Upload Photo',
+                                              ),
+                                            )
                                     ]),
                               ),
                               onTap: () {
