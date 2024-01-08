@@ -35,7 +35,7 @@ class _MapViewState extends State<MapView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+      appBar: AppBar(),
       body: SafeArea(
         child: GoogleMap(
           onMapCreated: _onMapCreated,

@@ -236,7 +236,7 @@ class _HomeViewState extends State<HomeView> {
                             ),
                           )
                         : Container(),
-                    Container(
+                 controller.bannersList.isNotEmpty?   Container(
                       constraints: BoxConstraints(minHeight: 0, maxHeight: 300),
                       child: CarouselSlider.builder(
                         options: CarouselOptions(
@@ -269,7 +269,7 @@ class _HomeViewState extends State<HomeView> {
                           );
                         },
                       ),
-                    ),
+                    ):Gap(0),
                     Gap(12),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

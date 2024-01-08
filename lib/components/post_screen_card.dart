@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:mudarribe_trainee/components/topbar.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
+import 'package:get/get.dart';
 
 class PostScreenCard extends StatelessWidget {
   const PostScreenCard(
@@ -41,7 +42,7 @@ class PostScreenCard extends StatelessWidget {
       body: SafeArea(
         child: Container(
           width: double.infinity,
-          margin: EdgeInsets.only(bottom: 12),
+          margin: EdgeInsets.only(bottom: 12,left: 15,right: 15),
           padding: EdgeInsets.only(top: 20, bottom: 20),
           decoration: BoxDecoration(
             color: bgContainer,
@@ -144,7 +145,8 @@ class PostScreenCard extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Padding(
+                  Container(
+                    constraints: BoxConstraints(maxWidth: Get.width*0.89),
                     padding: EdgeInsets.only(
                       left: 10,
                       right: 10,

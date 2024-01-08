@@ -347,6 +347,15 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                           future: TrainerProfileApi.fetchTrainerPostsData(
                               trainerId),
                           builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Container(
+                                height: Get.height * 0.5,
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              );
+                            }
                             if (snapshot.hasError) {
                               return Text('');
                             }
@@ -393,26 +402,23 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                       }
                                       return InkWell(
                                         onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      PostScreenCard(
-                                                        userimg: posts[index]
-                                                            .trainer
-                                                            .profileImageUrl,
-                                                        username: posts[index]
-                                                            .trainer
-                                                            .name,
-                                                        postdescription:
-                                                            posts[index]
-                                                                .post
-                                                                .caption,
-                                                        postimg: posts[index]
-                                                            .post
-                                                            .imageUrl,
-                                                        time: time,
-                                                      )));
+                                          Get.to(() => PostScreenCard(
+                                                userimg: posts[index]
+                                                    .trainer
+                                                    .profileImageUrl,
+                                                username:
+                                                    posts[index].trainer.name,
+                                                postdescription:
+                                                    posts[index].post.caption,
+                                                postimg:
+                                                    posts[index].post.imageUrl,
+                                                time: time,
+                                              ));
+                                          // Navigator.push(
+                                          //     context,
+                                          //     MaterialPageRoute(
+                                          //         builder: (context) =>
+                                          //             ));
                                         },
                                         child: CachedNetworkImage(
                                           imageUrl: posts[index].post.imageUrl,
@@ -463,6 +469,15 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                     future: HomeApi.fetchCombineEventData(
                                         trainerId, events),
                                     builder: (context, snapshot) {
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        return Container(
+                                          height: Get.height * 0.5,
+                                          child: Center(
+                                            child: CircularProgressIndicator(),
+                                          ),
+                                        );
+                                      }
                                       if (snapshot.hasError) {
                                         return Text('');
                                       }
@@ -491,6 +506,16 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                   isEqualTo: events.eventId)
                                               .get(),
                                           builder: (context, snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
+                                              return Container(
+                                                height: Get.height * 0.5,
+                                                child: Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                ),
+                                              );
+                                            }
                                             if (!snapshot.hasData) {
                                               return Text('');
                                             } else if (snapshot.hasError) {
@@ -556,6 +581,11 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                         TrainerProfileApi.getTrainerPackages(
                                             trainerId),
                                     builder: (context, snapshot) {
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        return Center(
+                                            child: CircularProgressIndicator());
+                                      }
                                       if (snapshot.hasError) {
                                         return Text('');
                                       }
