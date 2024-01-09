@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mudarribe_trainee/api/coupon_code_api.dart';
@@ -19,6 +21,7 @@ class EventcheckoutController extends GetxController {
   String price = '';
   String total = '';
   String firebaseToken = '';
+  String id = '';
   int discount = 0;
   bool isCode = false;
 
@@ -44,6 +47,21 @@ class EventcheckoutController extends GetxController {
           title: 'Event Joined!',
           body: 'Event joined Succesfully!',
           receiverToken: firebaseToken);
+      String notiId = DateTime.now().millisecondsSinceEpoch.toString();
+      await FirebaseFirestore.instance
+          .collection('notifications')
+          .doc(notiId)
+          .set({
+        'id': notiId,
+        'userId': FirebaseAuth.instance.currentUser!.uid,
+        'trainerId': id,
+        'content': 'Event joined successfully.',
+        'orderId': '',
+        'seen': false,
+        "planId": '',
+        'planName': '',
+        'type': 'event'
+      });
       Get.back();
       UiUtilites.successAlert(Get.context, 'Event Joined Successfully');
     }

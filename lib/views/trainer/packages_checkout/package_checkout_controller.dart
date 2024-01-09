@@ -1,5 +1,7 @@
 // ignore_for_file: division_optimization
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mudarribe_trainee/api/coupon_code_api.dart';
@@ -51,6 +53,22 @@ class Packagecheckoutcontroller extends GetxController {
             title: 'New order placed',
             body: 'Order placed with an Order Id #$orderId',
             receiverToken: firebaseToken);
+        String notiId = DateTime.now().millisecondsSinceEpoch.toString();
+
+        await FirebaseFirestore.instance
+            .collection('notifications')
+            .doc(notiId)
+            .set({
+          'id': notiId,
+          'userId': FirebaseAuth.instance.currentUser!.uid,
+          'trainerId': trainerId,
+          'content': 'Your order has been placed.',
+          'orderId': orderId,
+          'seen': false,
+          "planId": packageId,
+          'planName': '',
+          'type': 'package'
+        });
         Get.back();
         UiUtilites.successAlert(Get.context, 'Package Subscribed Successfully');
       } else {

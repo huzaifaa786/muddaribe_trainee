@@ -60,7 +60,7 @@ class _NotificationsViewState extends State<NotificationsView> {
               return ListView.builder(
                   itemCount: notifications.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return Column(
+                    return notifications[index].notification.type == 'plans'? Column(
                       children: [
                         ExcercisePlan(
                           content: notifications[index].notification.content,
@@ -75,6 +75,17 @@ class _NotificationsViewState extends State<NotificationsView> {
                               'trainerId':
                                   notifications[index].notification.trainerId,
                             });
+                          },
+                        ),
+                        DividerNotification(),
+                      ],
+                    ):Column(
+                      children: [
+                        RemainderView(
+                           content: notifications[index].notification.content,
+                          img: notifications[index].trainer.profileImageUrl,
+                          name: notifications[index].trainer.name,
+                          ontap: () {
                           },
                         ),
                         DividerNotification(),
