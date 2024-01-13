@@ -2,19 +2,34 @@
 
 import 'package:flutter/material.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
+import 'package:mudarribe_trainee/utils/translation.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class ExcercisePlan extends StatefulWidget {
-  const ExcercisePlan({Key? key, this.name, this.content, this.ontap, this.img}) : super(key: key);
-final img;
-final name;
-final content;
-final ontap;
+  const ExcercisePlan({Key? key, this.name, this.content, this.ontap, this.img})
+      : super(key: key);
+  final img;
+  final name;
+  final content;
+  final ontap;
   @override
   State<ExcercisePlan> createState() => _ExcercisePlanState();
 }
 
 class _ExcercisePlanState extends State<ExcercisePlan> {
+  String? translatedText;
+
+  @override
+  void initState() {
+    super.initState();
+    translateText1('View Plan');
+  }
+
+  translateText1(String text) async {
+    translatedText = await translateText(text);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -87,7 +102,7 @@ class _ExcercisePlanState extends State<ExcercisePlan> {
                           Padding(
                             padding: const EdgeInsets.only(left: 8),
                             child: GradientText(
-                              'View Plan',
+                              translatedText ?? '...',
                               style: TextStyle(
                                 fontSize: 14.0,
                                 fontFamily: 'Poppins',

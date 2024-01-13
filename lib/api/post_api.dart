@@ -1,3 +1,5 @@
+// ignore_for_file: body_might_complete_normally_nullable, unused_local_variable
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
@@ -6,7 +8,6 @@ import 'package:mudarribe_trainee/models/event.dart';
 import 'package:mudarribe_trainee/models/event_data_combined.dart';
 import 'package:mudarribe_trainee/models/event_other_data.dart';
 import 'package:mudarribe_trainee/models/trainer.dart';
-import 'package:mudarribe_trainee/models/trainer_story.dart';
 
 class HomeApi {
   static var postquery = FirebaseFirestore.instance

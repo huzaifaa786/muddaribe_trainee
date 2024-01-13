@@ -79,18 +79,21 @@ dependencies:
   geolocator: ^10.1.0
   google_maps_place_picker_mb: ^3.0.2
   google_maps_flutter: ^2.5.0
-
-flutter_icons:
-  android: true
-  ios: true
-  image_path: "assets/images/appLogo.png"
+  google_translator: ^1.0.0
+  translator: ^0.1.7
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  # dependency_overrides:
-  #   stripe_android: "9.5.0+1"
+dependency_overrides:
+  http: ^1.1.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/appLogo.png"
+    # stripe_android: "9.5.0+1"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

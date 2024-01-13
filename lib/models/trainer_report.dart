@@ -1,6 +1,3 @@
-
-import 'package:mudarribe_trainee/enums/enums.dart';
-
 class TraineeReport {
   late String id;
 

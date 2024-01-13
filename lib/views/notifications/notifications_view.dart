@@ -1,8 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, unused_import
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/api/notification_api.dart';
 import 'package:mudarribe_trainee/components/appbar.dart';
 import 'package:mudarribe_trainee/components/basic_loader%20copy.dart';
@@ -33,71 +36,105 @@ class _NotificationsViewState extends State<NotificationsView> {
         title: TopBar(text: 'Notifications'),
       ),
       body: SafeArea(
-        child: FutureBuilder<List<CombinedTrainerNotification>>(
-            future: NotificationApi.fetchCombinedTrainerNotifications(),
-            builder: (context, snapshot) {
-              if(snapshot.connectionState == ConnectionState.waiting){
-                    return SizedBox(
-                      height: Get.height*0.7,
-                      child: BasicLoader(
-                        background: false,
-                      ),
-                    );
-                  }
-              if (snapshot.hasError) {
-                return Text('');
-              }
-              if (!snapshot.hasData) {
-                return Center(
-                  heightFactor: 15,
-                  child: Text(
-                    'No Notification Found!',
-                    style: TextStyle(color: white.withOpacity(0.7)),
-                  ),
-                );
-              }
-              List<CombinedTrainerNotification> notifications = snapshot.data!;
-              return ListView.builder(
-                  itemCount: notifications.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return notifications[index].notification.type == 'plans'? Column(
-                      children: [
-                        ExcercisePlan(
-                          content: notifications[index].notification.content,
-                          img: notifications[index].trainer.profileImageUrl,
-                          name: notifications[index].trainer.name,
-                          ontap: () {
-                            Get.toNamed(AppRoutes.planFiles, parameters: {
-                              'planId':
-                                  notifications[index].notification.planId,
-                              'planName':
-                                  notifications[index].notification.planName,
-                              'trainerId':
-                                  notifications[index].notification.trainerId,
-                            });
-                          },
-                        ),
-                        DividerNotification(),
-                      ],
-                    ):Column(
-                      children: [
-                        RemainderView(
-                           content: notifications[index].notification.content,
-                          img: notifications[index].trainer.profileImageUrl,
-                          name: notifications[index].trainer.name,
-                          ontap: () {
-                          },
-                        ),
-                        DividerNotification(),
-                      ],
-                    );
-                    // return OrderCard(
-                    //   trainer: notifications[index].combinedPackageData!.trainer,
-                    //   package: notifications[index].combinedPackageData!.package,
-                    //   order: notifications[index].order,
-                    // );
-                  });
-            }),
+        child: Padding(
+          padding: EdgeInsets.only(top: 12),
+          child: FutureBuilder<List<CombinedTrainerNotification>>(
+              future: NotificationApi.fetchCombinedTrainerNotifications(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return SizedBox(
+                    height: Get.height * 0.7,
+                    child: BasicLoader(
+                      background: false,
+                    ),
+                  );
+                }
+                if (snapshot.hasError) {
+                  return Text('');
+                }
+                if (!snapshot.hasData) {
+                  return Center(
+                    heightFactor: 15,
+                    child: Text(
+                      'No Notification Found!',
+                      style: TextStyle(color: white.withOpacity(0.7)),
+                    ).translate(),
+                  );
+                }
+                List<CombinedTrainerNotification> notifications = snapshot.data!;
+                return ListView.builder(
+                    itemCount: notifications.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return notifications[index].notification.type == 'plans'
+                          ? Column(
+                              children: [
+                                ExcercisePlan(
+                                  content:
+                                      notifications[index].notification.content,
+                                  img: notifications[index]
+                                      .trainer
+                                      .profileImageUrl,
+                                  name: notifications[index].trainer.name,
+                                  ontap: () {
+                                    Get.toNamed(AppRoutes.planFiles, parameters: {
+                                      'planId': notifications[index]
+                                          .notification
+                                          .planId,
+                                      'planName': notifications[index]
+                                          .notification
+                                          .planName,
+                                      'trainerId': notifications[index]
+                                          .notification
+                                          .trainerId,
+                                    });
+                                  },
+                                ),
+                                DividerNotification(),
+                              ],
+                            )
+                          : Column(
+                              children: [
+                                RemainderView(
+                                  content:
+                                      notifications[index].notification.content,
+                                  img: notifications[index]
+                                      .trainer
+                                      .profileImageUrl,
+                                  name: notifications[index].trainer.name,
+                                  ontap: () {
+                                    Get.toNamed(AppRoutes.trainerprofile,
+                                            arguments:
+                                                notifications[index].trainer.id)!
+                                        .then((value) async {
+                                      //                                     try {
+                                      //   // Reference to the "followed_trainers" collection
+                                      //   final CollectionReference followedTrainersRef =
+                                      //       FirebaseFirestore.instance.collection('followed_trainers');
+                                      //   final QuerySnapshot querySnapshot = await followedTrainersRef
+                                      //       .where('userId', isEqualTo: FirebaseAuth.instance.)
+                                      //       .limit(1)
+                                      //       .get();
+                                      //   if (querySnapshot.docs.isNotEmpty) {
+                                      //     follewed = true;
+                                      //     update();
+                                      //   } else {
+                                      //     follewed = false;
+                                      //     update();
+                                      //   }
+                                      // } catch (e) {
+                                      //   follewed = false;
+                                      //   update();
+                                      //   // return false;
+                                      // }
+                                    });
+                                  },
+                                ),
+                                DividerNotification(),
+                              ],
+                            );
+                    });
+              }),
+        ),
         // child: Column(
         //   children: [
 

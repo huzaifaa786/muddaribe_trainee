@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/api/event_api.dart';
 import 'package:mudarribe_trainee/api/post_api.dart';
 import 'package:mudarribe_trainee/components/appbar.dart';
@@ -41,7 +42,7 @@ class _MyEventsViewState extends State<MyEventsView> {
               color: white,
               fontWeight: FontWeight.w800,
               fontFamily: 'Poppins'),
-        ),
+        ).translate(),
       ),
       body: SafeArea(
         child: Container(
@@ -55,7 +56,7 @@ class _MyEventsViewState extends State<MyEventsView> {
             onEmpty: Text(
               'No event joined yet.',
               style: TextStyle(color: white.withOpacity(0.3)),
-            ),
+            ).translate(),
             viewType: ViewType.list,
             physics: BouncingScrollPhysics(),
             scrollDirection: Axis.vertical,
@@ -71,7 +72,7 @@ class _MyEventsViewState extends State<MyEventsView> {
                     return Text(
                       snapshot.error.toString(),
                       style: TextStyle(color: white),
-                    );
+                    ).translate();
                   }
                   if (!snapshot.hasData) {
                     return Text('');

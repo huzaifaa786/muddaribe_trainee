@@ -6,6 +6,7 @@ import 'package:gap/gap.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:mudarribe_trainee/components/appbar.dart';
 import 'package:mudarribe_trainee/components/location.dart';
@@ -225,7 +226,7 @@ class EventDetailsCard extends StatelessWidget {
                             fontWeight: FontWeight.w400,
                             fontSize: 12,
                           ),
-                        ),
+                        ).translate(),
                       )
                     ],
                   ),
@@ -262,7 +263,7 @@ class EventDetailsCard extends StatelessWidget {
                             fontWeight: FontWeight.w400,
                             fontSize: 12,
                           ),
-                        ),
+                        ).translate(),
                       )
                     ],
                   ),
@@ -276,7 +277,7 @@ class EventDetailsCard extends StatelessWidget {
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
                         ),
-                      ),
+                      ).translate(),
                       Text(
                         ' $price AED',
                         style: TextStyle(
@@ -285,7 +286,7 @@ class EventDetailsCard extends StatelessWidget {
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),
-                      )
+                      ).translate()
                     ],
                   ),
                   // Gap(5),
@@ -313,7 +314,7 @@ class EventDetailsCard extends StatelessWidget {
                               decoration: TextDecoration.underline,
                               decorationStyle: TextDecorationStyle.dashed,
                               decorationColor: white),
-                        ),
+                        ).translate(),
                       ),
                       int.parse(attendees) < int.parse(capacity) &&
                               isJoined == false

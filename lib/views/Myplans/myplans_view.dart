@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/components/plancontainer.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
@@ -22,7 +23,8 @@ class _MyplansViewState extends State<MyplansView> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,
-         
+         centerTitle: true,
+         automaticallyImplyLeading: false,
           title: Text(
             'My Plans',
             style: TextStyle(
@@ -30,7 +32,7 @@ class _MyplansViewState extends State<MyplansView> {
                 color: white,
                 fontWeight: FontWeight.w800,
                 fontFamily: 'Poppins'),
-          ),
+          ).translate(),
           bottom: TabBar(
               isScrollable: false,
               dividerColor: Colors.transparent,
@@ -53,7 +55,7 @@ class _MyplansViewState extends State<MyplansView> {
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
                             color: white),
-                      ),
+                      ).translate(),
                     ],
                   ),
                 ),
@@ -73,7 +75,7 @@ class _MyplansViewState extends State<MyplansView> {
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: white),
-                      ),
+                      ).translate(),
                     ],
                   ),
                 ),

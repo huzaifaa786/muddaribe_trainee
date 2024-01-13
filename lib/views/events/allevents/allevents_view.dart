@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/api/event_api.dart';
 import 'package:mudarribe_trainee/api/post_api.dart';
 import 'package:mudarribe_trainee/components/appbar.dart';
@@ -38,7 +39,7 @@ class _AllEventsViewState extends State<AllEventsView> {
               color: white,
               fontWeight: FontWeight.w800,
               fontFamily: 'Poppins'),
-        ),
+        ).translate(),
         leading: GestureDetector(
             onTap: () {
               Get.back();
@@ -60,7 +61,7 @@ class _AllEventsViewState extends State<AllEventsView> {
             onEmpty: Text(
               'No event uploaded yet.',
               style: TextStyle(color: white.withOpacity(0.3)),
-            ),
+            ).translate(),
             viewType: ViewType.list,
             physics: BouncingScrollPhysics(),
             scrollDirection: Axis.vertical,
@@ -84,7 +85,7 @@ class _AllEventsViewState extends State<AllEventsView> {
                     );
                   }
                   if (!snapshot.hasData) {
-                    return Text('1234567890');
+                    return Text('');
                   }
 
                   CombinedEventData combineEvent = snapshot.data!;

@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/api/event_api.dart';
 import 'package:mudarribe_trainee/components/Eventcheckoutcontainer.dart';
 import 'package:mudarribe_trainee/components/basic_loader%20copy.dart';
-import 'package:mudarribe_trainee/components/checkbox.dart';
-import 'package:mudarribe_trainee/components/inputfield.dart';
 import 'package:mudarribe_trainee/components/location.dart';
 import 'package:mudarribe_trainee/components/textgradient.dart';
 import 'package:mudarribe_trainee/components/topbar.dart';
@@ -18,8 +16,6 @@ import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/views/trainer/event_checkout/event_checkout_controller.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
-import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -116,7 +112,7 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
                     ),
-                  ),
+                  ).translate(),
                 )),
           ),
         ),
@@ -188,7 +184,7 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                     ),
-                                  ),
+                                  ).translate(),
                                   controller.total != ''
                                       ? GradientText1(
                                           text: controller.promoCode.text,
@@ -309,7 +305,7 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                       fontWeight: FontWeight.w400,
                                       fontSize: 12,
                                     ),
-                                  ),
+                                  ).translate(),
                                 ),
                               )
                             ],
@@ -327,7 +323,7 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
                               ),
-                            ),
+                            ).translate(),
                           ),
                         ),
                         Container(
@@ -354,7 +350,7 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                       ),
-                                    ),
+                                    ).translate(),
                                     Text(
                                       combinedEventData.event.price + ' AED',
                                       style: TextStyle(
@@ -362,7 +358,7 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                       ),
-                                    ),
+                                    ).translate(),
                                   ],
                                 ),
                               ),
@@ -388,7 +384,7 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                       ),
-                                    ),
+                                    ).translate(),
                                     Text(
                                       controller.discount.toString() + ' AED',
                                       style: TextStyle(
@@ -396,7 +392,7 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                       ),
-                                    ),
+                                    ).translate(),
                                   ],
                                 ),
                               ),
@@ -422,7 +418,7 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                       ),
-                                    ),
+                                    ).translate(),
                                     GradientText(
                                       controller.total == ''
                                           ? controller.price + ' AED'

@@ -1,5 +1,6 @@
+// ignore_for_file: body_might_complete_normally_nullable, unnecessary_cast
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mudarribe_trainee/models/coupon_code.dart';
 
 class CouponCodeApi {

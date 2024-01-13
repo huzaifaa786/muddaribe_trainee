@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:mudarribe_trainee/views/trainer/profile/profile_view.dart';
 
 class TrainerprofileController extends GetxController {
   static TrainerprofileController instance = Get.find();

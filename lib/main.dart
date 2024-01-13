@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/helper/loading_helper.dart';
 import 'package:mudarribe_trainee/routes/app_pages.dart';
 import 'package:mudarribe_trainee/services/notification_service.dart';
@@ -61,27 +62,35 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider<ChatProvider>(
-          create: (_) => ChatProvider(),
-        ),
-      ],
-      child: GetMaterialApp(
-        theme: ThemeData(
-          scaffoldBackgroundColor: Colors.black,
-          textSelectionTheme: const TextSelectionThemeData(
-            cursorColor: white,
+    GetStorage box = GetStorage();
+    box.read('Locale') == null ? box.write('Locale', 'en') : null;
+    String locale = box.read('Locale') == null ? 'en' : box.read('Locale');
+    return GoogleTranslatorInit('AIzaSyBOr3bXgN2bj9eECzSudyj_rgIFjyXkdn8',
+        translateFrom: box.read('Locale') == 'en' ? Locale('ur') : Locale('en'),
+        translateTo: Locale(locale),
+        automaticDetection: false, builder: () {
+      return MultiProvider(
+        providers: [
+          Provider<ChatProvider>(
+            create: (_) => ChatProvider(),
           ),
-          useMaterial3: true,
-          fontFamily: 'Montserrat',
+        ],
+        child: GetMaterialApp(
+          theme: ThemeData(
+            scaffoldBackgroundColor: Colors.black,
+            textSelectionTheme: const TextSelectionThemeData(
+              cursorColor: white,
+            ),
+            useMaterial3: true,
+            fontFamily: 'Montserrat',
+          ),
+          debugShowCheckedModeBanner: false,
+          title: "Mudarribe",
+          initialBinding: SplashBinding(),
+          home: SplashView(),
+          getPages: AppPages.pages,
         ),
-        debugShowCheckedModeBanner: false,
-        title: "Mudarribe",
-        initialBinding: SplashBinding(),
-        home: SplashView(),
-        getPages: AppPages.pages,
-      ),
-    );
+      );
+    });
   }
 }

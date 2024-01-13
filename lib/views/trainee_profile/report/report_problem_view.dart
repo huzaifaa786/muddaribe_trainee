@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/components/color_button.dart';
 import 'package:mudarribe_trainee/components/inputfield.dart';
 import 'package:mudarribe_trainee/components/password_inputField.dart';
@@ -59,7 +60,7 @@ class _ReportProblemViewState extends State<ReportProblemView> {
                               fontSize: 24,
                               fontWeight: FontWeight.w600,
                               color: white),
-                        ),
+                        ).translate(),
                       ),
                     ],
                   ),

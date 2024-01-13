@@ -1,9 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, sort_child_properties_last
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
+import 'package:mudarribe_trainee/utils/translation.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class RemainderView extends StatefulWidget {
@@ -18,6 +17,19 @@ class RemainderView extends StatefulWidget {
 }
 
 class _RemainderViewState extends State<RemainderView> {
+  String? translatedText;
+
+  @override
+  void initState() {
+    super.initState();
+    translateText1('View Trainer profile');
+  }
+
+  translateText1(String text) async {
+    translatedText = await translateText(text);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +37,7 @@ class _RemainderViewState extends State<RemainderView> {
       child: Row(
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 20, bottom: 28),
+            padding: const EdgeInsets.only(left: 20, bottom: 20),
             child: Container(
               width: 55,
               height: 55,
@@ -39,7 +51,7 @@ class _RemainderViewState extends State<RemainderView> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 10, top: 13),
+            padding: const EdgeInsets.only(left: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -62,7 +74,7 @@ class _RemainderViewState extends State<RemainderView> {
                       '${widget.content}',
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: 14,
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
@@ -70,40 +82,17 @@ class _RemainderViewState extends State<RemainderView> {
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 22, left: 2),
+                  padding: const EdgeInsets.only(top: 10, left: 2),
                   child: Row(
                     children: [
-                      // Container(
-                      //   width: 8,
-                      //   height: 8,
-                      //   decoration: ShapeDecoration(
-                      //     color: Color(0xFF58E0FF),
-                      //     shape: OvalBorder(),
-                      //   ),
-                      // ),
                       Row(
                         children: [
-                          // Padding(
-                          //   padding: const EdgeInsets.only(left: 8),
-                          //   child: GradientText(
-                          //     'View event',
-                          //     style: TextStyle(
-                          //       fontSize: 14.0,
-                          //       fontFamily: 'Poppins',
-                          //       fontWeight: FontWeight.w600,
-                          //     ),
-                          //     colors: [gradientpurple1,gradientblue1],
-                          //   ),
-                          // ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: Container(
-                              width: 8,
-                              height: 8,
-                              decoration: ShapeDecoration(
-                                color: Color(0xFF58E0FF),
-                                shape: OvalBorder(),
-                              ),
+                          Container(
+                            width: 8,
+                            height: 8,
+                            decoration: ShapeDecoration(
+                              color: Color(0xFF58E0FF),
+                              shape: OvalBorder(),
                             ),
                           ),
                           InkWell(
@@ -113,7 +102,7 @@ class _RemainderViewState extends State<RemainderView> {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 8),
                                   child: GradientText(
-                                    'View Trainer profile',
+                                    translatedText ?? '...',
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Poppins',

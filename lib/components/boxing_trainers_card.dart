@@ -2,6 +2,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
 class BoxingTrainersCard extends StatelessWidget {
@@ -121,7 +122,7 @@ class BoxingTrainersCard extends StatelessWidget {
                           fontWeight: FontWeight.w700,
                           height: 0,
                         ),
-                      ),
+                      ).translate(),
                     ),
                   ),
                 ),

@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/api/trainer_saved.dart';
 import 'package:mudarribe_trainee/components/boxing_trainers_card.dart';
 import 'package:mudarribe_trainee/components/color_button.dart';
@@ -189,7 +190,7 @@ class _SerachViewState extends State<SerachView> {
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
                                       color: white),
-                                ),
+                                ).translate(),
                                 Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -200,7 +201,7 @@ class _SerachViewState extends State<SerachView> {
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
                                       color: white),
-                                ),
+                                ).translate(),
                                 Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -211,7 +212,7 @@ class _SerachViewState extends State<SerachView> {
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
                                       color: white),
-                                ),
+                                ).translate(),
                                 Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -274,7 +275,7 @@ class _SerachViewState extends State<SerachView> {
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: white),
-              ),
+              ).translate(),
               Text(
                 '',
               ),
@@ -315,7 +316,7 @@ class _SerachViewState extends State<SerachView> {
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: white),
-              ),
+              ).translate(),
               Text(
                 '',
               ),
@@ -360,7 +361,7 @@ class _SerachViewState extends State<SerachView> {
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: white),
-              ),
+              ).translate(),
               Text(
                 '',
               ),

@@ -1,13 +1,14 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/components/profile_tile.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/views/trainee_profile/profile/profile_controller.dart';
+import 'package:mudarribe_trainee/views/trainee_profile/app_translate/translate.dart';
 
 class TraineeProfileView extends StatelessWidget {
   const TraineeProfileView({super.key});
@@ -30,7 +31,7 @@ class TraineeProfileView extends StatelessWidget {
                       fontSize: 24,
                       fontWeight: FontWeight.w700,
                     ),
-                  ),
+                  ).translate(),
                 ),
                 body: SafeArea(
                   child: Column(
@@ -91,6 +92,13 @@ class TraineeProfileView extends StatelessWidget {
                                           Get.toNamed(AppRoutes.saved);
                                         },
                                         text: 'Saved',
+                                      ),
+                                      ProfileTile(
+                                        img: 'assets/images/report.svg',
+                                        ontap: () {
+                                          Get.to(()=> TranslateScreen());
+                                        },
+                                        text: 'Language',
                                       ),
                                       ProfileTile(
                                         img: 'assets/images/report.svg',

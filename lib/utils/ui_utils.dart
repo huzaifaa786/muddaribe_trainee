@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
@@ -99,7 +100,7 @@ class UiUtilites {
                       // height: 52 / 12,
                     ),
                     textAlign: TextAlign.center,
-                  ),
+                  ).translate(),
                   Gap(40),
                 ],
               ),

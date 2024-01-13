@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:intl/intl.dart';
 import 'package:mudarribe_trainee/api/post_api.dart';
@@ -22,7 +23,6 @@ import 'package:mudarribe_trainee/models/event_data_combined.dart';
 import 'package:mudarribe_trainee/models/post_data_combined.dart';
 import 'package:mudarribe_trainee/models/post.dart';
 import 'package:mudarribe_trainee/models/trainer.dart';
-import 'package:mudarribe_trainee/models/trainer_story.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/utils/fontWeight.dart';
@@ -85,7 +85,7 @@ class _HomeViewState extends State<HomeView> {
                       ],
                     ),
                     controller.follewed != false
-                        ? const Padding(
+                        ?  Padding(
                             padding: EdgeInsets.only(top: 20.0),
                             child: Text(
                               'Followed trainers',
@@ -94,7 +94,7 @@ class _HomeViewState extends State<HomeView> {
                                 fontSize: 20,
                                 fontWeight: FontWeight.w800,
                               ),
-                            ),
+                            ).translate(),
                           )
                         : Container(),
                     controller.follewed != false
@@ -123,7 +123,7 @@ class _HomeViewState extends State<HomeView> {
                                   ),
                                   child: Center(
                                       child: GradientText(
-                                    'Stories',
+                                        'Stories',
                                     colors: [borderTop, borderDown],
                                   )),
                                 ),
@@ -281,7 +281,7 @@ class _HomeViewState extends State<HomeView> {
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
                           ),
-                        ),
+                        ).translate(),
                         InkWell(
                           onTap: () {
                             controller.showAllCategory();
@@ -293,7 +293,7 @@ class _HomeViewState extends State<HomeView> {
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                             ),
-                          ),
+                          ).translate(),
                         ),
                       ],
                     ),
@@ -346,7 +346,7 @@ class _HomeViewState extends State<HomeView> {
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
                           ),
-                        ),
+                        ).translate(),
                         GestureDetector(
                           onTap: () {
                             Get.to(() => AllEventsView())!.then((value) {
@@ -361,7 +361,7 @@ class _HomeViewState extends State<HomeView> {
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                             ),
-                          ),
+                          ).translate(),
                         ),
                       ],
                     ),
@@ -376,7 +376,7 @@ class _HomeViewState extends State<HomeView> {
                         onEmpty: Text(
                           'No event uploaded yet.',
                           style: TextStyle(color: white.withOpacity(0.3)),
-                        ),
+                        ).translate(),
                         viewType: ViewType.list,
                         physics: BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
@@ -468,7 +468,7 @@ class _HomeViewState extends State<HomeView> {
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
                       ),
-                    ),
+                    ).translate(),
                     Gap(15),
                     FirestorePagination(
                       shrinkWrap: true,

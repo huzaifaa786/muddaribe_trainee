@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/components/topbar.dart';
 
 class PDFScreen extends StatefulWidget {
@@ -78,7 +79,7 @@ class _PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
                     )
                   : Container()
               : Center(
-                  child: Text(errorMessage),
+                  child: Text(errorMessage).translate(),
                 )
         ],
       ),

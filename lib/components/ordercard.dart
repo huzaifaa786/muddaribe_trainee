@@ -3,16 +3,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:mudarribe_trainee/models/order.dart';
 import 'package:mudarribe_trainee/models/trainer.dart';
 import 'package:mudarribe_trainee/models/trainer_package.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
+import 'package:mudarribe_trainee/utils/translation.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:intl/intl.dart';
 
-class OrderCard extends StatelessWidget {
+class OrderCard extends StatefulWidget {
   const OrderCard({
     Key? key,
     required this.trainer,
@@ -24,6 +26,24 @@ class OrderCard extends StatelessWidget {
   final Trainer trainer;
   final TrainerPackage package;
   final TrainerOrder order;
+
+  @override
+  State<OrderCard> createState() => _OrderCardState();
+}
+
+class _OrderCardState extends State<OrderCard> {
+  String? translatedText;
+
+  @override
+  void initState() {
+    super.initState();
+    translateText1('View Profile');
+  }
+
+  translateText1(String text) async {
+    translatedText = await translateText(text);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +81,7 @@ class OrderCard extends StatelessWidget {
                         ),
                         image: DecorationImage(
                           image: CachedNetworkImageProvider(
-                              trainer.profileImageUrl),
+                              widget.trainer.profileImageUrl),
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -73,7 +93,7 @@ class OrderCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          trainer.name,
+                          widget.trainer.name,
                           style: TextStyle(
                             fontSize: 16,
                             fontFamily: 'Montserrat',
@@ -82,7 +102,7 @@ class OrderCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          trainer.category.join('& '),
+                          widget.trainer.category.join('& '),
                           style: TextStyle(
                             fontSize: 12,
                             fontFamily: 'Montserrat',
@@ -125,7 +145,7 @@ class OrderCard extends StatelessWidget {
                                 color: white.withOpacity(0.5),
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600),
-                          ),
+                          ).translate(),
                         ),
                         Container(
                           height: 149,
@@ -141,7 +161,7 @@ class OrderCard extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              package.category == 'excercise&nutrition'
+                              widget.package.category == 'excercise&nutrition'
                                   ? Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -173,7 +193,8 @@ class OrderCard extends StatelessWidget {
                                   : Padding(
                                       padding: EdgeInsets.only(
                                           left: 20, right: 20, bottom: 10),
-                                      child: package.category == 'excercise'
+                                      child: widget.package.category ==
+                                              'excercise'
                                           ? Image.asset(
                                               'assets/images/packageplanimage.png',
                                               height: 18,
@@ -214,7 +235,7 @@ class OrderCard extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.only(left: 2.0),
                                 child: Text(
-                                  package.name!,
+                                  widget.package.name!,
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w700,
@@ -226,7 +247,7 @@ class OrderCard extends StatelessWidget {
                                     const EdgeInsets.only(top: 5, bottom: 10),
                                 child: Text(
                                     textAlign: TextAlign.center,
-                                    package.discription!,
+                                    widget.package.discription!,
                                     style: TextStyle(
                                         fontSize: 11,
                                         fontWeight: FontWeight.w500,
@@ -257,7 +278,7 @@ class OrderCard extends StatelessWidget {
                                 color: white.withOpacity(0.5),
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600),
-                          ),
+                          ).translate(),
                         ),
                         Container(
                           height: 149,
@@ -274,7 +295,7 @@ class OrderCard extends StatelessWidget {
                               textAlign: TextAlign.center,
                               DateFormat("dd/MM/yyyy").format(
                                   DateTime.fromMillisecondsSinceEpoch(
-                                      int.parse(order.id))),
+                                      int.parse(widget.order.id))),
                               style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w700,
@@ -302,7 +323,7 @@ class OrderCard extends StatelessWidget {
                                 color: white.withOpacity(0.5),
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600),
-                          ),
+                          ).translate(),
                         ),
                         Container(
                           height: 149,
@@ -318,7 +339,7 @@ class OrderCard extends StatelessWidget {
                             children: [
                               GradientText(
                                 textAlign: TextAlign.center,
-                                package.price!,
+                                widget.package.price!,
                                 style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w700,
@@ -334,7 +355,7 @@ class OrderCard extends StatelessWidget {
                                       fontSize: 12,
                                       fontWeight: FontWeight.w700,
                                       color: whitewithopacity1),
-                                ),
+                                ).translate(),
                               ),
                             ],
                           ),
@@ -347,7 +368,8 @@ class OrderCard extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Get.toNamed(AppRoutes.trainerprofile, arguments: trainer.id);
+                Get.toNamed(AppRoutes.trainerprofile,
+                    arguments: widget.trainer.id);
               },
               child: Padding(
                 padding: const EdgeInsets.only(top: 15, right: 20),
@@ -355,7 +377,7 @@ class OrderCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     GradientText(
-                      'View Profile',
+                      translatedText ?? '...',
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,

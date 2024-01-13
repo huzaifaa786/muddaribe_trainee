@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/components/color_button.dart';
 import 'package:mudarribe_trainee/components/inputfield.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
@@ -44,7 +45,7 @@ class ForgotPasswordView extends StatelessWidget {
                             color: Colors.white,
                           ),
                           textAlign: TextAlign.start,
-                        ),
+                        ).translate(),
                       ),
                       Container(
                         height: 300,
@@ -67,7 +68,7 @@ class ForgotPasswordView extends StatelessWidget {
                                   height: 28 / 14,
                                 ),
                                 textAlign: TextAlign.left,
-                              ),
+                              ).translate(),
                               InputField(
                                 lable: 'Email',
                                 controller: controller.emailController,

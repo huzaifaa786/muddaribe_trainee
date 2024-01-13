@@ -3,6 +3,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/components/IconButton.dart';
 import 'package:mudarribe_trainee/components/color_button.dart';
 import 'package:mudarribe_trainee/components/inputfield.dart';
@@ -11,6 +12,7 @@ import 'package:mudarribe_trainee/components/password_inputField.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/utils/controller_initlization.dart';
+import 'package:mudarribe_trainee/utils/translation.dart';
 import 'package:mudarribe_trainee/utils/ui_utils.dart';
 import 'package:mudarribe_trainee/views/authentication/signin/signin_controller.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
@@ -23,6 +25,28 @@ class SignInView extends StatefulWidget {
 }
 
 class _SignInViewState extends State<SignInView> {
+  String? translatedText;
+  String? privacypolicy;
+  String? and;
+  String? term_and_condition;
+  String? signup;
+  String? create;
+  translateText1() async {
+    translatedText = await translateText('Forget password?');
+    privacypolicy = await translateText('Privacy Policy');
+    and = await translateText('and');
+    term_and_condition = await translateText('Terms & Conditions');
+    signup = await translateText('Sign Up');
+    create = await translateText('Create a new account ?');
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    translateText1();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SignInController>(
@@ -51,7 +75,7 @@ class _SignInViewState extends State<SignInView> {
                                 color: Colors.white,
                               ),
                               textAlign: TextAlign.center,
-                            ),
+                            ).translate(),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 20.0),
@@ -64,7 +88,7 @@ class _SignInViewState extends State<SignInView> {
                                 color: white.withOpacity(0.45),
                               ),
                               textAlign: TextAlign.center,
-                            ),
+                            ).translate(),
                           ),
                           Container(
                             height: 250,
@@ -94,7 +118,8 @@ class _SignInViewState extends State<SignInView> {
                                         onTap: () {
                                           Get.toNamed(AppRoutes.forgot);
                                         },
-                                        child: GradientText('Forget password?',
+                                        child: GradientText(
+                                            translatedText ?? '...',
                                             style: TextStyle(
                                                 fontSize: 14.0,
                                                 fontFamily: "Poppins"),
@@ -138,7 +163,7 @@ class _SignInViewState extends State<SignInView> {
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
                                     color: white),
-                              ),
+                              ).translate(),
                               Expanded(
                                   child: Container(
                                       margin:
@@ -177,7 +202,7 @@ class _SignInViewState extends State<SignInView> {
                                   color: white,
                                 ),
                                 textAlign: TextAlign.center,
-                              ),
+                              ).translate(),
                             ),
                           ),
                           Align(
@@ -190,7 +215,8 @@ class _SignInViewState extends State<SignInView> {
                                 text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: 'Privacy Policy',
+                                      text: privacypolicy as String,
+                                      // text: 'Privacy Policy',
                                       style: TextStyle(
                                           fontSize: 12,
                                           fontFamily: "Poppins",
@@ -201,12 +227,23 @@ class _SignInViewState extends State<SignInView> {
                                         ..onTap = () {},
                                     ),
                                     TextSpan(
-                                      text: '  and  ',
+                                      text: '  ',
                                       style: TextStyle(
                                           fontSize: 12, color: Colors.white),
                                     ),
                                     TextSpan(
-                                      text: 'Terms & Conditions',
+                                      text: and ?? '...',
+                                      style: TextStyle(
+                                          fontSize: 12, color: Colors.white),
+                                    ),
+                                    TextSpan(
+                                      text: '  ',
+                                      style: TextStyle(
+                                          fontSize: 12, color: Colors.white),
+                                    ),
+                                    TextSpan(
+                                      text: term_and_condition ?? '...',
+                                      // text: 'Terms & Conditions',
                                       style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
@@ -230,7 +267,7 @@ class _SignInViewState extends State<SignInView> {
                                 text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: 'Create a new account ?   ',
+                                      text: create,
                                       style: TextStyle(
                                           fontSize: 12,
                                           fontFamily: "Poppins",
@@ -239,8 +276,9 @@ class _SignInViewState extends State<SignInView> {
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {},
                                     ),
+                                    TextSpan(text: '    '),
                                     TextSpan(
-                                      text: 'Sign Up',
+                                      text: signup ?? '...',
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500,

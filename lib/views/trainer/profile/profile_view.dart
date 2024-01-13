@@ -7,20 +7,18 @@ import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:gradient_borders/gradient_borders.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:intl/intl.dart';
 import 'package:mudarribe_trainee/api/post_api.dart';
 import 'package:mudarribe_trainee/api/trainer_profile_api.dart';
 import 'package:mudarribe_trainee/components/chat_me_card.dart';
 import 'package:mudarribe_trainee/components/color_button.dart';
 import 'package:mudarribe_trainee/components/eventDetailsCard.dart';
-import 'package:mudarribe_trainee/components/packagecheckbox.dart';
 import 'package:mudarribe_trainee/components/post_screen_card.dart';
 import 'package:mudarribe_trainee/components/trainer_package_card.dart';
 import 'package:mudarribe_trainee/components/trainer_profile_card.dart';
 import 'package:mudarribe_trainee/models/event.dart';
 import 'package:mudarribe_trainee/models/event_data_combined.dart';
-import 'package:mudarribe_trainee/models/post.dart';
 import 'package:mudarribe_trainee/models/post_data_combined.dart';
 import 'package:mudarribe_trainee/models/trainer.dart';
 import 'package:mudarribe_trainee/models/trainer_package.dart';
@@ -95,7 +93,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                       fontSize: 12,
                                       fontWeight: FontWeight.w700,
                                       color: whitewithopacity1),
-                                ),
+                                ).translate(),
                               ),
                             ],
                           ),
@@ -224,7 +222,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w700,
                                                 ),
-                                              ),
+                                              ).translate(),
                                             )),
                                       );
                                     }),
@@ -267,7 +265,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
                                 ),
-                              ),
+                              ).translate(),
                             ),
                             VerticalDivider(
                               color: Colors.grey,
@@ -297,7 +295,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
                                   ),
-                                ),
+                                ).translate(),
                               ),
                               VerticalDivider(
                                 color: Colors.grey,
@@ -326,7 +324,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
                                 ),
-                              ),
+                              ).translate(),
                             ),
                           ],
                         ),
@@ -366,7 +364,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                   'No Posts Found !',
                                   style:
                                       TextStyle(color: white.withOpacity(0.7)),
-                                ),
+                                ).translate(),
                               );
                             }
                             List<CombinedData> posts = snapshot.data!;
@@ -433,7 +431,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                       'No Post Found !',
                                       style: TextStyle(
                                           color: white.withOpacity(0.7)),
-                                    ),
+                                    ).translate(),
                                   );
                           })
                       : controller.indexs == 1
@@ -450,7 +448,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                     'No Events Found !',
                                     style: TextStyle(
                                         color: white.withOpacity(0.7)),
-                                  ),
+                                  ).translate(),
                                 ),
                                 viewType: ViewType.list,
                                 physics: BouncingScrollPhysics(),
@@ -489,7 +487,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                               style: TextStyle(
                                                   color:
                                                       white.withOpacity(0.7)),
-                                            ));
+                                            ).translate());
                                       }
 
                                       CombinedEventData combineEvent =
@@ -596,7 +594,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                             'No Package Found !',
                                             style: TextStyle(
                                                 color: white.withOpacity(0.7)),
-                                          ),
+                                          ).translate(),
                                         );
                                       }
                                       List<TrainerPackage> packages =
@@ -637,7 +635,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                 style: TextStyle(
                                                     color:
                                                         white.withOpacity(0.7)),
-                                              ),
+                                              ).translate(),
                                             );
                                     }),
                                 controller.indexs == 2 &&
@@ -663,7 +661,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.w500,
                                                     color: white),
-                                              ),
+                                              ).translate(),
                                               Expanded(
                                                   child: Container(
                                                       margin: EdgeInsets.only(

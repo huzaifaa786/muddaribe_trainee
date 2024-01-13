@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_translator/google_translator.dart';
 
 class SearchInput extends StatelessWidget {
   const SearchInput({super.key, this.ontap});
@@ -37,7 +38,7 @@ class SearchInput extends StatelessWidget {
                 height: 0.27,
                 letterSpacing: -0.13,
               ),
-            ),
+            ).translate(),
           ]),
         ),
       ),

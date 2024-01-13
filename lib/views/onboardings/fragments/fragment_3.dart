@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
 class FragmentThree extends StatefulWidget {
@@ -64,7 +65,7 @@ class _FragmentThreeState extends State<FragmentThree> {
                       // height: 84 / 28,
                     ),
                     textAlign: TextAlign.center,
-                  )),
+                  ).translate()),
             ],
           ),
         ),

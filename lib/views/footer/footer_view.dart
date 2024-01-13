@@ -6,10 +6,10 @@ import 'package:gap/gap.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/views/Myplans/myplans_view.dart';
 import 'package:mudarribe_trainee/views/events/myevents/myEvents_view.dart';
+import 'package:mudarribe_trainee/views/footer/foot_text.dart';
 import 'dart:ui' as ui;
 import 'package:mudarribe_trainee/views/home/home_view.dart';
 import 'package:mudarribe_trainee/views/trainee_profile/profile/profile_view.dart';
-import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class FooterView extends StatefulWidget {
   const FooterView({Key? key, this.selectedIndex}) : super(key: key);
@@ -23,7 +23,6 @@ class _FooterViewState extends State<FooterView> with RouteAware {
   int _navigationMenuIndex = 0;
   @override
   Widget build(BuildContext context) {
-   
     var _fragments = [
       const HomeView(),
       const MyplansView(),
@@ -81,15 +80,11 @@ class _FooterViewState extends State<FooterView> with RouteAware {
                                       width: 16,
                                     ),
                               const Gap(4),
-                              GradientText(
-                                'Home',
-                                style: const TextStyle(
-                                  fontSize: 10.0,
-                                ),
-                                colors: _navigationMenuIndex == 0
+                              FooterText(
+                                  text: 'Home',
+                                   colors: _navigationMenuIndex == 0
                                     ? [borderDown, borderTop]
-                                    : [white, white],
-                              ),
+                                    : [white, white],),
                             ],
                           ),
                         ),
@@ -124,15 +119,11 @@ class _FooterViewState extends State<FooterView> with RouteAware {
                                     width: 16,
                                   ),
                             const Gap(4),
-                            GradientText(
-                              'My Plans',
-                              style: const TextStyle(
-                                fontSize: 10.0,
-                              ),
-                              colors: _navigationMenuIndex == 1
-                                  ? [borderDown, borderTop]
-                                  : [white, white],
-                            ),
+                            FooterText(
+                                text: 'My Plans',
+                                 colors: _navigationMenuIndex == 1
+                                    ? [borderDown, borderTop]
+                                    : [white, white]),
                           ],
                         ),
                       ),
@@ -172,15 +163,11 @@ class _FooterViewState extends State<FooterView> with RouteAware {
                                       width: 16,
                                     ),
                               const Gap(4),
-                              GradientText(
-                                'Events',
-                                style: const TextStyle(
-                                  fontSize: 10.0,
-                                ),
-                                colors: _navigationMenuIndex == 2
+                              FooterText(
+                                  text: 'Events',
+                                   colors: _navigationMenuIndex == 2
                                     ? [borderDown, borderTop]
-                                    : [white, white],
-                              ),
+                                    : [white, white],),
                             ],
                           ),
                         ),
@@ -220,11 +207,8 @@ class _FooterViewState extends State<FooterView> with RouteAware {
                                       width: 16,
                                     ),
                               const Gap(4),
-                              GradientText(
-                                'Me',
-                                style: const TextStyle(
-                                  fontSize: 10.0,
-                                ),
+                              FooterText(
+                                text: 'Me',
                                 colors: _navigationMenuIndex == 3
                                     ? [borderDown, borderTop]
                                     : [white, white],

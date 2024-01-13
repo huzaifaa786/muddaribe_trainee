@@ -1,10 +1,5 @@
 import 'package:get/get.dart';
-import 'package:mudarribe_trainee/components/ordercard.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
-import 'package:mudarribe_trainee/views/Myplans/Morningworkout/morning_workout_binding.dart';
-import 'package:mudarribe_trainee/views/Myplans/Morningworkout/morning_workout_view.dart';
-import 'package:mudarribe_trainee/views/Myplans/NutritionPlan/nutrition_plan_binding.dart';
-import 'package:mudarribe_trainee/views/Myplans/NutritionPlan/nutrition_plan_view.dart';
 import 'package:mudarribe_trainee/views/Myplans/PacakgePlan/package_binding.dart';
 import 'package:mudarribe_trainee/views/Myplans/myPackages/my_packages_binding.dart';
 import 'package:mudarribe_trainee/views/Myplans/planFiles/plan_files.dart';
@@ -47,8 +42,6 @@ import 'package:mudarribe_trainee/views/trainer/packages_checkout/package_checko
 import 'package:mudarribe_trainee/views/trainer/packages_checkout/package_checkout_view.dart';
 import 'package:mudarribe_trainee/views/trainer/profile/profile_binding.dart';
 import 'package:mudarribe_trainee/views/trainer/profile/profile_view.dart';
-import 'package:mudarribe_trainee/views/video/video_view.dart';
-import 'package:mudarribe_trainee/views/video/videoplay_binding.dart';
 import 'package:mudarribe_trainee/views/trainee_profile/edit_profile/editprofile_binding.dart';
 
 class AppPages {
@@ -153,11 +146,11 @@ class AppPages {
       page: () => const PlanFiles(),
       binding: PlanFilesBinding(),
     ),
-    GetPage(
-      name: AppRoutes.nutritionplan,
-      page: () => const NutritionplanView(),
-      binding: NutritionplanBinding(),
-    ),
+    // GetPage(
+    //   name: AppRoutes.nutritionplan,
+    //   page: () => const NutritionplanView(),
+    //   binding: NutritionplanBinding(),
+    // ),
     GetPage(
       name: AppRoutes.search,
       page: () => const SerachView(),

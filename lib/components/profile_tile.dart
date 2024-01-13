@@ -4,19 +4,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
+import 'package:mudarribe_trainee/utils/translation.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
-class ProfileTile extends StatelessWidget {
+class ProfileTile extends StatefulWidget {
   const ProfileTile(
       {super.key, this.ontap, this.text, this.img, this.logout = false});
   final img;
   final text;
   final ontap;
   final logout;
+
+  @override
+  State<ProfileTile> createState() => _ProfileTileState();
+}
+
+class _ProfileTileState extends State<ProfileTile> {
+  String? translatedText;
+
+  @override
+  void initState() {
+    super.initState();
+    translateText1(widget.text);
+  }
+
+  translateText1(String text) async {
+    translatedText = await translateText(text);
+    print(translatedText);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: ontap,
+      onTap: widget.ontap,
       child: SizedBox(
         height: 60,
         width: MediaQuery.of(context).size.width,
@@ -26,13 +47,13 @@ class ProfileTile extends StatelessWidget {
             Row(
               children: [
                 SvgPicture.asset(
-                  img,
+                  widget.img,
                   height: 20,
                   fit: BoxFit.scaleDown,
                 ),
                 Gap(12),
                 GradientText(
-                  text,
+                  translatedText ?? '...',
                   style: TextStyle(
                       fontSize: 16.0,
                       fontFamily: "Poppins",
@@ -41,7 +62,7 @@ class ProfileTile extends StatelessWidget {
                 ),
               ],
             ),
-            logout == false
+            widget.logout == false
                 ? SvgPicture.asset(
                     'assets/images/arrow_forward.svg',
                     height: 20,

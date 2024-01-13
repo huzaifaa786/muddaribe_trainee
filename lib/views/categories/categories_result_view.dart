@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/api/trainer_saved.dart';
 import 'package:mudarribe_trainee/components/boxing_trainers_card.dart';
 import 'package:mudarribe_trainee/components/loading_indicator.dart';
@@ -74,7 +75,7 @@ class _CategoriesResultViewState extends State<CategoriesResultView> {
                           child: Text(
                             'No Trainer With This Category Exist.',
                             style: TextStyle(color: white.withOpacity(0.5)),
-                          ))
+                          ).translate())
                       : ListView.builder(
                           shrinkWrap: true,
                           physics: BouncingScrollPhysics(),

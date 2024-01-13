@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
 class CustomeButton extends StatelessWidget {
@@ -38,7 +39,7 @@ class CustomeButton extends StatelessWidget {
               fontSize: 14,
               fontWeight: FontWeight.w700,
             ),
-          ),
+          ).translate(),
         ),
       ),
     );

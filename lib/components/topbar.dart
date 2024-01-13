@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 
 class TopBar extends StatelessWidget {
   const TopBar({super.key, required this.text});
@@ -33,7 +34,7 @@ class TopBar extends StatelessWidget {
                 fontFamily: "Poppins",
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
-              ))
+              )).translate()
         ],
       ),
     );

@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
 class Plancontainer extends StatelessWidget {
@@ -55,7 +55,7 @@ class Plancontainer extends StatelessWidget {
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
                               color: white),
-                        )),
+                        ).translate()),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(),
@@ -96,7 +96,7 @@ class Plancontainer extends StatelessWidget {
                                   fontSize: 12,
                                   fontWeight: FontWeight.w700,
                                 ),
-                              ),
+                              ).translate(),
                             ),
                           ))
                     ]),

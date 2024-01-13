@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_typing_uninitialized_variables, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:gap/gap.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
@@ -158,7 +159,7 @@ class ChatPlanPopUpCard extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  price,
+                  price + '   ',
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
@@ -167,14 +168,14 @@ class ChatPlanPopUpCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "   AED",
+                  "AED",
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
                     color: white,
                     height: 32 / 12,
                   ),
-                )
+                ).translate()
               ],
             ),
           )

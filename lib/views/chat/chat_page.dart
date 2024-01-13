@@ -1,7 +1,8 @@
-// ignore_for_file: prefer_final_fields, sort_child_properties_last, prefer_const_constructors, avoid_unnecessary_containers, prefer_is_empty, prefer_interpolation_to_compose_strings, avoid_print, prefer_const_literals_to_create_immutables, depend_on_referenced_packages
+// ignore_for_file: prefer_final_fields, sort_child_properties_last, prefer_const_constructors, avoid_unnecessary_containers, prefer_is_empty, prefer_interpolation_to_compose_strings, avoid_print, prefer_const_literals_to_create_immutables, depend_on_referenced_packages, unused_local_variable
 
 import 'dart:async';
 import 'dart:io';
+import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/services/notification_service.dart';
 import 'package:mudarribe_trainee/utils/controller_initlization.dart';
 import 'package:mudarribe_trainee/views/chat/chat_plan_card.dart';
@@ -652,7 +653,7 @@ class ChatPageState extends State<ChatPage> {
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w600,
                                                     color: white),
-                                              )
+                                              ).translate()
                                             ],
                                           ),
                                           Gap(12),
@@ -779,7 +780,7 @@ class ChatPageState extends State<ChatPage> {
                                                     fontWeight: FontWeight.w500,
                                                     color: white,
                                                   ),
-                                                ),
+                                                ).translate(),
                                               ),
                                               messageChat.content
                                                           .split("~~")[3]
@@ -971,7 +972,7 @@ class ChatPageState extends State<ChatPage> {
                                                               FontWeight.w500,
                                                           color: white,
                                                         ),
-                                                      ),
+                                                      ).translate(),
                                                     )
                                                   : SizedBox(),
                                             ],
@@ -1219,7 +1220,7 @@ class ChatPageState extends State<ChatPage> {
                         child: Text(
                       "No message here yet...",
                       style: TextStyle(color: white),
-                    ));
+                    ).translate());
                   }
                 } else {
                   return Center(
@@ -1267,7 +1268,7 @@ class ChatPageState extends State<ChatPage> {
                     fontWeight: FontWeight.w500,
                     color: Color(0xff0f0a06),
                   ),
-                ),
+                ).translate(),
               ),
               Container(
                   width: double.infinity,
@@ -1293,7 +1294,7 @@ class ChatPageState extends State<ChatPage> {
                     fontWeight: FontWeight.w500,
                     color: Color(0xff0f0a06),
                   ),
-                ),
+                ).translate(),
               ),
               SizedBox(height: 20),
               ElevatedButton(
@@ -1316,7 +1317,7 @@ class ChatPageState extends State<ChatPage> {
                     fontWeight: FontWeight.w500,
                     color: Color(0xff0f0a06),
                   ),
-                ),
+                ).translate(),
               ),
             ],
           ),

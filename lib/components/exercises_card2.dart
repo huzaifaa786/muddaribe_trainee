@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
+import 'package:mudarribe_trainee/utils/translation.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
-class ExercisesCard2 extends StatelessWidget {
+class ExercisesCard2 extends StatefulWidget {
   const ExercisesCard2(
       {super.key,
       this.category,
@@ -20,9 +21,27 @@ class ExercisesCard2 extends StatelessWidget {
   final ontap;
 
   @override
+  State<ExercisesCard2> createState() => _ExercisesCard2State();
+}
+
+class _ExercisesCard2State extends State<ExercisesCard2> {
+  String? translatedText;
+
+  @override
+  void initState() {
+    super.initState();
+    translateText1(widget.planName);
+  }
+
+  translateText1(String text) async {
+    translatedText = await translateText(text);
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: ontap,
+      onTap: widget.ontap,
       child: Container(
         margin: EdgeInsets.only(top: 10, right: 10, left: 10),
         padding: EdgeInsets.all(20),
@@ -37,7 +56,7 @@ class ExercisesCard2 extends StatelessWidget {
             ),
             Row(
               children: [
-                category == 'excercise&nutrition'
+                widget.category == 'excercise&nutrition'
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -62,12 +81,12 @@ class ExercisesCard2 extends StatelessWidget {
                       )
                     : Padding(
                         padding: EdgeInsets.only(left: 20, right: 20),
-                        child: category == 'excercise'
+                        child: widget.category == 'excercise'
                             ? Image.asset('assets/images/packageplanimage.png')
                             : Image.asset(
                                 'assets/images/packageplanimage1.png'),
                       ),
-                GradientText(planName,
+                GradientText(translatedText ?? '...',
                     style: TextStyle(fontSize: 16.0, fontFamily: "Poppins"),
                     colors: [borderDown, borderTop]),
               ],
@@ -94,7 +113,7 @@ class ExercisesCard2 extends StatelessWidget {
                           width: 2,
                         ),
                         image: DecorationImage(
-                          image: NetworkImage(trainerProfile),
+                          image: NetworkImage(widget.trainerProfile),
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -109,7 +128,7 @@ class ExercisesCard2 extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            trainerName,
+                            widget.trainerName,
                             style: TextStyle(
                               fontSize: 14,
                               fontFamily: 'Montserrat',
@@ -118,7 +137,7 @@ class ExercisesCard2 extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            trainerCategories,
+                            widget.trainerCategories,
                             style: TextStyle(
                               fontSize: 12,
                               fontFamily: 'Montserrat',

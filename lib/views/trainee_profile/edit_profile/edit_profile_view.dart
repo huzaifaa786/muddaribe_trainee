@@ -3,15 +3,34 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/components/color_button.dart';
 import 'package:mudarribe_trainee/components/underline_input.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
+import 'package:mudarribe_trainee/utils/translation.dart';
 import 'package:mudarribe_trainee/views/trainee_profile/edit_profile/editprofile_controller.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
-class TraineeEditProfileView extends StatelessWidget {
+class TraineeEditProfileView extends StatefulWidget {
   const TraineeEditProfileView({super.key});
+
+  @override
+  State<TraineeEditProfileView> createState() => _TraineeEditProfileViewState();
+}
+
+class _TraineeEditProfileViewState extends State<TraineeEditProfileView> {
+  String? changePassword;
+  text() async {
+    changePassword = await translateText('Change password?');
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    text();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +54,7 @@ class TraineeEditProfileView extends StatelessWidget {
                       color: Colors.white,
                       fontSize: 24,
                       fontWeight: FontWeight.w700,
-                    )),
+                    )).translate(),
               ),
               body: SafeArea(
                 child: Column(
@@ -67,7 +86,7 @@ class TraineeEditProfileView extends StatelessWidget {
                                         children: [
                                           CircleAvatar(
                                             backgroundImage: AssetImage(
-                                                    "assets/images/dummyUser.png"),
+                                                "assets/images/dummyUser.png"),
                                           ),
                                           // Positioned(
                                           //     bottom: 23,
@@ -116,7 +135,7 @@ class TraineeEditProfileView extends StatelessWidget {
                                           color: white.withOpacity(0.45),
                                           height: 20 / 14,
                                         ),
-                                      ),
+                                      ).translate(),
                                     ),
                                     UnderlineInputField(
                                       img: 'assets/images/person.svg',
@@ -133,7 +152,7 @@ class TraineeEditProfileView extends StatelessWidget {
                                           fontWeight: FontWeight.w500,
                                           color: white.withOpacity(0.45),
                                         ),
-                                      ),
+                                      ).translate(),
                                     ),
                                     UnderlineInputField(
                                       img: 'assets/images/email_outline.svg',
@@ -151,7 +170,7 @@ class TraineeEditProfileView extends StatelessWidget {
                                             child: Align(
                                               alignment: Alignment.centerLeft,
                                               child: GradientText(
-                                                  'Change password?',
+                                                  changePassword ?? '...',
                                                   style: TextStyle(
                                                       fontSize: 14.0,
                                                       fontFamily: "Poppins"),

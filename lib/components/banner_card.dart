@@ -3,6 +3,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/api/attenddee_api.dart';
 import 'package:mudarribe_trainee/components/button.dart';
 import 'package:mudarribe_trainee/models/event_other_data.dart';
@@ -120,7 +121,7 @@ class BannerCard extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                              ),
+                              ).translate(),
                             ],
                           )
                         ],

@@ -6,7 +6,6 @@ import 'package:mudarribe_trainee/components/exercises_card.dart';
 import 'package:mudarribe_trainee/components/topbar.dart';
 import 'package:mudarribe_trainee/models/plan.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
-import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/views/Myplans/PacakgePlan/package_controller.dart';
 
 class PackagePlans extends StatefulWidget {

@@ -3,12 +3,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/components/IconButton.dart';
 import 'package:mudarribe_trainee/components/color_button.dart';
 import 'package:mudarribe_trainee/components/inputfield.dart';
 import 'package:mudarribe_trainee/components/password_inputField.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
+import 'package:mudarribe_trainee/utils/translation.dart';
 import 'package:mudarribe_trainee/utils/ui_utils.dart';
 import 'package:mudarribe_trainee/views/authentication/signup/signup_controller.dart';
 import 'package:mudarribe_trainee/components/loading_indicator.dart';
@@ -21,6 +23,28 @@ class SignUpView extends StatefulWidget {
 }
 
 class _SignUpViewState extends State<SignUpView> {
+  String? translatedText;
+  String? privacypolicy;
+  String? and;
+  String? term_and_condition;
+  String? signin;
+  String? create;
+  translateText1() async {
+    translatedText = await translateText('Forget password?');
+    privacypolicy = await translateText('Privacy Policy');
+    and = await translateText('and');
+    term_and_condition = await translateText('Terms & Conditions');
+    signin = await translateText('Signin');
+    create = await translateText('Already have account ?');
+    setState(() {});
+  }
+
+  @override
+  void initState() async {
+    super.initState();
+    translateText1();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SignUpController>(
@@ -49,7 +73,7 @@ class _SignUpViewState extends State<SignUpView> {
                                 color: Colors.white,
                               ),
                               textAlign: TextAlign.center,
-                            ),
+                            ).translate(),
                           ),
                           Container(
                             padding: EdgeInsets.only(
@@ -116,7 +140,7 @@ class _SignUpViewState extends State<SignUpView> {
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
                                     color: white),
-                              ),
+                              ).translate(),
                               Expanded(
                                   child: Container(
                                       margin:
@@ -154,7 +178,7 @@ class _SignUpViewState extends State<SignUpView> {
                                   color: white,
                                 ),
                                 textAlign: TextAlign.center,
-                              ),
+                              ).translate(),
                             ),
                           ),
                           Align(
@@ -167,7 +191,8 @@ class _SignUpViewState extends State<SignUpView> {
                                 text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: 'Privacy Policy',
+                                      text: privacypolicy as String,
+                                      // text: 'Privacy Policy',
                                       style: TextStyle(
                                           fontSize: 12,
                                           fontFamily: "Poppins",
@@ -178,12 +203,23 @@ class _SignUpViewState extends State<SignUpView> {
                                         ..onTap = () {},
                                     ),
                                     TextSpan(
-                                      text: '  and  ',
+                                      text: '  ',
                                       style: TextStyle(
                                           fontSize: 12, color: Colors.white),
                                     ),
                                     TextSpan(
-                                      text: 'Terms & Conditions',
+                                      text: and ?? '...',
+                                      style: TextStyle(
+                                          fontSize: 12, color: Colors.white),
+                                    ),
+                                    TextSpan(
+                                      text: '  ',
+                                      style: TextStyle(
+                                          fontSize: 12, color: Colors.white),
+                                    ),
+                                    TextSpan(
+                                      text: term_and_condition ?? '...',
+                                      // text: 'Terms & Conditions',
                                       style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
@@ -207,7 +243,7 @@ class _SignUpViewState extends State<SignUpView> {
                                 text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: 'Already have account ?   ',
+                                      text: create ?? '...',
                                       style: TextStyle(
                                           fontSize: 12,
                                           fontFamily: "Poppins",
@@ -216,8 +252,9 @@ class _SignUpViewState extends State<SignUpView> {
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {},
                                     ),
+                                    TextSpan(text: '    '),
                                     TextSpan(
-                                      text: 'Sign in',
+                                      text: signin ?? '...',
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500,

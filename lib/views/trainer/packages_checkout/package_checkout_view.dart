@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:mudarribe_trainee/api/package_api.dart';
 import 'package:mudarribe_trainee/components/textgradient.dart';
@@ -52,7 +53,7 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                       color: white,
                       fontWeight: FontWeight.w700,
                       fontFamily: 'Poppins'),
-                ),
+                ).translate(),
               ),
               body: SafeArea(
                   child: Container(
@@ -293,7 +294,7 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                                     fontSize: 12,
                                                     fontWeight: FontWeight.w700,
                                                   ),
-                                                ),
+                                                ).translate(),
                                               ],
                                             )),
                                       ],
@@ -324,7 +325,7 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                             fontSize: 14,
                                             fontWeight: FontWeight.w600,
                                           ),
-                                        ),
+                                        ).translate(),
                                         controller.total != ''
                                             ? GradientText1(
                                                 text: controller.promoCode.text,
@@ -404,7 +405,7 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700,
                                     ),
-                                  ),
+                                  ).translate(),
                                 ),
                               ),
                               Container(
@@ -432,7 +433,7 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600,
                                             ),
-                                          ),
+                                          ).translate(),
                                           Text(
                                             '${combinedPackagetData.package.price} AED',
                                             style: TextStyle(
@@ -440,7 +441,7 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600,
                                             ),
-                                          ),
+                                          ).translate(),
                                         ],
                                       ),
                                     ),
@@ -466,7 +467,7 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600,
                                             ),
-                                          ),
+                                          ).translate(),
                                           Text(
                                             '${controller.discount.toString()} AED',
                                             style: TextStyle(
@@ -474,7 +475,7 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600,
                                             ),
-                                          ),
+                                          ).translate(),
                                         ],
                                       ),
                                     ),
@@ -500,7 +501,7 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600,
                                             ),
-                                          ),
+                                          ).translate(),
                                           GradientText(
                                             controller.total == ''
                                                 ? controller.price + ' AED'
@@ -566,7 +567,7 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                             fontSize: 14,
                                             fontWeight: FontWeight.w700,
                                           ),
-                                        ),
+                                        ).translate(),
                                       )),
                                 ),
                               )

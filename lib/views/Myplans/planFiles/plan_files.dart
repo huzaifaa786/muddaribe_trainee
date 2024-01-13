@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:mudarribe_trainee/api/order_api.dart';
 import 'package:mudarribe_trainee/api/trainer_profile_api.dart';
@@ -212,7 +212,7 @@ class _PlanFilesState extends State<PlanFiles> {
                                               fontWeight: FontWeight.w700,
                                               fontFamily: 'Poppins',
                                               color: whitewithopacity1),
-                                        ),
+                                        ).translate(),
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.only(top: 10),

@@ -2,17 +2,14 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:gradient_borders/box_borders/gradient_box_border.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:intl/intl.dart';
 import 'package:mudarribe_trainee/api/post_api.dart';
 import 'package:mudarribe_trainee/api/save_api.dart';
 import 'package:mudarribe_trainee/api/trainer_saved.dart';
 import 'package:mudarribe_trainee/components/boxing_trainers_card.dart';
-// ignore: unused_import
 import 'package:mudarribe_trainee/components/eventDetailsCard.dart';
-import 'package:mudarribe_trainee/components/eventDetailsCard1.dart';
 import 'package:mudarribe_trainee/components/post_card.dart';
 import 'package:mudarribe_trainee/models/event_data_combined.dart';
 import 'package:mudarribe_trainee/models/post_data_combined.dart';
@@ -55,7 +52,7 @@ class _SavedViewsState extends State<SavedViews> {
               fontFamily: 'Poppins',
               fontWeight: FontWeight.w700,
             ),
-          ),
+          ).translate(),
         ),
         body: SafeArea(
           child: DefaultTabController(
@@ -76,7 +73,7 @@ class _SavedViewsState extends State<SavedViews> {
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w700,
                         ),
-                      ),
+                      ).translate(),
                     ),
                     Tab(
                       child: Text(
@@ -87,7 +84,7 @@ class _SavedViewsState extends State<SavedViews> {
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w700,
                         ),
-                      ),
+                      ).translate(),
                     ),
                     Tab(
                       child: Text(
@@ -98,7 +95,7 @@ class _SavedViewsState extends State<SavedViews> {
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w700,
                         ),
-                      ),
+                      ).translate(),
                     ),
                   ],
                 ),
@@ -115,7 +112,7 @@ class _SavedViewsState extends State<SavedViews> {
                                   child: Text(
                                 'Error: ${snapshot.error}',
                                 style: TextStyle(color: white),
-                              ));
+                              ).translate());
                             } else if (!snapshot.hasData) {
                               return SizedBox(
                                 height: Get.height,
@@ -124,7 +121,7 @@ class _SavedViewsState extends State<SavedViews> {
                                     child: Text(
                                   'No Saved Trainer',
                                   style: TextStyle(color: white),
-                                )),
+                                ).translate()),
                               );
                             } else {
                               final saveTrainerSnapshot = snapshot.data;
@@ -137,7 +134,7 @@ class _SavedViewsState extends State<SavedViews> {
                                         if (trainers.hasError) {
                                           return Center(
                                               child: Text(
-                                                  'Error: ${trainers.error}'));
+                                                  'Error: ${trainers.error}').translate());
                                         } else if (!trainers.hasData) {
                                           return SizedBox(
                                             height: Get.height,
@@ -146,7 +143,7 @@ class _SavedViewsState extends State<SavedViews> {
                                                 child: Text(
                                               'No Saved Trainer',
                                               style: TextStyle(color: white),
-                                            )),
+                                            ).translate()),
                                           );
                                         } else {
                                           List<Trainer> trainerss =
@@ -207,7 +204,7 @@ class _SavedViewsState extends State<SavedViews> {
                                           child: Text(
                                         'No Saved Trainer',
                                         style: TextStyle(color: white),
-                                      )),
+                                      ).translate()),
                                     );
                             }
                           },
@@ -220,7 +217,7 @@ class _SavedViewsState extends State<SavedViews> {
                                   child: Text(
                                 'Error: ${snapshot.error}',
                                 style: TextStyle(color: white),
-                              ));
+                              ).translate());
                             } else if (!snapshot.hasData) {
                               print('no event data');
                               return SizedBox(
@@ -230,7 +227,7 @@ class _SavedViewsState extends State<SavedViews> {
                                     child: Text(
                                   'No Saved Event',
                                   style: TextStyle(color: white),
-                                )),
+                                ).translate()),
                               );
                             } else {
                               final saveEventSnapshot = snapshot.data;
@@ -242,7 +239,7 @@ class _SavedViewsState extends State<SavedViews> {
                                         if (combinedEventData.hasError) {
                                           return Center(
                                               child: Text(
-                                                  'Error: ${combinedEventData.error}'));
+                                                  'Error: ${combinedEventData.error}').translate());
                                         } else if (!combinedEventData.hasData) {
                                           return SizedBox(
                                             height: Get.height,
@@ -251,7 +248,7 @@ class _SavedViewsState extends State<SavedViews> {
                                                 child: Text(
                                               'No Saved Event',
                                               style: TextStyle(color: white),
-                                            )),
+                                            ).translate()),
                                           );
                                         } else {
                                           List<CombinedEventData> events =
@@ -342,7 +339,7 @@ class _SavedViewsState extends State<SavedViews> {
                                   child: Text(
                                 'Error: ${snapshot.error}',
                                 style: TextStyle(color: white),
-                              ));
+                              ).translate());
                             } else if (!snapshot.hasData) {
                               return SizedBox(
                                 height: Get.height,
@@ -351,7 +348,7 @@ class _SavedViewsState extends State<SavedViews> {
                                     child: Text(
                                   'No Saved Posts',
                                   style: TextStyle(color: white),
-                                )),
+                                ).translate()),
                               );
                             } else {
                               final savePostSnapshot = snapshot.data;
@@ -365,7 +362,7 @@ class _SavedViewsState extends State<SavedViews> {
                                               child: Text(
                                             'Error: ${combinedPostData.error}',
                                             style: TextStyle(color: white),
-                                          ));
+                                          ).translate());
                                         } else if (!combinedPostData.hasData) {
                                           return SizedBox(
                                             height: Get.height,
@@ -374,7 +371,7 @@ class _SavedViewsState extends State<SavedViews> {
                                                 child: Text(
                                               'No Saved Posts',
                                               style: TextStyle(color: white),
-                                            )),
+                                            ).translate()),
                                           );
                                         } else {
                                           List<CombinedData> posts =
@@ -460,7 +457,7 @@ class _SavedViewsState extends State<SavedViews> {
                                           child: Text(
                                         'No Saved Posts',
                                         style: TextStyle(color: white),
-                                      )),
+                                      ).translate()),
                                     );
                             }
                           },

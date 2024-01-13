@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:photo_view/photo_view.dart';
 
 class FullPhotoPage extends StatefulWidget {
@@ -17,7 +18,7 @@ class _FullPhotoPageState extends State<FullPhotoPage> {
       appBar: AppBar(
         title: const Text(
           'Full photo',
-        ),
+        ).translate(),
         centerTitle: true,
       ),
       body: PhotoView(

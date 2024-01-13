@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/api/chat_api.dart';
 import 'package:mudarribe_trainee/components/Chat_tile.dart';
 import 'package:mudarribe_trainee/components/topbar.dart';
@@ -36,7 +37,7 @@ class ChatLsitScreen extends StatelessWidget {
                       builder: (context, snapshot) {
                         if (snapshot.hasError) {
                           return Center(
-                              child: Text('Error: ${snapshot.error}'));
+                              child: Text('Error: ${snapshot.error}').translate());
                         } else if (!snapshot.hasData) {
                           return Center(child: Text(''));
                         } else {
@@ -46,7 +47,7 @@ class ChatLsitScreen extends StatelessWidget {
                             builder: (context, snapshot) {
                               if (snapshot.hasError) {
                                 return Center(
-                                    child: Text('Error: ${snapshot.error}'));
+                                    child: Text('Error: ${snapshot.error}').translate());
                               } else if (!snapshot.hasData) {
                                 return Text('');
                               } else {
@@ -111,10 +112,10 @@ class ChatLsitScreen extends StatelessWidget {
                                               padding: const EdgeInsets.only(
                                                   bottom: 12),
                                               child: Text(
-                                                "No chats found".tr,
+                                                "No chats found",
                                                 textAlign: TextAlign.center,
                                                 maxLines: 2,
-                                              ),
+                                              ).translate(),
                                             ),
                                           ],
                                         ));

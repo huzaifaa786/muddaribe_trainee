@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mudarribe_trainee/api/post_api.dart';
 import 'package:mudarribe_trainee/api/story_api.dart';
 import 'package:mudarribe_trainee/models/trainer.dart';
 import 'package:mudarribe_trainee/models/trainer_story.dart';
-import 'package:story_view/controller/story_controller.dart';
 import 'package:story_view/story_view.dart';
 
 class TrainerStoryContoller extends GetxController {

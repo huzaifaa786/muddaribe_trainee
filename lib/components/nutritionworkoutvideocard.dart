@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
 class Nutritionworkoutvideocard extends StatelessWidget {
@@ -71,7 +72,7 @@ class Nutritionworkoutvideocard extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                       color: Color.fromRGBO(255, 255, 255, 0.6),
                       fontFamily: 'Poppins'),
-                )
+                ).translate()
               ],
             ),
           )

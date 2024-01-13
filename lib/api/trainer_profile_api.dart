@@ -1,9 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:mudarribe_trainee/exceptions/database_api_exception.dart';
-import 'package:mudarribe_trainee/models/event.dart';
 import 'package:mudarribe_trainee/models/post.dart';
 import 'package:mudarribe_trainee/models/post_data_combined.dart';
 import 'package:mudarribe_trainee/models/trainer.dart';
