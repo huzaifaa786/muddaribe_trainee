@@ -35,9 +35,14 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     // ignore: prefer_const_literals_to_create_immutables
                     children: [
-                      Icon(
-                        Icons.arrow_back_ios_new,
-                        color: Colors.white,
+                      InkWell(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: Icon(
+                          Icons.arrow_back_ios_new,
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   ),
@@ -58,7 +63,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                   Container(
                     // height: 300,
                     padding: EdgeInsets.only(
-                        left: 15, right: 15, top:40, bottom: 25),
+                        left: 15, right: 15, top: 40, bottom: 25),
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                         color: Color.fromARGB(255, 15, 15, 15),
@@ -114,15 +119,15 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                   ),
                   GradientButton(
                     title: 'Submit',
-                      onPressed: controller.areFieldsFilled.value
-                          ? () {
-                              controller.changePassword();
-                            }
-                          : () {
-                              UiUtilites.errorSnackbar('Fill out all fields',
-                                  'Please fill all above fields');
-                            },
-                      selected: controller.areFieldsFilled.value,
+                    onPressed: controller.areFieldsFilled.value
+                        ? () {
+                            controller.changePassword();
+                          }
+                        : () {
+                            UiUtilites.errorSnackbar('Fill out all fields',
+                                'Please fill all above fields');
+                          },
+                    selected: controller.areFieldsFilled.value,
                   )
                 ],
               ),
