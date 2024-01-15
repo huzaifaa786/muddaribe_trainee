@@ -61,7 +61,8 @@ class _NotificationsViewState extends State<NotificationsView> {
                     ).translate(),
                   );
                 }
-                List<CombinedTrainerNotification> notifications = snapshot.data!;
+                List<CombinedTrainerNotification> notifications =
+                    snapshot.data!;
                 return ListView.builder(
                     itemCount: notifications.length,
                     itemBuilder: (BuildContext context, int index) {
@@ -76,17 +77,18 @@ class _NotificationsViewState extends State<NotificationsView> {
                                       .profileImageUrl,
                                   name: notifications[index].trainer.name,
                                   ontap: () {
-                                    Get.toNamed(AppRoutes.planFiles, parameters: {
-                                      'planId': notifications[index]
-                                          .notification
-                                          .planId,
-                                      'planName': notifications[index]
-                                          .notification
-                                          .planName,
-                                      'trainerId': notifications[index]
-                                          .notification
-                                          .trainerId,
-                                    });
+                                    Get.toNamed(AppRoutes.planFiles,
+                                        parameters: {
+                                          'planId': notifications[index]
+                                              .notification
+                                              .planId,
+                                          'planName': notifications[index]
+                                              .notification
+                                              .planName,
+                                          'trainerId': notifications[index]
+                                              .notification
+                                              .trainerId,
+                                        });
                                   },
                                 ),
                                 DividerNotification(),
@@ -95,6 +97,12 @@ class _NotificationsViewState extends State<NotificationsView> {
                           : Column(
                               children: [
                                 RemainderView(
+                                  text: notifications[index]
+                                              .notification
+                                              .content ==
+                                          'Event joined successfully.'
+                                      ? 'View Events'
+                                      : 'View Trainer Profile',
                                   content:
                                       notifications[index].notification.content,
                                   img: notifications[index]
@@ -102,31 +110,37 @@ class _NotificationsViewState extends State<NotificationsView> {
                                       .profileImageUrl,
                                   name: notifications[index].trainer.name,
                                   ontap: () {
-                                    Get.toNamed(AppRoutes.trainerprofile,
+                                    notifications[index].notification.content ==
+                                            'Event joined successfully.'
+                                        ? Get.toNamed(AppRoutes.myevents,
                                             arguments:
-                                                notifications[index].trainer.id)!
-                                        .then((value) async {
-                                      //                                     try {
-                                      //   // Reference to the "followed_trainers" collection
-                                      //   final CollectionReference followedTrainersRef =
-                                      //       FirebaseFirestore.instance.collection('followed_trainers');
-                                      //   final QuerySnapshot querySnapshot = await followedTrainersRef
-                                      //       .where('userId', isEqualTo: FirebaseAuth.instance.)
-                                      //       .limit(1)
-                                      //       .get();
-                                      //   if (querySnapshot.docs.isNotEmpty) {
-                                      //     follewed = true;
-                                      //     update();
-                                      //   } else {
-                                      //     follewed = false;
-                                      //     update();
-                                      //   }
-                                      // } catch (e) {
-                                      //   follewed = false;
-                                      //   update();
-                                      //   // return false;
-                                      // }
-                                    });
+                                                notifications[index].trainer.id)
+                                        : Get.toNamed(AppRoutes.trainerprofile,
+                                            arguments: notifications[index]
+                                                .trainer
+                                                .id);
+                                    // .then((value) async {
+                                    //   //                                     try {
+                                    //   //   // Reference to the "followed_trainers" collection
+                                    //   //   final CollectionReference followedTrainersRef =
+                                    //   //       FirebaseFirestore.instance.collection('followed_trainers');
+                                    //   //   final QuerySnapshot querySnapshot = await followedTrainersRef
+                                    //   //       .where('userId', isEqualTo: FirebaseAuth.instance.)
+                                    //   //       .limit(1)
+                                    //   //       .get();
+                                    //   //   if (querySnapshot.docs.isNotEmpty) {
+                                    //   //     follewed = true;
+                                    //   //     update();
+                                    //   //   } else {
+                                    //   //     follewed = false;
+                                    //   //     update();
+                                    //   //   }
+                                    //   // } catch (e) {
+                                    //   //   follewed = false;
+                                    //   //   update();
+                                    //   //   // return false;
+                                    //   // }
+                                    // });
                                   },
                                 ),
                                 DividerNotification(),

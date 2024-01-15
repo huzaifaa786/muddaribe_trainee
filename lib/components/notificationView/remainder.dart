@@ -6,12 +6,13 @@ import 'package:mudarribe_trainee/utils/translation.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class RemainderView extends StatefulWidget {
-  const RemainderView({Key? key, this.name, this.ontap, this.content, this.img})
+  const RemainderView({Key? key, this.name, this.ontap, this.content, this.img,this.text})
       : super(key: key);
   final content;
   final name;
   final ontap;
   final img;
+  final text;
   @override
   State<RemainderView> createState() => _RemainderViewState();
 }
@@ -22,7 +23,7 @@ class _RemainderViewState extends State<RemainderView> {
   @override
   void initState() {
     super.initState();
-    translateText1('View Trainer profile');
+    translateText1(widget.text);
   }
 
   translateText1(String text) async {

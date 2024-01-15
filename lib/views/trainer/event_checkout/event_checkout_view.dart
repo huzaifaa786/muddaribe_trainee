@@ -265,22 +265,35 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                             child: Row(
                               children: [
                                 SvgPicture.asset('assets/images/location.svg'),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10, bottom: 0),
-                                  child: Container(
-                                    width: Get.width * 0.7,
-                                    child: Text(
-                                      combinedEventData.event.address,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Montserrat',
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 12,
+                                SizedBox(
+                                  width: Get.width * 0.8,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, bottom: 0),
+                                        child: Container(
+                                          width: Get.width * 0.6,
+                                          child: Text(
+                                            combinedEventData.event.address,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontFamily: 'Montserrat',
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                      GradientText1(
+                                        text: 'View',
+                                        size: 16.0,
+                                      ),
+                                    ],
                                   ),
-                                )
+                                ),
                               ],
                             ),
                           ),
@@ -419,16 +432,32 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ).translate(),
-                                    GradientText(
+                                    // GradientText(
+
+                                    //   style: TextStyle(
+                                    //     fontSize: 18,
+                                    //     fontWeight: FontWeight.w700,
+                                    //   ),
+                                    //   colors: [borderTop, gradientblue],
+                                    // ),
+                                    Text(
                                       controller.total == ''
                                           ? controller.price + ' AED'
                                           : controller.total + ' AED',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                      colors: [borderTop, gradientblue],
-                                    ),
+                                      style: new TextStyle(
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.bold,
+                                          foreground: Paint()
+                                            ..shader = LinearGradient(
+                                              colors: <Color>[
+                                                borderTop,
+                                                borderTop,
+                                                borderTop,
+                                                borderDown
+                                              ],
+                                            ).createShader(Rect.fromLTWH(
+                                                0.0, 0.0, 250.0, 70.0))),
+                                    ).translate()
                                   ],
                                 ),
                               ),

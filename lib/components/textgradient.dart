@@ -9,9 +9,10 @@ class GradientText1 extends StatefulWidget {
   GradientText1({
     super.key,
     this.text,
+    this.size =16.0,
   });
   dynamic text;
-
+dynamic size;
   @override
   State<GradientText1> createState() => _GradientText1State();
 }
@@ -35,7 +36,7 @@ class _GradientText1State extends State<GradientText1> {
     return GradientText(
       translatedText ?? '...',
       style: TextStyle(
-        fontSize: 16,
+        fontSize: widget.size,
         fontFamily: 'Montserrat',
         fontWeight: FontWeight.w700,
       ),

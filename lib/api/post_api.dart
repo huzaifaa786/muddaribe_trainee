@@ -44,6 +44,28 @@ class HomeApi {
         trainer: trainer, event: event, eventOtherData: eventOtherData);
   }
 
+  static Stream<CombinedEventData> fetchCombineEventDataAsStream(
+      String trainerId, Events event) async* {
+    final attendeeApi = AttendeeApi();
+
+    // Fetch trainer data
+    final trainerSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(trainerId)
+        .get();
+
+    final trainerData = trainerSnapshot.data() as Map<String, dynamic>;
+    Trainer trainer = Trainer.fromMap(trainerData);
+
+    // Fetch event attendees data
+    EventOtherData eventOtherData =
+        await attendeeApi.geteventAttendees(event.eventId);
+
+    // Yield the combined data
+    yield CombinedEventData(
+        trainer: trainer, event: event, eventOtherData: eventOtherData);
+  }
+
   static Future<Trainer?> fetchTrainerStoryData(String trainerId) async {
     final storySnapshot = await FirebaseFirestore.instance
         .collection('trainer_stories')
