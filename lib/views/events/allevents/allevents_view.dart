@@ -27,6 +27,8 @@ class AllEventsView extends StatefulWidget {
 }
 
 class _AllEventsViewState extends State<AllEventsView> {
+  bool _isDataLoaded = false;
+  CombinedEventData? _cachedData;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +62,7 @@ class _AllEventsViewState extends State<AllEventsView> {
             limit: 20,
             onEmpty: Text(
               'No event uploaded yet.',
-              style: TextStyle(color: white.withOpacity(0.3)),
+              style: TextStyle(color: Colors.white.withOpacity(0.3)),
             ).translate(),
             viewType: ViewType.list,
             physics: BouncingScrollPhysics(),
@@ -70,26 +72,38 @@ class _AllEventsViewState extends State<AllEventsView> {
               final eventData = documentSnapshot.data() as Map<String, dynamic>;
               final trainerId = eventData['trainerId'];
               Events events = Events.fromMap(eventData);
-              return FutureBuilder<CombinedEventData>(
-                future: HomeApi.fetchCombineEventData(trainerId, events),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return SizedBox(
-                        height: Get.height * 0.5,
-                        child: Center(child: CircularProgressIndicator()));
-                  }
-                  if (snapshot.hasError) {
-                    return Text(
-                      snapshot.error.toString(),
-                      style: TextStyle(color: white),
-                    );
-                  }
-                  if (!snapshot.hasData) {
-                    return Text('');
-                  }
 
-                  CombinedEventData combineEvent = snapshot.data!;
-                  return FutureBuilder<QuerySnapshot>(
+              if (!_isDataLoaded) {
+                // Only show the loading state if the data has not been loaded
+                return FutureBuilder<CombinedEventData>(
+                  future: _cachedData != null
+                      ? Future.value(
+                          _cachedData) // Use the cached data if available
+                      : HomeApi.fetchCombineEventData(trainerId, events),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.5,
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    }
+                    if (snapshot.hasError) {
+                      return Text(
+                        snapshot.error.toString(),
+                        style: TextStyle(color: Colors.white),
+                      );
+                    }
+                    if (!snapshot.hasData) {
+                      return Text('');
+                    }
+
+                    _cachedData = snapshot.data; // Cache the fetched data
+                    _isDataLoaded =
+                        true; // Set the flag to true once the data is loaded
+
+                    CombinedEventData combineEvent = snapshot.data!;
+
+                    return FutureBuilder<QuerySnapshot>(
                       future: FirebaseFirestore.instance
                           .collection('savedEvent')
                           .where('userId',
@@ -133,9 +147,57 @@ class _AllEventsViewState extends State<AllEventsView> {
                             },
                           );
                         }
-                      });
-                },
-              );
+                      },
+                    );
+                  },
+                );
+              } else {
+                return FutureBuilder<QuerySnapshot>(
+                  future: FirebaseFirestore.instance
+                      .collection('savedEvent')
+                      .where('userId',
+                          isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+                      .where('eventId', isEqualTo: events.eventId)
+                      .get(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return Text('');
+                    } else if (snapshot.hasError) {
+                      return Text('');
+                    } else {
+                      final docs = snapshot.data!.docs;
+                      bool saved = docs.isNotEmpty ? true : false;
+                      return EventDetailsCard(
+                        category: _cachedData!.trainer.category.join(' & '),
+                        name: _cachedData!.trainer.name,
+                        image: _cachedData!.trainer.profileImageUrl,
+                        eventimg: _cachedData!.event.imageUrl,
+                        address: _cachedData!.event.address,
+                        startTime: _cachedData!.event.startTime,
+                        endTime: _cachedData!.event.endTime,
+                        date: _cachedData!.event.date,
+                        capacity: _cachedData!.event.capacity,
+                        attendees: _cachedData!.eventOtherData.totalAttendees,
+                        isJoined:
+                            _cachedData!.eventOtherData.isCurrentUserAttendee,
+                        price: _cachedData!.event.price,
+                        isSaved: saved,
+                        eventId: _cachedData!.event.eventId,
+                        onSave: () {
+                          setState(() {
+                            saved = !saved;
+                          });
+                          if (saved) {
+                            HomeApi.eventSaved(events.eventId);
+                          } else {
+                            HomeApi.eventUnsaved(events.eventId);
+                          }
+                        },
+                      );
+                    }
+                  },
+                );
+              }
             },
           ),
         ),

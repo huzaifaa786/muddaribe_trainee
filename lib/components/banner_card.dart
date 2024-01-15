@@ -63,14 +63,7 @@ class BannerCard extends StatelessWidget {
                             color: Colors.white,
                             fontSize: 20,
                             fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w600,
-                            shadows: <Shadow>[
-                              Shadow(
-                                offset: Offset(2.0, 6.0),
-                                blurRadius: 1.0,
-                                color: shadowBlack,
-                              ),
-                            ],
+                            fontWeight: FontWeight.w600
                           ),
                         ),
                       ),
@@ -112,14 +105,7 @@ class BannerCard extends StatelessWidget {
                                   color: Colors.white,
                                   fontSize: 30,
                                   fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w700,
-                                  shadows: <Shadow>[
-                                    Shadow(
-                                      offset: Offset(2.0, 6.0),
-                                      blurRadius: 1.0,
-                                      color: shadowBlack,
-                                    ),
-                                  ],
+                                  fontWeight: FontWeight.w700
                                 ),
                               ).translate(),
                             ],

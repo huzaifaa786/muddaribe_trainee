@@ -307,14 +307,9 @@ class EventDetailsCard extends StatelessWidget {
                             }
                           }
                         },
-                        child: Text(
-                          ' View Location ',
-                          style: TextStyle(
-                              color: white,
-                              decoration: TextDecoration.underline,
-                              decorationStyle: TextDecorationStyle.dashed,
-                              decorationColor: white),
-                        ).translate(),
+                        child: GradientText1(
+                          text: 'View Location',
+                        ),
                       ),
                       int.parse(attendees) < int.parse(capacity) &&
                               isJoined == false

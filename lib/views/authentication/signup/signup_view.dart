@@ -40,7 +40,7 @@ class _SignUpViewState extends State<SignUpView> {
   }
 
   @override
-  void initState() async {
+  void initState() {
     super.initState();
     translateText1();
   }
@@ -191,7 +191,7 @@ class _SignUpViewState extends State<SignUpView> {
                                 text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: privacypolicy as String,
+                                      text: privacypolicy ?? '...',
                                       // text: 'Privacy Policy',
                                       style: TextStyle(
                                           fontSize: 12,

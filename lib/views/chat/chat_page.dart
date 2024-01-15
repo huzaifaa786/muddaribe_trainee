@@ -198,6 +198,7 @@ class ChatPageState extends State<ChatPage> {
         isLoading = false;
         onSendMessage(pdfUrl, TypeMessage.document);
       });
+      Get.back();
     } on FirebaseException catch (e) {
       setState(() {
         isLoading = false;
@@ -218,6 +219,7 @@ class ChatPageState extends State<ChatPage> {
         isLoading = false;
         onSendMessage(imageUrl, TypeMessage.image);
       });
+      Get.back();
     } on FirebaseException catch (e) {
       setState(() {
         isLoading = false;
@@ -284,7 +286,7 @@ class ChatPageState extends State<ChatPage> {
                     : messageChat.type == TypeMessage.image
                         // Image
                         ? Container(
-                            child: OutlinedButton(
+                            child: TextButton(
                               child: Material(
                                 child: Image.network(
                                   messageChat.content,
@@ -872,14 +874,15 @@ class ChatPageState extends State<ChatPage> {
                                                           bool i = await chatProvider
                                                               .orderPlacement(
                                                                   planid,
-                                                                  widget
-                                                                      .arguments
+                                                                  widget.arguments
                                                                       .peerId,
                                                                   currentUserId,
                                                                   orderId,
                                                                   paymentService
                                                                       .paymentID
-                                                                      .toString(),int.parse(amount));
+                                                                      .toString(),
+                                                                  int.parse(
+                                                                      amount));
                                                           print(
                                                               '*************************** $i');
                                                           if (i == true) {

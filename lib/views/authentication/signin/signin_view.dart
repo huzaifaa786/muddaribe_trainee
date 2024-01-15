@@ -215,7 +215,7 @@ class _SignInViewState extends State<SignInView> {
                                 text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: privacypolicy as String,
+                                      text: privacypolicy ?? '...',
                                       // text: 'Privacy Policy',
                                       style: TextStyle(
                                           fontSize: 12,

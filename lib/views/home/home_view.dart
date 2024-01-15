@@ -85,7 +85,7 @@ class _HomeViewState extends State<HomeView> {
                       ],
                     ),
                     controller.follewed != false
-                        ?  Padding(
+                        ? Padding(
                             padding: EdgeInsets.only(top: 20.0),
                             child: Text(
                               'Followed trainers',
@@ -123,7 +123,7 @@ class _HomeViewState extends State<HomeView> {
                                   ),
                                   child: Center(
                                       child: GradientText(
-                                        'Stories',
+                                    'Stories',
                                     colors: [borderTop, borderDown],
                                   )),
                                 ),
@@ -235,41 +235,45 @@ class _HomeViewState extends State<HomeView> {
                               ],
                             ),
                           )
-                        : Container(),
-                 controller.bannersList.isNotEmpty?   Container(
-                      constraints: BoxConstraints(minHeight: 0, maxHeight: 300),
-                      child: CarouselSlider.builder(
-                        options: CarouselOptions(
-                          height: 280,
-                          enableInfiniteScroll: true,
-                          autoPlay: true,
-                          viewportFraction: 1.0,
-                          enlargeCenterPage: false,
-                        ),
-                        itemCount: controller.bannersList.length,
-                        itemBuilder: (context, index, realIndex) {
-                          Events banners = controller.bannersList[index];
-                          return BannerCard(
-                            joinTap: () {
-                              Get.toNamed(AppRoutes.eventcheckout,
-                                      arguments: banners.eventId)!
-                                  .then((value) {
-                                controller.checkIfDocumentExists(
-                                    FirebaseAuth.instance.currentUser!.uid);
-                              });
-                            },
-                            endTime: banners.endTime,
-                            image: banners.imageUrl,
-                            price: banners.price,
-                            startTime: banners.startTime,
-                            eventId: banners.eventId,
-                            date: banners.date,
-                            capacity: banners.capacity,
-                            title: banners.title,
-                          );
-                        },
-                      ),
-                    ):Gap(0),
+                        : Container(height: 20),
+                    controller.bannersList.isNotEmpty
+                        ? Container(
+                            constraints:
+                                BoxConstraints(minHeight: 0, maxHeight: 300),
+                            child: CarouselSlider.builder(
+                              options: CarouselOptions(
+                                height: 280,
+                                enableInfiniteScroll: true,
+                                autoPlay: true,
+                                viewportFraction: 1.0,
+                                enlargeCenterPage: false,
+                              ),
+                              itemCount: controller.bannersList.length,
+                              itemBuilder: (context, index, realIndex) {
+                                Events banners = controller.bannersList[index];
+                                return BannerCard(
+                                  joinTap: () {
+                                    Get.toNamed(AppRoutes.eventcheckout,
+                                            arguments: banners.eventId)!
+                                        .then((value) {
+                                      controller.checkIfDocumentExists(
+                                          FirebaseAuth
+                                              .instance.currentUser!.uid);
+                                    });
+                                  },
+                                  endTime: banners.endTime,
+                                  image: banners.imageUrl,
+                                  price: banners.price,
+                                  startTime: banners.startTime,
+                                  eventId: banners.eventId,
+                                  date: banners.date,
+                                  capacity: banners.capacity,
+                                  title: banners.title,
+                                );
+                              },
+                            ),
+                          )
+                        : Gap(0),
                     Gap(12),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
