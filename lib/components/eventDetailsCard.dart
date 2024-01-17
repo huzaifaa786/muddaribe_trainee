@@ -20,6 +20,7 @@ class EventDetailsCard extends StatelessWidget {
   const EventDetailsCard(
       {super.key,
       this.address,
+      required this.trainerId,
       this.capacity,
       this.image,
       this.date,
@@ -39,6 +40,7 @@ class EventDetailsCard extends StatelessWidget {
   final startTime;
   final endTime;
   final image;
+  final trainerId;
   final date;
   final capacity;
   final price;
@@ -321,7 +323,8 @@ class EventDetailsCard extends StatelessWidget {
                                   GestureDetector(
                                     onTap: () {
                                       Get.toNamed(AppRoutes.eventcheckout,
-                                          arguments: eventId);
+                                          arguments: eventId,
+                                          parameters: {'trainerId': trainerId});
                                     },
                                     child: GradientText1(
                                       text: 'Join Event',

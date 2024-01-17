@@ -377,7 +377,7 @@ class _OrderCardState extends State<OrderCard> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     GradientText(
-                      translatedText ?? '...',
+                      translatedText ?? '',
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,

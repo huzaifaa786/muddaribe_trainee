@@ -819,10 +819,11 @@ packages:
   google_translator:
     dependency: "direct main"
     description:
-      name: google_translator
-      sha256: "8fc4a8fb803cb1dc6da1723b2a3f77f32bc83f7538d1ae2a20cbf8f2b5c81e73"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: "2520ef34db6c4615a240ba51c85bf99abcce549d"
+      url: "https://github.com/huzaifaa786/google_translator"
+    source: git
     version: "1.0.0"
   gradient_borders:
     dependency: "direct main"

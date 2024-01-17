@@ -87,9 +87,11 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
           child: Obx(
             () => GestureDetector(
                 onTap: () {
-                  controller.payEventCharges(controller.total == ''
-                      ? controller.price
-                      : controller.total);
+                  controller.payEventCharges(
+                      controller.total == ''
+                          ? controller.price
+                          : controller.total,
+                      Get.parameters['trainerId']);
                 },
                 child: Container(
                   padding: EdgeInsets.only(top: 17),

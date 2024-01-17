@@ -81,11 +81,11 @@ class AppPages {
       page: () => const TrainerprofileView(),
       binding: Trainerprofilebinding(),
     ),
-    GetPage(
-      name: AppRoutes.eventsDetails,
-      page: () => const EventsDetailsView(),
-      // binding: Trainerprounfbinding(),
-    ),
+    // GetPage(
+    //   name: AppRoutes.eventsDetails,
+    //   page: () => const EventsDetailsView(),
+    //   // binding: Trainerprounfbinding(),
+    // ),
     GetPage(
       name: AppRoutes.signin,
       page: () => const SignInView(),

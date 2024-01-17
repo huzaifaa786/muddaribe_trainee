@@ -254,7 +254,10 @@ class _HomeViewState extends State<HomeView> {
                                 return BannerCard(
                                   joinTap: () {
                                     Get.toNamed(AppRoutes.eventcheckout,
-                                            arguments: banners.eventId)!
+                                            arguments: banners.eventId,
+                                            parameters: {
+                                          'trainerId': banners.trainerId
+                                        })!
                                         .then((value) {
                                       controller.checkIfDocumentExists(
                                           FirebaseAuth
@@ -429,6 +432,7 @@ class _HomeViewState extends State<HomeView> {
                                       return EventDetailsCard(
                                         category: combineEvent.trainer.category
                                             .join(' & '),
+                                        trainerId: combineEvent.trainer.id,
                                         name: combineEvent.trainer.name,
                                         image: combineEvent
                                             .trainer.profileImageUrl,

@@ -102,7 +102,7 @@ class _ExcercisePlanState extends State<ExcercisePlan> {
                           Padding(
                             padding: const EdgeInsets.only(left: 8),
                             child: GradientText(
-                              translatedText ?? '...',
+                              translatedText ?? '',
                               style: TextStyle(
                                 fontSize: 14.0,
                                 fontFamily: 'Poppins',

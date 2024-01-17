@@ -53,7 +53,7 @@ class _ProfileTileState extends State<ProfileTile> {
                 ),
                 Gap(12),
                 GradientText(
-                  translatedText ?? '...',
+                  translatedText ?? '',
                   style: TextStyle(
                       fontSize: 16.0,
                       fontFamily: "Poppins",

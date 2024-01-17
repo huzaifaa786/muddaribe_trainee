@@ -38,11 +38,11 @@ class EventcheckoutController extends GetxController {
     super.onInit();
   }
 
-  void payEventCharges(pricetotal) async {
+  void payEventCharges(pricetotal,trainerId) async {
     bool isPayment = await _paymentService.makePayment(int.parse(pricetotal));
 
     if (isPayment) {
-      await _eventApi.joinEvent(eventId);
+      await _eventApi.joinEvent(eventId, int.parse(pricetotal), trainerId);
       notificationService.postNotification(
           title: 'Event Joined!',
           body: 'Event joined Succesfully!',

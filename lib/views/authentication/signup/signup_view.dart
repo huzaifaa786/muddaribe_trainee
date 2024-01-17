@@ -191,7 +191,7 @@ class _SignUpViewState extends State<SignUpView> {
                                 text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: privacypolicy ?? '...',
+                                      text: privacypolicy ?? '',
                                       // text: 'Privacy Policy',
                                       style: TextStyle(
                                           fontSize: 12,
@@ -208,7 +208,7 @@ class _SignUpViewState extends State<SignUpView> {
                                           fontSize: 12, color: Colors.white),
                                     ),
                                     TextSpan(
-                                      text: and ?? '...',
+                                      text: and ?? '',
                                       style: TextStyle(
                                           fontSize: 12, color: Colors.white),
                                     ),
@@ -218,7 +218,7 @@ class _SignUpViewState extends State<SignUpView> {
                                           fontSize: 12, color: Colors.white),
                                     ),
                                     TextSpan(
-                                      text: term_and_condition ?? '...',
+                                      text: term_and_condition ?? '',
                                       // text: 'Terms & Conditions',
                                       style: TextStyle(
                                           fontSize: 12,
@@ -243,7 +243,7 @@ class _SignUpViewState extends State<SignUpView> {
                                 text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: create ?? '...',
+                                      text: create ?? '',
                                       style: TextStyle(
                                           fontSize: 12,
                                           fontFamily: "Poppins",
@@ -254,7 +254,7 @@ class _SignUpViewState extends State<SignUpView> {
                                     ),
                                     TextSpan(text: '    '),
                                     TextSpan(
-                                      text: signin ?? '...',
+                                      text: signin ?? '',
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500,

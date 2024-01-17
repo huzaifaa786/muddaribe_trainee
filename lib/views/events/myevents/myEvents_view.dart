@@ -101,6 +101,7 @@ class _MyEventsViewState extends State<MyEventsView> {
                           return EventDetailsCard(
                             category: combineEvent.trainer.category.join(' & '),
                             name: combineEvent.trainer.name,
+                            trainerId: combineEvent.trainer.id,
                             image: combineEvent.trainer.profileImageUrl,
                             eventimg: combineEvent.event.imageUrl,
                             address: combineEvent.event.address,

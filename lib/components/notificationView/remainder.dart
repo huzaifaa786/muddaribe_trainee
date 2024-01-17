@@ -103,7 +103,7 @@ class _RemainderViewState extends State<RemainderView> {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 8),
                                   child: GradientText(
-                                    translatedText ?? '...',
+                                    translatedText ?? '',
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Poppins',

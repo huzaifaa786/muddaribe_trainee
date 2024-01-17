@@ -34,7 +34,7 @@ class _GradientText1State extends State<GradientText1> {
   @override
   Widget build(BuildContext context) {
     return GradientText(
-      translatedText ?? '...',
+      translatedText ?? '',
       style: TextStyle(
         fontSize: widget.size,
         fontFamily: 'Montserrat',

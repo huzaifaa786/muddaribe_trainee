@@ -29,7 +29,7 @@ class _FooterTextState extends State<FooterText> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientText(translatedText ?? '...',
+    return GradientText(translatedText ?? '',
         style: const TextStyle(
           fontSize: 10.0,
         ),

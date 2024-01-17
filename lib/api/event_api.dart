@@ -19,42 +19,42 @@ class EventApi {
   static Future<CombinedEventData?> fetchEventData(String eventId) async {
     final attendeeApi = AttendeeApi();
     if (eventId.isNotEmpty) {
-      
-    
-    DocumentSnapshot eventSnapshot = await FirebaseFirestore.instance
-        .collection('trainer_events')
-        .doc(eventId)
-        .get();
-
-    EventOtherData eventOtherData =
-        await attendeeApi.geteventAttendees(eventId);
-    if (eventSnapshot.exists) {
-      Map<String, dynamic> eventData =
-          eventSnapshot.data()! as Map<String, dynamic>;
-
-      Events event = Events.fromMap(eventData);
-      DocumentSnapshot trainerSnapshot = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(event.trainerId)
+      DocumentSnapshot eventSnapshot = await FirebaseFirestore.instance
+          .collection('trainer_events')
+          .doc(eventId)
           .get();
-      if (trainerSnapshot.exists) {
-        Map<String, dynamic> trainerData =
-            trainerSnapshot.data()! as Map<String, dynamic>;
-        Trainer trainer = Trainer.fromMap(trainerData);
-        return CombinedEventData(
-            trainer: trainer, event: event, eventOtherData: eventOtherData);
+
+      EventOtherData eventOtherData =
+          await attendeeApi.geteventAttendees(eventId);
+      if (eventSnapshot.exists) {
+        Map<String, dynamic> eventData =
+            eventSnapshot.data()! as Map<String, dynamic>;
+
+        Events event = Events.fromMap(eventData);
+        DocumentSnapshot trainerSnapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(event.trainerId)
+            .get();
+        if (trainerSnapshot.exists) {
+          Map<String, dynamic> trainerData =
+              trainerSnapshot.data()! as Map<String, dynamic>;
+          Trainer trainer = Trainer.fromMap(trainerData);
+          return CombinedEventData(
+              trainer: trainer, event: event, eventOtherData: eventOtherData);
+        }
       }
-    }
     }
     return null;
   }
 
-  Future joinEvent(eventId) async {
+  Future joinEvent(eventId, amount, trainerId) async {
     String id = DateTime.now().millisecondsSinceEpoch.toString();
     await FirebaseFirestore.instance.collection('event_attendees').doc(id).set({
       "id": id,
       'eventId': eventId,
       "userId": FirebaseAuth.instance.currentUser!.uid,
+      'trainerId': trainerId,
+      'amount': amount,
     });
   }
 }

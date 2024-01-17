@@ -119,7 +119,7 @@ class _SignInViewState extends State<SignInView> {
                                           Get.toNamed(AppRoutes.forgot);
                                         },
                                         child: GradientText(
-                                            translatedText ?? '...',
+                                            translatedText ?? '',
                                             style: TextStyle(
                                                 fontSize: 14.0,
                                                 fontFamily: "Poppins"),
@@ -215,7 +215,7 @@ class _SignInViewState extends State<SignInView> {
                                 text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: privacypolicy ?? '...',
+                                      text: privacypolicy ?? '',
                                       // text: 'Privacy Policy',
                                       style: TextStyle(
                                           fontSize: 12,
@@ -232,7 +232,7 @@ class _SignInViewState extends State<SignInView> {
                                           fontSize: 12, color: Colors.white),
                                     ),
                                     TextSpan(
-                                      text: and ?? '...',
+                                      text: and ?? '',
                                       style: TextStyle(
                                           fontSize: 12, color: Colors.white),
                                     ),
@@ -242,7 +242,7 @@ class _SignInViewState extends State<SignInView> {
                                           fontSize: 12, color: Colors.white),
                                     ),
                                     TextSpan(
-                                      text: term_and_condition ?? '...',
+                                      text: term_and_condition ?? '',
                                       // text: 'Terms & Conditions',
                                       style: TextStyle(
                                           fontSize: 12,
@@ -278,7 +278,7 @@ class _SignInViewState extends State<SignInView> {
                                     ),
                                     TextSpan(text: '    '),
                                     TextSpan(
-                                      text: signup ?? '...',
+                                      text: signup ?? '',
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500,

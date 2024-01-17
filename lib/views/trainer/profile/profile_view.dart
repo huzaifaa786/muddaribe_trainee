@@ -530,6 +530,8 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                 category: combineEvent
                                                     .trainer.category
                                                     .join(' & '),
+                                                trainerId:
+                                                    combineEvent.trainer.id,
                                                 name: combineEvent.trainer.name,
                                                 image: combineEvent
                                                     .trainer.profileImageUrl,

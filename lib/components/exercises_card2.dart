@@ -86,7 +86,7 @@ class _ExercisesCard2State extends State<ExercisesCard2> {
                             : Image.asset(
                                 'assets/images/packageplanimage1.png'),
                       ),
-                GradientText(translatedText ?? '...',
+                GradientText(translatedText ?? '',
                     style: TextStyle(fontSize: 16.0, fontFamily: "Poppins"),
                     colors: [borderDown, borderTop]),
               ],

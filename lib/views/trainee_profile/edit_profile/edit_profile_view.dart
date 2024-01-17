@@ -170,7 +170,7 @@ class _TraineeEditProfileViewState extends State<TraineeEditProfileView> {
                                             child: Align(
                                               alignment: Alignment.centerLeft,
                                               child: GradientText(
-                                                  changePassword ?? '...',
+                                                  changePassword ?? '',
                                                   style: TextStyle(
                                                       fontSize: 14.0,
                                                       fontFamily: "Poppins"),

@@ -79,7 +79,10 @@ dependencies:
   geolocator: ^10.1.0
   google_maps_place_picker_mb: ^3.0.2
   google_maps_flutter: ^2.5.0
-  google_translator: ^1.0.0
+  # google_translator: ^1.0.0
+  google_translator:
+    git:
+      url: https://github.com/huzaifaa786/google_translator
   translator: ^0.1.7
 
 dev_dependencies:
