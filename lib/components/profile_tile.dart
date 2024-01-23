@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
-import 'package:mudarribe_trainee/utils/translation.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class ProfileTile extends StatefulWidget {
@@ -20,21 +19,7 @@ class ProfileTile extends StatefulWidget {
 }
 
 class _ProfileTileState extends State<ProfileTile> {
-  String? translatedText;
-
-  @override
-  void initState() {
-    super.initState();
-    translateText1(widget.text);
-  }
-
-  translateText1(String text) async {
-    translatedText = await translateText(text);
-    print(translatedText);
-    setState(() {});
-  }
-
-  @override
+@override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: widget.ontap,
@@ -53,7 +38,7 @@ class _ProfileTileState extends State<ProfileTile> {
                 ),
                 Gap(12),
                 GradientText(
-                  translatedText ?? '',
+                  widget.text,
                   style: TextStyle(
                       fontSize: 16.0,
                       fontFamily: "Poppins",

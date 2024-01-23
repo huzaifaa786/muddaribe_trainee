@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_typing_uninitialized_variables, must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:mudarribe_trainee/utils/translation.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class FooterText extends StatefulWidget {
@@ -14,22 +13,9 @@ class FooterText extends StatefulWidget {
 }
 
 class _FooterTextState extends State<FooterText> {
-  String? translatedText;
-
-  @override
-  void initState() {
-    super.initState();
-    translateText1(widget.text);
-  }
-
-  translateText1(String text) async {
-    translatedText = await translateText(text);
-    setState(() {});
-  }
-
-  @override
+ @override
   Widget build(BuildContext context) {
-    return GradientText(translatedText ?? '',
+    return GradientText(widget.text,
         style: const TextStyle(
           fontSize: 10.0,
         ),

@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
-import 'package:mudarribe_trainee/utils/translation.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class ExcercisePlan extends StatefulWidget {
@@ -17,20 +17,7 @@ class ExcercisePlan extends StatefulWidget {
 }
 
 class _ExcercisePlanState extends State<ExcercisePlan> {
-  String? translatedText;
-
-  @override
-  void initState() {
-    super.initState();
-    translateText1('View Plan');
-  }
-
-  translateText1(String text) async {
-    translatedText = await translateText(text);
-    setState(() {});
-  }
-
-  @override
+@override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -102,7 +89,7 @@ class _ExcercisePlanState extends State<ExcercisePlan> {
                           Padding(
                             padding: const EdgeInsets.only(left: 8),
                             child: GradientText(
-                              translatedText ?? '',
+                              'View Plan'.tr,
                               style: TextStyle(
                                 fontSize: 14.0,
                                 fontFamily: 'Poppins',

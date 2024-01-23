@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
 class GradientButton extends StatelessWidget {
@@ -51,7 +50,7 @@ class GradientButton extends StatelessWidget {
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
               ),
-            ).translate(),
+            ),
           ),
         ),
       ),

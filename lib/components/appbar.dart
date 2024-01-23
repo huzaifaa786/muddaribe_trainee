@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
-import 'package:google_translator/google_translator.dart';
 
 class TopScreenBar extends StatelessWidget {
   const TopScreenBar({
@@ -32,7 +31,7 @@ class TopScreenBar extends StatelessWidget {
               fontSize: 24,
               fontWeight: FontWeight.w700,
             ),
-          ).translate(),
+          ),
         ],
       ),
     );

@@ -42,7 +42,7 @@ class TrainerProfileApi {
 
     final posts = result.docs
         .map(
-          (e) => Post.fromMap(e.data() as Map<String, dynamic>),
+          (e) => Post.fromMap(e.data()),
         )
         .where((item) => item.trainerId == trainerId)
         .toList();
@@ -87,7 +87,7 @@ class TrainerProfileApi {
 
     final packages = result.docs
         .map(
-          (e) => TrainerPackage.fromJson(e.data() as Map<String, dynamic>),
+          (e) => TrainerPackage.fromJson(e.data()),
         )
         .where((item) => item.trainerId == trainerId)
         .toList();

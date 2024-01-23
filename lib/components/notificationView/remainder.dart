@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
-import 'package:mudarribe_trainee/utils/translation.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class RemainderView extends StatefulWidget {
@@ -18,19 +17,6 @@ class RemainderView extends StatefulWidget {
 }
 
 class _RemainderViewState extends State<RemainderView> {
-  String? translatedText;
-
-  @override
-  void initState() {
-    super.initState();
-    translateText1(widget.text);
-  }
-
-  translateText1(String text) async {
-    translatedText = await translateText(text);
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -103,7 +89,7 @@ class _RemainderViewState extends State<RemainderView> {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 8),
                                   child: GradientText(
-                                    translatedText ?? '',
+                                    widget.text,
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Poppins',

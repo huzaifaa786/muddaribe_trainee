@@ -35,32 +35,35 @@ class _ReportProblemViewState extends State<ReportProblemView> {
                   SizedBox(
                     height: 20,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    // ignore: prefer_const_literals_to_create_immutables
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Get.back();
-                        },
-                        child: Icon(
-                          Icons.arrow_back_ios_new,
-                          color: Colors.white,
+                  Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      // ignore: prefer_const_literals_to_create_immutables
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Get.back();
+                          },
+                          child: Icon(
+                            Icons.arrow_back_ios_new,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   Row(
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 40, bottom: 50),
                         child: Text(
-                          'What’s the problem?',
+                          'What’s the problem?'.tr,
                           style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.w600,
                               color: white),
-                        ).translate(),
+                        ),
                       ),
                     ],
                   ),
@@ -77,7 +80,7 @@ class _ReportProblemViewState extends State<ReportProblemView> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           InputField(
-                            lable: 'Problem Text',
+                            lable: 'Problem Text'.tr,
                             maxlines: 5,
                             controller: controller.report,
                           ),
@@ -114,7 +117,7 @@ class _ReportProblemViewState extends State<ReportProblemView> {
                                                 left: 8,
                                               ),
                                               child: GradientText1(
-                                                text: 'Uploaded',
+                                                text: 'Uploaded'.tr,
                                               ),
                                             )
                                           : Padding(
@@ -122,7 +125,7 @@ class _ReportProblemViewState extends State<ReportProblemView> {
                                                 left: 8,
                                               ),
                                               child: GradientText1(
-                                                text: 'Upload Photo',
+                                                text: 'Upload Photo'.tr,
                                               ),
                                             )
                                     ]),
@@ -138,7 +141,7 @@ class _ReportProblemViewState extends State<ReportProblemView> {
                     height: 50,
                   ),
                   GradientButton(
-                    title: 'Report',
+                    title: 'Report'.tr,
                     selected: controller.areFieldsFilled.value,
                     onPressed: () {
                       controller.areFieldsFilled.value == true;

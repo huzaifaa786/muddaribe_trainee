@@ -88,7 +88,7 @@ class ReportProblemController extends GetxController {
     }
 
     await _reportService.createReport(report: traineeReport);
-    UiUtilites.successAlert(Get.context, 'Report submit Successfully.');
+    UiUtilites.successAlert(Get.context, 'Report submit Successfully.'.tr);
     clearValues();
   }
 

@@ -14,7 +14,6 @@ import 'package:mudarribe_trainee/views/authentication/signup/signup_binding.dar
 import 'package:mudarribe_trainee/views/authentication/signup/signup_view.dart';
 import 'package:mudarribe_trainee/views/categories/categories_binding.dart';
 import 'package:mudarribe_trainee/views/categories/categories_result_view.dart';
-import 'package:mudarribe_trainee/views/events/eventsdetail/eventsDetail_view.dart';
 import 'package:mudarribe_trainee/views/Myplans/PacakgePlan/package_plan.dart';
 import 'package:mudarribe_trainee/views/Myplans/myPackages/my_packages.dart';
 import 'package:mudarribe_trainee/views/footer/footer_binding.dart';

@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/api/order_api.dart';
 import 'package:mudarribe_trainee/components/basic_loader%20copy.dart';
 import 'package:mudarribe_trainee/components/ordercard.dart';
@@ -24,7 +23,7 @@ class _OrderhistoryViewState extends State<OrderhistoryView> {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           forceMaterialTransparency: true,
-          title: TopBar(text: "Orders History"),
+          title: TopBar(text: "Orders History".tr),
         ),
         body: SafeArea(
           child: FutureBuilder<List<CombinedOrderData>>(
@@ -47,7 +46,7 @@ class _OrderhistoryViewState extends State<OrderhistoryView> {
                     child: Text(
                       'No Order Found !',
                       style: TextStyle(color: white.withOpacity(0.7)),
-                    ).translate(),
+                    ),
                   );
                 }
                 List<CombinedOrderData> orders = snapshot.data!;

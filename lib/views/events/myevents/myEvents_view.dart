@@ -33,16 +33,17 @@ class _MyEventsViewState extends State<MyEventsView> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
         centerTitle: true,
+        iconTheme: IconThemeData(color: white),
         title: Text(
-          'My  Events',
+          'My Events'.tr,
           style: TextStyle(
               fontSize: 20,
               color: white,
               fontWeight: FontWeight.w800,
               fontFamily: 'Poppins'),
-        ).translate(),
+        ),
       ),
       body: SafeArea(
         child: Container(
@@ -54,9 +55,9 @@ class _MyEventsViewState extends State<MyEventsView> {
             isLive: false,
             limit: 20,
             onEmpty: Text(
-              'No event joined yet.',
+              'No event joined yet.'.tr,
               style: TextStyle(color: white.withOpacity(0.3)),
-            ).translate(),
+            ),
             viewType: ViewType.list,
             physics: BouncingScrollPhysics(),
             scrollDirection: Axis.vertical,
@@ -72,7 +73,7 @@ class _MyEventsViewState extends State<MyEventsView> {
                     return Text(
                       snapshot.error.toString(),
                       style: TextStyle(color: white),
-                    ).translate();
+                    );
                   }
                   if (!snapshot.hasData) {
                     return Text('');

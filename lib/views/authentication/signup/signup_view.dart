@@ -3,14 +3,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/components/IconButton.dart';
 import 'package:mudarribe_trainee/components/color_button.dart';
 import 'package:mudarribe_trainee/components/inputfield.dart';
 import 'package:mudarribe_trainee/components/password_inputField.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
-import 'package:mudarribe_trainee/utils/translation.dart';
 import 'package:mudarribe_trainee/utils/ui_utils.dart';
 import 'package:mudarribe_trainee/views/authentication/signup/signup_controller.dart';
 import 'package:mudarribe_trainee/components/loading_indicator.dart';
@@ -23,27 +21,27 @@ class SignUpView extends StatefulWidget {
 }
 
 class _SignUpViewState extends State<SignUpView> {
-  String? translatedText;
-  String? privacypolicy;
-  String? and;
-  String? term_and_condition;
-  String? signin;
-  String? create;
-  translateText1() async {
-    translatedText = await translateText('Forget password?');
-    privacypolicy = await translateText('Privacy Policy');
-    and = await translateText('and');
-    term_and_condition = await translateText('Terms & Conditions');
-    signin = await translateText('Signin');
-    create = await translateText('Already have account ?');
-    setState(() {});
-  }
+  // String? translatedText;
+  // String? privacypolicy;
+  // String? and;
+  // String? term_and_condition;
+  // String? signin;
+  // String? create;
+  // translateText1() async {
+  //   translatedText = await translateText('Forget password?');
+  //   privacypolicy = await translateText('Privacy Policy');
+  //   and = await translateText('and');
+  //   term_and_condition = await translateText('Terms & Conditions');
+  //   signin = await translateText('Signin');
+  //   create = await translateText('Already have account ?');
+  //   setState(() {});
+  // }
 
-  @override
-  void initState() {
-    super.initState();
-    translateText1();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   translateText1();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +71,7 @@ class _SignUpViewState extends State<SignUpView> {
                                 color: Colors.white,
                               ),
                               textAlign: TextAlign.center,
-                            ).translate(),
+                            ),
                           ),
                           Container(
                             padding: EdgeInsets.only(
@@ -118,8 +116,8 @@ class _SignUpViewState extends State<SignUpView> {
                                       }
                                     : () {
                                         UiUtilites.errorSnackbar(
-                                            'Fill out all fields',
-                                            'Please fill all above fields');
+                                            'Fill out all fields'.tr,
+                                            'Please fill all above fields'.tr);
                                       },
                                 selected: controller.areFieldsFilled.value,
                               );
@@ -140,7 +138,7 @@ class _SignUpViewState extends State<SignUpView> {
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
                                     color: white),
-                              ).translate(),
+                              ),
                               Expanded(
                                   child: Container(
                                       margin:
@@ -178,7 +176,7 @@ class _SignUpViewState extends State<SignUpView> {
                                   color: white,
                                 ),
                                 textAlign: TextAlign.center,
-                              ).translate(),
+                              ),
                             ),
                           ),
                           Align(
@@ -191,8 +189,7 @@ class _SignUpViewState extends State<SignUpView> {
                                 text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: privacypolicy ?? '',
-                                      // text: 'Privacy Policy',
+                                      text: 'Privacy Policy'.tr,
                                       style: TextStyle(
                                           fontSize: 12,
                                           fontFamily: "Poppins",
@@ -208,7 +205,7 @@ class _SignUpViewState extends State<SignUpView> {
                                           fontSize: 12, color: Colors.white),
                                     ),
                                     TextSpan(
-                                      text: and ?? '',
+                                      text: 'and'.tr,
                                       style: TextStyle(
                                           fontSize: 12, color: Colors.white),
                                     ),
@@ -218,8 +215,7 @@ class _SignUpViewState extends State<SignUpView> {
                                           fontSize: 12, color: Colors.white),
                                     ),
                                     TextSpan(
-                                      text: term_and_condition ?? '',
-                                      // text: 'Terms & Conditions',
+                                      text: 'Terms & Conditions'.tr,
                                       style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
@@ -243,7 +239,7 @@ class _SignUpViewState extends State<SignUpView> {
                                 text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: create ?? '',
+                                      text: 'Already have account ?'.tr,
                                       style: TextStyle(
                                           fontSize: 12,
                                           fontFamily: "Poppins",
@@ -254,7 +250,7 @@ class _SignUpViewState extends State<SignUpView> {
                                     ),
                                     TextSpan(text: '    '),
                                     TextSpan(
-                                      text: signin ?? '',
+                                      text: 'Signin'.tr,
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500,

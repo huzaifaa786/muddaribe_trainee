@@ -19,7 +19,7 @@ enum Categories {
   body_Building,
   Yoga,
   Boxing,
-  Basketball,
+  BasketBall,
   Fitness,
   Tennis,
   Swimming,
@@ -37,9 +37,9 @@ class HomeController extends GetxController {
     update();
   }
 
-@override
+  @override
   void onInit() async {
-    print("call onInit");  // this line not printing
+    print("call onInit"); // this line not printing
     fetchDataFromFirestore();
     super.onInit();
   }

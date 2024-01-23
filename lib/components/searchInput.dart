@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_translator/google_translator.dart';
+import 'package:get/get.dart';
 
 class SearchInput extends StatelessWidget {
   const SearchInput({super.key, this.ontap});
@@ -28,7 +28,7 @@ class SearchInput extends StatelessWidget {
               width: 10.0,
             ),
             Text(
-              'Search',
+              'Search'.tr,
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white.withOpacity(0.4000000059604645),
@@ -38,7 +38,7 @@ class SearchInput extends StatelessWidget {
                 height: 0.27,
                 letterSpacing: -0.13,
               ),
-            ).translate(),
+            ),
           ]),
         ),
       ),

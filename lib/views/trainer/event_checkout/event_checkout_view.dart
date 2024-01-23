@@ -1,10 +1,10 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously, deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
-import 'package:google_translator/google_translator.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mudarribe_trainee/api/event_api.dart';
 import 'package:mudarribe_trainee/components/Eventcheckoutcontainer.dart';
 import 'package:mudarribe_trainee/components/basic_loader%20copy.dart';
@@ -63,6 +63,7 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
     return true;
   }
 
+  GetStorage box = GetStorage();
   @override
   Widget build(BuildContext context) {
     String eventId = Get.arguments;
@@ -76,7 +77,7 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
       builder: (controller) => Scaffold(
         appBar: AppBar(
           title: TopBar(
-            text: "Event Check out",
+            text: "Event Check out".tr,
           ),
           automaticallyImplyLeading: false,
           forceMaterialTransparency: true,
@@ -107,14 +108,14 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                             : [Color(0xFF58E0FF), Color(0xFF727DCD)],
                       )),
                   child: Text(
-                    'Check Out',
+                    'Check Out'.tr,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
                     ),
-                  ).translate(),
+                  ),
                 )),
           ),
         ),
@@ -151,17 +152,20 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
 
                     return Column(
                       children: [
-                        EventcheckoutContainer(
-                          onProfileTap: () {
-                            Get.toNamed(AppRoutes.trainerprofile,
-                                arguments: combinedEventData.trainer.id);
-                          },
-                          userimg: combinedEventData.trainer.profileImageUrl,
-                          username: combinedEventData.trainer.name,
-                          categories:
-                              combinedEventData.trainer.category.join(' & '),
-                          price: combinedEventData.event.price,
-                          eventDate: combinedEventData.event.date,
+                        Directionality(
+                          textDirection: TextDirection.ltr,
+                          child: EventcheckoutContainer(
+                            onProfileTap: () {
+                              Get.toNamed(AppRoutes.trainerprofile,
+                                  arguments: combinedEventData.trainer.id);
+                            },
+                            userimg: combinedEventData.trainer.profileImageUrl,
+                            username: combinedEventData.trainer.name,
+                            categories:
+                                combinedEventData.trainer.category.join(' & '),
+                            price: combinedEventData.event.price,
+                            eventDate: combinedEventData.event.date,
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 10),
@@ -180,13 +184,13 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    'Promo Code',
+                                    'Promo Code'.tr,
                                     style: TextStyle(
                                       color: white,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                     ),
-                                  ).translate(),
+                                  ),
                                   controller.total != ''
                                       ? GradientText1(
                                           text: controller.promoCode.text,
@@ -199,21 +203,21 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                                     width: 110,
                                                     padding: EdgeInsets.all(2),
                                                     decoration: BoxDecoration(
-                                                        color: Colors.black),
+                                                        color: Colors.grey),
                                                     child: TextField(
                                                       controller:
                                                           controller.promoCode,
                                                       style: TextStyle(
-                                                          color: white),
+                                                          color: Colors.black),
                                                       decoration:
                                                           InputDecoration(
                                                               border:
                                                                   InputBorder
                                                                       .none,
                                                               fillColor:
-                                                                  Colors.black,
+                                                                  Colors.grey,
                                                               focusColor:
-                                                                  Colors.black),
+                                                                  Colors.grey),
                                                     )),
                                                 Padding(
                                                   padding:
@@ -226,7 +230,7 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                                               .trainer.id);
                                                     },
                                                     child: GradientText1(
-                                                      text: 'Apply',
+                                                      text: 'Apply'.tr,
                                                     ),
                                                   ),
                                                 ),
@@ -238,7 +242,7 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                                 setState(() {});
                                               },
                                               child: GradientText1(
-                                                text: 'Add Code',
+                                                text: 'Add Code'.tr,
                                               ),
                                             )
                                 ],
@@ -246,99 +250,118 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                             ),
                           ),
                         ),
-                        InkWell(
-                          onTap: () async {
-                            if (await getpermission() == true) {
-                              List<Location> locations =
-                                  await locationFromAddress(
-                                      combinedEventData.event.address);
-                              if (locations.isNotEmpty) {
-                                Location location = locations.first;
-                                double latitude = location.latitude;
-                                double longitude = location.longitude;
-                                Get.to(() => MapView(
-                                    latitude: latitude, longitude: longitude));
+                        Directionality(
+                          textDirection: TextDirection.ltr,
+                          child: InkWell(
+                            onTap: () async {
+                              if (await getpermission() == true) {
+                                List<Location> locations =
+                                    await locationFromAddress(
+                                        combinedEventData.event.address);
+                                if (locations.isNotEmpty) {
+                                  Location location = locations.first;
+                                  double latitude = location.latitude;
+                                  double longitude = location.longitude;
+                                  Get.to(() => MapView(
+                                      latitude: latitude,
+                                      longitude: longitude));
+                                }
                               }
-                            }
-                          },
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.only(
+                                  top: 12, left: 12, right: 12),
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(
+                                      'assets/images/location.svg'),
+                                  SizedBox(
+                                    width: Get.width * 0.8,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 10, bottom: 0),
+                                          child: Container(
+                                            width: Get.width * 0.6,
+                                            child: Text(
+                                              combinedEventData.event.address,
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontFamily: 'Montserrat',
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        GradientText1(
+                                          text: 'View'.tr,
+                                          size: 16.0,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Directionality(
+                          textDirection: TextDirection.ltr,
                           child: Container(
                             padding: const EdgeInsets.only(
                                 top: 12, left: 12, right: 12),
                             child: Row(
                               children: [
-                                SvgPicture.asset('assets/images/location.svg'),
-                                SizedBox(
-                                  width: Get.width * 0.8,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 10, bottom: 0),
-                                        child: Container(
-                                          width: Get.width * 0.6,
-                                          child: Text(
-                                            combinedEventData.event.address,
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontFamily: 'Montserrat',
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 12,
-                                            ),
-                                          ),
+                                SvgPicture.asset('assets/images/clock.svg',
+                                    color: white),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, bottom: 0),
+                                  child: SizedBox(
+                                    width: Get.width * 0.7,
+                                    child: Directionality(
+                                      textDirection: box.read('locale') == 'ar'
+                                          ? TextDirection.rtl
+                                          : TextDirection.ltr,
+                                      child: Text(
+                                        '${combinedEventData.event.startTime} ' +
+                                            'to'.tr +
+                                            ' ${combinedEventData.event.endTime}',
+                                        textAlign: box.read('locale') == 'ar'
+                                            ? TextAlign.end
+                                            : TextAlign.start,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: 'Montserrat',
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 12,
                                         ),
                                       ),
-                                      GradientText1(
-                                        text: 'View',
-                                        size: 16.0,
-                                      ),
-                                    ],
+                                    ),
                                   ),
-                                ),
+                                )
                               ],
                             ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(
-                              top: 12, left: 12, right: 12),
-                          child: Row(
-                            children: [
-                              SvgPicture.asset('assets/images/clock.svg',
-                                  color: white),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 10, bottom: 0),
-                                child: SizedBox(
-                                  width: Get.width * 0.7,
-                                  child: Text(
-                                    '${combinedEventData.event.startTime} to ${combinedEventData.event.endTime}',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'Montserrat',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12,
-                                    ),
-                                  ).translate(),
-                                ),
-                              )
-                            ],
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
                               top: 35, left: 5, bottom: 20),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              'Summary',
-                              style: TextStyle(
-                                color: white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
+                          child: Row(
+                            children: [
+                              Text(
+                                'Summary'.tr,
+                                style: TextStyle(
+                                  color: white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
-                            ).translate(),
+                            ],
                           ),
                         ),
                         Container(
@@ -359,21 +382,23 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Price ',
+                                      'Price'.tr,
                                       style: TextStyle(
                                         color: white,
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                       ),
-                                    ).translate(),
+                                    ),
                                     Text(
-                                      combinedEventData.event.price + ' AED',
+                                      combinedEventData.event.price +
+                                          ' ' +
+                                          'AED'.tr,
                                       style: TextStyle(
                                         color: white,
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                       ),
-                                    ).translate(),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -393,21 +418,23 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Offer ',
+                                      'Offer'.tr,
                                       style: TextStyle(
                                         color: white,
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                       ),
-                                    ).translate(),
+                                    ),
                                     Text(
-                                      controller.discount.toString() + ' AED',
+                                      controller.discount.toString() +
+                                          ' ' +
+                                          'AED'.tr,
                                       style: TextStyle(
                                         color: white,
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                       ),
-                                    ).translate(),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -426,26 +453,18 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      'Total',
+                                    GradientText(
+                                      'Total'.tr,
                                       style: TextStyle(
-                                        color: white,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w700,
                                       ),
-                                    ).translate(),
-                                    // GradientText(
-
-                                    //   style: TextStyle(
-                                    //     fontSize: 18,
-                                    //     fontWeight: FontWeight.w700,
-                                    //   ),
-                                    //   colors: [borderTop, gradientblue],
-                                    // ),
+                                      colors: [borderTop, gradientblue],
+                                    ),
                                     Text(
                                       controller.total == ''
-                                          ? controller.price + ' AED'
-                                          : controller.total + ' AED',
+                                          ? controller.price + ' ' + 'AED'.tr
+                                          : controller.total + ' ' + 'AED'.tr,
                                       style: new TextStyle(
                                           fontSize: 18.0,
                                           fontWeight: FontWeight.bold,
@@ -459,7 +478,7 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                               ],
                                             ).createShader(Rect.fromLTWH(
                                                 0.0, 0.0, 250.0, 70.0))),
-                                    ).translate()
+                                    )
                                   ],
                                 ),
                               ),

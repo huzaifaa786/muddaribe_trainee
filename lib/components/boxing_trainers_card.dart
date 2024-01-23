@@ -2,7 +2,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:google_translator/google_translator.dart';
+import 'package:get/get.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
 class BoxingTrainersCard extends StatelessWidget {
@@ -14,6 +14,7 @@ class BoxingTrainersCard extends StatelessWidget {
     this.isSaved = false,
     this.ontap,
     this.onProfileTap,
+    this.rating,
   });
 
   final String title;
@@ -22,13 +23,13 @@ class BoxingTrainersCard extends StatelessWidget {
   final bool isSaved;
   final onProfileTap;
   final ontap;
-
+  final rating;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onProfileTap,
       child: Container(
-          constraints: BoxConstraints(minHeight: 112, maxHeight: 120),
+          constraints: BoxConstraints(minHeight: 112),
           margin: EdgeInsets.only(top: 10),
           padding: EdgeInsets.all(8.0),
           decoration: BoxDecoration(
@@ -77,6 +78,7 @@ class BoxingTrainersCard extends StatelessWidget {
                       height: 5,
                     ),
                     Text(description,
+                        // max
                         style: TextStyle(
                           color: white,
                           fontSize: 12,
@@ -85,54 +87,73 @@ class BoxingTrainersCard extends StatelessWidget {
                     SizedBox(
                       width: 10,
                     ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    rating == 0.0
+                        ? SizedBox()
+                        : Row(
+                            children: [
+                              Icon(Icons.star, color: borderDown, size: 20),
+                              Text(' $rating',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w500,
+                                  )),
+                            ],
+                          )
                   ],
                 ),
               ],
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                InkWell(
-                  onTap: ontap,
-                  child: isSaved == false
-                      ? Image.asset('assets/images/bookmark1.png')
-                      : Image.asset('assets/images/bookmark-light.png'),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 7),
-                  child: Container(
-                    width: 80,
-                    height: 29,
-                    decoration: ShapeDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment(0.00, -1.00),
-                        end: Alignment(0, 1),
-                        colors: [Color(0xFF727DCD), Color(0xFF58E0FF)],
+            Container(
+              constraints: BoxConstraints(minHeight: 112),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  InkWell(
+                    onTap: ontap,
+                    child: isSaved == false
+                        ? Image.asset('assets/images/bookmark1.png')
+                        : Image.asset('assets/images/bookmark-light.png'),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 7),
+                    child: Container(
+                      width: 80,
+                      height: 29,
+                      decoration: ShapeDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment(0.00, -1.00),
+                          end: Alignment(0, 1),
+                          colors: [Color(0xFF727DCD), Color(0xFF58E0FF)],
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
                       ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                    ),
-                    child: InkWell(
-                      onTap: onProfileTap,
-                      child: Center(
-                        child: Text(
-                          'View Profile',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 10,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w700,
-                            height: 0,
+                      child: InkWell(
+                        onTap: onProfileTap,
+                        child: Center(
+                          child: Text(
+                            'View Profile'.tr,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 10,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w700,
+                              height: 0,
+                            ),
                           ),
-                        ).translate(),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             )
           ])),
     );

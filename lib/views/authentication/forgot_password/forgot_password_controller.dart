@@ -38,12 +38,12 @@ class ForgotPasswordContoller extends GetxController {
       );
       if (isSent) {
         await UiUtilites.successSnackbar(
-            'Forget Password', 'Reset password link has been sent to email');
+            'Forget Password'.tr, 'Reset password link has been sent to email'.tr);
                 Get.offNamed(AppRoutes.signin);
       }
   
     } on AuthApiException catch (e) {
-      UiUtilites.errorSnackbar('Forget password Failed', e.toString());
+      UiUtilites.errorSnackbar('Forget password Failed'.tr, e.toString());
     }
   }
 }

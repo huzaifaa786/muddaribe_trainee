@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:google_translator/google_translator.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:intl/intl.dart';
 import 'package:mudarribe_trainee/api/post_api.dart';
@@ -88,13 +87,13 @@ class _HomeViewState extends State<HomeView> {
                         ? Padding(
                             padding: EdgeInsets.only(top: 20.0),
                             child: Text(
-                              'Followed trainers',
+                              'Followed trainers'.tr,
                               style: TextStyle(
                                 color: white,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w800,
                               ),
-                            ).translate(),
+                            ),
                           )
                         : Container(),
                     controller.follewed != false
@@ -282,25 +281,25 @@ class _HomeViewState extends State<HomeView> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Categories',
+                          'Categories'.tr,
                           style: TextStyle(
                             color: white,
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
                           ),
-                        ).translate(),
+                        ),
                         InkWell(
                           onTap: () {
                             controller.showAllCategory();
                           },
                           child: Text(
-                            'View all',
+                            'View all'.tr,
                             style: TextStyle(
                               color: Color(0xFF727DCD),
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                             ),
-                          ).translate(),
+                          ),
                         ),
                       ],
                     ),
@@ -347,13 +346,13 @@ class _HomeViewState extends State<HomeView> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Events',
+                          'Events'.tr,
                           style: TextStyle(
                             color: white,
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
                           ),
-                        ).translate(),
+                        ),
                         GestureDetector(
                           onTap: () {
                             Get.to(() => AllEventsView())!.then((value) {
@@ -362,13 +361,13 @@ class _HomeViewState extends State<HomeView> {
                             });
                           },
                           child: Text(
-                            'View all',
+                            'View all'.tr,
                             style: TextStyle(
                               color: Color(0xFF727DCD),
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                             ),
-                          ).translate(),
+                          ),
                         ),
                       ],
                     ),
@@ -381,9 +380,9 @@ class _HomeViewState extends State<HomeView> {
                         isLive: false,
                         limit: 20,
                         onEmpty: Text(
-                          'No event uploaded yet.',
+                          'No event uploaded yet.'.tr,
                           style: TextStyle(color: white.withOpacity(0.3)),
-                        ).translate(),
+                        ),
                         viewType: ViewType.list,
                         physics: BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
@@ -470,13 +469,13 @@ class _HomeViewState extends State<HomeView> {
                     ),
                     Gap(20),
                     Text(
-                      'Posts',
+                      'Posts'.tr,
                       style: TextStyle(
                         color: white,
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
                       ),
-                    ).translate(),
+                    ),
                     Gap(15),
                     FirestorePagination(
                       shrinkWrap: true,

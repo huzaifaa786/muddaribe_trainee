@@ -38,14 +38,37 @@ class TSearchController extends GetxController {
         if (savedTrainerSnapshot.docs.isNotEmpty) {
           trainer.isSaved = true;
         }
+        double ratingSum = await fetchCompanyRatingSum(trainer.id);
+        trainer.rating = ratingSum;
       }
-
       allItems = trainers;
       updateTrainers(trainers);
     } catch (e) {
       print("Error fetching trainers: $e");
     }
     busyController.setBusy(false);
+  }
+
+  Future<double> fetchCompanyRatingSum(String trainerId) async {
+    double sum = 0.0;
+    int totalRatings = 0;
+
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('ratings')
+          .where('trainerId', isEqualTo: trainerId)
+          .get();
+
+      totalRatings = querySnapshot.docs.length;
+
+      sum = querySnapshot.docs.fold(
+          0.0, (previousValue, doc) => previousValue + (doc['rating'] ?? 0.0));
+    } catch (e) {
+      print('Error fetching rating sum for company $trainerId: $e');
+    }
+
+    double averageRating = totalRatings > 0 ? sum / totalRatings : 0.0;
+    return averageRating;
   }
 
   void toggleShow() {

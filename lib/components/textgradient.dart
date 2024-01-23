@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
-import 'package:mudarribe_trainee/utils/translation.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class GradientText1 extends StatefulWidget {
@@ -18,23 +17,10 @@ dynamic size;
 }
 
 class _GradientText1State extends State<GradientText1> {
-  String? translatedText;
-
-  @override
-  void initState() {
-    super.initState();
-    translateText1(widget.text);
-  }
-
-  translateText1(String text) async {
-    translatedText = await translateText(text);
-    setState(() {});
-  }
-
-  @override
+@override
   Widget build(BuildContext context) {
     return GradientText(
-      translatedText ?? '',
+      widget.text,
       style: TextStyle(
         fontSize: widget.size,
         fontFamily: 'Montserrat',

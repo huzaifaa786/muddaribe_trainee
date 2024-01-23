@@ -22,6 +22,7 @@ import 'package:mudarribe_trainee/views/events/myevents/myEvents_view.dart';
 import 'package:mudarribe_trainee/views/Myplans/PacakgePlan/package_plan.dart';
 import 'package:mudarribe_trainee/views/Myplans/myPackages/my_packages.dart';
 import 'package:mudarribe_trainee/views/footer/footer_view.dart';
+import 'package:mudarribe_trainee/translation.dart';
 import 'package:mudarribe_trainee/views/home/home_binding.dart';
 import 'package:mudarribe_trainee/views/home/home_view.dart';
 import 'package:mudarribe_trainee/views/splash/splash_binding.dart';
@@ -63,35 +64,42 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GetStorage box = GetStorage();
-    box.read('Locale') == null ? box.write('Locale', 'en') : null;
-    String locale = box.read('Locale') == null ? 'en' : box.read('Locale');
-    return GoogleTranslatorInit('AIzaSyBOr3bXgN2bj9eECzSudyj_rgIFjyXkdn8',
-        translateFrom: box.read('Locale') == 'en' ? Locale('ur') : Locale('en'),
-        translateTo: Locale(locale),
-        cacheDuration: Duration(days: 7),
-        automaticDetection: false, builder: () {
-      return MultiProvider(
-        providers: [
-          Provider<ChatProvider>(
-            create: (_) => ChatProvider(),
-          ),
-        ],
-        child: GetMaterialApp(
-          theme: ThemeData(
-            scaffoldBackgroundColor: Colors.black,
-            textSelectionTheme: const TextSelectionThemeData(
-              cursorColor: white,
-            ),
-            useMaterial3: true,
-            fontFamily: 'Montserrat',
-          ),
-          debugShowCheckedModeBanner: false,
-          title: "Mudarribe",
-          initialBinding: SplashBinding(),
-          home: SplashView(),
-          getPages: AppPages.pages,
+    // box.read('Locale') == null ? box.write('Locale', 'en') : null;
+    // String locale = box.read('Locale') == null ? 'en' : box.read('Locale');
+    // return GoogleTranslatorInit('AIzaSyBOr3bXgN2bj9eECzSudyj_rgIFjyXkdn8',
+    //     translateFrom: box.read('Locale') == 'en' ? Locale('ur') : Locale('en'),
+    //     translateTo: Locale(locale),
+    //     cacheDuration: Duration(days: 7),
+    //     automaticDetection: false, builder: () {
+    return MultiProvider(
+      providers: [
+        Provider<ChatProvider>(
+          create: (_) => ChatProvider(),
         ),
-      );
-    });
+      ],
+      child: GetMaterialApp(
+        translations: LocaleString(),
+        locale: box.read('locale') != 'ar'
+            ? Locale('en', 'US')
+            : Locale('ar', 'AE'),
+        fallbackLocale: box.read('locale') != 'ar'
+            ? Locale('en', 'US')
+            : Locale('ar', 'AE'),
+        theme: ThemeData(
+          scaffoldBackgroundColor: Colors.black,
+          textSelectionTheme: const TextSelectionThemeData(
+            cursorColor: white,
+          ),
+          useMaterial3: true,
+          fontFamily: 'Montserrat',
+        ),
+        debugShowCheckedModeBanner: false,
+        title: "Mudarribe",
+        initialBinding: SplashBinding(),
+        home: SplashView(),
+        getPages: AppPages.pages,
+      ),
+    );
+    // });
   }
 }

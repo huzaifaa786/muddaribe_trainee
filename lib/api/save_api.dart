@@ -38,7 +38,7 @@ class SaveApi {
 
     final stories = trainerSnapshot.docs
         .map(
-          (e) => TrainerStory.fromJson(e.data() as Map<String, dynamic>),
+          (e) => TrainerStory.fromJson(e.data()),
         )
         .where((item) => item.trainerId == trainerId)
         .toList();
@@ -106,7 +106,6 @@ class SaveApi {
     return combinedData;
   }
 
-
   static Future<List<Trainer>> fetchTrainerData(
       QuerySnapshot saveTrainerSnapshot) async {
     List<Trainer> trainers = [];
@@ -120,9 +119,33 @@ class SaveApi {
             trainerSnapshot.data() as Map<String, dynamic>;
 
         Trainer trainer = Trainer.fromMap(trainerData);
+        double ratingSum = await fetchCompanyRatingSum(trainer.id);
+        trainer.rating = ratingSum;
         trainers.add(trainer);
       }
     }
     return trainers;
+  }
+
+  static Future<double> fetchCompanyRatingSum(String trainerId) async {
+    double sum = 0.0;
+    int totalRatings = 0;
+
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('ratings')
+          .where('trainerId', isEqualTo: trainerId)
+          .get();
+
+      totalRatings = querySnapshot.docs.length;
+
+      sum = querySnapshot.docs.fold(
+          0.0, (previousValue, doc) => previousValue + (doc['rating'] ?? 0.0));
+    } catch (e) {
+      print('Error fetching rating sum for company $trainerId: $e');
+    }
+
+    double averageRating = totalRatings > 0 ? sum / totalRatings : 0.0;
+    return averageRating;
   }
 }

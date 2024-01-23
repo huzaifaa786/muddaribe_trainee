@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'dart:ui' as ui;
-import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/components/topbar.dart';
-import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/views/trainee_profile/app_translate/translate_method.dart';
 
 class TranslateScreen extends StatefulWidget {
@@ -30,8 +28,8 @@ class _TranslateScreenState extends State<TranslateScreen> {
   void initState() {
     // print(Get.locale);
     GetStorage box = GetStorage();
-    box.read('Locale') == 'ar';
-    _site = box.read('Locale') != 'ar'
+    box.read('locale') == 'ar';
+    _site = box.read('locale') != 'ar'
         ? translateMethod.English
         : translateMethod.Arabic;
     super.initState();
@@ -45,7 +43,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           forceMaterialTransparency: true,
-          title: TopBar(text: "Languages"),
+          title: TopBar(text: "Languages".tr),
         ),
         body: SafeArea(
             child: Padding(
@@ -53,33 +51,50 @@ class _TranslateScreenState extends State<TranslateScreen> {
           child: Column(
             children: [
               TranslateMethod(
-                title: 'English',
+                title: 'English'.tr,
                 groupvalue: _site,
                 value: translateMethod.English,
+                // onchaged: () async {
+                //   await toggleplan(translateMethod.English);
+                // Get.updateLocale(const Locale('en', 'US'));
+                // GetStorage box = GetStorage();
+                // await box.write('Locale', 'en');
+                // GoogleTranslatorController.init(
+                //     'AIzaSyBOr3bXgN2bj9eECzSudyj_rgIFjyXkdn8', Locale('ur'),
+                //     cacheDuration: Duration(), translateTo: Locale('en'));
+                // Get.offAllNamed(AppRoutes.footer);
+
+                // },
                 onchaged: () async {
                   await toggleplan(translateMethod.English);
-                  // Get.updateLocale(const Locale('en', 'US'));
+                  Get.updateLocale(const Locale('en', 'US'));
                   GetStorage box = GetStorage();
-                  await box.write('Locale', 'en');
-                  GoogleTranslatorController.init(
-                      'AIzaSyBOr3bXgN2bj9eECzSudyj_rgIFjyXkdn8', Locale('ur'),
-                      cacheDuration: Duration(), translateTo: Locale('en'));
-                  Get.offAllNamed(AppRoutes.footer);
+                  await box.write('locale', 'en');
+                  box.read('locale');
+                  setState(() {});
                 },
               ),
               TranslateMethod(
-                title: 'Arabic',
+                title: 'Arabic'.tr,
                 groupvalue: _site,
                 value: translateMethod.Arabic,
+                // onchaged: () async {
+                //   await toggleplan(translateMethod.Arabic);
+                //   // Get.updateLocale(const Locale('ar', 'AE'));
+                //   GetStorage box = GetStorage();
+                //   await box.write('Locale', 'ar');
+                //   GoogleTranslatorController.init(
+                //       'AIzaSyBOr3bXgN2bj9eECzSudyj_rgIFjyXkdn8', Locale('en'),
+                //       cacheDuration: Duration(), translateTo: Locale('ar'));
+                //   Get.offAllNamed(AppRoutes.footer);
+                // },
                 onchaged: () async {
                   await toggleplan(translateMethod.Arabic);
-                  // Get.updateLocale(const Locale('ar', 'AE'));
+                  Get.updateLocale(const Locale('ar', 'AE'));
                   GetStorage box = GetStorage();
-                  await box.write('Locale', 'ar');
-                  GoogleTranslatorController.init(
-                      'AIzaSyBOr3bXgN2bj9eECzSudyj_rgIFjyXkdn8', Locale('en'),
-                      cacheDuration: Duration(), translateTo: Locale('ar'));
-                  Get.offAllNamed(AppRoutes.footer);
+                  await box.write('locale', 'ar');
+                  box.read('locale');
+                  setState(() {});
                 },
               ),
             ],

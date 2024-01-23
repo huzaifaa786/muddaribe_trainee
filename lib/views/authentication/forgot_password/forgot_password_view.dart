@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/components/color_button.dart';
 import 'package:mudarribe_trainee/components/inputfield.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
@@ -37,7 +36,7 @@ class ForgotPasswordView extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.only(top: 40, bottom: 50),
                         child: Text(
-                          "Forget Password",
+                          "Forget Password".tr,
                           style: const TextStyle(
                             fontFamily: "Poppins",
                             fontSize: 26,
@@ -45,7 +44,7 @@ class ForgotPasswordView extends StatelessWidget {
                             color: Colors.white,
                           ),
                           textAlign: TextAlign.start,
-                        ).translate(),
+                        ),
                       ),
                       Container(
                         height: 300,
@@ -59,7 +58,7 @@ class ForgotPasswordView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Enter Your Email Please",
+                                "Enter Your Email Please".tr,
                                 style: TextStyle(
                                   fontFamily: "Montserrat",
                                   fontSize: 14,
@@ -68,25 +67,25 @@ class ForgotPasswordView extends StatelessWidget {
                                   height: 28 / 14,
                                 ),
                                 textAlign: TextAlign.left,
-                              ).translate(),
+                              ),
                               InputField(
-                                lable: 'Email',
+                                lable: 'Email'.tr,
                                 controller: controller.emailController,
                               ),
                               Text(''),
                             ]),
                       ),
                       Gap(50),
-                   
                       GradientButton(
-                        title: 'Next',
+                        title: 'Next'.tr,
                         onPressed: controller.areFieldsFilled.value
-                      ? () {
-                          controller.forgotPassword();
-                        }
-                      : (){
-                         UiUtilites.errorSnackbar('Fill Email Field','Please fill above email field');
-                      },
+                            ? () {
+                                controller.forgotPassword();
+                              }
+                            : () {
+                                UiUtilites.errorSnackbar('Fill Email Field'.tr,
+                                    'Please fill above email field'.tr);
+                              },
                         selected: controller.areFieldsFilled.value,
                       ),
                     ],

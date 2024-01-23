@@ -32,7 +32,7 @@ class _MyPackagesState extends State<MyPackages> {
           automaticallyImplyLeading: false,
           forceMaterialTransparency: true,
           centerTitle: true,
-          title: TopBar(text: controller.category.capitalize!),
+          title: TopBar(text: '${controller.category.capitalize!}'),
         ),
         body: SafeArea(
             child: SingleChildScrollView(

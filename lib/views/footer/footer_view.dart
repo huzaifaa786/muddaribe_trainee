@@ -1,8 +1,9 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, unused_field, unused_element
+// ignore_for_file: prefer_typing_uninitialized_variables, unused_field, unused_element, deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/views/Myplans/myplans_view.dart';
 import 'package:mudarribe_trainee/views/events/myevents/myEvents_view.dart';
@@ -81,7 +82,7 @@ class _FooterViewState extends State<FooterView> with RouteAware {
                                     ),
                               const Gap(4),
                               FooterText(
-                                  text: 'Home',
+                                  text: 'Home'.tr,
                                    colors: _navigationMenuIndex == 0
                                     ? [borderDown, borderTop]
                                     : [white, white],),
@@ -120,7 +121,7 @@ class _FooterViewState extends State<FooterView> with RouteAware {
                                   ),
                             const Gap(4),
                             FooterText(
-                                text: 'My Plans',
+                                text: 'My Plans'.tr,
                                  colors: _navigationMenuIndex == 1
                                     ? [borderDown, borderTop]
                                     : [white, white]),
@@ -164,7 +165,7 @@ class _FooterViewState extends State<FooterView> with RouteAware {
                                     ),
                               const Gap(4),
                               FooterText(
-                                  text: 'Events',
+                                  text: 'Events'.tr,
                                    colors: _navigationMenuIndex == 2
                                     ? [borderDown, borderTop]
                                     : [white, white],),
@@ -208,7 +209,7 @@ class _FooterViewState extends State<FooterView> with RouteAware {
                                     ),
                               const Gap(4),
                               FooterText(
-                                text: 'Me',
+                                text: 'Me'.tr,
                                 colors: _navigationMenuIndex == 3
                                     ? [borderDown, borderTop]
                                     : [white, white],

@@ -6,6 +6,7 @@ import 'package:gap/gap.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_translator/google_translator.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:mudarribe_trainee/components/appbar.dart';
@@ -88,7 +89,7 @@ class EventDetailsCard extends StatelessWidget {
       await Geolocator.getCurrentPosition();
       return true;
     }
-
+GetStorage box = GetStorage();
     return Card(
       color: bgContainer,
       child: Container(
@@ -218,17 +219,20 @@ class EventDetailsCard extends StatelessWidget {
                     children: [
                       SvgPicture.asset('assets/images/timeline.svg',
                           fit: BoxFit.scaleDown, height: 24, width: 24),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8, bottom: 6),
-                        child: Text(
-                          'from $startTime to $endTime',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w400,
-                            fontSize: 12,
+                      Directionality(
+                        textDirection: box.read('locale') == 'ar'? TextDirection.rtl :TextDirection.ltr,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8, bottom: 6),
+                          child: Text(
+                            'from'.tr + ' $startTime ' + 'to'.tr + '$endTime',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12,
+                            ),
                           ),
-                        ).translate(),
+                        ),
                       )
                     ],
                   ),
@@ -258,37 +262,39 @@ class EventDetailsCard extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 8, bottom: 6),
                         child: Text(
-                          'Total People amount: $attendees / $capacity',
+                          'Total People amount'.tr +
+                              ':' +
+                              ' $attendees / $capacity',
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w400,
                             fontSize: 12,
                           ),
-                        ).translate(),
+                        ),
                       )
                     ],
                   ),
                   Row(
                     children: [
                       Text(
-                        'Price:',
+                        'Price'.tr +':',
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'Montserrat',
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
                         ),
-                      ).translate(),
+                      ),
                       Text(
-                        ' $price AED',
+                        ' $price '+'AED'.tr,
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'Montserrat',
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),
-                      ).translate()
+                      )
                     ],
                   ),
                   // Gap(5),
@@ -310,7 +316,7 @@ class EventDetailsCard extends StatelessWidget {
                           }
                         },
                         child: GradientText1(
-                          text: 'View Location',
+                          text: 'View Location'.tr,
                         ),
                       ),
                       int.parse(attendees) < int.parse(capacity) &&
@@ -327,7 +333,7 @@ class EventDetailsCard extends StatelessWidget {
                                           parameters: {'trainerId': trainerId});
                                     },
                                     child: GradientText1(
-                                      text: 'Join Event',
+                                      text: 'Join Event'.tr,
                                     ),
                                   ),
                                 ],
@@ -339,7 +345,7 @@ class EventDetailsCard extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   GradientText1(
-                                    text: 'Joined',
+                                    text: 'Joined'.tr,
                                   ),
                                 ],
                               ),

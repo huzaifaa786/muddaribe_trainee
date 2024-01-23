@@ -3,7 +3,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/api/attenddee_api.dart';
 import 'package:mudarribe_trainee/components/button.dart';
 import 'package:mudarribe_trainee/models/event_other_data.dart';
@@ -100,14 +99,14 @@ class BannerCard extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                '$price AED',
+                                '$price ' + 'AED'.tr,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 30,
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w700
                                 ),
-                              ).translate(),
+                              ),
                             ],
                           )
                         ],
@@ -159,13 +158,13 @@ class BannerCard extends StatelessWidget {
                                           children: [
                                             CustomeButton(
                                               onPressed: joinTap,
-                                              title: 'Join Event',
+                                              title: 'Join Event'.tr,
                                             ),
                                           ],
                                         )
                                       : CustomeButton(
                                           onPressed: () {},
-                                          title: 'Joined',
+                                          title: 'Joined'.tr,
                                         );
                                 }
                               }),

@@ -31,32 +31,35 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                   SizedBox(
                     height: 20,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    // ignore: prefer_const_literals_to_create_immutables
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Get.back();
-                        },
-                        child: Icon(
-                          Icons.arrow_back_ios_new,
-                          color: Colors.white,
+                  Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      // ignore: prefer_const_literals_to_create_immutables
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Get.back();
+                          },
+                          child: Icon(
+                            Icons.arrow_back_ios_new,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   Row(
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 40, bottom: 50),
                         child: Text(
-                          'Change Password.',
+                          'Change Password.'.tr,
                           style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.w600,
                               color: white),
-                        ).translate(),
+                        ),
                       ),
                     ],
                   ),
@@ -73,7 +76,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           PasswordInputField(
-                            lable: 'Old password',
+                            lable: 'Old Password'.tr,
                             obscure: controller.obscureTextOldPassword,
                             toggle: controller.toggle2,
                             controller: controller.oldpassword,
@@ -82,7 +85,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                             height: 18,
                           ),
                           PasswordInputField(
-                            lable: 'New password',
+                            lable: 'New Password'.tr,
                             obscure: controller.obscureTextPassword,
                             toggle: controller.toggle,
                             controller: controller.newpassword,
@@ -91,7 +94,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                             height: 18,
                           ),
                           PasswordInputField(
-                            lable: 'Confirm New Password',
+                            lable: 'Confirm New Password'.tr,
                             obscure: controller.obscureTextCPassword,
                             toggle: controller.toggle1,
                             controller: controller.confirmPassword,
@@ -118,14 +121,14 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                     height: 50,
                   ),
                   GradientButton(
-                    title: 'Submit',
+                    title: 'Submit'.tr,
                     onPressed: controller.areFieldsFilled.value
                         ? () {
                             controller.changePassword();
                           }
                         : () {
-                            UiUtilites.errorSnackbar('Fill out all fields',
-                                'Please fill all above fields');
+                            UiUtilites.errorSnackbar('Fill out all fields'.tr,
+                                'Please fill all above fields'.tr);
                           },
                     selected: controller.areFieldsFilled.value,
                   )

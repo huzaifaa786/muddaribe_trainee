@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
-import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
 class IconButtons extends StatelessWidget {
@@ -57,7 +56,7 @@ class IconButtons extends StatelessWidget {
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                   ),
-                ).translate(),
+                ),
               ],
             ),
           ),

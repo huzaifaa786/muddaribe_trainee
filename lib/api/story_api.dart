@@ -23,7 +23,7 @@ class StoryApi {
 
     final stories = trainerSnapshot.docs
         .map(
-          (e) => TrainerStory.fromJson(e.data() as Map<String, dynamic>),
+          (e) => TrainerStory.fromJson(e.data()),
         )
         .where((item) => item.trainerId == trainerId)
         .toList();

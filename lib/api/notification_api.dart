@@ -12,7 +12,7 @@ class NotificationApi {
     List<CombinedTrainerNotification> combinedData = [];
     QuerySnapshot notificationDocs = await FirebaseFirestore.instance
         .collection('notifications')
-        .where("userId", isEqualTo: traineeId)
+        .where("userId", isEqualTo: traineeId).orderBy('id', descending: true)
         .get();
 
     if (notificationDocs.docs.isNotEmpty) {

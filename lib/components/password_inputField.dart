@@ -1,13 +1,12 @@
-// ignore_for_file: use_full_hex_values_for_flutter_colors, prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_typing_uninitialized_variables
+// ignore_for_file: use_full_hex_values_for_flutter_colors, prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_typing_uninitialized_variables, deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
-import 'package:mudarribe_trainee/utils/translation.dart';
 
-class PasswordInputField extends StatefulWidget {
+class PasswordInputField extends StatelessWidget {
   const PasswordInputField({
     Key? key,
     this.controller,
@@ -34,44 +33,27 @@ class PasswordInputField extends StatefulWidget {
   final readOnly;
 
   @override
-  State<PasswordInputField> createState() => _PasswordInputFieldState();
-}
-
-class _PasswordInputFieldState extends State<PasswordInputField> {
-  String? labelTranslation;
-  translateLabel() async {
-    labelTranslation = await translateText(widget.lable);
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    translateLabel();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Container(
       // height: 65,
       padding: const EdgeInsets.only(top: 15, left: 0, right: 0),
       child: TextFormField(
-        readOnly: widget.readOnly,
-        obscureText: widget.obscure,
-        controller: widget.controller,
-        validator: widget.validator,
-        autovalidateMode: widget.autovalidateMode ??
-            (widget.validator == true.obs
+        readOnly: readOnly,
+        obscureText: obscure,
+        controller: controller,
+        validator: validator,
+        autovalidateMode: autovalidateMode ??
+            (validator == true.obs
                 ? AutovalidateMode.always
                 : AutovalidateMode.onUserInteraction),
         style: TextStyle(color: Colors.white),
-        keyboardType: widget.type,
+        keyboardType: type,
         decoration: InputDecoration(
           suffixIcon: InkWell(
               onTap: () {
-                widget.toggle();
+                toggle();
               },
-              child: widget.obscure
+              child: obscure
                   ? SvgPicture.asset(
                       'assets/images/emojione-monotone_eye-1.svg',
                       height: 24,
@@ -103,8 +85,8 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
           ),
           hoverColor: Colors.grey,
           focusColor: Colors.grey,
-          labelText: labelTranslation ?? '',
-          hintText: widget.hint,
+          labelText: lable,
+          hintText: hint,
           labelStyle: TextStyle(
             fontFamily: 'Poppins',
             fontWeight: FontWeight.w500,

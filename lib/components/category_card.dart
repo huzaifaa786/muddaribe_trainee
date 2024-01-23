@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
-import 'package:google_translator/google_translator.dart';
+import 'package:get/get.dart';
 
 class CategoryCard extends StatelessWidget {
   const CategoryCard(
@@ -50,14 +50,14 @@ class CategoryCard extends StatelessWidget {
       child: Align(
         alignment: Alignment.center,
         child: Text(
-          title,
+          "$title".tr,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.white,
             fontSize: 18,
             fontWeight: FontWeight.w700,
           ),
-        ).translate(),
+        ),
       ),
     );
   }

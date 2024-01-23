@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gradient_borders/gradient_borders.dart';
-import 'package:mudarribe_trainee/utils/translation.dart';
 
 class InputField extends StatefulWidget {
   const InputField({
@@ -34,18 +33,6 @@ class InputField extends StatefulWidget {
 }
 
 class _InputFieldState extends State<InputField> {
-    String? labelTranslation;
-  translateLabel() async {
-    labelTranslation = await translateText(widget.lable);
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    translateLabel();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -62,10 +49,9 @@ class _InputFieldState extends State<InputField> {
                     : AutovalidateMode.onUserInteraction),
             style: TextStyle(color: Colors.white),
             keyboardType: widget.type,
-            
             decoration: InputDecoration(
-           contentPadding: EdgeInsets.symmetric(vertical: 14,horizontal: 10),
-
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 14, horizontal: 10),
                 floatingLabelBehavior: FloatingLabelBehavior.always,
                 fillColor: Colors.white,
                 border: GradientOutlineInputBorder(
@@ -78,7 +64,7 @@ class _InputFieldState extends State<InputField> {
                 ),
                 hoverColor: Colors.grey,
                 focusColor: Colors.grey,
-                labelText: labelTranslation ?? '',
+                labelText: widget.lable,
                 hintText: widget.hint,
                 labelStyle: TextStyle(
                     fontFamily: 'Poppins',

@@ -79,7 +79,7 @@ class SignInController extends GetxController {
         }
       }
     } on AuthApiException catch (e) {
-      UiUtilites.errorSnackbar('Signin Failed', e.toString());
+      UiUtilites.errorSnackbar('Signin Failed'.tr, e.toString());
     }
     busyController.setBusy(false);
   }
@@ -102,7 +102,7 @@ class SignInController extends GetxController {
         Get.offNamed(AppRoutes.footer);
       }
     } on AuthApiException catch (e) {
-      UiUtilites.errorSnackbar('Signin Failed', e.toString());
+      UiUtilites.errorSnackbar('Signin Failed'.tr, e.toString());
     }
   }
 }

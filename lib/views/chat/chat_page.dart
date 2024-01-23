@@ -2,9 +2,9 @@
 
 import 'dart:async';
 import 'dart:io';
-import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/services/notification_service.dart';
 import 'package:mudarribe_trainee/utils/controller_initlization.dart';
+import 'package:mudarribe_trainee/utils/ui_utils.dart';
 import 'package:mudarribe_trainee/views/chat/chat_plan_card.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:mudarribe_trainee/views/chat/full_photo_page.dart';
@@ -28,7 +28,7 @@ import 'package:mudarribe_trainee/views/chat/pdf_view.dart';
 import 'package:provider/provider.dart';
 import 'dart:ui' as ui;
 import 'widgets.dart';
-// import 'pages.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key, required this.arguments});
@@ -86,6 +86,19 @@ class ChatPageState extends State<ChatPage> {
       }
     } catch (error) {
       print('Error fetching user token: $error');
+    }
+  }
+
+  double? ratings;
+  storeRating(trainerId, rating) async {
+    try {
+      String ratingId = DateTime.now().millisecondsSinceEpoch.toString();
+      await FirebaseFirestore.instance
+          .collection('ratings')
+          .doc(ratingId)
+          .set({"id": ratingId, 'trainerId': trainerId, 'rating': rating});
+    } catch (e) {
+      print('Error occurred while setting data: $e');
     }
   }
 
@@ -649,13 +662,13 @@ class ChatPageState extends State<ChatPage> {
                                               ),
                                               Gap(12),
                                               Text(
-                                                "Personal Plan",
+                                                "Personal Plan".tr,
                                                 style: const TextStyle(
                                                     fontFamily: "Poppins",
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w600,
                                                     color: white),
-                                              ).translate()
+                                              )
                                             ],
                                           ),
                                           Gap(12),
@@ -775,14 +788,14 @@ class ChatPageState extends State<ChatPage> {
                                                   );
                                                 },
                                                 child: Text(
-                                                  'View Plan',
+                                                  'View Plan'.tr,
                                                   style: TextStyle(
                                                     fontFamily: "Poppins",
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w500,
                                                     color: white,
                                                   ),
-                                                ).translate(),
+                                                ),
                                               ),
                                               messageChat.content
                                                           .split("~~")[3]
@@ -967,7 +980,7 @@ class ChatPageState extends State<ChatPage> {
                                                         }
                                                       },
                                                       child: Text(
-                                                        'Checkout',
+                                                        'Check Out'.tr,
                                                         style: TextStyle(
                                                           fontFamily: "Poppins",
                                                           fontSize: 14,
@@ -975,7 +988,7 @@ class ChatPageState extends State<ChatPage> {
                                                               FontWeight.w500,
                                                           color: white,
                                                         ),
-                                                      ).translate(),
+                                                      ),
                                                     )
                                                   : SizedBox(),
                                             ],
@@ -983,7 +996,214 @@ class ChatPageState extends State<ChatPage> {
                                         ],
                                       ),
                                     )
-                                  : SizedBox()
+                                  : Container(
+                                      width: 250,
+                                      margin:
+                                          EdgeInsets.only(left: 10, bottom: 10),
+                                      padding: EdgeInsets.all(12),
+                                      decoration: BoxDecoration(
+                                          color: bgContainer,
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Container(
+                                                width: 10,
+                                                height: 10,
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: borderDown),
+                                              ),
+                                              Gap(12),
+                                              Text(
+                                                "Rating".tr,
+                                                style: const TextStyle(
+                                                    fontFamily: "Poppins",
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: white),
+                                              )
+                                            ],
+                                          ),
+                                          Gap(12),
+                                          Row(
+                                            children: [
+                                              Material(
+                                                child: Image.network(
+                                                  widget.arguments.peerAvatar,
+                                                  loadingBuilder:
+                                                      (BuildContext context,
+                                                          Widget child,
+                                                          ImageChunkEvent?
+                                                              loadingProgress) {
+                                                    if (loadingProgress == null)
+                                                      return child;
+                                                    return Center(
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        color: Colors.grey[300],
+                                                        value: loadingProgress
+                                                                    .expectedTotalBytes !=
+                                                                null
+                                                            ? loadingProgress
+                                                                    .cumulativeBytesLoaded /
+                                                                loadingProgress
+                                                                    .expectedTotalBytes!
+                                                            : null,
+                                                      ),
+                                                    );
+                                                  },
+                                                  errorBuilder: (context,
+                                                      object, stackTrace) {
+                                                    return Icon(
+                                                      Icons.account_circle,
+                                                      size: 35,
+                                                      color: Colors.grey[300],
+                                                    );
+                                                  },
+                                                  width: 35,
+                                                  height: 35,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(18),
+                                                ),
+                                                clipBehavior: Clip.hardEdge,
+                                              ),
+                                              Gap(12),
+                                              SizedBox(
+                                                width: 150,
+                                                child: Text(
+                                                  widget.arguments.peerNickname,
+                                                  style: const TextStyle(
+                                                      fontFamily: "Poppins",
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: white),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          Gap(16),
+                                          RatingBar.builder(
+                                            initialRating: messageChat.content
+                                                        .split("~~")[0]
+                                                        .split(":")[1]
+                                                        .trim() ==
+                                                    '0'
+                                                ? 0
+                                                : double.parse(messageChat
+                                                    .content
+                                                    .split("~~")[0]
+                                                    .split(":")[1]
+                                                    .trim()),
+                                            minRating: 1,
+                                            direction: Axis.horizontal,
+                                            allowHalfRating: true,
+                                            itemCount: 5,
+                                            itemSize: 25,
+                                            unratedColor: Colors.grey,
+                                            glow: false,
+                                            ignoreGestures: messageChat.content
+                                                        .split("~~")[1]
+                                                        .split(":")[1]
+                                                        .trim() ==
+                                                    'false'
+                                                ? false
+                                                : true,
+                                            itemPadding: EdgeInsets.symmetric(
+                                                horizontal: 2.0),
+                                            itemBuilder: (context, _) => Icon(
+                                              Icons.star,
+                                              color: borderDown,
+                                              size: 15,
+                                            ),
+                                            onRatingUpdate: (rating) {
+                                              ratings = rating;
+                                              setState(() {});
+                                            },
+                                          ),
+                                          messageChat.content
+                                                      .split("~~")[1]
+                                                      .split(":")[1]
+                                                      .trim() ==
+                                                  'false'
+                                              ? Row(
+                                                  children: [
+                                                    ElevatedButton(
+                                                      style: ButtonStyle(
+                                                        shape: MaterialStateProperty
+                                                            .all<
+                                                                RoundedRectangleBorder>(
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5.0)),
+                                                        ),
+                                                        backgroundColor:
+                                                            MaterialStateProperty
+                                                                .all<Color>(
+                                                                    borderDown),
+                                                        minimumSize:
+                                                            MaterialStateProperty
+                                                                .all(Size(
+                                                                    100, 30)),
+                                                      ),
+                                                      onPressed: ratings != null
+                                                          ? () async {
+                                                              String content =
+                                                                  'rating:' +
+                                                                      '$ratings' +
+                                                                      '~~isRating:' +
+                                                                      'true';
+                                                              await FirebaseFirestore
+                                                                  .instance
+                                                                  .collection(
+                                                                      'messages')
+                                                                  .doc(
+                                                                      groupChatId)
+                                                                  .collection(
+                                                                      groupChatId)
+                                                                  .doc(messageChat
+                                                                      .timestamp)
+                                                                  .update({
+                                                                'content':
+                                                                    content,
+                                                              });
+                                                              storeRating(
+                                                                  widget
+                                                                      .arguments
+                                                                      .peerId,
+                                                                  ratings);
+                                                              print(content);
+                                                            }
+                                                          : () {
+                                                              UiUtilites
+                                                                  .errorSnackbar(
+                                                                      'Error!'.tr,
+                                                                      "Rating can't be less then 1.".tr);
+                                                            },
+                                                      child: Text(
+                                                        'Submit'.tr,
+                                                        style: TextStyle(
+                                                          fontFamily: "Poppins",
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: Colors.black,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              : SizedBox()
+                                        ],
+                                      ),
+                                    )
                 ],
               ),
 
@@ -1129,72 +1349,79 @@ class ChatPageState extends State<ChatPage> {
 
 ///////////////////////// Message Input Fields ///////////////////////////////////
   Widget buildInput() {
-    return Container(
-      child: Row(
-        children: <Widget>[
-          Material(
-            child: Container(
-              child: IconButton(
-                icon: Icon(Icons.more_vert),
-                // onPressed: getImage,
-                onPressed: () {
-                  _showBottomSheet(context);
-                },
-                color: white,
-              ),
-            ),
-            color: Colors.black,
-          ),
-          Flexible(
-            child: Container(
-              child: TextField(
-                onSubmitted: (value) {
-                  onSendMessage(textEditingController.text, TypeMessage.text);
-                },
-                style: TextStyle(color: Colors.white, fontSize: 15),
-                controller: textEditingController,
-                decoration: InputDecoration.collapsed(
-                    hintText: 'Type here',
-                    hintStyle: TextStyle(color: Colors.grey[300]),
-                    fillColor: Colors.black,
-                    filled: true),
-                focusNode: focusNode,
-                autofocus: true,
-              ),
-            ),
-          ),
-
-          // Button send message
-          Material(
-            child: InkWell(
-              onTap: () =>
-                  onSendMessage(textEditingController.text, TypeMessage.text),
+    GetStorage box = GetStorage();
+    return Directionality(
+      textDirection: box.read('locale') == 'ar'
+          ? ui.TextDirection.rtl
+          : ui.TextDirection.ltr,
+      child: Container(
+        child: Row(
+          children: <Widget>[
+            Material(
               child: Container(
-                  padding: EdgeInsets.all(8),
-                  margin: EdgeInsets.only(right: 8, left: 8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(45),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [borderTop, borderDown],
-                      stops: [0.0, 1.0],
-                    ),
-                  ),
-                  child: SvgPicture.asset(
-                    'assets/images/send.svg',
-                    fit: BoxFit.scaleDown,
-                  )),
+                child: IconButton(
+                  icon: Icon(Icons.more_vert),
+                  // onPressed: getImage,
+                  onPressed: () {
+                    _showBottomSheet(context);
+                  },
+                  color: white,
+                ),
+              ),
+              color: Colors.black,
             ),
-            color: Colors.black,
-          ),
-        ],
+            Flexible(
+              child: Container(
+                child: TextField(
+                  onSubmitted: (value) {
+                    onSendMessage(textEditingController.text, TypeMessage.text);
+                  },
+                  style: TextStyle(color: Colors.white, fontSize: 15),
+                  controller: textEditingController,
+                  decoration: InputDecoration.collapsed(
+                      hintText: 'Type here ...'.tr,
+                      hintStyle: TextStyle(color: Colors.grey[300]),
+                      fillColor: Colors.black,
+                      filled: true),
+                  focusNode: focusNode,
+                  autofocus: true,
+                ),
+              ),
+            ),
+
+            // Button send message
+            Material(
+              child: InkWell(
+                onTap: () =>
+                    onSendMessage(textEditingController.text, TypeMessage.text),
+                child: Container(
+                    padding: EdgeInsets.all(8),
+                    margin: EdgeInsets.only(right: 8, left: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(45),
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [borderTop, borderDown],
+                        stops: [0.0, 1.0],
+                      ),
+                    ),
+                    child: SvgPicture.asset(
+                      'assets/images/send.svg',
+                      fit: BoxFit.scaleDown,
+                    )),
+              ),
+              color: Colors.black,
+            ),
+          ],
+        ),
+        width: double.infinity,
+        height: 50,
+        decoration: BoxDecoration(
+            border:
+                Border(top: BorderSide(color: Colors.grey[300]!, width: 0.5)),
+            color: Colors.black),
       ),
-      width: double.infinity,
-      height: 50,
-      decoration: BoxDecoration(
-          border: Border(top: BorderSide(color: Colors.grey[300]!, width: 0.5)),
-          color: Colors.black),
     );
   }
 
@@ -1223,7 +1450,7 @@ class ChatPageState extends State<ChatPage> {
                         child: Text(
                       "No message here yet...",
                       style: TextStyle(color: white),
-                    ).translate());
+                    ));
                   }
                 } else {
                   return Center(
@@ -1264,14 +1491,14 @@ class ChatPageState extends State<ChatPage> {
                 ),
                 onPressed: getImage,
                 child: Text(
-                  'Photos',
+                  'Photos'.tr,
                   style: TextStyle(
                     fontFamily: "Poppins",
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: Color(0xff0f0a06),
                   ),
-                ).translate(),
+                ),
               ),
               Container(
                   width: double.infinity,
@@ -1290,14 +1517,14 @@ class ChatPageState extends State<ChatPage> {
                 ),
                 onPressed: getPdf,
                 child: Text(
-                  'Document',
+                  'Document'.tr,
                   style: TextStyle(
                     fontFamily: "Poppins",
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: Color(0xff0f0a06),
                   ),
-                ).translate(),
+                ),
               ),
               SizedBox(height: 20),
               ElevatedButton(
@@ -1313,14 +1540,14 @@ class ChatPageState extends State<ChatPage> {
                   Navigator.of(context).pop();
                 },
                 child: Text(
-                  'Cancel',
+                  'Cancel'.tr,
                   style: TextStyle(
                     fontFamily: "Poppins",
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: Color(0xff0f0a06),
                   ),
-                ).translate(),
+                ),
               ),
             ],
           ),

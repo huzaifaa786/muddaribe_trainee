@@ -19,7 +19,6 @@ class TrainerStoryContoller extends GetxController {
     trainer = await _homeApi.fetchTrainerData(id).then((value) => value.obs);
     firebaseStories =
         await _homeApi.fetchTrainerStoryData(id).then((value) => value.obs);
-
     for (var story in firebaseStories) {
       int timestamp = int.parse(story.postedTime!);
       DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);

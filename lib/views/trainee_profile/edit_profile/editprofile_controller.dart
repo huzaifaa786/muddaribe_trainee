@@ -59,7 +59,7 @@ class EditProfileContoller extends GetxController {
           'profileImageFileName': imageResult.imageFileName,
           'profileImageUrl': imageResult.imageUrl,
         });
-        UiUtilites.successSnackbar('Update User', 'User updated successfully');
+        UiUtilites.successSnackbar('Update User'.tr, 'User updated successfully'.tr);
       }
     } else {
       await _userService.updateUser(
@@ -68,7 +68,7 @@ class EditProfileContoller extends GetxController {
           'name': nameController.text,
         },
       );
-      UiUtilites.successSnackbar('Update User', 'User updated successfully');
+      UiUtilites.successSnackbar('Update User'.tr, 'User updated successfully'.tr);
     }
     // busyController.setBusy(false);
   }

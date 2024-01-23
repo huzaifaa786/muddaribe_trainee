@@ -63,26 +63,26 @@ class EventcheckoutController extends GetxController {
         'type': 'event'
       });
       Get.back();
-      UiUtilites.successAlert(Get.context, 'Event Joined Successfully');
+      UiUtilites.successAlert(Get.context, 'Event Joined Successfully'.tr);
     }
   }
 
   void applyPromoCode(String trainerId) async {
     if (promoCode.text.isEmpty) {
-      UiUtilites.errorSnackbar('Empty Promo Code', 'Please enter code first');
+      UiUtilites.errorSnackbar('Empty Promo Code'.tr, 'Please enter code first'.tr);
       return;
     }
     CouponCode? couponCode =
         await _couponCodeApi.getPromoCode(promoCode.text, trainerId);
     if (couponCode != null) {
       discount =
-          (int.parse(price) * int.parse(couponCode.percentage) / 100).toInt();
+          int.parse(price) * int.parse(couponCode.percentage) ~/ 100;
       total = (int.parse(price) - discount).toString();
       isCode = !isCode;
       update();
     } else {
       UiUtilites.errorSnackbar(
-          'Invalid Promo Code', 'Please enter correct code');
+          'Invalid Promo Code'.tr, 'Please enter correct code'.tr);
     }
   }
 

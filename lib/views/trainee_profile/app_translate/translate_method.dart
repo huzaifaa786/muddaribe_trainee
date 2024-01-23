@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
 class TranslateMethod extends StatefulWidget {
@@ -50,7 +49,7 @@ class _TranslateMethodState extends State<TranslateMethod> {
                         widget.title,
                         style: TextStyle( color: white,
                             fontSize: 16.0, fontWeight: FontWeight.w400),
-                      ).translate(),
+                      ),
                       Transform.scale(
                           scale: 1.2,
                           child: Radio(

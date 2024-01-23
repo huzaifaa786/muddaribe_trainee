@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_translator/google_translator.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
@@ -94,7 +93,7 @@ class ChatMeCard extends StatelessWidget {
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400),
                             maxLines: 2,
-                          ).translate(),
+                          ),
                         ),
                       ),
                     ],

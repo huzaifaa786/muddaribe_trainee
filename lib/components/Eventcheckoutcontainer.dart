@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:google_translator/google_translator.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
@@ -137,14 +136,14 @@ class EventcheckoutContainer extends StatelessWidget {
                     right: 14,
                   ),
                   child: Text(
-                    price + ' AED',
+                    price + ' '+'AED'.tr,
                     style: TextStyle(
                       color: Colors.white,
                       fontFamily: 'Montserrat',
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
-                  ).translate()),
+                  )),
             ],
           )
         ],

@@ -70,7 +70,7 @@ class Packagecheckoutcontroller extends GetxController {
           'type': 'package'
         });
         Get.back();
-        UiUtilites.successAlert(Get.context, 'Package Subscribed Successfully');
+        UiUtilites.successAlert(Get.context, 'Package Subscribed Successfully'.tr);
       } else {
         await _packageApi.orderPlacement(
             packageId, trainerId, userid, orderId, intent, int.parse(total));
@@ -79,14 +79,14 @@ class Packagecheckoutcontroller extends GetxController {
             body: 'Order placed with an Order Id #$orderId',
             receiverToken: firebaseToken);
         Get.back();
-        UiUtilites.successAlert(Get.context, 'Package Subscribed Successfully');
+        UiUtilites.successAlert(Get.context, 'Package Subscribed Successfully'.tr);
       }
     }
   }
 
   void applyPromoCode(trainerId) async {
     if (promoCode.text.isEmpty) {
-      UiUtilites.errorSnackbar('Empty Promo Code', 'Please enter code first');
+      UiUtilites.errorSnackbar('Empty Promo Code'.tr, 'Please enter code first'.tr);
       return;
     }
     CouponCode? couponCode =
@@ -99,7 +99,7 @@ class Packagecheckoutcontroller extends GetxController {
       update();
     } else {
       UiUtilites.errorSnackbar(
-          'Invalid Promo Code', 'Please enter correct code');
+          'Invalid Promo Code'.tr, 'Please enter correct code'.tr);
     }
   }
 

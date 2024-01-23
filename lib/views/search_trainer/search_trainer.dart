@@ -5,7 +5,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/api/trainer_saved.dart';
 import 'package:mudarribe_trainee/components/boxing_trainers_card.dart';
 import 'package:mudarribe_trainee/components/color_button.dart';
@@ -53,116 +52,123 @@ class _SerachViewState extends State<SerachView> {
             automaticallyImplyLeading: false,
             forceMaterialTransparency: true,
             title: TopBar(
-              text: 'Search',
+              text: 'Search'.tr,
             ),
           ),
           body: SafeArea(
               child: Stack(
             children: [
-              InkWell(
-                highlightColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                splashColor: Colors.transparent,
-                onTap: controller.show == true
-                    ? () {
-                        controller.toggleShow();
-                      }
-                    : null,
-                child: IgnorePointer(
-                  ignoring: controller.show == true ? true : false,
-                  child: Container(
-                    padding: EdgeInsets.only(left: 15, right: 15),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(top: 15, bottom: 15),
-                          child: Row(
-                            children: [
-                              Flexible(
-                                child: TextField(
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: "Montserrat",
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
+              Directionality(
+                textDirection: TextDirection.ltr,
+                child: InkWell(
+                  highlightColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  onTap: controller.show == true
+                      ? () {
+                          controller.toggleShow();
+                        }
+                      : null,
+                  child: IgnorePointer(
+                    ignoring: controller.show == true ? true : false,
+                    child: Container(
+                      padding: EdgeInsets.only(left: 15, right: 15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(top: 15, bottom: 15),
+                            child: Row(
+                              children: [
+                                Flexible(
+                                  child: TextField(
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: "Montserrat",
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    onChanged: (String val) {
+                                      setState(() {
+                                        search = val;
+                                        controller.filterTrainers(val);
+                                      });
+                                    },
+                                    decoration: InputDecoration(
+                                        fillColor: bgContainer,
+                                        filled: true,
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 14, horizontal: 14),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(25))),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(25))),
+                                        hintText: 'Search trainer by name'.tr,
+                                        hintStyle: TextStyle(
+                                          color: Colors.white.withOpacity(0.3),
+                                          fontFamily: "Montserrat",
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                        )),
                                   ),
-                                  onChanged: (String val) {
-                                    setState(() {
-                                      search = val;
-                                      controller.filterTrainers(val);
-                                    });
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    controller.toggleShow();
                                   },
-                                  decoration: InputDecoration(
-                                      fillColor: bgContainer,
-                                      filled: true,
-                                      contentPadding: EdgeInsets.symmetric(
-                                          vertical: 14, horizontal: 14),
-                                      enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(25))),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(25))),
-                                      hintText: 'Search trainer by name',
-                                      hintStyle: TextStyle(
-                                        color: Colors.white.withOpacity(0.3),
-                                        fontFamily: "Montserrat",
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                      )),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  controller.toggleShow();
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: SvgPicture.asset(
-                                    'assets/images/filter.svg',
-                                    fit: BoxFit.scaleDown,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: SvgPicture.asset(
+                                      'assets/images/filter.svg',
+                                      fit: BoxFit.scaleDown,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        controller.items.isNotEmpty
-                            ? Flexible(
-                                child: SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.85,
-                                    child: ListView.builder(
-                                      itemCount: controller.items.length,
-                                      itemBuilder: (context, index) {
-                                        Trainer item = controller.items[index];
-                                        return BoxingTrainersCard(
-                                          onProfileTap: () {
-                                            Get.toNamed(
-                                                AppRoutes.trainerprofile,
-                                                arguments:
-                                                    controller.items[index].id);
-                                          },
-                                          title: item.name,
-                                          description: item.category.join('\n'),
-                                          imgpath1: item.profileImageUrl,
-                                          isSaved: item.isSaved,
-                                          ontap: () {
-                                            item.isSaved = !item.isSaved;
-                                            setState(() {});
-                                            item.isSaved
-                                                ? TrainerSaved.trainerSaved(
-                                                    item.id)
-                                                : TrainerSaved.trainerUnsaved(
-                                                    item.id);
-                                          },
-                                        );
-                                      },
-                                    )),
-                              )
-                            : SizedBox.shrink(),
-                      ],
+                          controller.items.isNotEmpty
+                              ? Flexible(
+                                  child: SizedBox(
+                                      height: MediaQuery.of(context).size.height *
+                                          0.85,
+                                      child: ListView.builder(
+                                        itemCount: controller.items.length,
+                                        itemBuilder: (context, index) {
+                                          Trainer item = controller.items[index];
+                                          print(item.rating);
+                                          print(item.id);
+              
+                                          return BoxingTrainersCard(
+                                            onProfileTap: () {
+                                              Get.toNamed(
+                                                  AppRoutes.trainerprofile,
+                                                  arguments:
+                                                      controller.items[index].id);
+                                            },
+                                            rating: item.rating,
+                                            title: item.name,
+                                            description: item.category.join('\n'),
+                                            imgpath1: item.profileImageUrl,
+                                            isSaved: item.isSaved,
+                                            ontap: () {
+                                              item.isSaved = !item.isSaved;
+                                              setState(() {});
+                                              item.isSaved
+                                                  ? TrainerSaved.trainerSaved(
+                                                      item.id)
+                                                  : TrainerSaved.trainerUnsaved(
+                                                      item.id);
+                                            },
+                                          );
+                                        },
+                                      )),
+                                )
+                              : SizedBox.shrink(),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -185,34 +191,34 @@ class _SerachViewState extends State<SerachView> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Categories',
+                                  'Categories'.tr,
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
                                       color: white),
-                                ).translate(),
+                                ),
                                 Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: _buildCategoryButtons()),
                                 Text(
-                                  'Languages',
+                                  'Languages'.tr,
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
                                       color: white),
-                                ).translate(),
+                                ),
                                 Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: _buildRadioButtons()),
                                 Text(
-                                  'Gender',
+                                  'Gender'.tr,
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
                                       color: white),
-                                ).translate(),
+                                ),
                                 Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -220,7 +226,7 @@ class _SerachViewState extends State<SerachView> {
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: GradientButton(
-                                    title: 'Search',
+                                    title: 'Search'.tr,
                                     onPressed: () async {
                                       controller.lang = lang;
                                       controller.gender = gender;
@@ -269,13 +275,13 @@ class _SerachViewState extends State<SerachView> {
                     },
                   )),
               Text(
-                option.toString().split('.').last,
+                option.toString().split('.').last.tr,
                 style: TextStyle(
                     fontFamily: "Poppins",
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: white),
-              ).translate(),
+              ),
               Text(
                 '',
               ),
@@ -310,13 +316,13 @@ class _SerachViewState extends State<SerachView> {
                     },
                   )),
               Text(
-                option.toString().split('.').last,
+                option.toString().split('.').last.tr,
                 style: TextStyle(
                     fontFamily: "Poppins",
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: white),
-              ).translate(),
+              ),
               Text(
                 '',
               ),
@@ -352,16 +358,16 @@ class _SerachViewState extends State<SerachView> {
                   )),
               Text(
                 option.toString().split('.').last == 'body_Building'
-                    ? "Body Building"
+                    ? "Body Building".tr
                     : option.toString().split('.').last == 'medical_Fitness'
-                        ? 'Medical Fitness'
-                        : option.toString().split('.').last,
+                        ? 'Medical Fitness'.tr
+                        : option.toString().split('.').last.tr,
                 style: TextStyle(
                     fontFamily: "Poppins",
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: white),
-              ).translate(),
+              ),
               Text(
                 '',
               ),

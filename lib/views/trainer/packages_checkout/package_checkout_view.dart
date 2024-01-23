@@ -3,10 +3,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_translator/google_translator.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:mudarribe_trainee/api/package_api.dart';
 import 'package:mudarribe_trainee/components/textgradient.dart';
+import 'package:mudarribe_trainee/components/topbar.dart';
 import 'package:mudarribe_trainee/models/package_data_combined.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
@@ -36,25 +36,9 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
         },
         builder: (controller) => Scaffold(
               appBar: AppBar(
-                backgroundColor: Colors.black,
-                leading: InkWell(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: Icon(
-                    Icons.arrow_back_ios_new,
-                    color: white,
-                  ),
-                ),
-                title: Text(
-                  'Package Check out',
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: white,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: 'Poppins'),
-                ).translate(),
-              ),
+                  backgroundColor: Colors.black,
+                  automaticallyImplyLeading: false,
+                  title: TopBar(text: 'Package Check out'.tr)),
               body: SafeArea(
                   child: Container(
                 child: Padding(
@@ -77,229 +61,248 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
 
                           return Column(
                             children: [
-                              Container(
-                                height: 191,
-                                width: MediaQuery.sizeOf(context).width,
-                                decoration: BoxDecoration(
-                                  color: bgContainer,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 10, top: 10),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () {
-                              Get.toNamed(AppRoutes.trainerprofile,
-                                  arguments: combinedPackagetData.trainer.id);
-                            },
-                                            child: ClipOval(
-                                              child: Container(
-                                                width: 36,
-                                                height: 36,
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  border: const GradientBoxBorder(
-                                                    gradient: LinearGradient(
-                                                      colors: [
-                                                        Color.fromARGB(
-                                                            255, 184, 66, 186),
-                                                        Color.fromARGB(
-                                                            255, 111, 127, 247),
-                                                      ],
+                              Directionality(
+                                textDirection: TextDirection.ltr,
+                                child: Container(
+                                  height: 191,
+                                  width: MediaQuery.sizeOf(context).width,
+                                  decoration: BoxDecoration(
+                                    color: bgContainer,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, top: 10),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                Get.toNamed(
+                                                    AppRoutes.trainerprofile,
+                                                    arguments:
+                                                        combinedPackagetData
+                                                            .trainer.id);
+                                              },
+                                              child: ClipOval(
+                                                child: Container(
+                                                  width: 36,
+                                                  height: 36,
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    border:
+                                                        const GradientBoxBorder(
+                                                      gradient: LinearGradient(
+                                                        colors: [
+                                                          Color.fromARGB(255,
+                                                              184, 66, 186),
+                                                          Color.fromARGB(255,
+                                                              111, 127, 247),
+                                                        ],
+                                                      ),
+                                                      width: 2,
                                                     ),
-                                                    width: 2,
-                                                  ),
-                                                  image: DecorationImage(
-                                                    image: NetworkImage(
-                                                        combinedPackagetData.trainer.profileImageUrl),
-                                                    fit: BoxFit.contain,
+                                                    image: DecorationImage(
+                                                      image: NetworkImage(
+                                                          combinedPackagetData
+                                                              .trainer
+                                                              .profileImageUrl),
+                                                      fit: BoxFit.contain,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 2.0, left: 10.4),
-                                            child: Row(
-                                              children: [
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    GestureDetector(
-                                                       onTap: () {
-                              Get.toNamed(AppRoutes.trainerprofile,
-                                  arguments: combinedPackagetData.trainer.id);
-                            },
-                                                      child: Text(
-                                                        combinedPackagetData
-                                                            .trainer.name,
-                                                        style: TextStyle(
-                                                          fontSize: 14,
-                                                          fontFamily:
-                                                              'Montserrat',
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: Get.width *0.5,
-                                                      child: Text(
-                                                        combinedPackagetData
-                                                            .trainer.category
-                                                            .join('& '),
-                                                        style: TextStyle(
-                                                          fontSize: 10,
-                                                          fontFamily:
-                                                              'Montserrat',
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          color: Colors.white
-                                                              .withOpacity(
-                                                                  0.6000000238418579),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 7,
-                                                              bottom: 7),
-                                                      child: combinedPackagetData
-                                                                  .package
-                                                                  .category ==
-                                                              "nutrition"
-                                                          ? Image.asset(
-                                                              'assets/images/packageplanimage1.png',
-                                                              height: 18,
-                                                              width: 20)
-                                                          : combinedPackagetData
-                                                                      .package
-                                                                      .category ==
-                                                                  'excercise'
-                                                              ? Image.asset(
-                                                                  'assets/images/packageplanimage.png',
-                                                                  height: 19,
-                                                                  width: 20,
-                                                                )
-                                                              : Row(
-                                                                  children: [
-                                                                    Image.asset(
-                                                                      'assets/images/packageplanimage.png',
-                                                                      height:
-                                                                          19,
-                                                                      width: 20,
-                                                                    ),
-                                                                    Padding(
-                                                                      padding: const EdgeInsets
-                                                                          .only(
-                                                                          left:
-                                                                              5,
-                                                                          right:
-                                                                              5),
-                                                                      child:
-                                                                          Text(
-                                                                        '+',
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                white,
-                                                                            fontSize:
-                                                                                20,
-                                                                            fontWeight:
-                                                                                FontWeight.w700),
-                                                                      ),
-                                                                    ),
-                                                                    Image.asset(
-                                                                        'assets/images/packageplanimage1.png',
-                                                                        height:
-                                                                            18,
-                                                                        width:
-                                                                            20),
-                                                                  ],
-                                                                ),
-                                                    ),
-                                                    Text(
-                                                      combinedPackagetData
-                                                          .package.name
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                          fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                          color:
-                                                              whitewithopacity1),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 5,
-                                                              bottom: 10),
-                                                      child: Text(
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 2.0, left: 10.4),
+                                              child: Row(
+                                                children: [
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          Get.toNamed(
+                                                              AppRoutes
+                                                                  .trainerprofile,
+                                                              arguments:
+                                                                  combinedPackagetData
+                                                                      .trainer
+                                                                      .id);
+                                                        },
+                                                        child: Text(
                                                           combinedPackagetData
-                                                              .package
-                                                              .discription
-                                                              .toString(),
+                                                              .trainer.name,
                                                           style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              color:
-                                                                  whitewithopacity1)),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
+                                                            fontSize: 14,
+                                                            fontFamily:
+                                                                'Montserrat',
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: Get.width * 0.5,
+                                                        child: Text(
+                                                          combinedPackagetData
+                                                              .trainer.category
+                                                              .join('& '),
+                                                          style: TextStyle(
+                                                            fontSize: 10,
+                                                            fontFamily:
+                                                                'Montserrat',
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            color: Colors.white
+                                                                .withOpacity(
+                                                                    0.6000000238418579),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                top: 7,
+                                                                bottom: 7),
+                                                        child: combinedPackagetData
+                                                                    .package
+                                                                    .category ==
+                                                                "nutrition"
+                                                            ? Image.asset(
+                                                                'assets/images/packageplanimage1.png',
+                                                                height: 18,
+                                                                width: 20)
+                                                            : combinedPackagetData
+                                                                        .package
+                                                                        .category ==
+                                                                    'excercise'
+                                                                ? Image.asset(
+                                                                    'assets/images/packageplanimage.png',
+                                                                    height: 19,
+                                                                    width: 20,
+                                                                  )
+                                                                : Row(
+                                                                    children: [
+                                                                      Image
+                                                                          .asset(
+                                                                        'assets/images/packageplanimage.png',
+                                                                        height:
+                                                                            19,
+                                                                        width:
+                                                                            20,
+                                                                      ),
+                                                                      Padding(
+                                                                        padding: const EdgeInsets
+                                                                            .only(
+                                                                            left:
+                                                                                5,
+                                                                            right:
+                                                                                5),
+                                                                        child:
+                                                                            Text(
+                                                                          '+',
+                                                                          style: TextStyle(
+                                                                              color: white,
+                                                                              fontSize: 20,
+                                                                              fontWeight: FontWeight.w700),
+                                                                        ),
+                                                                      ),
+                                                                      Image.asset(
+                                                                          'assets/images/packageplanimage1.png',
+                                                                          height:
+                                                                              18,
+                                                                          width:
+                                                                              20),
+                                                                    ],
+                                                                  ),
+                                                      ),
+                                                      Text(
+                                                        combinedPackagetData
+                                                            .package.name
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            color:
+                                                                whitewithopacity1),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                top: 5,
+                                                                bottom: 10),
+                                                        child: Text(
+                                                            combinedPackagetData
+                                                                .package
+                                                                .discription
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                color:
+                                                                    whitewithopacity1)),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Padding(
-                                            padding: const EdgeInsets.only(
-                                              right: 14,
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  combinedPackagetData
-                                                      .package.price
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontFamily: 'Montserrat',
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.w700,
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          Padding(
+                                              padding: const EdgeInsets.only(
+                                                right: 14,
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    combinedPackagetData
+                                                        .package.price
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontFamily: 'Montserrat',
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                    ),
                                                   ),
-                                                ),
-                                                Text(
-                                                  'AED',
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontFamily: 'Montserrat',
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w700,
+                                                  Text(
+                                                    'AED'.tr,
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontFamily: 'Montserrat',
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                    ),
                                                   ),
-                                                ).translate(),
-                                              ],
-                                            )),
-                                      ],
-                                    )
-                                  ],
+                                                ],
+                                              )),
+                                        ],
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                               Padding(
@@ -319,13 +322,13 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          'Promo Code',
+                                          'Promo Code'.tr,
                                           style: TextStyle(
                                             color: white,
                                             fontSize: 14,
                                             fontWeight: FontWeight.w600,
                                           ),
-                                        ).translate(),
+                                        ),
                                         controller.total != ''
                                             ? GradientText1(
                                                 text: controller.promoCode.text,
@@ -341,23 +344,23 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                                           decoration:
                                                               BoxDecoration(
                                                                   color: Colors
-                                                                      .black),
+                                                                      .grey),
                                                           child: TextField(
                                                             controller:
                                                                 controller
                                                                     .promoCode,
                                                             style: TextStyle(
-                                                                color: white),
+                                                                color: Colors
+                                                                    .black),
                                                             decoration: InputDecoration(
                                                                 border:
                                                                     InputBorder
                                                                         .none,
                                                                 fillColor:
-                                                                    Colors
-                                                                        .black,
+                                                                    Colors.grey,
                                                                 focusColor:
                                                                     Colors
-                                                                        .black),
+                                                                        .grey),
                                                           )),
                                                       Padding(
                                                         padding:
@@ -373,7 +376,7 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                                                         .id);
                                                           },
                                                           child: GradientText1(
-                                                            text: 'Apply',
+                                                            text: 'Apply'.tr,
                                                           ),
                                                         ),
                                                       ),
@@ -385,7 +388,7 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                                       setState(() {});
                                                     },
                                                     child: GradientText1(
-                                                      text: 'Add Code',
+                                                      text: 'Add Code'.tr,
                                                     ),
                                                   )
                                       ],
@@ -396,16 +399,17 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                               Padding(
                                 padding: const EdgeInsets.only(
                                     top: 35, left: 5, bottom: 20),
-                                child: Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    'Summary',
-                                    style: TextStyle(
-                                      color: white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'Summary'.tr,
+                                      style: TextStyle(
+                                        color: white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700,
+                                      ),
                                     ),
-                                  ).translate(),
+                                  ],
                                 ),
                               ),
                               Container(
@@ -427,21 +431,22 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            'Price ',
+                                            'Price'.tr,
                                             style: TextStyle(
                                               color: white,
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600,
                                             ),
-                                          ).translate(),
+                                          ),
                                           Text(
-                                            '${combinedPackagetData.package.price} AED',
+                                            '${combinedPackagetData.package.price} ' +
+                                                'AED'.tr,
                                             style: TextStyle(
                                               color: white,
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600,
                                             ),
-                                          ).translate(),
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -461,21 +466,22 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            'Offer ',
+                                            'Offer'.tr,
                                             style: TextStyle(
                                               color: white,
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600,
                                             ),
-                                          ).translate(),
+                                          ),
                                           Text(
-                                            '${controller.discount.toString()} AED',
+                                            '${controller.discount.toString()} ' +
+                                                'AED'.tr,
                                             style: TextStyle(
                                               color: white,
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600,
                                             ),
-                                          ).translate(),
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -495,17 +501,21 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            'Total',
+                                            'Total'.tr,
                                             style: TextStyle(
                                               color: white,
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600,
                                             ),
-                                          ).translate(),
+                                          ),
                                           GradientText(
                                             controller.total == ''
-                                                ? controller.price + ' AED'
-                                                : controller.total + ' AED',
+                                                ? controller.price +
+                                                    ' ' +
+                                                    'AED'.tr
+                                                : controller.total +
+                                                    ' ' +
+                                                    'AED'.tr,
                                             style: TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.w700,
@@ -560,14 +570,14 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                                     ],
                                             )),
                                         child: Text(
-                                          'Check Out',
+                                          'Check Out'.tr,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 14,
                                             fontWeight: FontWeight.w700,
                                           ),
-                                        ).translate(),
+                                        ),
                                       )),
                                 ),
                               )

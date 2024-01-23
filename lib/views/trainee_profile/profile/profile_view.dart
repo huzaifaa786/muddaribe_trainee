@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/components/profile_tile.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
@@ -24,14 +23,14 @@ class TraineeProfileView extends StatelessWidget {
                   forceMaterialTransparency: true,
                   centerTitle: true,
                   title: Text(
-                    'Account',
+                    'Account'.tr,
                     style: TextStyle(
                       fontFamily: "Poppins",
                       color: Colors.white,
                       fontSize: 24,
                       fontWeight: FontWeight.w700,
                     ),
-                  ).translate(),
+                  ),
                 ),
                 body: SafeArea(
                   child: Column(
@@ -84,42 +83,42 @@ class TraineeProfileView extends StatelessWidget {
                                               .then((value) =>
                                                   controller.getAppUser());
                                         },
-                                        text: 'Account Setting',
+                                        text: 'Account Setting'.tr,
                                       ),
                                       ProfileTile(
                                         img: 'assets/images/saved.svg',
                                         ontap: () {
                                           Get.toNamed(AppRoutes.saved);
                                         },
-                                        text: 'Saved',
+                                        text: 'Saved'.tr,
                                       ),
                                       ProfileTile(
-                                        img: 'assets/images/report.svg',
+                                        img: 'assets/images/lang1.svg',
                                         ontap: () {
                                           Get.to(()=> TranslateScreen());
                                         },
-                                        text: 'Language',
+                                        text: 'Languages'.tr,
                                       ),
                                       ProfileTile(
                                         img: 'assets/images/report.svg',
                                         ontap: () {
                                           Get.toNamed(AppRoutes.reports);
                                         },
-                                        text: 'Report a problem',
+                                        text: 'Report a problem'.tr,
                                       ),
                                       ProfileTile(
                                         img: 'assets/images/order.svg',
                                         ontap: () {
                                           Get.toNamed(AppRoutes.orderHistory);
                                         },
-                                        text: 'Order History',
+                                        text: 'Orders History'.tr,
                                       ),
                                       ProfileTile(
                                         img: 'assets/images/logout.svg',
                                         ontap: () {
                                           controller.logout();
                                         },
-                                        text: 'Logout',
+                                        text: 'Log Out'.tr,
                                         logout: true,
                                       ),
                                     ],

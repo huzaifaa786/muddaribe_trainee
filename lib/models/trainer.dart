@@ -8,6 +8,7 @@ class Trainer {
   final String gender;
   final String? firebaseToken;
   bool isSaved;
+  double? rating;
 
   Trainer({
     required this.id,
@@ -19,6 +20,7 @@ class Trainer {
     this.isSaved = false,
     required this.bio,
     this.firebaseToken,
+    this.rating,
   });
 
   factory Trainer.fromMap(Map<String, dynamic> map) {
