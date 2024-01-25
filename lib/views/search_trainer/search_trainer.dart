@@ -132,25 +132,28 @@ class _SerachViewState extends State<SerachView> {
                           controller.items.isNotEmpty
                               ? Flexible(
                                   child: SizedBox(
-                                      height: MediaQuery.of(context).size.height *
-                                          0.85,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.85,
                                       child: ListView.builder(
                                         itemCount: controller.items.length,
                                         itemBuilder: (context, index) {
-                                          Trainer item = controller.items[index];
+                                          Trainer item =
+                                              controller.items[index];
                                           print(item.rating);
                                           print(item.id);
-              
+
                                           return BoxingTrainersCard(
                                             onProfileTap: () {
                                               Get.toNamed(
                                                   AppRoutes.trainerprofile,
-                                                  arguments:
-                                                      controller.items[index].id);
+                                                  arguments: controller
+                                                      .items[index].id);
                                             },
                                             rating: item.rating,
                                             title: item.name,
-                                            description: item.category.join('\n'),
+                                            description:
+                                                item.category.join('\n'),
                                             imgpath1: item.profileImageUrl,
                                             isSaved: item.isSaved,
                                             ontap: () {
@@ -360,7 +363,7 @@ class _SerachViewState extends State<SerachView> {
                 option.toString().split('.').last == 'body_Building'
                     ? "Body Building".tr
                     : option.toString().split('.').last == 'medical_Fitness'
-                        ? 'Medical Fitness'.tr
+                        ? 'Medical fitness'.tr
                         : option.toString().split('.').last.tr,
                 style: TextStyle(
                     fontFamily: "Poppins",
