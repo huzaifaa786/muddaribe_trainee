@@ -25,7 +25,7 @@ class _MyplansViewState extends State<MyplansView> {
          centerTitle: true,
          automaticallyImplyLeading: false,
           title: Text(
-            'My Plans',
+            'My Plans'.tr,
             style: TextStyle(
                 fontSize: 20,
                 color: white,

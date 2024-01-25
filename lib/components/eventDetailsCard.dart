@@ -189,7 +189,7 @@ GetStorage box = GetStorage();
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20, top: 7.0),
+              padding: const EdgeInsets.only(left: 20,right: 20, top: 7.0),
               child: Column(
                 children: [
                   Row(

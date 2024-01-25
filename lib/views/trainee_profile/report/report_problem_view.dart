@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/components/color_button.dart';
 import 'package:mudarribe_trainee/components/inputfield.dart';
+import 'package:mudarribe_trainee/components/loading_indicator.dart';
 import 'package:mudarribe_trainee/components/password_inputField.dart';
 import 'package:mudarribe_trainee/components/textgradient.dart';
 import 'package:mudarribe_trainee/components/textgradient2.dart';
@@ -25,131 +26,133 @@ class _ReportProblemViewState extends State<ReportProblemView> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ReportProblemController>(
-      builder: (controller) => Scaffold(
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Directionality(
-                    textDirection: TextDirection.ltr,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      // ignore: prefer_const_literals_to_create_immutables
+      builder: (controller) => BusyIndicator(
+        child: Scaffold(
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        // ignore: prefer_const_literals_to_create_immutables
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Icon(
+                              Icons.arrow_back_ios_new,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
                       children: [
-                        InkWell(
-                          onTap: () {
-                            Get.back();
-                          },
-                          child: Icon(
-                            Icons.arrow_back_ios_new,
-                            color: Colors.white,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 40, bottom: 50),
+                          child: Text(
+                            'What’s the problem?'.tr,
+                            style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w600,
+                                color: white),
                           ),
                         ),
                       ],
                     ),
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 40, bottom: 50),
-                        child: Text(
-                          'What’s the problem?'.tr,
-                          style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w600,
-                              color: white),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.5,
-                    padding: EdgeInsets.only(
-                        left: 15, right: 15, top: 40, bottom: 25),
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        color: bgContainer,
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          InputField(
-                            lable: 'Problem Text'.tr,
-                            maxlines: 5,
-                            controller: controller.report,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 43),
-                            child: GestureDetector(
-                              child: Container(
-                                height: 52,
-                                width: 215,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  border: Border.all(color: gradientblue),
-                                ),
-                                child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      controller.reportImage == null
-                                          ? Image.asset(
-                                              'assets/images/image.png',
-                                              height: 15,
-                                              width: 20,
-                                            )
-                                          : Container(
-                                              child: Icon(
-                                                Icons.check_circle,
-                                                color: Colors.green,
-                                              ),
-                                            ),
-                                      controller.reportImage != null
-                                          ? Padding(
-                                              padding: const EdgeInsets.only(
-                                                left: 8,
-                                              ),
-                                              child: GradientText1(
-                                                text: 'Uploaded'.tr,
-                                              ),
-                                            )
-                                          : Padding(
-                                              padding: const EdgeInsets.only(
-                                                left: 8,
-                                              ),
-                                              child: GradientText1(
-                                                text: 'Upload Photo'.tr,
-                                              ),
-                                            )
-                                    ]),
-                              ),
-                              onTap: () {
-                                controller.reportuploadimage();
-                              },
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.5,
+                      padding: EdgeInsets.only(
+                          left: 15, right: 15, top: 40, bottom: 25),
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          color: bgContainer,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            InputField(
+                              lable: 'Problem Text'.tr,
+                              maxlines: 5,
+                              controller: controller.report,
                             ),
-                          ),
-                        ]),
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  GradientButton(
-                    title: 'Report'.tr,
-                    selected: controller.areFieldsFilled.value,
-                    onPressed: () {
-                      controller.areFieldsFilled.value == true;
-                      controller.reportfun();
-                      // : null;
-                    },
-                  ),
-                ],
+                            Padding(
+                              padding: const EdgeInsets.only(top: 43),
+                              child: GestureDetector(
+                                child: Container(
+                                  height: 52,
+                                  width: 215,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    border: Border.all(color: gradientblue),
+                                  ),
+                                  child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        controller.reportImage == null
+                                            ? Image.asset(
+                                                'assets/images/image.png',
+                                                height: 15,
+                                                width: 20,
+                                              )
+                                            : Container(
+                                                child: Icon(
+                                                  Icons.check_circle,
+                                                  color: Colors.green,
+                                                ),
+                                              ),
+                                        controller.reportImage != null
+                                            ? Padding(
+                                                padding: const EdgeInsets.only(
+                                                  left: 8,
+                                                ),
+                                                child: GradientText1(
+                                                  text: 'Uploaded'.tr,
+                                                ),
+                                              )
+                                            : Padding(
+                                                padding: const EdgeInsets.only(
+                                                  left: 8,
+                                                ),
+                                                child: GradientText1(
+                                                  text: 'Upload Photo'.tr,
+                                                ),
+                                              )
+                                      ]),
+                                ),
+                                onTap: () {
+                                  controller.reportuploadimage();
+                                },
+                              ),
+                            ),
+                          ]),
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    GradientButton(
+                      title: 'Report'.tr,
+                      selected: controller.areFieldsFilled.value,
+                      onPressed: () {
+                        controller.areFieldsFilled.value == true;
+                        controller.reportfun();
+                        // : null;
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

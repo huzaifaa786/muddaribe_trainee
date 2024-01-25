@@ -42,7 +42,7 @@ class PostCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(left: 14),
+            padding: EdgeInsets.only(left: 14, right: 14),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -76,9 +76,7 @@ class PostCard extends StatelessWidget {
                     InkWell(
                       onTap: onProfileImageTap,
                       child: Padding(
-                        padding: EdgeInsets.only(
-                          left: 8,
-                        ),
+                        padding: EdgeInsets.only(left: 8, right: 8),
                         child: Text(
                           username,
                           style: TextStyle(

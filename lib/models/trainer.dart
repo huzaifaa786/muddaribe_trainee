@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class Trainer {
   final String id;
   final String name;
@@ -24,11 +26,20 @@ class Trainer {
   });
 
   factory Trainer.fromMap(Map<String, dynamic> map) {
+    List<dynamic> translatedCategories = [];
+
+    if (map['categories'] != null) {
+      List<dynamic> arabicCategories = List<String>.from(map['categories']);
+      for (String category in arabicCategories) {
+        var i = category.tr;
+        translatedCategories.add(i);
+      }
+    }
     return Trainer(
       id: map['id'],
       name: map['name'],
       profileImageUrl: map['profileImageUrl'],
-      category: map['categories'],
+      category: translatedCategories,
       gender: map['gender'] ?? '',
       languages: map['languages'] ?? [],
       firebaseToken: map['firebaseToken'] ?? '',

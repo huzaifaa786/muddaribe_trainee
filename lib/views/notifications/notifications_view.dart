@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/api/notification_api.dart';
 import 'package:mudarribe_trainee/components/appbar.dart';
@@ -19,6 +20,7 @@ import 'package:mudarribe_trainee/models/combined_notification.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/views/events/myevents/myEvents_view.dart';
+import 'package:provider/provider.dart';
 
 class NotificationsView extends StatefulWidget {
   const NotificationsView({super.key});
@@ -28,6 +30,7 @@ class NotificationsView extends StatefulWidget {
 }
 
 class _NotificationsViewState extends State<NotificationsView> {
+  GetStorage box = GetStorage();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +40,7 @@ class _NotificationsViewState extends State<NotificationsView> {
         title: TopBar(text: 'Notifications'.tr),
       ),
       body: Directionality(
-        textDirection: TextDirection.ltr,
+        textDirection: box.read('locale') == 'ar'? TextDirection.rtl :TextDirection.ltr,
         child: SafeArea(
           child: Padding(
             padding: EdgeInsets.only(top: 12),
@@ -73,8 +76,10 @@ class _NotificationsViewState extends State<NotificationsView> {
                             ? Column(
                                 children: [
                                   ExcercisePlan(
-                                    content:
-                                        notifications[index].notification.content,
+                                    content: notifications[index]
+                                        .notification
+                                        .content
+                                        .tr,
                                     img: notifications[index]
                                         .trainer
                                         .profileImageUrl,
@@ -106,8 +111,10 @@ class _NotificationsViewState extends State<NotificationsView> {
                                             'Event joined successfully.'
                                         ? 'View Events'.tr
                                         : 'View Trainer profile'.tr,
-                                    content:
-                                        notifications[index].notification.content,
+                                    content: notifications[index]
+                                        .notification
+                                        .content
+                                        .tr,
                                     img: notifications[index]
                                         .trainer
                                         .profileImageUrl,
@@ -117,14 +124,15 @@ class _NotificationsViewState extends State<NotificationsView> {
                                               .notification
                                               .content ==
                                           'Event joined successfully.') {
-                                        print('agya yar idr ');
                                         Get.to(() => MyEventsView(),
-                                            arguments:
-                                                notifications[index].trainer.id);
+                                            arguments: notifications[index]
+                                                .trainer
+                                                .id);
                                       } else
                                         Get.toNamed(AppRoutes.trainerprofile,
-                                            arguments:
-                                                notifications[index].trainer.id);
+                                            arguments: notifications[index]
+                                                .trainer
+                                                .id);
                                       // .then((value) async {
                                       //   //                                     try {
                                       //   //   // Reference to the "followed_trainers" collection
@@ -157,7 +165,7 @@ class _NotificationsViewState extends State<NotificationsView> {
           ),
           // child: Column(
           //   children: [
-      
+
           // NewMessage(),
           // DividerNotification(),
           // ExcercisePlan(),

@@ -29,6 +29,7 @@ import 'package:mudarribe_trainee/views/categories/categories_result_view.dart';
 import 'package:mudarribe_trainee/views/events/allevents/allevents_view.dart';
 import 'package:mudarribe_trainee/views/home/home_controller.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
+import 'dart:ui' as ui;
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -55,7 +56,7 @@ class _HomeViewState extends State<HomeView> {
             padding: EdgeInsets.only(left: 15.0, right: 15.0),
             child: Column(
               children: [
-                MainTopBar(),
+                Directionality(textDirection: ui.TextDirection.ltr,child: MainTopBar()),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -122,7 +123,7 @@ class _HomeViewState extends State<HomeView> {
                                   ),
                                   child: Center(
                                       child: GradientText(
-                                    'Stories',
+                                    'Stories'.tr,
                                     colors: [borderTop, borderDown],
                                   )),
                                 ),

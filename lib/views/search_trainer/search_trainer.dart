@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mudarribe_trainee/api/trainer_saved.dart';
 import 'package:mudarribe_trainee/components/boxing_trainers_card.dart';
 import 'package:mudarribe_trainee/components/color_button.dart';
@@ -15,6 +16,7 @@ import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/views/home/home_controller.dart';
 import 'package:mudarribe_trainee/views/search_trainer/search_trianer_binding.dart';
+import 'package:provider/provider.dart';
 
 // import 'package:mudarribe_trainee/components/topbar.dart';
 
@@ -32,6 +34,7 @@ class _SerachViewState extends State<SerachView> {
   Categories category = Categories.body_Building;
   @override
   Widget build(BuildContext context) {
+    GetStorage box = GetStorage();
     return GetBuilder<TSearchController>(
       initState: (state) {
         Future.delayed(Duration(milliseconds: 100), () {
@@ -59,7 +62,7 @@ class _SerachViewState extends State<SerachView> {
               child: Stack(
             children: [
               Directionality(
-                textDirection: TextDirection.ltr,
+                textDirection:box.read('locale') == 'ar'? TextDirection.rtl: TextDirection.ltr,
                 child: InkWell(
                   highlightColor: Colors.transparent,
                   focusColor: Colors.transparent,

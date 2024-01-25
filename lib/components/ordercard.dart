@@ -3,12 +3,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:mudarribe_trainee/models/order.dart';
 import 'package:mudarribe_trainee/models/trainer.dart';
 import 'package:mudarribe_trainee/models/trainer_package.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
+import 'package:provider/provider.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:intl/intl.dart';
 import 'dart:ui' as ui;
@@ -31,7 +33,8 @@ class OrderCard extends StatefulWidget {
 }
 
 class _OrderCardState extends State<OrderCard> {
-@override
+  GetStorage box = GetStorage();
+  @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: ui.TextDirection.ltr,
@@ -46,62 +49,68 @@ class _OrderCardState extends State<OrderCard> {
           ),
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 19, top: 19,right: 19),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ClipOval(
-                      child: Container(
-                        width: 52,
-                        height: 52,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: const GradientBoxBorder(
-                            gradient: LinearGradient(
-                              colors: [
-                                Color.fromARGB(255, 184, 66, 186),
-                                Color.fromARGB(255, 111, 127, 247),
-                              ],
+              Directionality(
+                textDirection: box.read('locale') == 'ar'
+                    ? ui.TextDirection.rtl
+                    : ui.TextDirection.ltr,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 19, top: 19, right: 19),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipOval(
+                        child: Container(
+                          width: 52,
+                          height: 52,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: const GradientBoxBorder(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Color.fromARGB(255, 184, 66, 186),
+                                  Color.fromARGB(255, 111, 127, 247),
+                                ],
+                              ),
+                              width: 2,
                             ),
-                            width: 2,
-                          ),
-                          image: DecorationImage(
-                            image: CachedNetworkImageProvider(
-                                widget.trainer.profileImageUrl),
-                            fit: BoxFit.contain,
+                            image: DecorationImage(
+                              image: CachedNetworkImageProvider(
+                                  widget.trainer.profileImageUrl),
+                              fit: BoxFit.contain,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 11, left: 11),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.trainer.name,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
+                      Padding(
+                        padding: const EdgeInsets.only(right: 11, left: 11),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.trainer.name,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                          Text(
-                            widget.trainer.category.join('& '),
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white.withOpacity(0.6000000238418579),
+                            Text(
+                              widget.trainer.category.join('& '),
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white
+                                    .withOpacity(0.6000000238418579),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Padding(
@@ -192,7 +201,7 @@ class _OrderCardState extends State<OrderCard> {
                                                 height: 18,
                                                 width: 20),
                                       ),
-    
+
                                 // Row(
                                 //   mainAxisAlignment: MainAxisAlignment.center,
                                 //   crossAxisAlignment: CrossAxisAlignment.center,
@@ -219,7 +228,7 @@ class _OrderCardState extends State<OrderCard> {
                                 //         width: 20),
                                 //   ],
                                 // ),
-    
+
                                 Padding(
                                   padding: const EdgeInsets.only(left: 2.0),
                                   child: Text(

@@ -251,7 +251,9 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                           ),
                         ),
                         Directionality(
-                          textDirection: TextDirection.ltr,
+                          textDirection: box.read('locale') == 'ar'
+                              ? TextDirection.rtl
+                              : TextDirection.ltr,
                           child: InkWell(
                             onTap: () async {
                               if (await getpermission() == true) {
@@ -283,7 +285,7 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.only(
-                                              left: 10, bottom: 0),
+                                              left: 10, right: 10),
                                           child: Container(
                                             width: Get.width * 0.6,
                                             child: Text(
@@ -310,7 +312,9 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                           ),
                         ),
                         Directionality(
-                          textDirection: TextDirection.ltr,
+                          textDirection: box.read('locale') == 'ar'
+                              ? TextDirection.rtl
+                              : TextDirection.ltr,
                           child: Container(
                             padding: const EdgeInsets.only(
                                 top: 12, left: 12, right: 12),
@@ -320,9 +324,9 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                     color: white),
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                      left: 10, bottom: 0),
+                                      left: 10, right: 10),
                                   child: SizedBox(
-                                    width: Get.width * 0.7,
+                                    // width: Get.width * 0.7,
                                     child: Directionality(
                                       textDirection: box.read('locale') == 'ar'
                                           ? TextDirection.rtl

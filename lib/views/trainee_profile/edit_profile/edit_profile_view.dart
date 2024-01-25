@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mudarribe_trainee/components/color_button.dart';
+import 'package:mudarribe_trainee/components/topbar.dart';
 import 'package:mudarribe_trainee/components/underline_input.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
@@ -18,32 +20,20 @@ class TraineeEditProfileView extends StatefulWidget {
 }
 
 class _TraineeEditProfileViewState extends State<TraineeEditProfileView> {
-@override
+  GetStorage box = GetStorage();
+  @override
   Widget build(BuildContext context) {
     return GetBuilder<EditProfileContoller>(
       builder: (controller) => controller.currentUser != null
           ? Directionality(
-            textDirection: TextDirection.ltr,
-            child: Scaffold(
+              textDirection: box.read('locale') == 'ar'
+                  ? TextDirection.rtl
+                  : TextDirection.ltr,
+              child: Scaffold(
                 appBar: AppBar(
-                  forceMaterialTransparency: true,
-                  leading: GestureDetector(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: Icon(
-                      Icons.arrow_back_ios_new,
-                      color: white,
-                    ),
-                  ),
-                  title: Text('Account'.tr,
-                      style: TextStyle(
-                        fontFamily: "Poppins",
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
-                      )),
-                ),
+                    forceMaterialTransparency: true,
+                    automaticallyImplyLeading: false,
+                    title: TopBar(text: 'Account'.tr)),
                 body: SafeArea(
                   child: Column(
                     children: [
@@ -63,7 +53,8 @@ class _TraineeEditProfileViewState extends State<TraineeEditProfileView> {
                                       color: bgContainer,
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       SizedBox(
                                         height: 115,
@@ -131,17 +122,18 @@ class _TraineeEditProfileViewState extends State<TraineeEditProfileView> {
                                         controller: controller.nameController,
                                       ),
                                       Gap(20),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          "Email".tr,
-                                          style: TextStyle(
-                                            fontFamily: "Montserrat",
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: white.withOpacity(0.45),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Email".tr,
+                                            style: TextStyle(
+                                              fontFamily: "Montserrat",
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: white.withOpacity(0.45),
+                                            ),
                                           ),
-                                        ),
+                                        ],
                                       ),
                                       UnderlineInputField(
                                         img: 'assets/images/email_outline.svg',
@@ -150,23 +142,25 @@ class _TraineeEditProfileViewState extends State<TraineeEditProfileView> {
                                       ),
                                       Gap(25),
                                       controller.providerNames!
-                                              .contains('password') 
+                                              .contains('password')
                                           ? GestureDetector(
                                               onTap: () {
                                                 Get.toNamed(
                                                     AppRoutes.changepassword);
                                               },
-                                              child: Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: GradientText(
-                                                    'Change password?'.tr,
-                                                    style: TextStyle(
-                                                        fontSize: 14.0,
-                                                        fontFamily: "Poppins"),
-                                                    colors: [
-                                                      borderDown,
-                                                      borderTop
-                                                    ]),
+                                              child: Row(
+                                                children: [
+                                                  GradientText(
+                                                      'Change password?'.tr,
+                                                      style: TextStyle(
+                                                          fontSize: 14.0,
+                                                          fontFamily:
+                                                              "Poppins"),
+                                                      colors: [
+                                                        borderDown,
+                                                        borderTop
+                                                      ]),
+                                                ],
                                               ),
                                             )
                                           : Container(),
@@ -190,7 +184,7 @@ class _TraineeEditProfileViewState extends State<TraineeEditProfileView> {
                   ),
                 ),
               ),
-          )
+            )
           : SizedBox(),
     );
   }

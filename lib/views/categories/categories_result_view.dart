@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mudarribe_trainee/api/trainer_saved.dart';
 import 'package:mudarribe_trainee/components/boxing_trainers_card.dart';
 import 'package:mudarribe_trainee/components/loading_indicator.dart';
@@ -10,6 +11,7 @@ import 'package:mudarribe_trainee/components/topbar.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/views/categories/categories_result_%20controller.dart';
+import 'package:provider/provider.dart';
 
 // import 'package:mudarribe_trainee/components/topbar.dart';
 
@@ -21,6 +23,7 @@ class CategoriesResultView extends StatefulWidget {
 }
 
 class _CategoriesResultViewState extends State<CategoriesResultView> {
+  GetStorage box = GetStorage();
   final args = Get.arguments as MyArguments;
   @override
   Widget build(BuildContext context) {
@@ -38,7 +41,7 @@ class _CategoriesResultViewState extends State<CategoriesResultView> {
             automaticallyImplyLeading: false,
             forceMaterialTransparency: true,
             title: TopBar(
-              text: args.category,
+              text: args.category.tr,
             ),
           ),
           body: SingleChildScrollView(
@@ -57,22 +60,29 @@ class _CategoriesResultViewState extends State<CategoriesResultView> {
                                 fontWeight: FontWeight.w600,
                               )),
                         )
-                      : Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                              "${controller.trainersList.length.toString()} Results",
-                              style: TextStyle(
-                                color: white.withOpacity(0.3),
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                              )),
+                      : Directionality(
+                          textDirection: box.read('locale') == 'ar'
+                              ? TextDirection.rtl
+                              : TextDirection.ltr,
+                          child: Row(
+                            children: [
+                              Text(
+                                  "${controller.trainersList.length.toString()} " +
+                                      "Results".tr,
+                                  style: TextStyle(
+                                    color: white.withOpacity(0.3),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                  )),
+                            ],
+                          ),
                         ),
                   controller.trainersList.isEmpty
                       ? Container(
                           height: MediaQuery.of(context).size.height * 0.6,
                           alignment: Alignment.center,
                           child: Text(
-                            'No Trainer With This Category Exist.',
+                            'No Trainer With This Category Exist.'.tr,
                             style: TextStyle(color: white.withOpacity(0.5)),
                           ))
                       : ListView.builder(
@@ -98,7 +108,8 @@ class _CategoriesResultViewState extends State<CategoriesResultView> {
                                   controller.trainersList[index].isSaved =
                                       !controller.trainersList[index].isSaved;
                                   setState(() {});
-                                  controller.trainersList[index].isSaved == false
+                                  controller.trainersList[index].isSaved ==
+                                          false
                                       ? TrainerSaved.trainerUnsaved(
                                           controller.trainersList[index].id)
                                       : TrainerSaved.trainerSaved(

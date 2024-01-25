@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/views/Myplans/myplans_view.dart';
 import 'package:mudarribe_trainee/views/events/myevents/myEvents_view.dart';
@@ -30,8 +31,11 @@ class _FooterViewState extends State<FooterView> with RouteAware {
       const MyEventsView(),
       const TraineeProfileView(),
     ];
+    GetStorage box = GetStorage();
     return Directionality(
-      textDirection: ui.TextDirection.ltr,
+      textDirection: box.read('locale') == 'ar'
+          ? ui.TextDirection.rtl
+          : ui.TextDirection.ltr,
       child: WillPopScope(
         onWillPop: () => Future.value(false),
         child: Scaffold(
@@ -82,10 +86,11 @@ class _FooterViewState extends State<FooterView> with RouteAware {
                                     ),
                               const Gap(4),
                               FooterText(
-                                  text: 'Home'.tr,
-                                   colors: _navigationMenuIndex == 0
+                                text: 'Home'.tr,
+                                colors: _navigationMenuIndex == 0
                                     ? [borderDown, borderTop]
-                                    : [white, white],),
+                                    : [white, white],
+                              ),
                             ],
                           ),
                         ),
@@ -122,7 +127,7 @@ class _FooterViewState extends State<FooterView> with RouteAware {
                             const Gap(4),
                             FooterText(
                                 text: 'My Plans'.tr,
-                                 colors: _navigationMenuIndex == 1
+                                colors: _navigationMenuIndex == 1
                                     ? [borderDown, borderTop]
                                     : [white, white]),
                           ],
@@ -165,10 +170,11 @@ class _FooterViewState extends State<FooterView> with RouteAware {
                                     ),
                               const Gap(4),
                               FooterText(
-                                  text: 'Events'.tr,
-                                   colors: _navigationMenuIndex == 2
+                                text: 'Events'.tr,
+                                colors: _navigationMenuIndex == 2
                                     ? [borderDown, borderTop]
-                                    : [white, white],),
+                                    : [white, white],
+                              ),
                             ],
                           ),
                         ),

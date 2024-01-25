@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
@@ -19,7 +20,8 @@ class ProfileTile extends StatefulWidget {
 }
 
 class _ProfileTileState extends State<ProfileTile> {
-@override
+  GetStorage box = GetStorage();
+  @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: widget.ontap,
@@ -48,11 +50,17 @@ class _ProfileTileState extends State<ProfileTile> {
               ],
             ),
             widget.logout == false
-                ? SvgPicture.asset(
-                    'assets/images/arrow_forward.svg',
-                    height: 20,
-                    fit: BoxFit.scaleDown,
-                  )
+                ? box.read('locale') == 'ar'
+                    ? SvgPicture.asset(
+                        'assets/images/arrow_backward.svg',
+                        height: 20,
+                        fit: BoxFit.scaleDown,
+                      )
+                    : SvgPicture.asset(
+                        'assets/images/arrow_forward.svg',
+                        height: 20,
+                        fit: BoxFit.scaleDown,
+                      )
                 : Container(),
           ],
         ),

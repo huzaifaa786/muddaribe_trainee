@@ -6,13 +6,14 @@ import 'package:get/get.dart';
 import 'package:mudarribe_trainee/api/image_selector_api.dart';
 import 'package:mudarribe_trainee/api/report_storage_api.dart';
 import 'package:mudarribe_trainee/helper/data_model.dart';
+import 'package:mudarribe_trainee/helper/loading_helper.dart';
 import 'package:mudarribe_trainee/models/trainer_report.dart';
 import 'package:mudarribe_trainee/services/report_service.dart';
 import 'package:mudarribe_trainee/utils/ui_utils.dart';
 
 class ReportProblemController extends GetxController {
   static ReportProblemController instance = Get.find();
-
+  final BusyController busyController = Get.find();
   final _imageSelectorApi = ImageSelectorApi();
   final _reportStorageApi = ReportStorageApi();
   final _reportService = ReportService();
@@ -66,6 +67,7 @@ class ReportProblemController extends GetxController {
   }
 
   Future reportfun() async {
+    busyController.setBusy(true);
     final reportId = DateTime.now().millisecondsSinceEpoch.toString();
     CloudStorageResult? imageResult = await _saveReportImage(reportId);
 
@@ -86,8 +88,8 @@ class ReportProblemController extends GetxController {
         traineeId: user!.uid,
       );
     }
-
     await _reportService.createReport(report: traineeReport);
+    busyController.setBusy(false);
     UiUtilites.successAlert(Get.context, 'Report submit Successfully.'.tr);
     clearValues();
   }

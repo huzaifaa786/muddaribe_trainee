@@ -696,7 +696,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                               userimg: trainer.profileImageUrl,
                                               username: trainer.name,
                                               chatText:
-                                                  'Chat With me for a personal plan',
+                                                  'Chat With me for a personal plan'.tr,
                                               onChatClick: () {
                                                 Get.off(() => ChatPage(
                                                     arguments: ChatPageArguments(

@@ -6,6 +6,7 @@ import 'package:mudarribe_trainee/components/exercises_card.dart';
 import 'package:mudarribe_trainee/components/topbar.dart';
 import 'package:mudarribe_trainee/models/plan.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
+import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/views/Myplans/PacakgePlan/package_controller.dart';
 
 class PackagePlans extends StatefulWidget {
@@ -34,7 +35,7 @@ class _PackagePlansState extends State<PackagePlans> {
           automaticallyImplyLeading: false,
           forceMaterialTransparency: true,
           centerTitle: true,
-          title: TopBar(text: controller.category.capitalize!),
+          title: TopBar(text: controller.category.capitalize!.tr),
         ),
         body: SafeArea(
             child: SingleChildScrollView(
@@ -44,9 +45,9 @@ class _PackagePlansState extends State<PackagePlans> {
                 future: OrderApi.getPlansByOrder(
                     controller.orderId, controller.category),
                 builder: (context, snapshot) {
-                     if(snapshot.connectionState == ConnectionState.waiting){
+                  if (snapshot.connectionState == ConnectionState.waiting) {
                     return SizedBox(
-                      height: Get.height*0.7,
+                      height: Get.height * 0.7,
                       child: BasicLoader(
                         background: false,
                       ),
@@ -59,24 +60,33 @@ class _PackagePlansState extends State<PackagePlans> {
                     return Text('');
                   }
                   List<Plan> plans = snapshot.data!;
-                  return SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.9,
-                    width: MediaQuery.of(context).size.width,
-                    child: ListView.builder(
-                        itemCount: plans.length,
-                        itemBuilder: (context, index) {
-                          return ExercisesCard(
-                              onTap: () {
-                                Get.toNamed(AppRoutes.planFiles, parameters: {
-                                  'planId': plans[index].id,
-                                  'planName': plans[index].name!,
-                                  'trainerId': plans[index].trainerId!,
-                                });
-                              },
-                              title: plans[index].name!,
-                              description: plans[index].description!);
-                        }),
-                  );
+                  return snapshot.data!.isEmpty
+                      ? SizedBox(
+                          height: Get.height * 0.8,
+                          child: Center(
+                              child: Text('No Plan File Found Yet'.tr,
+                                  style: TextStyle(color: white))),
+                        )
+                      : SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.9,
+                          width: MediaQuery.of(context).size.width,
+                          child: ListView.builder(
+                              itemCount: plans.length,
+                              itemBuilder: (context, index) {
+                                return ExercisesCard(
+                                    onTap: () {
+                                      Get.toNamed(AppRoutes.planFiles,
+                                          parameters: {
+                                            'planId': plans[index].id,
+                                            'planName': plans[index].name!,
+                                            'trainerId':
+                                                plans[index].trainerId!,
+                                          });
+                                    },
+                                    title: plans[index].name!,
+                                    description: plans[index].description!);
+                              }),
+                        );
                 }),
           ),
         )),

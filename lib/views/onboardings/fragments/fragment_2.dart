@@ -64,6 +64,19 @@ class _FragmentTwoState extends State<FragmentTwo> {
                     ),
                     textAlign: TextAlign.center,
                   )),
+                   Container(
+                  padding:
+                      EdgeInsets.only(top: 10, right: 8, left: 8, bottom: 40),
+                  child: Text(
+                    'نحن نقدم خطط الوجبات\nالتي تناسب أهدافك!',
+                    style: const TextStyle(
+                      fontFamily: "Poppins",
+                      fontSize: 28,
+                      fontWeight: FontWeight.w600,
+                      color: white,
+                    ),
+                    textAlign: TextAlign.center,
+                  )),
             ],
           ),
         ),

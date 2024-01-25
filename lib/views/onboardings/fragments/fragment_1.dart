@@ -68,6 +68,20 @@ class _FragmentOneState extends State<FragmentOne> {
                     ),
                     textAlign: TextAlign.center,
                   )),
+                   Container(
+                  padding:
+                      EdgeInsets.only(top: 10, right: 8, left: 8, bottom: 40),
+                  child: Text(
+                    "البحث عن أفضل المدربين",
+                    style: const TextStyle(
+                      fontFamily: "Poppins",
+                      fontSize: 28,
+                      fontWeight: FontWeight.w600,
+                      color: white,
+                      // height: 84 / 28,
+                    ),
+                    textAlign: TextAlign.center,
+                  )),
             ],
           ),
         ),

@@ -65,6 +65,19 @@ class _FragmentThreeState extends State<FragmentThree> {
                     ),
                     textAlign: TextAlign.center,
                   )),
+                   Container(
+                  padding:
+                      EdgeInsets.only(top: 10, right: 8, left: 8, bottom: 40),
+                  child: Text("يوفر لك أفضل التمارين التي تناسب أهدافك!",
+                    style: const TextStyle(
+                      fontFamily: "Poppins",
+                      fontSize: 28,
+                      fontWeight: FontWeight.w600,
+                      color: white,
+                      // height: 84 / 28,
+                    ),
+                    textAlign: TextAlign.center,
+                  )),
             ],
           ),
         ),
