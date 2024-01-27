@@ -367,7 +367,7 @@ class LocaleString extends Translations {
           "Home": " الصفحة الرئيسة ",
           "My Plans": " خططي",
           "Events": " الأحداث ",
-          "Me": " أنا ",
+          "Me": 'حسابي',
           "Boxing Trainers": "مدربين الملاكمة ",
           "View Profile": " عرض الملف ",
           "My Events": " أحداثي",

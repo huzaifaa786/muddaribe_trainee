@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mudarribe_trainee/api/attenddee_api.dart';
 import 'package:mudarribe_trainee/components/button.dart';
+import 'package:mudarribe_trainee/components/textgradient.dart';
 import 'package:mudarribe_trainee/models/event_other_data.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
@@ -59,11 +60,10 @@ class BannerCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w600
-                          ),
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
                       Row(
@@ -101,11 +101,10 @@ class BannerCard extends StatelessWidget {
                               Text(
                                 '$price ' + 'AED'.tr,
                                 style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 30,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w700
-                                ),
+                                    color: Colors.white,
+                                    fontSize: 30,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w700),
                               ),
                             ],
                           )
@@ -162,9 +161,12 @@ class BannerCard extends StatelessWidget {
                                             ),
                                           ],
                                         )
-                                      : CustomeButton(
-                                          onPressed: () {},
-                                          title: 'Joined'.tr,
+                                      : Row(
+                                          children: [
+                                            GradientText1(
+                                              text: 'Joined'.tr,
+                                            ),
+                                          ],
                                         );
                                 }
                               }),
