@@ -22,8 +22,8 @@ class _MyplansViewState extends State<MyplansView> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,
-         centerTitle: true,
-         automaticallyImplyLeading: false,
+          centerTitle: true,
+          automaticallyImplyLeading: false,
           title: Text(
             'My Plans'.tr,
             style: TextStyle(
@@ -84,8 +84,12 @@ class _MyplansViewState extends State<MyplansView> {
           children: [
             Plancontainer(
               onButtonTap: () {
-                Get.toNamed(AppRoutes.mypackages, parameters: {
-                  "category": "excercise",
+                // Get.toNamed(AppRoutes.mypackages, parameters: {
+                //   "category": "excercise",
+                // });
+                Get.toNamed(AppRoutes.packagePlans, parameters: {
+                  "orderId":'345',
+                  "category": 'excercise',
                 });
               },
               viewcontent: AppRoutes.mypackages,
@@ -97,8 +101,8 @@ class _MyplansViewState extends State<MyplansView> {
             ),
             Plancontainer(
               onButtonTap: () {
-                    Get.toNamed(AppRoutes.mypackages, parameters: {
-                  "category": "nutrition",
+                 Get.toNamed(AppRoutes.packagePlans, parameters: {
+                  "category": 'nutrition',
                 });
               },
               viewcontent: AppRoutes.mypackages,

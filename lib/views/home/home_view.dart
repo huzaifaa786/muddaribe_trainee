@@ -56,7 +56,8 @@ class _HomeViewState extends State<HomeView> {
             padding: EdgeInsets.only(left: 15.0, right: 15.0),
             child: Column(
               children: [
-                Directionality(textDirection: ui.TextDirection.ltr,child: MainTopBar()),
+                Directionality(
+                    textDirection: ui.TextDirection.ltr, child: MainTopBar()),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -264,6 +265,7 @@ class _HomeViewState extends State<HomeView> {
                                               .instance.currentUser!.uid);
                                     });
                                   },
+                                  enddate: banners.todate,
                                   endTime: banners.endTime,
                                   image: banners.imageUrl,
                                   price: banners.price,
@@ -430,6 +432,7 @@ class _HomeViewState extends State<HomeView> {
                                           docs.isNotEmpty ? true : false;
 
                                       return EventDetailsCard(
+                                        endDate: combineEvent.event.todate,
                                         category: combineEvent.trainer.category
                                             .join(' & '),
                                         trainerId: combineEvent.trainer.id,

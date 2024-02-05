@@ -612,6 +612,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                 itemCount: packages.length,
                                                 itemBuilder: (context, index) {
                                                   return TrainerPackageCard(
+                                                    duration: packages[index].duration,
                                                     name: packages[index].name,
                                                     description: packages[index]
                                                         .discription,

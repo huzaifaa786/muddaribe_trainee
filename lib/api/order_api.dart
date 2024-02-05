@@ -1,12 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:mudarribe_trainee/exceptions/database_api_exception.dart';
 import 'package:mudarribe_trainee/models/combine_order.dart';
+import 'package:mudarribe_trainee/models/combined_file.dart';
 import 'package:mudarribe_trainee/models/order.dart';
 import 'package:mudarribe_trainee/models/package_data_combined.dart';
 import 'package:mudarribe_trainee/models/plan.dart';
 import 'package:mudarribe_trainee/models/plan_file.dart';
+import 'package:mudarribe_trainee/models/post_data_combined.dart';
 import 'package:mudarribe_trainee/models/trainer.dart';
 import 'package:mudarribe_trainee/models/trainer_package.dart';
 
@@ -138,47 +141,54 @@ class OrderApi {
     return combineOrders;
   }
 
-  static Future<List<Plan>> getPlansByOrder(orderId, category) async {
+  static Future<List<CombinedTraineeFileData>> getPlansByOrder(category) async {
     final _firestore = FirebaseFirestore.instance;
     final CollectionReference _trainerplanCollection =
         _firestore.collection("plans");
     final CollectionReference _trainerFilesCollection =
         _firestore.collection("trainer_plan_files");
-    final CollectionReference _userPlanCollection =
-        _firestore.collection("user_personal_plans");
+    final CollectionReference _trainerCollection =
+        _firestore.collection("users");
     try {
-      final result =
-          await _userPlanCollection.where('orderId', isEqualTo: orderId).get();
+      print(FirebaseAuth.instance.currentUser!.uid);
+      final result = await _trainerplanCollection
+          .where('category', isEqualTo: category)
+          .where('traineeId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .get();
 
       List<Plan> plans = [];
+      List<CombinedTraineeFileData> combinedata = [];
       for (var userPlan in result.docs) {
         var datadoc = userPlan.data() as Map<String, dynamic>;
-        final doc = await _trainerplanCollection.doc(datadoc['planId']).get();
 
         String fileLength = '0';
         String videoLength = '0';
-        final planData = doc.data() as Map<String, dynamic>;
-
         final fileResult = await _trainerFilesCollection
-            .where('planId', isEqualTo: doc.id)
+            .where('planId', isEqualTo: datadoc['id'])
             .where('fileType', isEqualTo: 'pdf')
             .get();
-
         final videoResult = await _trainerFilesCollection
-            .where('planId', isEqualTo: doc.id)
+            .where('planId', isEqualTo: datadoc['id'])
             .where('fileType', isEqualTo: 'mp4')
             .get();
         if (fileResult.docs.isNotEmpty || videoResult.docs.isNotEmpty) {
           fileLength = fileResult.docs.length.toString();
           videoLength = videoResult.docs.length.toString();
         }
-        planData['description'] = '$fileLength Files ,$videoLength videos';
-        // if (planData['category'] == category) {
-        plans.add(Plan.fromJson(planData));
-        // }
+        datadoc['description'] = '$fileLength Files ,$videoLength videos';
+        print(datadoc);
+        // plans.add(Plan.fromJson(datadoc));
+        DocumentSnapshot trainerSnapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(datadoc['trainerId'])
+            .get();
+        Map<String, dynamic> trainerData =
+            trainerSnapshot.data()! as Map<String, dynamic>;
+        Trainer trainer = Trainer.fromMap(trainerData);
+       combinedata.add(CombinedTraineeFileData(trainer: trainer, plan: Plan.fromJson(datadoc)));
       }
 
-      return plans;
+      return combinedata;
     } on PlatformException catch (e) {
       throw DatabaseApiException(
         title: 'Failed to Get Plans',
@@ -186,6 +196,55 @@ class OrderApi {
       );
     }
   }
+
+  // static Future<List<Plan>> getPlansByOrder(orderId, category) async {
+  //   final _firestore = FirebaseFirestore.instance;
+  //   final CollectionReference _trainerplanCollection =
+  //       _firestore.collection("plans");
+  //   final CollectionReference _trainerFilesCollection =
+  //       _firestore.collection("trainer_plan_files");
+  //   final CollectionReference _userPlanCollection =
+  //       _firestore.collection("user_personal_plans");
+  //   try {
+  //     final result =
+  //         await _userPlanCollection.where('orderId', isEqualTo: orderId).get();
+
+  //     List<Plan> plans = [];
+  //     for (var userPlan in result.docs) {
+  //       var datadoc = userPlan.data() as Map<String, dynamic>;
+  //       final doc = await _trainerplanCollection.doc(datadoc['planId']).get();
+
+  //       String fileLength = '0';
+  //       String videoLength = '0';
+  //       final planData = doc.data() as Map<String, dynamic>;
+
+  //       final fileResult = await _trainerFilesCollection
+  //           .where('planId', isEqualTo: doc.id)
+  //           .where('fileType', isEqualTo: 'pdf')
+  //           .get();
+
+  //       final videoResult = await _trainerFilesCollection
+  //           .where('planId', isEqualTo: doc.id)
+  //           .where('fileType', isEqualTo: 'mp4')
+  //           .get();
+  //       if (fileResult.docs.isNotEmpty || videoResult.docs.isNotEmpty) {
+  //         fileLength = fileResult.docs.length.toString();
+  //         videoLength = videoResult.docs.length.toString();
+  //       }
+  //       planData['description'] = '$fileLength Files ,$videoLength videos';
+  //       // if (planData['category'] == category) {
+  //       plans.add(Plan.fromJson(planData));
+  //       // }
+  //     }
+
+  //     return plans;
+  //   } on PlatformException catch (e) {
+  //     throw DatabaseApiException(
+  //       title: 'Failed to Get Plans',
+  //       message: e.message,
+  //     );
+  //   }
+  // }
 
   static Future<List<PlanFile>> getFilesByPlanId(planId) async {
     print('object********************************');

@@ -2,10 +2,12 @@
 
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:mudarribe_trainee/services/notification_service.dart';
 import 'package:mudarribe_trainee/utils/controller_initlization.dart';
 import 'package:mudarribe_trainee/utils/ui_utils.dart';
 import 'package:mudarribe_trainee/views/chat/chat_plan_card.dart';
+import 'package:mudarribe_trainee/views/video/video_view.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:mudarribe_trainee/views/chat/full_photo_page.dart';
 import 'package:file_picker/file_picker.dart';
@@ -49,6 +51,7 @@ class ChatPageState extends State<ChatPage> {
   final notificationService = NotificationService();
   File? imageFile;
   File? pdfFile;
+  File? videoFile;
   bool isLoading = false;
   bool isShowSticker = false;
   String imageUrl = "";
@@ -216,6 +219,45 @@ class ChatPageState extends State<ChatPage> {
       setState(() {
         isLoading = false;
       });
+      print(e);
+    }
+  }
+
+  Future getMp4() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['mp4'],
+    );
+
+    if (result != null) {
+      List<File> pickedFiles = result.paths.map((path) => File(path!)).toList();
+      if (pickedFiles.isNotEmpty) {
+        videoFile = pickedFiles.first;
+        String? fileName = result.files.first.name;
+        setState(() {
+          isLoading = true;
+        });
+        uploadVideo(videoFile!, fileName);
+      }
+    }
+  }
+
+  Future uploadVideo(File videoFile, String fileName) async {
+    UploadTask uploadTask = chatProvider.uploadVideo(videoFile, fileName);
+    try {
+      TaskSnapshot snapshot = await uploadTask;
+      String videoUrl = await snapshot.ref.getDownloadURL();
+      print(videoUrl);
+      setState(() {
+        isLoading = false;
+        onSendMessage(videoUrl, TypeMessage.video);
+      });
+      Get.back();
+    } on FirebaseException catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Get.back();
       print(e);
     }
   }
@@ -427,7 +469,63 @@ class ChatPageState extends State<ChatPage> {
                                   ),
                                 ),
                               )
-                            : SizedBox()
+                            : messageChat.type == TypeMessage.video
+                                ? InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => VideoPlay(
+                                              path: messageChat.content),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      width: 250,
+                                      height: 60,
+                                      margin:
+                                          EdgeInsets.only(left: 10, bottom: 10),
+                                      decoration: BoxDecoration(
+                                          color: white,
+                                          borderRadius:
+                                              BorderRadius.circular(8)),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                              padding: EdgeInsets.all(8),
+                                              margin: EdgeInsets.only(
+                                                  right: 4, left: 4),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(45),
+                                                gradient: LinearGradient(
+                                                  begin: Alignment.topLeft,
+                                                  end: Alignment.bottomRight,
+                                                  colors: [
+                                                    borderTop,
+                                                    borderDown
+                                                  ],
+                                                  stops: [0.0, 1.0],
+                                                ),
+                                              ),
+                                              child: Icon(
+                                                  CupertinoIcons.video_camera)),
+                                          SizedBox(
+                                            width: 200,
+                                            child: Text(
+                                                get_text_between(
+                                                    messageChat.content,
+                                                    "/o/",
+                                                    "?"),
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                    color: Colors.black)),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                : SizedBox()
               ],
               mainAxisAlignment: MainAxisAlignment.end,
             ),
@@ -641,7 +739,7 @@ class ChatPageState extends State<ChatPage> {
                                 )
                               : messageChat.type == TypeMessage.myplan
                                   ? Container(
-                                      width: 250,
+                                      width: 270,
                                       margin:
                                           EdgeInsets.only(left: 10, bottom: 10),
                                       padding: EdgeInsets.all(12),
@@ -966,7 +1064,9 @@ class ChatPageState extends State<ChatPage> {
                                                                     .timestamp)
                                                                 .update({
                                                               'content': plan,
-                                                            });
+                                                            }).then((value) =>
+                                                                    print(
+                                                                        'update hu gya hu !'));
                                                             // chatProvider
                                                             //     .notificationCreated(
                                                             //         noti,
@@ -996,214 +1096,290 @@ class ChatPageState extends State<ChatPage> {
                                         ],
                                       ),
                                     )
-                                  : Container(
-                                      width: 250,
-                                      margin:
-                                          EdgeInsets.only(left: 10, bottom: 10),
-                                      padding: EdgeInsets.all(12),
-                                      decoration: BoxDecoration(
-                                          color: bgContainer,
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      child: Column(
-                                        children: [
-                                          Row(
+                                  : messageChat.type == TypeMessage.video
+                                      ? InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => VideoPlay(
+                                                    path: messageChat.content),
+                                              ),
+                                            );
+                                          },
+                                          child: Container(
+                                            width: 250,
+                                            height: 60,
+                                            margin: EdgeInsets.only(
+                                                left: 10, bottom: 10),
+                                            decoration: BoxDecoration(
+                                                color: bgContainer,
+                                                borderRadius:
+                                                    BorderRadius.circular(8)),
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                    padding: EdgeInsets.all(8),
+                                                    margin: EdgeInsets.only(
+                                                        right: 4, left: 4),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              45),
+                                                      gradient: LinearGradient(
+                                                        begin:
+                                                            Alignment.topLeft,
+                                                        end: Alignment
+                                                            .bottomRight,
+                                                        colors: [
+                                                          borderTop,
+                                                          borderDown
+                                                        ],
+                                                        stops: [0.0, 1.0],
+                                                      ),
+                                                    ),
+                                                    child: Icon(CupertinoIcons
+                                                        .video_camera)),
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                      get_text_between(
+                                                          messageChat.content,
+                                                          "/o/",
+                                                          "?"),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                          color: Colors.white)),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                      : Container(
+                                          width: 250,
+                                          margin: EdgeInsets.only(
+                                              left: 10, bottom: 10),
+                                          padding: EdgeInsets.all(12),
+                                          decoration: BoxDecoration(
+                                              color: bgContainer,
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child: Column(
                                             children: [
-                                              Container(
-                                                width: 10,
-                                                height: 10,
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: borderDown),
+                                              Row(
+                                                children: [
+                                                  Container(
+                                                    width: 10,
+                                                    height: 10,
+                                                    decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        color: borderDown),
+                                                  ),
+                                                  Gap(12),
+                                                  Text(
+                                                    "Rating".tr,
+                                                    style: const TextStyle(
+                                                        fontFamily: "Poppins",
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: white),
+                                                  )
+                                                ],
                                               ),
                                               Gap(12),
-                                              Text(
-                                                "Rating".tr,
-                                                style: const TextStyle(
-                                                    fontFamily: "Poppins",
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: white),
-                                              )
-                                            ],
-                                          ),
-                                          Gap(12),
-                                          Row(
-                                            children: [
-                                              Material(
-                                                child: Image.network(
-                                                  widget.arguments.peerAvatar,
-                                                  loadingBuilder:
-                                                      (BuildContext context,
+                                              Row(
+                                                children: [
+                                                  Material(
+                                                    child: Image.network(
+                                                      widget
+                                                          .arguments.peerAvatar,
+                                                      loadingBuilder: (BuildContext
+                                                              context,
                                                           Widget child,
                                                           ImageChunkEvent?
                                                               loadingProgress) {
-                                                    if (loadingProgress == null)
-                                                      return child;
-                                                    return Center(
-                                                      child:
-                                                          CircularProgressIndicator(
-                                                        color: Colors.grey[300],
-                                                        value: loadingProgress
-                                                                    .expectedTotalBytes !=
-                                                                null
-                                                            ? loadingProgress
-                                                                    .cumulativeBytesLoaded /
-                                                                loadingProgress
-                                                                    .expectedTotalBytes!
-                                                            : null,
-                                                      ),
-                                                    );
-                                                  },
-                                                  errorBuilder: (context,
-                                                      object, stackTrace) {
-                                                    return Icon(
-                                                      Icons.account_circle,
-                                                      size: 35,
-                                                      color: Colors.grey[300],
-                                                    );
-                                                  },
-                                                  width: 35,
-                                                  height: 35,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(18),
-                                                ),
-                                                clipBehavior: Clip.hardEdge,
+                                                        if (loadingProgress ==
+                                                            null) return child;
+                                                        return Center(
+                                                          child:
+                                                              CircularProgressIndicator(
+                                                            color: Colors
+                                                                .grey[300],
+                                                            value: loadingProgress
+                                                                        .expectedTotalBytes !=
+                                                                    null
+                                                                ? loadingProgress
+                                                                        .cumulativeBytesLoaded /
+                                                                    loadingProgress
+                                                                        .expectedTotalBytes!
+                                                                : null,
+                                                          ),
+                                                        );
+                                                      },
+                                                      errorBuilder: (context,
+                                                          object, stackTrace) {
+                                                        return Icon(
+                                                          Icons.account_circle,
+                                                          size: 35,
+                                                          color:
+                                                              Colors.grey[300],
+                                                        );
+                                                      },
+                                                      width: 35,
+                                                      height: 35,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                      Radius.circular(18),
+                                                    ),
+                                                    clipBehavior: Clip.hardEdge,
+                                                  ),
+                                                  Gap(12),
+                                                  SizedBox(
+                                                    width: 150,
+                                                    child: Text(
+                                                      widget.arguments
+                                                          .peerNickname,
+                                                      style: const TextStyle(
+                                                          fontFamily: "Poppins",
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color: white),
+                                                    ),
+                                                  )
+                                                ],
                                               ),
-                                              Gap(12),
-                                              SizedBox(
-                                                width: 150,
-                                                child: Text(
-                                                  widget.arguments.peerNickname,
-                                                  style: const TextStyle(
-                                                      fontFamily: "Poppins",
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color: white),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          Gap(16),
-                                          RatingBar.builder(
-                                            initialRating: messageChat.content
+                                              Gap(16),
+                                              RatingBar.builder(
+                                                initialRating: messageChat
+                                                            .content
+                                                            .split("~~")[0]
+                                                            .split(":")[1]
+                                                            .trim() ==
+                                                        '0'
+                                                    ? 0
+                                                    : double.parse(messageChat
+                                                        .content
                                                         .split("~~")[0]
                                                         .split(":")[1]
-                                                        .trim() ==
-                                                    '0'
-                                                ? 0
-                                                : double.parse(messageChat
-                                                    .content
-                                                    .split("~~")[0]
-                                                    .split(":")[1]
-                                                    .trim()),
-                                            minRating: 1,
-                                            direction: Axis.horizontal,
-                                            allowHalfRating: true,
-                                            itemCount: 5,
-                                            itemSize: 25,
-                                            unratedColor: Colors.grey,
-                                            glow: false,
-                                            ignoreGestures: messageChat.content
-                                                        .split("~~")[1]
-                                                        .split(":")[1]
-                                                        .trim() ==
-                                                    'false'
-                                                ? false
-                                                : true,
-                                            itemPadding: EdgeInsets.symmetric(
-                                                horizontal: 2.0),
-                                            itemBuilder: (context, _) => Icon(
-                                              Icons.star,
-                                              color: borderDown,
-                                              size: 15,
-                                            ),
-                                            onRatingUpdate: (rating) {
-                                              ratings = rating;
-                                              setState(() {});
-                                            },
+                                                        .trim()),
+                                                minRating: 1,
+                                                direction: Axis.horizontal,
+                                                allowHalfRating: true,
+                                                itemCount: 5,
+                                                itemSize: 25,
+                                                unratedColor: Colors.grey,
+                                                glow: false,
+                                                ignoreGestures: messageChat
+                                                            .content
+                                                            .split("~~")[1]
+                                                            .split(":")[1]
+                                                            .trim() ==
+                                                        'false'
+                                                    ? false
+                                                    : true,
+                                                itemPadding:
+                                                    EdgeInsets.symmetric(
+                                                        horizontal: 2.0),
+                                                itemBuilder: (context, _) =>
+                                                    Icon(
+                                                  Icons.star,
+                                                  color: borderDown,
+                                                  size: 15,
+                                                ),
+                                                onRatingUpdate: (rating) {
+                                                  ratings = rating;
+                                                  setState(() {});
+                                                },
+                                              ),
+                                              messageChat.content
+                                                          .split("~~")[1]
+                                                          .split(":")[1]
+                                                          .trim() ==
+                                                      'false'
+                                                  ? Row(
+                                                      children: [
+                                                        ElevatedButton(
+                                                          style: ButtonStyle(
+                                                            shape: MaterialStateProperty
+                                                                .all<
+                                                                    RoundedRectangleBorder>(
+                                                              RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              5.0)),
+                                                            ),
+                                                            backgroundColor:
+                                                                MaterialStateProperty
+                                                                    .all<Color>(
+                                                                        borderDown),
+                                                            minimumSize:
+                                                                MaterialStateProperty
+                                                                    .all(Size(
+                                                                        100,
+                                                                        30)),
+                                                          ),
+                                                          onPressed:
+                                                              ratings != null
+                                                                  ? () async {
+                                                                      String content = 'rating:' +
+                                                                          '$ratings' +
+                                                                          '~~isRating:' +
+                                                                          'true';
+                                                                      await FirebaseFirestore
+                                                                          .instance
+                                                                          .collection(
+                                                                              'messages')
+                                                                          .doc(
+                                                                              groupChatId)
+                                                                          .collection(
+                                                                              groupChatId)
+                                                                          .doc(messageChat
+                                                                              .timestamp)
+                                                                          .update({
+                                                                        'content':
+                                                                            content,
+                                                                      });
+                                                                      storeRating(
+                                                                          widget
+                                                                              .arguments
+                                                                              .peerId,
+                                                                          ratings);
+                                                                      print(
+                                                                          content);
+                                                                    }
+                                                                  : () {
+                                                                      UiUtilites.errorSnackbar(
+                                                                          'Error!'
+                                                                              .tr,
+                                                                          "Rating can't be less then 1."
+                                                                              .tr);
+                                                                    },
+                                                          child: Text(
+                                                            'Submit'.tr,
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  "Poppins",
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color:
+                                                                  Colors.black,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  : SizedBox()
+                                            ],
                                           ),
-                                          messageChat.content
-                                                      .split("~~")[1]
-                                                      .split(":")[1]
-                                                      .trim() ==
-                                                  'false'
-                                              ? Row(
-                                                  children: [
-                                                    ElevatedButton(
-                                                      style: ButtonStyle(
-                                                        shape: MaterialStateProperty
-                                                            .all<
-                                                                RoundedRectangleBorder>(
-                                                          RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5.0)),
-                                                        ),
-                                                        backgroundColor:
-                                                            MaterialStateProperty
-                                                                .all<Color>(
-                                                                    borderDown),
-                                                        minimumSize:
-                                                            MaterialStateProperty
-                                                                .all(Size(
-                                                                    100, 30)),
-                                                      ),
-                                                      onPressed: ratings != null
-                                                          ? () async {
-                                                              String content =
-                                                                  'rating:' +
-                                                                      '$ratings' +
-                                                                      '~~isRating:' +
-                                                                      'true';
-                                                              await FirebaseFirestore
-                                                                  .instance
-                                                                  .collection(
-                                                                      'messages')
-                                                                  .doc(
-                                                                      groupChatId)
-                                                                  .collection(
-                                                                      groupChatId)
-                                                                  .doc(messageChat
-                                                                      .timestamp)
-                                                                  .update({
-                                                                'content':
-                                                                    content,
-                                                              });
-                                                              storeRating(
-                                                                  widget
-                                                                      .arguments
-                                                                      .peerId,
-                                                                  ratings);
-                                                              print(content);
-                                                            }
-                                                          : () {
-                                                              UiUtilites
-                                                                  .errorSnackbar(
-                                                                      'Error!'.tr,
-                                                                      "Rating can't be less then 1.".tr);
-                                                            },
-                                                      child: Text(
-                                                        'Submit'.tr,
-                                                        style: TextStyle(
-                                                          fontFamily: "Poppins",
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                )
-                                              : SizedBox()
-                                        ],
-                                      ),
-                                    )
+                                        )
                 ],
               ),
 
@@ -1492,6 +1668,32 @@ class ChatPageState extends State<ChatPage> {
                 onPressed: getImage,
                 child: Text(
                   'Photos'.tr,
+                  style: TextStyle(
+                    fontFamily: "Poppins",
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xff0f0a06),
+                  ),
+                ),
+              ),
+              Container(
+                  width: double.infinity,
+                  color: bgContainer.withOpacity(0.45),
+                  height: 0.5),
+              ElevatedButton(
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(5),
+                            bottomRight: Radius.circular(5))),
+                  ),
+                  minimumSize:
+                      MaterialStateProperty.all(Size(double.infinity, 50)),
+                ),
+                onPressed: getPdf,
+                child: Text(
+                  'Video'.tr,
                   style: TextStyle(
                     fontFamily: "Poppins",
                     fontSize: 14,

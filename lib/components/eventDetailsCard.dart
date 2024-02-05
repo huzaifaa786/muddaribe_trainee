@@ -26,6 +26,7 @@ class EventDetailsCard extends StatelessWidget {
       this.image,
       this.date,
       this.endTime,
+      this.endDate,
       this.price,
       this.startTime,
       this.category,
@@ -54,6 +55,7 @@ class EventDetailsCard extends StatelessWidget {
   final eventId;
   final attendees;
   final bool isJoined;
+  final endDate;
   @override
   Widget build(BuildContext context) {
     Future<bool> getpermission() async {
@@ -224,7 +226,7 @@ GetStorage box = GetStorage();
                         child: Padding(
                           padding: const EdgeInsets.only(left: 8, bottom: 6),
                           child: Text(
-                            'from'.tr + ' $startTime ' + 'to'.tr + '$endTime',
+                            'from'.tr + ' $startTime ' + 'to'.tr + ' $endTime',
                             style: TextStyle(
                               color: Colors.white,
                               fontFamily: 'Montserrat',
@@ -240,15 +242,18 @@ GetStorage box = GetStorage();
                     children: [
                       SvgPicture.asset('assets/images/calender1.svg',
                           fit: BoxFit.scaleDown, height: 24, width: 24),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8, bottom: 6),
-                        child: Text(
-                          date,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w400,
-                            fontSize: 12,
+                      Directionality(
+                        textDirection: box.read('locale') == 'ar'? TextDirection.rtl :TextDirection.ltr,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8, bottom: 6),
+                          child: Text(
+                            'from'.tr + ' $date ' + 'to'.tr + ' $endDate',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12,
+                            ),
                           ),
                         ),
                       )

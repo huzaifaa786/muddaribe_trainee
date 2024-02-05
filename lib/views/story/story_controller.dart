@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mudarribe_trainee/api/story_api.dart';
+import 'package:mudarribe_trainee/enums/enums.dart';
 import 'package:mudarribe_trainee/models/trainer.dart';
 import 'package:mudarribe_trainee/models/trainer_story.dart';
 import 'package:story_view/story_view.dart';
@@ -36,17 +37,22 @@ class TrainerStoryContoller extends GetxController {
         print(time.value);
       }
       if (time.value != 'DontShow') {
-        stories.add(StoryItem.inlineImage(
-            key: Key(time.value),
-            url: story.imageUrl!,
-            controller: storyController,
-            roundedBottom: false,
-            roundedTop: false));
+        stories.add(story.mediaType == MediaType.image
+            ? StoryItem.inlineImage(
+                key: Key(time.value),
+                url: story.imageUrl!,
+                controller: storyController,
+                roundedBottom: false,
+                roundedTop: false)
+            : StoryItem.pageVideo(
+                key: Key(story.id.toString()),
+                story.imageUrl!,
+                controller: storyController,
+              ));
         update();
       }
     }
-    if(stories.length != 0)
-    time = stories.first.view.key.toString().obs;
+    if (stories.length != 0) time = stories.first.view.key.toString().obs;
     update();
   }
 

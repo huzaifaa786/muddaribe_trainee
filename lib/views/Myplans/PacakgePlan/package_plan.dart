@@ -4,6 +4,7 @@ import 'package:mudarribe_trainee/api/order_api.dart';
 import 'package:mudarribe_trainee/components/basic_loader%20copy.dart';
 import 'package:mudarribe_trainee/components/exercises_card.dart';
 import 'package:mudarribe_trainee/components/topbar.dart';
+import 'package:mudarribe_trainee/models/combined_file.dart';
 import 'package:mudarribe_trainee/models/plan.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
@@ -17,14 +18,14 @@ class PackagePlans extends StatefulWidget {
 }
 
 class _PackagePlansState extends State<PackagePlans> {
-  var orderId = Get.parameters['orderId'] as String;
+  // var orderId = Get.parameters['orderId'] as String;
   var category = Get.parameters['category'] as String;
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PackagePlanController>(
       initState: (state) async {
         Future.delayed(const Duration(milliseconds: 100), () {
-          state.controller!.orderId = orderId;
+          // state.controller!.orderId = orderId;
           state.controller!.category = category;
 
           setState(() {});
@@ -41,9 +42,8 @@ class _PackagePlansState extends State<PackagePlans> {
             child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.only(left: 15, right: 15),
-            child: FutureBuilder<List<Plan>>(
-                future: OrderApi.getPlansByOrder(
-                    controller.orderId, controller.category),
+            child: FutureBuilder<List<CombinedTraineeFileData>>(
+                future: OrderApi.getPlansByOrder(controller.category),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return SizedBox(
@@ -59,7 +59,7 @@ class _PackagePlansState extends State<PackagePlans> {
                   if (!snapshot.hasData) {
                     return Text('');
                   }
-                  List<Plan> plans = snapshot.data!;
+                  List<CombinedTraineeFileData> plans = snapshot.data!;
                   return snapshot.data!.isEmpty
                       ? SizedBox(
                           height: Get.height * 0.8,
@@ -77,14 +77,17 @@ class _PackagePlansState extends State<PackagePlans> {
                                     onTap: () {
                                       Get.toNamed(AppRoutes.planFiles,
                                           parameters: {
-                                            'planId': plans[index].id,
-                                            'planName': plans[index].name!,
+                                            'planId': plans[index].plan.id,
+                                            'planName': plans[index].plan.name!,
                                             'trainerId':
-                                                plans[index].trainerId!,
+                                                plans[index].plan.trainerId!,
                                           });
                                     },
-                                    title: plans[index].name!,
-                                    description: plans[index].description!);
+                                    trainerName:  plans[index].trainer.name,
+                                    trainerImage: plans[index].trainer.profileImageUrl,
+                                    title: plans[index].plan.name!,
+                                    description:
+                                        plans[index].plan.description!);
                               }),
                         );
                 }),

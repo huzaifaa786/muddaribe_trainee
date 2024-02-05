@@ -1,6 +1,8 @@
 // ignore_for_file: unused_field, constant_identifier_names
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/intl.dart';
 import 'package:mudarribe_trainee/api/post_api.dart';
 import 'package:mudarribe_trainee/models/event.dart';
 
@@ -40,6 +42,7 @@ class HomeController extends GetxController {
   @override
   void onInit() async {
     print("call onInit"); // this line not printing
+    print(DateFormat('dd/MM/yyyy').format(DateTime.now()).toString());
     fetchDataFromFirestore();
     super.onInit();
   }

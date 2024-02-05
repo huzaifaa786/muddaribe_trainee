@@ -14,6 +14,7 @@ class BannerCard extends StatelessWidget {
       {super.key,
       this.image,
       this.endTime,
+      this.enddate,
       this.date,
       this.price,
       this.startTime,
@@ -27,6 +28,7 @@ class BannerCard extends StatelessWidget {
   final capacity;
   final startTime;
   final endTime;
+  final enddate;
   final price;
   final eventId;
   final joinTap;
@@ -85,10 +87,10 @@ class BannerCard extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.only(left: 15.0),
                                 child: Text(
-                                  '$date',
+                                  '$date - $enddate',
                                   style: TextStyle(
                                     color: white,
-                                    fontSize: 14,
+                                    fontSize: 12,
                                     fontFamily: 'Poppins',
                                     fontWeight: FontWeight.w600,
                                   ),

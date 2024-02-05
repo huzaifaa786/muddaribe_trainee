@@ -5,18 +5,21 @@ class Plan {
   String? category;
   String? trainerId;
   String? description;
+  String? orderId;
 
   Plan(
       {required this.id,
       this.name,
       this.file,
       this.category,
+      this.orderId,
       this.trainerId,
       this.description});
 
   Plan.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     trainerId = json['trainerId'];
+    orderId = json['orderId'];
     name = json['name'];
     file = json['file'];
     category = json['category'];
@@ -31,7 +34,7 @@ class Plan {
     data['file'] = file;
     data['category'] = category;
     data['description'] = description;
-
+    data['orderId'] = orderId;
     return data;
   }
 }

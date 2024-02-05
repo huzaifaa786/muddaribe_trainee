@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mudarribe_trainee/components/packagecheckbox.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
@@ -30,8 +31,8 @@ class TrainerPackageCard extends StatelessWidget {
       onTap: onTap,
       child: Stack(alignment: Alignment.bottomLeft, children: [
         Container(
-            height: 118,
             margin: EdgeInsets.only(top: 8.0, bottom: 8.0),
+            padding: EdgeInsets.only(bottom: 8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Colors.black,
@@ -135,6 +136,13 @@ class TrainerPackageCard extends StatelessWidget {
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
                           color: whitewithopacity1)),
+                  Text(
+                    '$duration'.tr,
+                    style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: whitewithopacity1),
+                  ),
                 ],
               ),
             )),
