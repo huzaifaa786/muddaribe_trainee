@@ -37,7 +37,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
             child: Column(
               children: [
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.65,
+                  height: MediaQuery.of(context).size.height * 0.75,
                   child: PageView(
                     controller: controller,
                     onPageChanged: (index) {
@@ -53,7 +53,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(bottom: 50),
+                  margin: EdgeInsets.only(bottom: 30),
                   padding: const EdgeInsets.only(top: 0.0, bottom: 10.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

@@ -53,7 +53,7 @@ class TrainerProfileApi {
   static Future<List<CombinedData>> fetchTrainerPostsData(trainerId) async {
     final savePostSnapshot = await FirebaseFirestore.instance
         .collection('trainer_posts')
-        .where("trainerId", isEqualTo: trainerId)
+        .where("trainerId", isEqualTo: trainerId).orderBy('id', descending: true)
         .get();
     List<CombinedData> combinedData = [];
     for (var savePost in savePostSnapshot.docs) {

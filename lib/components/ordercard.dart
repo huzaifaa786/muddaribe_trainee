@@ -369,10 +369,18 @@ class _OrderCardState extends State<OrderCard> {
                       arguments: widget.trainer.id);
                 },
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 15, right: 20),
+                  padding: const EdgeInsets.only(top: 15, right: 20, left: 20),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      GradientText(
+                       'Duration'.tr + ': ' + '${widget.package.duration}'.tr,
+                       style: TextStyle(
+                         fontSize: 14,
+                         fontWeight: FontWeight.w600,
+                       ),
+                       colors: [borderTop, gradientblue],
+                          ),
                       GradientText(
                         'View Profile'.tr,
                         style: TextStyle(

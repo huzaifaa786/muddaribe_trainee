@@ -7,12 +7,13 @@ import 'package:mudarribe_trainee/utils/colors.dart';
 
 class ChatPlanPopUpCard extends StatelessWidget {
   const ChatPlanPopUpCard(
-      {super.key, this.img, this.name, this.price, this.title, this.category});
+      {super.key, this.img, this.name, this.price, this.title, this.category, this.duration});
   final img;
   final name;
   final price;
   final category;
   final title;
+  final duration;
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -153,6 +154,14 @@ class ChatPlanPopUpCard extends StatelessWidget {
               padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
               child: Text(
                 "Included $category",
+                style: const TextStyle(
+                    fontSize: 12, fontWeight: FontWeight.w600, color: white),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+              child: Text(
+                "Duration: " + "$duration",
                 style: const TextStyle(
                     fontSize: 12, fontWeight: FontWeight.w600, color: white),
               ),

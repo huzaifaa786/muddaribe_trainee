@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:intl/intl.dart';
 import 'package:mudarribe_trainee/api/post_api.dart';
@@ -41,6 +42,7 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
+    GetStorage box = GetStorage();
     return GetBuilder<HomeController>(
       autoRemove: false,
       initState: (state) {
@@ -171,12 +173,12 @@ class _HomeViewState extends State<HomeView> {
                                             child: Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceEvenly,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
+                                              // crossAxisAlignment:
+                                              //     CrossAxisAlignment.start,
                                               children: [
                                                 Container(
                                                   height: 70,
-                                                  width: 80,
+                                                  width: 70,
                                                   decoration: BoxDecoration(
                                                     shape: BoxShape.circle,
                                                     border:
@@ -193,8 +195,7 @@ class _HomeViewState extends State<HomeView> {
                                                   ),
                                                   child: Padding(
                                                     padding:
-                                                        const EdgeInsets.all(
-                                                            3.5),
+                                                        const EdgeInsets.all(3),
                                                     child: Container(
                                                       decoration: BoxDecoration(
                                                         shape: BoxShape.circle,
@@ -211,12 +212,16 @@ class _HomeViewState extends State<HomeView> {
                                                 SizedBox(
                                                   width: 80,
                                                   child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                      left: 12.0,
-                                                    ),
+                                                    padding: box.read(
+                                                                'locale') !=
+                                                            'ar'
+                                                        ? const EdgeInsets.only(
+                                                            left: 8.0)
+                                                        : EdgeInsets.all(0),
                                                     child: Text(
                                                       trainer.name,
+                                                      textAlign:
+                                                          TextAlign.center,
                                                       style: const TextStyle(
                                                           color: white,
                                                           fontSize: 12,

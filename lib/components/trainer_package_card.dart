@@ -89,7 +89,7 @@ class TrainerPackageCard extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.only(top: 10, left: 6),
                             child: Text(
-                              'AED',
+                              'AED'.tr,
                               style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w700,

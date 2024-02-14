@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:mudarribe_trainee/exceptions/database_api_exception.dart';
 import 'package:mudarribe_trainee/models/combine_order.dart';
 import 'package:mudarribe_trainee/models/combined_file.dart';
@@ -82,11 +83,12 @@ class OrderApi {
 
   static Future<List<CombinedOrderData>> fetchOrders() async {
     final traineeId = FirebaseAuth.instance.currentUser!.uid;
-
+// .orderBy('orderId',descending: true)
     List<CombinedOrderData> combineOrders = [];
     QuerySnapshot orders = await FirebaseFirestore.instance
         .collection('orders')
         .where("userId", isEqualTo: traineeId)
+        .orderBy('orderId', descending: true)
         .get();
 
     if (orders.docs.isNotEmpty) {
@@ -175,7 +177,12 @@ class OrderApi {
           fileLength = fileResult.docs.length.toString();
           videoLength = videoResult.docs.length.toString();
         }
-        datadoc['description'] = '$fileLength Files ,$videoLength videos';
+        // datadoc['description'] = '$fileLength files.tr ,$videoLength videos';
+        datadoc['description'] = '${'files'.tr} ' +
+            '$fileLength ,' +
+            '${'videos'.tr} ' +
+            '$videoLength';
+
         print(datadoc);
         // plans.add(Plan.fromJson(datadoc));
         DocumentSnapshot trainerSnapshot = await FirebaseFirestore.instance
@@ -185,7 +192,8 @@ class OrderApi {
         Map<String, dynamic> trainerData =
             trainerSnapshot.data()! as Map<String, dynamic>;
         Trainer trainer = Trainer.fromMap(trainerData);
-       combinedata.add(CombinedTraineeFileData(trainer: trainer, plan: Plan.fromJson(datadoc)));
+        combinedata.add(CombinedTraineeFileData(
+            trainer: trainer, plan: Plan.fromJson(datadoc)));
       }
 
       return combinedata;

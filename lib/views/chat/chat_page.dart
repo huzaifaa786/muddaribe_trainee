@@ -873,6 +873,11 @@ class ChatPageState extends State<ChatPage> {
                                                                 .split("~~")[0]
                                                                 .split(":")[1]
                                                                 .trim(),
+                                                            duration: messageChat
+                                                                .content
+                                                                .split("~~")[5]
+                                                                .split(":")[1]
+                                                                .trim(),
                                                             category:
                                                                 messageChat
                                                                     .content
@@ -972,6 +977,15 @@ class ChatPageState extends State<ChatPage> {
                                                                   .trim();
                                                           print('planid');
                                                           print(planid);
+                                                          String planduration =
+                                                              messageChat
+                                                                  .content
+                                                                  .split(
+                                                                      "~~")[5]
+                                                                  .split(":")[1]
+                                                                  .trim();
+                                                          print('planduration');
+                                                          print(planduration);
                                                           String orderId = DateTime
                                                                   .now()
                                                               .millisecondsSinceEpoch
@@ -1018,37 +1032,37 @@ class ChatPageState extends State<ChatPage> {
                                                                     .millisecondsSinceEpoch
                                                                     .toString();
                                                             String plan = 'PlanTitle:' +
-                                                                messageChat
-                                                                        .content
+                                                                messageChat.content
                                                                         .split(
                                                                             "~~")[0]
                                                                         .split(":")[
                                                                     1] +
                                                                 '~~AMOUNT:' +
-                                                                messageChat
-                                                                        .content
+                                                                messageChat.content
                                                                         .split(
                                                                             "~~")[1]
-                                                                        .split(
-                                                                            ":")[
+                                                                        .split(":")[
                                                                     1] +
                                                                 '~~PlanCategory:' +
-                                                                messageChat
-                                                                        .content
+                                                                messageChat.content
                                                                         .split(
                                                                             "~~")[2]
-                                                                        .split(
-                                                                            ":")[
+                                                                        .split(":")[
                                                                     1] +
                                                                 '~~pay:' +
                                                                 'true' +
                                                                 '~~PlanId:' +
                                                                 messageChat
+                                                                        .content
+                                                                        .split(
+                                                                            "~~")[4]
+                                                                        .split(":")[
+                                                                    1] +
+                                                                '~~PlanDuration:' +
+                                                                messageChat
                                                                     .content
-                                                                    .split(
-                                                                        "~~")[4]
-                                                                    .split(
-                                                                        ":")[1];
+                                                                    .split("~~")[5]
+                                                                    .split(":")[1];
                                                             print(messageChat
                                                                 .timestamp);
                                                             print(groupChatId);

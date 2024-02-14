@@ -165,7 +165,7 @@ class LocaleString extends Translations {
           "Price": "Price",
           "Joined": "Joined",
           "No event uploaded yet.": "No event uploaded yet.",
-          "from": "from",
+          "from": "From",
           "to": "to",
           "View Location": "View Location",
           "Total People amount": "Total people amount",
@@ -243,8 +243,10 @@ class LocaleString extends Translations {
           "Ten Months": "Ten Months",
           "Eleven Months": "Eleven Months",
           "Twelve Months": "Twelve Months",
+          'Duration': 'Duration'
         },
         'ar_AE': {
+          "Duration": "المدة",
           "One Month": "شهر واحد",
           "Two Months": 'شهرين',
           "Three Months": 'ثلاثة شهور',
