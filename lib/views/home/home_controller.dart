@@ -157,7 +157,7 @@ class HomeController extends GetxController {
       'endY': '0.32'
     },
     {
-      'title': 'Medical fitness',
+      'title': 'Medical Fitness',
       'image': 'assets/images/heart.png',
       'firstColor': '0xFF727DCD',
       'secondColor': '0xFFBF31E3',
@@ -167,10 +167,89 @@ class HomeController extends GetxController {
       'endY': '0.32'
     },
     {
-      'title': 'Lifting',
-      'image': 'assets/images/tumble.png',
+      'title': 'Indoor Cycling',
+      'image': 'assets/images/indoor.png',
+      'firstColor': '0xFFF5A84CE',
+      'secondColor': '0xFFD54395',
+      'beginX': '0.5',
+      'beginY': '-0.32',
+      'endX': '-0.5',
+      'endY': '0.32'
+    },
+    {
+      'title': 'CrossFit',
+      'image': 'assets/images/crossFit.png',
       'firstColor': '0xFF9113DE',
       'secondColor': '0xFFFF9541',
+      'beginX': '0.5',
+      'beginY': '-0.32',
+      'endX': '-0.5',
+      'endY': '0.32'
+    },
+    {
+      'title': 'Rehabilitation Coach',
+      'image': 'assets/images/rehab.png',
+      'firstColor': '0xFFB937E1',
+      'secondColor': '0xFF8967D3',
+      'beginX': '0.5',
+      'beginY': '-0.32',
+      'endX': '-0.5',
+      'endY': '0.32'
+    },
+    {
+      'title': 'Paddle',
+      'image': 'assets/images/padel.png',
+      'firstColor': '0xFF50CDC5',
+      'secondColor': '0xFF3B9931',
+      'beginX': '0.5',
+      'beginY': '-0.32',
+      'endX': '-0.5',
+      'endY': '0.32'
+    },
+    {
+      'title': 'Calisthenics',
+      'image': 'assets/images/calis.png',
+      'firstColor': '0xFF5DCEF5',
+      'secondColor': '0xFF727DCD',
+      'beginX': '0.5',
+      'beginY': '-0.32',
+      'endX': '-0.5',
+      'endY': '0.32'
+    },        {
+      'title': 'Animal flow',
+      'image': 'assets/images/animal.png',
+      'firstColor': '0xFFDD432C',
+      'secondColor': '0xFF980A0A',
+      'beginX': '0.5',
+      'beginY': '-0.32',
+      'endX': '-0.5',
+      'endY': '0.32'
+    },
+    {
+      'title': 'Kettle bell',
+      'image': 'assets/images/kettle.png',
+      'firstColor': '0xFF4FCBBF',
+      'secondColor': '0xFF3D9C37',
+      'beginX': '0.5',
+      'beginY': '-0.32',
+      'endX': '-0.5',
+      'endY': '0.32'
+    },
+    {
+      'title': 'Aerobics',
+      'image': 'assets/images/aero.png',
+      'firstColor': '0xFFEC805D',
+      'secondColor': '0xFFA62DC0',
+      'beginX': '0.5',
+      'beginY': '-0.32',
+      'endX': '-0.5',
+      'endY': '0.32'
+    },
+    {
+      'title': 'Plates',
+      'image': 'assets/images/plates.png',
+      'firstColor': '0xFFBF32E3',
+      'secondColor': '0xFF7D74D0',
       'beginX': '0.5',
       'beginY': '-0.32',
       'endX': '-0.5',

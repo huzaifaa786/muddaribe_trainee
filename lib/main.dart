@@ -86,7 +86,24 @@ class MyApp extends StatelessWidget {
             ? Locale('en', 'US')
             : Locale('ar', 'AE'),
         theme: ThemeData(
+          scaffoldBackgroundColor: Colors.white,
+          textTheme: TextTheme(
+               titleMedium: TextStyle(color: Colors.black),
+            bodyMedium: TextStyle(color: Colors.black),
+          ),
+          textSelectionTheme: const TextSelectionThemeData(
+            cursorColor: borderTop,
+          ),
+          useMaterial3: true,
+          fontFamily: 'Montserrat',
+        ),
+        themeMode: ThemeMode.dark,
+        darkTheme: ThemeData(
           scaffoldBackgroundColor: Colors.black,
+            textTheme: TextTheme(
+            titleMedium: TextStyle(color: Colors.white),
+            bodyMedium: TextStyle(color: Colors.white),
+          ),
           textSelectionTheme: const TextSelectionThemeData(
             cursorColor: white,
           ),

@@ -93,7 +93,6 @@ class _HomeViewState extends State<HomeView> {
                             child: Text(
                               'Followed trainers'.tr,
                               style: TextStyle(
-                                color: white,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w800,
                               ),
