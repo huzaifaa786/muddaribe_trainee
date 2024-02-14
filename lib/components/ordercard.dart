@@ -44,7 +44,7 @@ class _OrderCardState extends State<OrderCard> {
           height: 344,
           width: MediaQuery.sizeOf(context).width,
           decoration: BoxDecoration(
-            color: bgContainer,
+            color: Get.isDarkMode ? black : grey.withOpacity(0.2),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Column(
@@ -93,17 +93,18 @@ class _OrderCardState extends State<OrderCard> {
                                 fontSize: 16,
                                 fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w600,
-                                color: Colors.white,
                               ),
                             ),
-                            Text(
-                              widget.trainer.category.join('& '),
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w400,
-                                color: Colors.white
-                                    .withOpacity(0.6000000238418579),
+                            Container(
+                              width: Get.width * 0.63,
+                              child: Text(
+                                widget.trainer.category.join('& '),
+                                style: TextStyle(
+                                  overflow: TextOverflow.ellipsis,
+                                  fontSize: 12,
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w400,
+                                ),
                               ),
                             ),
                           ],
@@ -139,7 +140,6 @@ class _OrderCardState extends State<OrderCard> {
                               textAlign: TextAlign.center,
                               'Package'.tr,
                               style: TextStyle(
-                                  color: white.withOpacity(0.5),
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600),
                             ),
@@ -176,7 +176,6 @@ class _OrderCardState extends State<OrderCard> {
                                             child: Text(
                                               '+',
                                               style: TextStyle(
-                                                  color: white,
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.w700),
                                             ),
@@ -235,8 +234,7 @@ class _OrderCardState extends State<OrderCard> {
                                     widget.package.name!,
                                     style: TextStyle(
                                         fontSize: 14,
-                                        fontWeight: FontWeight.w700,
-                                        color: whitewithopacity1),
+                                        fontWeight: FontWeight.w700),
                                   ),
                                 ),
                                 Padding(
@@ -247,8 +245,7 @@ class _OrderCardState extends State<OrderCard> {
                                       widget.package.discription!,
                                       style: TextStyle(
                                           fontSize: 11,
-                                          fontWeight: FontWeight.w500,
-                                          color: whitewithopacity1)),
+                                          fontWeight: FontWeight.w500,)),
                                 ),
                               ],
                             ),
@@ -272,7 +269,6 @@ class _OrderCardState extends State<OrderCard> {
                               textAlign: TextAlign.center,
                               'Check out Date'.tr,
                               style: TextStyle(
-                                  color: white.withOpacity(0.5),
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600),
                             ),
@@ -295,8 +291,7 @@ class _OrderCardState extends State<OrderCard> {
                                         int.parse(widget.order.id))),
                                 style: TextStyle(
                                     fontSize: 14,
-                                    fontWeight: FontWeight.w700,
-                                    color: whitewithopacity1),
+                                    fontWeight: FontWeight.w700),
                               ),
                             ),
                           ),
@@ -317,7 +312,6 @@ class _OrderCardState extends State<OrderCard> {
                               textAlign: TextAlign.center,
                               'Price'.tr,
                               style: TextStyle(
-                                  color: white.withOpacity(0.5),
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600),
                             ),
@@ -350,8 +344,7 @@ class _OrderCardState extends State<OrderCard> {
                                     'AED'.tr,
                                     style: TextStyle(
                                         fontSize: 12,
-                                        fontWeight: FontWeight.w700,
-                                        color: whitewithopacity1),
+                                        fontWeight: FontWeight.w700),
                                   ),
                                 ),
                               ],

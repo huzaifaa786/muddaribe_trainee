@@ -25,13 +25,17 @@ class MainTopBar extends StatelessWidget {
                       Get.to(() => const ChatLsitScreen());
                     },
                     child: SvgPicture.asset('assets/images/msg.svg',
-                        fit: BoxFit.scaleDown)),
+                        fit: BoxFit.scaleDown,
+                        color: Get.isDarkMode ? Colors.white : Colors.black,
+                        )),
                 GestureDetector(
                    onTap: () {
                       Get.to(() => const NotificationsView());
                     },
                   child: SvgPicture.asset('assets/images/notification.svg',
-                      fit: BoxFit.scaleDown),
+                      fit: BoxFit.scaleDown,
+                        color: Get.isDarkMode ? Colors.white : Colors.black,
+                  ),
                 )
                 // Icon(Icons.abc,color: white,)
               ],

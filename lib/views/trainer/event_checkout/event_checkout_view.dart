@@ -174,7 +174,7 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                             height: 67,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: bgContainer,
+                              color: Get.isDarkMode ? black : grey.withOpacity(0.2),
                             ),
                             child: Padding(
                               padding:
@@ -186,7 +186,6 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                   Text(
                                     'Promo Code'.tr,
                                     style: TextStyle(
-                                      color: white,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -276,7 +275,8 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                               child: Row(
                                 children: [
                                   SvgPicture.asset(
-                                      'assets/images/location.svg'),
+                                      'assets/images/location.svg',
+                                        color: Get.isDarkMode ? white : black),
                                   SizedBox(
                                     width: Get.width * 0.8,
                                     child: Row(
@@ -291,7 +291,6 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                             child: Text(
                                               combinedEventData.event.address,
                                               style: TextStyle(
-                                                color: Colors.white,
                                                 fontFamily: 'Montserrat',
                                                 fontWeight: FontWeight.w400,
                                                 fontSize: 12,
@@ -321,7 +320,7 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                             child: Row(
                               children: [
                                 SvgPicture.asset('assets/images/clock.svg',
-                                    color: white),
+                                    color: Get.isDarkMode ? white : black),
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       left: 10, right: 10),
@@ -339,7 +338,6 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                             ? TextAlign.end
                                             : TextAlign.start,
                                         style: TextStyle(
-                                          color: Colors.white,
                                           fontFamily: 'Montserrat',
                                           fontWeight: FontWeight.w400,
                                           fontSize: 12,
@@ -360,7 +358,6 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                               Text(
                                 'Summary'.tr,
                                 style: TextStyle(
-                                  color: white,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -372,7 +369,7 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                           height: 216,
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
-                            color: bgContainer,
+                            color: Get.isDarkMode ? black : grey.withOpacity(0.2),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Column(
@@ -388,7 +385,6 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                     Text(
                                       'Price'.tr,
                                       style: TextStyle(
-                                        color: white,
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -398,7 +394,6 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                           ' ' +
                                           'AED'.tr,
                                       style: TextStyle(
-                                        color: white,
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -424,7 +419,6 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                     Text(
                                       'Offer'.tr,
                                       style: TextStyle(
-                                        color: white,
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -434,7 +428,6 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                           ' ' +
                                           'AED'.tr,
                                       style: TextStyle(
-                                        color: white,
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -477,8 +470,6 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                                               colors: <Color>[
                                                 borderTop,
                                                 borderTop,
-                                                borderTop,
-                                                borderDown
                                               ],
                                             ).createShader(Rect.fromLTWH(
                                                 0.0, 0.0, 250.0, 70.0))),

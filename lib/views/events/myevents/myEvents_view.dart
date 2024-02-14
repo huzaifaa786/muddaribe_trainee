@@ -32,15 +32,12 @@ class _MyEventsViewState extends State<MyEventsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
         automaticallyImplyLeading: true,
         centerTitle: true,
-        iconTheme: IconThemeData(color: white),
         title: Text(
           'My Events'.tr,
           style: TextStyle(
               fontSize: 20,
-              color: white,
               fontWeight: FontWeight.w800,
               fontFamily: 'Poppins'),
         ),
@@ -56,7 +53,6 @@ class _MyEventsViewState extends State<MyEventsView> {
             limit: 20,
             onEmpty: Text(
               'No event joined yet.'.tr,
-              style: TextStyle(color: white.withOpacity(0.3)),
             ),
             viewType: ViewType.list,
             physics: BouncingScrollPhysics(),
@@ -72,8 +68,7 @@ class _MyEventsViewState extends State<MyEventsView> {
                   if (snapshot.hasError) {
                     return Text(
                       snapshot.error.toString(),
-                      style: TextStyle(color: white),
-                    );
+                      );
                   }
                   if (!snapshot.hasData) {
                     return Text('');

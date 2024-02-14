@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:mudarribe_trainee/utils/colors.dart';
 
 class TopBar extends StatelessWidget {
   const TopBar({super.key, required this.text});
@@ -23,6 +24,7 @@ class TopBar extends StatelessWidget {
                 padding: const EdgeInsets.all(4.0),
                 child: SvgPicture.asset(
                   'assets/images/nevigate.svg',
+                  color: Get.isDarkMode ? white : black,
                 ),
               ),
             ),
@@ -31,7 +33,6 @@ class TopBar extends StatelessWidget {
             ),
             Text(text,
                 style: const TextStyle(
-                  color: Colors.white,
                   fontFamily: "Poppins",
                   fontSize: 20,
                   fontWeight: FontWeight.w700,

@@ -11,6 +11,7 @@ import 'package:mudarribe_trainee/routes/app_pages.dart';
 import 'package:mudarribe_trainee/services/notification_service.dart';
 import 'package:mudarribe_trainee/services/payment_service.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
+import 'package:mudarribe_trainee/utils/theme.dart';
 import 'package:mudarribe_trainee/views/authentication/change_password/change_password_binding.dart';
 import 'package:mudarribe_trainee/views/authentication/change_password/change_password_view.dart';
 import 'package:mudarribe_trainee/views/authentication/signin/signin_binding.dart';
@@ -64,7 +65,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GetStorage box = GetStorage();
-    // box.read('Locale') == null ? box.write('Locale', 'en') : null;
+    box.read('theme') == null ? box.write('theme', 'dark') : null;
     // String locale = box.read('Locale') == null ? 'en' : box.read('Locale');
     // return GoogleTranslatorInit('AIzaSyBOr3bXgN2bj9eECzSudyj_rgIFjyXkdn8',
     //     translateFrom: box.read('Locale') == 'en' ? Locale('ur') : Locale('en'),
@@ -85,31 +86,9 @@ class MyApp extends StatelessWidget {
         fallbackLocale: box.read('locale') != 'ar'
             ? Locale('en', 'US')
             : Locale('ar', 'AE'),
-        theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
-          textTheme: TextTheme(
-               titleMedium: TextStyle(color: Colors.black),
-            bodyMedium: TextStyle(color: Colors.black),
-          ),
-          textSelectionTheme: const TextSelectionThemeData(
-            cursorColor: borderTop,
-          ),
-          useMaterial3: true,
-          fontFamily: 'Montserrat',
-        ),
-        themeMode: ThemeMode.dark,
-        darkTheme: ThemeData(
-          scaffoldBackgroundColor: Colors.black,
-            textTheme: TextTheme(
-            titleMedium: TextStyle(color: Colors.white),
-            bodyMedium: TextStyle(color: Colors.white),
-          ),
-          textSelectionTheme: const TextSelectionThemeData(
-            cursorColor: white,
-          ),
-          useMaterial3: true,
-          fontFamily: 'Montserrat',
-        ),
+         theme: CustomTheme.lightTheme,
+        darkTheme: CustomTheme.darkTheme,
+        themeMode: box.read('theme') == 'light' ? ThemeMode.light : ThemeMode.dark,
         debugShowCheckedModeBanner: false,
         title: "Mudarribe",
         initialBinding: SplashBinding(),

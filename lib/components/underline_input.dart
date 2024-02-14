@@ -37,7 +37,6 @@ class UnderlineInputField extends StatelessWidget {
             (validator == true.obs
                 ? AutovalidateMode.always
                 : AutovalidateMode.onUserInteraction),
-        style: TextStyle(color: Colors.white),
         keyboardType: type,
         decoration: InputDecoration(
           suffixIcon: SvgPicture.asset(img, height: 20,fit: BoxFit.scaleDown),

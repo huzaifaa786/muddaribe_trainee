@@ -49,7 +49,6 @@ class _ReportProblemViewState extends State<ReportProblemView> {
                             },
                             child: Icon(
                               Icons.arrow_back_ios_new,
-                              color: Colors.white,
                             ),
                           ),
                         ],
@@ -63,8 +62,7 @@ class _ReportProblemViewState extends State<ReportProblemView> {
                             'What’s the problem?'.tr,
                             style: TextStyle(
                                 fontSize: 24,
-                                fontWeight: FontWeight.w600,
-                                color: white),
+                                fontWeight: FontWeight.w600,),
                           ),
                         ),
                       ],
@@ -75,7 +73,7 @@ class _ReportProblemViewState extends State<ReportProblemView> {
                           left: 15, right: 15, top: 40, bottom: 25),
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
-                          color: bgContainer,
+                          color: Get.isDarkMode ? black : grey.withOpacity(0.2),
                           borderRadius: BorderRadius.circular(10)),
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,

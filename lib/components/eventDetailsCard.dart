@@ -93,7 +93,7 @@ class EventDetailsCard extends StatelessWidget {
     }
 GetStorage box = GetStorage();
     return Card(
-      color: bgContainer,
+      color: Get.isDarkMode ? Color(0xFF0F0F0F) : white.withOpacity(0.9),
       child: Container(
         width: MediaQuery.sizeOf(context).width * 0.9,
         padding: EdgeInsets.only(bottom: 20, top: 20),
@@ -152,7 +152,6 @@ GetStorage box = GetStorage();
                                     fontSize: 16,
                                     fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.w600,
-                                    color: Colors.white,
                                   ),
                                 ),
                               ),
@@ -162,8 +161,8 @@ GetStorage box = GetStorage();
                                   fontSize: 12,
                                   fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.w400,
-                                  color: Colors.white
-                                      .withOpacity(0.6000000238418579),
+                                  color: Get.isDarkMode ? Colors.white
+                                      .withOpacity(0.6000000238418579) : black.withOpacity(0.6000000238418579),
                                 ),
                               ),
                             ],
@@ -198,6 +197,7 @@ GetStorage box = GetStorage();
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SvgPicture.asset('assets/images/location.svg',
+                      color: Get.isDarkMode ? white : black,
                           fit: BoxFit.scaleDown, height: 24, width: 24),
                       Container(
                         width: MediaQuery.of(context).size.width * 0.7,
@@ -206,7 +206,6 @@ GetStorage box = GetStorage();
                           address,
                           maxLines: 1,
                           style: TextStyle(
-                            color: Colors.white,
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w600,
                             fontSize: 14,
@@ -220,6 +219,7 @@ GetStorage box = GetStorage();
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       SvgPicture.asset('assets/images/timeline.svg',
+                      color: Get.isDarkMode ? white : black,
                           fit: BoxFit.scaleDown, height: 24, width: 24),
                       Directionality(
                         textDirection: box.read('locale') == 'ar'? TextDirection.rtl :TextDirection.ltr,
@@ -228,7 +228,6 @@ GetStorage box = GetStorage();
                           child: Text(
                             'from'.tr + ' $startTime ' + 'to'.tr + ' $endTime',
                             style: TextStyle(
-                              color: Colors.white,
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w400,
                               fontSize: 12,
@@ -241,6 +240,7 @@ GetStorage box = GetStorage();
                   Row(
                     children: [
                       SvgPicture.asset('assets/images/calender1.svg',
+                      color: Get.isDarkMode ? white : black,
                           fit: BoxFit.scaleDown, height: 24, width: 24),
                       Directionality(
                         textDirection: box.read('locale') == 'ar'? TextDirection.rtl :TextDirection.ltr,
@@ -249,7 +249,6 @@ GetStorage box = GetStorage();
                           child: Text(
                             'from'.tr + ' $date ' + 'to'.tr + ' $endDate',
                             style: TextStyle(
-                              color: Colors.white,
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w400,
                               fontSize: 12,
@@ -263,6 +262,7 @@ GetStorage box = GetStorage();
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       SvgPicture.asset('assets/images/peoplesharp.svg',
+                      color: Get.isDarkMode ? white : black,
                           fit: BoxFit.scaleDown, height: 24, width: 24),
                       Padding(
                         padding: const EdgeInsets.only(left: 8, bottom: 6),
@@ -271,7 +271,6 @@ GetStorage box = GetStorage();
                               ':' +
                               ' $attendees / $capacity',
                           style: TextStyle(
-                            color: Colors.white,
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w400,
                             fontSize: 12,
@@ -285,7 +284,6 @@ GetStorage box = GetStorage();
                       Text(
                         'Price'.tr +':',
                         style: TextStyle(
-                          color: Colors.white,
                           fontFamily: 'Montserrat',
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
@@ -294,7 +292,6 @@ GetStorage box = GetStorage();
                       Text(
                         ' $price '+'AED'.tr,
                         style: TextStyle(
-                          color: Colors.white,
                           fontFamily: 'Montserrat',
                           fontSize: 16,
                           fontWeight: FontWeight.w600,

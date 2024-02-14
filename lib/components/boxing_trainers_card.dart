@@ -33,7 +33,9 @@ class BoxingTrainersCard extends StatelessWidget {
           margin: EdgeInsets.only(top: 10),
           padding: EdgeInsets.all(8.0),
           decoration: BoxDecoration(
-              color: bgContainer, borderRadius: BorderRadius.circular(10)),
+              color: Get.isDarkMode
+                                      ? Color(0xFF0F0F0F)
+                                      : grey.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Row(
@@ -57,7 +59,6 @@ class BoxingTrainersCard extends StatelessWidget {
                             child: Text(title,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                  color: Colors.white,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w700,
                                 )),
@@ -80,7 +81,6 @@ class BoxingTrainersCard extends StatelessWidget {
                     Text(description,
                         // max
                         style: TextStyle(
-                          color: white,
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
                         )),
@@ -97,7 +97,6 @@ class BoxingTrainersCard extends StatelessWidget {
                               Icon(Icons.star, color: borderDown, size: 20),
                               Text(' $rating',
                                   style: TextStyle(
-                                    color: Colors.white,
                                     fontSize: 10,
                                     fontWeight: FontWeight.w500,
                                   )),

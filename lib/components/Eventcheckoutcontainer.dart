@@ -31,7 +31,7 @@ class EventcheckoutContainer extends StatelessWidget {
       padding: EdgeInsets.only(bottom: 20),
       width: MediaQuery.sizeOf(context).width,
       decoration: BoxDecoration(
-        color: bgContainer,
+        color: Get.isDarkMode ? black : grey.withOpacity(0.2),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
@@ -82,20 +82,17 @@ class EventcheckoutContainer extends StatelessWidget {
                                 fontSize: 16,
                                 fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w600,
-                                color: Colors.white,
                               ),
                             ),
                           ),
                           SizedBox(
-                            width: Get.width *0.5,
+                            width: Get.width * 0.5,
                             child: Text(
                               categories,
                               style: TextStyle(
                                 fontSize: 12,
                                 fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w400,
-                                color:
-                                    Colors.white.withOpacity(0.6000000238418579),
                               ),
                             ),
                           ),
@@ -103,14 +100,16 @@ class EventcheckoutContainer extends StatelessWidget {
                             padding: const EdgeInsets.only(top: 5),
                             child: Row(
                               children: [
-                                SvgPicture.asset('assets/images/calender1.svg'),
+                                SvgPicture.asset('assets/images/calender1.svg',
+                                    color: Get.isDarkMode
+                                        ? white
+                                        : black),
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       left: 10, bottom: 0),
                                   child: Text(
                                     eventDate,
                                     style: TextStyle(
-                                      color: Colors.white,
                                       fontFamily: 'Montserrat',
                                       fontWeight: FontWeight.w400,
                                       fontSize: 12,
@@ -136,9 +135,8 @@ class EventcheckoutContainer extends StatelessWidget {
                     right: 14,
                   ),
                   child: Text(
-                    price + ' '+'AED'.tr,
+                    price + ' ' + 'AED'.tr,
                     style: TextStyle(
-                      color: Colors.white,
                       fontFamily: 'Montserrat',
                       fontSize: 16,
                       fontWeight: FontWeight.w600,

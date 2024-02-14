@@ -44,8 +44,8 @@ class _FooterViewState extends State<FooterView> with RouteAware {
           ),
           bottomNavigationBar: BottomAppBar(
             elevation: 50,
-            surfaceTintColor: Colors.black,
-            color: Colors.black,
+            surfaceTintColor: Get.isDarkMode ? black : white,
+            color: Get.isDarkMode ? black : white,
             child: SizedBox(
               height: 60,
               child: Row(
@@ -60,7 +60,7 @@ class _FooterViewState extends State<FooterView> with RouteAware {
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.2,
-                      color: Colors.black,
+                      color: Get.isDarkMode ? black : white,
                       child: Center(
                         child: InkWell(
                           onTap: () {
@@ -83,13 +83,14 @@ class _FooterViewState extends State<FooterView> with RouteAware {
                                       fit: BoxFit.scaleDown,
                                       height: 16,
                                       width: 16,
+                                      color: Get.isDarkMode ? white : grey,
                                     ),
                               const Gap(4),
                               FooterText(
                                 text: 'Home'.tr,
                                 colors: _navigationMenuIndex == 0
                                     ? [borderDown, borderTop]
-                                    : [white, white],
+                                    : [grey, grey],
                               ),
                             ],
                           ),
@@ -105,7 +106,7 @@ class _FooterViewState extends State<FooterView> with RouteAware {
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.2,
-                      color: Colors.black,
+                      color: Get.isDarkMode ? black : white,
                       child: Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -123,13 +124,14 @@ class _FooterViewState extends State<FooterView> with RouteAware {
                                     fit: BoxFit.scaleDown,
                                     height: 16,
                                     width: 16,
+                                      color: Get.isDarkMode ? white : grey,
                                   ),
                             const Gap(4),
                             FooterText(
                                 text: 'My Plans'.tr,
                                 colors: _navigationMenuIndex == 1
                                     ? [borderDown, borderTop]
-                                    : [white, white]),
+                                    : [grey, grey]),
                           ],
                         ),
                       ),
@@ -143,7 +145,7 @@ class _FooterViewState extends State<FooterView> with RouteAware {
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.2,
-                      color: Colors.black,
+                      color: Get.isDarkMode ? black : white,
                       child: Center(
                         child: GestureDetector(
                           onTap: () {
@@ -167,13 +169,14 @@ class _FooterViewState extends State<FooterView> with RouteAware {
                                       fit: BoxFit.scaleDown,
                                       height: 16,
                                       width: 16,
+                                      color: Get.isDarkMode ? white : grey,
                                     ),
                               const Gap(4),
                               FooterText(
                                 text: 'Events'.tr,
                                 colors: _navigationMenuIndex == 2
                                     ? [borderDown, borderTop]
-                                    : [white, white],
+                                    : [grey, grey],
                               ),
                             ],
                           ),
@@ -189,7 +192,7 @@ class _FooterViewState extends State<FooterView> with RouteAware {
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.2,
-                      color: Colors.black,
+                      color: Get.isDarkMode ? black : white,
                       child: Center(
                         child: GestureDetector(
                           onTap: () {
@@ -212,13 +215,14 @@ class _FooterViewState extends State<FooterView> with RouteAware {
                                       fit: BoxFit.scaleDown,
                                       height: 16,
                                       width: 16,
+                                      color: Get.isDarkMode ? white : grey,
                                     ),
                               const Gap(4),
                               FooterText(
                                 text: 'Me'.tr,
                                 colors: _navigationMenuIndex == 3
                                     ? [borderDown, borderTop]
-                                    : [white, white],
+                                    : [grey, grey],
                               ),
                             ],
                           ),

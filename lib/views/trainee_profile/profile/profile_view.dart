@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:mudarribe_trainee/components/profile_tile.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
+import 'package:mudarribe_trainee/views/trainee_profile/app_theme/theme.dart';
 import 'package:mudarribe_trainee/views/trainee_profile/profile/profile_controller.dart';
 import 'package:mudarribe_trainee/views/trainee_profile/app_translate/translate.dart';
 
@@ -26,7 +27,6 @@ class TraineeProfileView extends StatelessWidget {
                     'Account'.tr,
                     style: TextStyle(
                       fontFamily: "Poppins",
-                      color: Colors.white,
                       fontSize: 24,
                       fontWeight: FontWeight.w700,
                     ),
@@ -48,8 +48,11 @@ class TraineeProfileView extends StatelessWidget {
                                   padding: const EdgeInsets.only(
                                       left: 15, right: 15, top: 10, bottom: 10),
                                   decoration: BoxDecoration(
-                                      color: bgContainer,
-                                      borderRadius: BorderRadius.circular(10)),
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Get.isDarkMode
+                                      ? Color(0xFF0F0F0F)
+                                      : white,),
+                                      
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
@@ -69,12 +72,11 @@ class TraineeProfileView extends StatelessWidget {
                                           fontFamily: "Poppins",
                                           fontSize: 16,
                                           fontWeight: FontWeight.w700,
-                                          color: white,
                                           height: 52 / 16,
                                         ),
                                         textAlign: TextAlign.center,
                                       ),
-                                      Divider(color: white.withOpacity(0.45)),
+                                      Divider(color: Get.isDarkMode ? white.withOpacity(0.45) : grey),
                                       Gap(16),
                                       ProfileTile(
                                         img: 'assets/images/person.svg',
@@ -91,6 +93,13 @@ class TraineeProfileView extends StatelessWidget {
                                           Get.toNamed(AppRoutes.saved);
                                         },
                                         text: 'Saved'.tr,
+                                      ),
+                                      ProfileTile(
+                                        img: 'assets/images/saved.svg',
+                                        ontap: () {
+                                          Get.to(() => ThemeScreen());
+                                        },
+                                        text: 'Theme'.tr,
                                       ),
                                       ProfileTile(
                                         img: 'assets/images/lang1.svg',

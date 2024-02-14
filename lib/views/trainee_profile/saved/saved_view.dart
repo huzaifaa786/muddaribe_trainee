@@ -37,9 +37,8 @@ class _SavedViewsState extends State<SavedViews> {
         textDirection: ui.TextDirection.ltr,
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.black,
             leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios_new, color: white),
+              icon: Icon(Icons.arrow_back_ios_new,),
               onPressed: () {
                 Get.back();
               },
@@ -47,7 +46,6 @@ class _SavedViewsState extends State<SavedViews> {
             title: Text(
               'Saved'.tr,
               style: TextStyle(
-                color: white,
                 fontSize: 24,
                 fontFamily: 'Poppins',
                 fontWeight: FontWeight.w700,
@@ -72,7 +70,6 @@ class _SavedViewsState extends State<SavedViews> {
                           child: Text(
                             'Trainers'.tr,
                             style: TextStyle(
-                              color: Colors.white,
                               fontSize: 16,
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w700,
@@ -83,7 +80,6 @@ class _SavedViewsState extends State<SavedViews> {
                           child: Text(
                             'Events'.tr,
                             style: TextStyle(
-                              color: Colors.white,
                               fontSize: 16,
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w700,
@@ -94,7 +90,6 @@ class _SavedViewsState extends State<SavedViews> {
                           child: Text(
                             'Posts'.tr,
                             style: TextStyle(
-                              color: Colors.white,
                               fontSize: 16,
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w700,

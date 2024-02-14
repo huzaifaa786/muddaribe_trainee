@@ -50,7 +50,9 @@ class _TraineeEditProfileViewState extends State<TraineeEditProfileView> {
                                   padding: const EdgeInsets.only(
                                       left: 15, right: 15, top: 10, bottom: 10),
                                   decoration: BoxDecoration(
-                                      color: bgContainer,
+                                      color: Get.isDarkMode
+                                      ? Color(0xFF0F0F0F)
+                                      : grey.withOpacity(0.3),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Column(
                                     crossAxisAlignment:
@@ -111,7 +113,6 @@ class _TraineeEditProfileViewState extends State<TraineeEditProfileView> {
                                               fontFamily: "Montserrat",
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500,
-                                              color: white.withOpacity(0.45),
                                               height: 20 / 14,
                                             ),
                                           ),
@@ -130,7 +131,6 @@ class _TraineeEditProfileViewState extends State<TraineeEditProfileView> {
                                               fontFamily: "Montserrat",
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500,
-                                              color: white.withOpacity(0.45),
                                             ),
                                           ),
                                         ],

@@ -21,14 +21,12 @@ class _MyplansViewState extends State<MyplansView> {
       // PackageType.values.length,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.black,
           centerTitle: true,
           automaticallyImplyLeading: false,
           title: Text(
             'My Plans'.tr,
             style: TextStyle(
                 fontSize: 20,
-                color: white,
                 fontWeight: FontWeight.w800,
                 fontFamily: 'Poppins'),
           ),
@@ -52,8 +50,7 @@ class _MyplansViewState extends State<MyplansView> {
                         'Exercises'.tr,
                         style: TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            color: white),
+                            fontWeight: FontWeight.w700),
                       ),
                     ],
                   ),
@@ -72,8 +69,7 @@ class _MyplansViewState extends State<MyplansView> {
                         'Nutrition'.tr,
                         style: TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: white),
+                            fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),

@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
-class TranslateMethod extends StatefulWidget {
-  TranslateMethod(
+class ThemeMethod extends StatefulWidget {
+  ThemeMethod(
       {Key? key,
       this.value,
       this.groupvalue,
@@ -22,10 +22,10 @@ class TranslateMethod extends StatefulWidget {
   final image;
   final title;
   @override
-  State<TranslateMethod> createState() => _TranslateMethodState();
+  State<ThemeMethod> createState() => _ThemeMethodState();
 }
 
-class _TranslateMethodState extends State<TranslateMethod> {
+class _ThemeMethodState extends State<ThemeMethod> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -33,7 +33,7 @@ class _TranslateMethodState extends State<TranslateMethod> {
       child: Container(
         // margin: EdgeInsets.only(left: 34),
         padding: EdgeInsets.only(top: 7, bottom: 7),
-        width: MediaQuery.of(context).size.width*0.88,
+        width: MediaQuery.of(context).size.width * 0.88,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -47,8 +47,9 @@ class _TranslateMethodState extends State<TranslateMethod> {
                     children: [
                       Text(
                         widget.title,
-                        style: TextStyle( 
-                            fontSize: 16.0, fontWeight: FontWeight.w400),
+                        style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w400),
                       ),
                       Transform.scale(
                           scale: 1.2,

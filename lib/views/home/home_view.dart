@@ -290,7 +290,6 @@ class _HomeViewState extends State<HomeView> {
                         Text(
                           'Categories'.tr,
                           style: TextStyle(
-                            color: white,
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
                           ),
@@ -355,7 +354,6 @@ class _HomeViewState extends State<HomeView> {
                         Text(
                           'Events'.tr,
                           style: TextStyle(
-                            color: white,
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
                           ),
@@ -479,7 +477,6 @@ class _HomeViewState extends State<HomeView> {
                     Text(
                       'Posts'.tr,
                       style: TextStyle(
-                        color: white,
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
                       ),

@@ -1,12 +1,13 @@
-// ignore_for_file: prefer_const_constructors, prefer_typing_uninitialized_variables
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:mudarribe_trainee/utils/colors.dart';
+import 'package:mudarribe_trainee/utils/theme.dart'; // Assuming CustomTheme is defined here
 
 class SearchInput extends StatelessWidget {
-  const SearchInput({super.key, this.ontap});
-  final ontap;
+  const SearchInput({Key? key, this.ontap}) : super(key: key);
+  final VoidCallback? ontap;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -15,31 +16,33 @@ class SearchInput extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.9,
         height: 48,
         decoration: ShapeDecoration(
-          color: Color(0xFF18130F),
+          color: Get.isDarkMode ? black : Colors.grey.withOpacity(0.2), 
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25),
           ),
         ),
         child: Padding(
           padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-          child: Row(children: [
-            SvgPicture.asset('assets/images/search.svg'),
-            const SizedBox(
-              width: 10.0,
-            ),
-            Text(
-              'Search'.tr,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white.withOpacity(0.4000000059604645),
-                fontSize: 14,
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w500,
-                height: 0.27,
-                letterSpacing: -0.13,
+          child: Row(
+            children: [
+              SvgPicture.asset('assets/images/search.svg', color: Get.isDarkMode ? grey : black.withOpacity(0.5),),
+              const SizedBox(
+                width: 10.0,
               ),
-            ),
-          ]),
+              Text(
+                'Search'.tr,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Get.isDarkMode ? Colors.white.withOpacity(0.4) : Colors.black.withOpacity(0.4),
+                  fontSize: 14,
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w500,
+                  height: 0.27,
+                  letterSpacing: -0.13,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
