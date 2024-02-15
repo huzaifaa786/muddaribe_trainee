@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
 class Workoutvideocard extends StatelessWidget {
@@ -25,7 +26,7 @@ class Workoutvideocard extends StatelessWidget {
       height: 105,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: bgContainer,
+        color: Get.isDarkMode ? black : grey.withOpacity(0.2),
         borderRadius: BorderRadius.circular(10),
       ),
       child: InkWell(
@@ -74,7 +75,7 @@ class Workoutvideocard extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        color: Color.fromRGBO(255, 255, 255, 0.6),
+                        color: Get.isDarkMode ? white : black,
                         fontFamily: 'Poppins'),
                   ),
                   // Padding(

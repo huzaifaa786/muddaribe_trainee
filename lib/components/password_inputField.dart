@@ -46,7 +46,9 @@ class PasswordInputField extends StatelessWidget {
             (validator == true.obs
                 ? AutovalidateMode.always
                 : AutovalidateMode.onUserInteraction),
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(
+          color: Get.isDarkMode ? white : black,
+        ),
         keyboardType: type,
         decoration: InputDecoration(
           suffixIcon: InkWell(
@@ -57,12 +59,13 @@ class PasswordInputField extends StatelessWidget {
                   ? SvgPicture.asset(
                       'assets/images/emojione-monotone_eye-1.svg',
                       height: 24,
-                      color: white,
+                      color: Get.isDarkMode ? white : black,
                       fit: BoxFit.scaleDown,
                     )
                   : SvgPicture.asset(
                       'assets/images/emojione-monotone_eye.svg',
                       height: 24,
+                      color: Get.isDarkMode ? white : black,
                       fit: BoxFit.scaleDown,
                     )
               //  Icon(

@@ -76,7 +76,7 @@ class _PlanFilesState extends State<PlanFiles> {
                                 height: 100,
                                 width: MediaQuery.of(context).size.width,
                                 decoration: BoxDecoration(
-                                  color: bgContainer,
+                                  color: Get.isDarkMode ? black : grey.withOpacity(0.2),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Padding(
@@ -112,6 +112,7 @@ class _PlanFilesState extends State<PlanFiles> {
                                               'assets/images/chat.svg',
                                               width: 26,
                                               height: 23,
+                                              color: Get.isDarkMode ? white : black,
                                               fit: BoxFit.scaleDown,
                                             ),
                                           ),
@@ -167,7 +168,6 @@ class _PlanFilesState extends State<PlanFiles> {
                                                       fontFamily: 'Poppins',
                                                       fontWeight:
                                                           FontWeight.w700,
-                                                      color: whitewithopacity1,
                                                     ),
                                                   ),
                                                   Text(
@@ -177,9 +177,6 @@ class _PlanFilesState extends State<PlanFiles> {
                                                       fontFamily: 'Poppins',
                                                       fontWeight:
                                                           FontWeight.w500,
-                                                      color: Colors.white
-                                                          .withOpacity(
-                                                              0.6000000238418579),
                                                     ),
                                                   ),
                                                 ],
@@ -199,7 +196,7 @@ class _PlanFilesState extends State<PlanFiles> {
                                   height: 136,
                                   width: MediaQuery.of(context).size.width,
                                   decoration: BoxDecoration(
-                                    color: bgContainer,
+                                    color: Get.isDarkMode ? black : grey.withOpacity(0.2),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Padding(
@@ -214,8 +211,7 @@ class _PlanFilesState extends State<PlanFiles> {
                                             style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w700,
-                                                fontFamily: 'Poppins',
-                                                color: whitewithopacity1),
+                                                fontFamily: 'Poppins',),
                                           ),
                                         ),
                                         Padding(
@@ -229,8 +225,6 @@ class _PlanFilesState extends State<PlanFiles> {
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w500,
                                                 fontFamily: 'Poppins',
-                                                color: Colors.white.withOpacity(
-                                                    0.6000000238418579),
                                               ),
                                             ),
                                           ),

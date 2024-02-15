@@ -58,7 +58,6 @@ class TrainerProfileCard extends StatelessWidget {
                       username,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          color: white,
                           fontSize: 18,
                           fontWeight: FontWeight.w600),
                     ),
@@ -80,7 +79,6 @@ class TrainerProfileCard extends StatelessWidget {
                   child: Text(
                     categories,
                     style: TextStyle(
-                        color: profilesubheading,
                         fontSize: 14,
                         fontWeight: FontWeight.w400),
                     maxLines: 2,
@@ -92,7 +90,6 @@ class TrainerProfileCard extends StatelessWidget {
                 child: Text(
                   bio,
                   style: TextStyle(
-                    color: white,
                     fontSize: 11,
                     fontWeight: FontWeight.w400,
                   ),

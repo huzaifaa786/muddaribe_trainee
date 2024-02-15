@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
 class Bodyworkplan extends StatelessWidget {
@@ -22,7 +23,7 @@ class Bodyworkplan extends StatelessWidget {
       height: 75,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: bgContainer,
+        color: Get.isDarkMode ? black : grey.withOpacity(0.2),
         borderRadius: BorderRadius.circular(10),
       ),
       child: InkWell(
@@ -63,13 +64,13 @@ class Bodyworkplan extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            fontFamily: 'Poppins',
-                            color: whitewithopacity1),
+                            fontFamily: 'Poppins',),
                       ),
                       Image.asset(
                         'assets/images/workplan1.png',
                         width: 24,
                         height: 22,
+                        color: Get.isDarkMode ? white : black,
                       )
                     ],
                   ),
@@ -81,8 +82,7 @@ class Bodyworkplan extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w600,
-                        fontFamily: 'Poppins',
-                        color: Colors.white.withOpacity(0.6000000238418579)),
+                        fontFamily: 'Poppins',),
                   ),
                 ),
               ],

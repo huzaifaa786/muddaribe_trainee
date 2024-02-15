@@ -48,7 +48,6 @@ class _SignInViewState extends State<SignInView> {
                                 fontFamily: "Poppins",
                                 fontSize: 26,
                                 fontWeight: FontWeight.w600,
-                                color: Colors.white,
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -61,7 +60,6 @@ class _SignInViewState extends State<SignInView> {
                                 fontFamily: "Poppins",
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
-                                color: white.withOpacity(0.45),
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -71,7 +69,9 @@ class _SignInViewState extends State<SignInView> {
                             padding: EdgeInsets.only(left: 15, right: 15),
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 15, 15, 15),
+                                color: Get.isDarkMode
+                                    ? Color.fromARGB(255, 15, 15, 15)
+                                    : grey.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(10)),
                             child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -137,8 +137,7 @@ class _SignInViewState extends State<SignInView> {
                                 style: const TextStyle(
                                     fontFamily: "Poppins",
                                     fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: white),
+                                    fontWeight: FontWeight.w500),
                               ),
                               Expanded(
                                   child: Container(
@@ -175,7 +174,6 @@ class _SignInViewState extends State<SignInView> {
                                   fontFamily: "Poppins",
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500,
-                                  color: white,
                                 ),
                                 textAlign: TextAlign.center,
                               ),
@@ -198,24 +196,29 @@ class _SignInViewState extends State<SignInView> {
                                           fontFamily: "Poppins",
                                           fontWeight: FontWeight.w400,
                                           decoration: TextDecoration.underline,
-                                          color: white),
+                                          color: Get.isDarkMode ? white : black
+                                          ),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {},
                                     ),
                                     TextSpan(
                                       text: '  ',
                                       style: TextStyle(
-                                          fontSize: 12, color: Colors.white),
+                                          fontSize: 12,
+                                        color: Get.isDarkMode ? white : black,
+                                      ),
                                     ),
                                     TextSpan(
                                       text: 'and'.tr,
                                       style: TextStyle(
-                                          fontSize: 12, color: Colors.white),
+                                          fontSize: 12, color: Get.isDarkMode ? white : black,
+                                      ),
                                     ),
                                     TextSpan(
                                       text: '  ',
                                       style: TextStyle(
-                                          fontSize: 12, color: Colors.white),
+                                          fontSize: 12, color: Get.isDarkMode ? white : black,
+                                      ),
                                     ),
                                     TextSpan(
                                       text: 'Terms & Conditions'.tr,
@@ -224,7 +227,8 @@ class _SignInViewState extends State<SignInView> {
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
                                           decoration: TextDecoration.underline,
-                                          color: Colors.white),
+                                          color: Get.isDarkMode ? white : black,
+                                      ),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {},
                                     ),
@@ -248,7 +252,8 @@ class _SignInViewState extends State<SignInView> {
                                           fontSize: 12,
                                           fontFamily: "Poppins",
                                           fontWeight: FontWeight.w500,
-                                          color: white),
+                                          color: Get.isDarkMode ? white : black,
+                                      ),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {},
                                     ),

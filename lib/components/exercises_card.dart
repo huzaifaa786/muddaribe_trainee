@@ -20,7 +20,7 @@ class ExercisesCard extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.only(left: 8,right: 8,bottom: 12,top: 12),
           decoration: BoxDecoration(
-              color: Color(0x872C2723),
+              color: Get.isDarkMode ? black : grey.withOpacity(0.2),
               borderRadius: BorderRadius.circular(10)),
           child: Row(
             children: [
@@ -48,7 +48,6 @@ class ExercisesCard extends StatelessWidget {
                     width: Get.width * 0.6,
                     child: Text(trainerName,
                         style: TextStyle(
-                          color: white,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         )),
@@ -57,14 +56,12 @@ class ExercisesCard extends StatelessWidget {
                     width: Get.width * 0.6,
                     child: Text('Plan title'.tr+ ': ' + title,
                         style: TextStyle(
-                          color: white,
                           fontSize: 13,
                           fontWeight: FontWeight.w700,
                         )),
                   ),
                   Text(description,
                       style: TextStyle(
-                        color: white,
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
                       ))

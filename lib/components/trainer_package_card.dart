@@ -35,7 +35,7 @@ class TrainerPackageCard extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Colors.black,
+              color: Get.isDarkMode ? black : grey.withOpacity(0.2),
               border:
                   selectedPlan == id ? Border.all(color: Colors.white) : null,
             ),
@@ -64,7 +64,6 @@ class TrainerPackageCard extends StatelessWidget {
                                     child: Text(
                                       '+',
                                       style: TextStyle(
-                                          color: white,
                                           fontSize: 20,
                                           fontWeight: FontWeight.w700),
                                     ),
@@ -83,8 +82,7 @@ class TrainerPackageCard extends StatelessWidget {
                             price,
                             style: TextStyle(
                                 fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                                color: whitewithopacity1),
+                                fontWeight: FontWeight.w700),
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: 10, left: 6),
@@ -92,8 +90,7 @@ class TrainerPackageCard extends StatelessWidget {
                               'AED'.tr,
                               style: TextStyle(
                                   fontSize: 12,
-                                  fontWeight: FontWeight.w700,
-                                  color: whitewithopacity1),
+                                  fontWeight: FontWeight.w700),
                             ),
                           ),
                         ],
@@ -125,8 +122,7 @@ class TrainerPackageCard extends StatelessWidget {
                           name,
                           style: TextStyle(
                               fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              color: whitewithopacity1),
+                              fontWeight: FontWeight.w700),
                         ),
                       ],
                     ),
@@ -134,14 +130,12 @@ class TrainerPackageCard extends StatelessWidget {
                   Text(description,
                       style: TextStyle(
                           fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: whitewithopacity1)),
+                          fontWeight: FontWeight.w600)),
                   Text(
                     '$duration'.tr,
                     style: TextStyle(
                         fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: whitewithopacity1),
+                        fontWeight: FontWeight.w600),
                   ),
                 ],
               ),

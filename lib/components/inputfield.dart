@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gradient_borders/gradient_borders.dart';
+import 'package:mudarribe_trainee/utils/colors.dart';
 
 class InputField extends StatefulWidget {
   const InputField({
@@ -47,7 +48,9 @@ class _InputFieldState extends State<InputField> {
                 (widget.validator == true.obs
                     ? AutovalidateMode.always
                     : AutovalidateMode.onUserInteraction),
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(
+              color: Get.isDarkMode ? white : black,
+            ),
             keyboardType: widget.type,
             decoration: InputDecoration(
                 contentPadding:

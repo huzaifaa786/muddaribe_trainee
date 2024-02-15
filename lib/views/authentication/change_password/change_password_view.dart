@@ -43,7 +43,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                           },
                           child: Icon(
                             Icons.arrow_back_ios_new,
-                            color: Colors.white,
+                            color: Get.isDarkMode ? white : black,
                           ),
                         ),
                       ],
@@ -57,8 +57,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                           'Change Password.'.tr,
                           style: TextStyle(
                               fontSize: 24,
-                              fontWeight: FontWeight.w600,
-                              color: white),
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
                     ],
@@ -69,7 +68,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                         left: 15, right: 15, top: 40, bottom: 25),
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 15, 15, 15),
+                        color: Get.isDarkMode ? Color.fromARGB(255, 15, 15, 15) : grey.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(10)),
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

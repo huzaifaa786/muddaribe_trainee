@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
@@ -22,7 +23,7 @@ class ChatMeCard extends StatelessWidget {
       onTap: onChatClick,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.grey.shade900,
+          color: Get.isDarkMode ? black : grey.withOpacity(0.2),
           borderRadius: BorderRadius.circular(5),
         ),
         padding: EdgeInsets.only(left: 6, right: 6, bottom: 8 ,),
@@ -68,7 +69,6 @@ class ChatMeCard extends StatelessWidget {
                           Text(
                             username,
                             style: TextStyle(
-                                color: white,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -89,7 +89,6 @@ class ChatMeCard extends StatelessWidget {
                           child: Text(
                             chatText,
                             style: TextStyle(
-                                color: profilesubheading,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400),
                             maxLines: 2,
@@ -107,6 +106,7 @@ class ChatMeCard extends StatelessWidget {
                 'assets/images/chat.svg',
                 width: 29,
                 height: 29,
+                color: Get.isDarkMode ? white : black,
                 fit: BoxFit.scaleDown,
               ),
             ),

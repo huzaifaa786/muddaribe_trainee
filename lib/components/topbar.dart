@@ -21,7 +21,7 @@ class TopBar extends StatelessWidget {
                 Get.back();
               },
               child: Padding(
-                padding: const EdgeInsets.all(4.0),
+                padding: const EdgeInsets.all(8.0),
                 child: SvgPicture.asset(
                   'assets/images/nevigate.svg',
                   color: Get.isDarkMode ? white : black,

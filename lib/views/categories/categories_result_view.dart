@@ -55,7 +55,6 @@ class _CategoriesResultViewState extends State<CategoriesResultView> {
                           alignment: Alignment.topLeft,
                           child: Text("",
                               style: TextStyle(
-                                color: white.withOpacity(0.3),
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
                               )),
@@ -70,7 +69,6 @@ class _CategoriesResultViewState extends State<CategoriesResultView> {
                                   "${controller.trainersList.length.toString()} " +
                                       "Results".tr,
                                   style: TextStyle(
-                                    color: white.withOpacity(0.3),
                                     fontSize: 12,
                                     fontWeight: FontWeight.w600,
                                   )),
@@ -83,7 +81,6 @@ class _CategoriesResultViewState extends State<CategoriesResultView> {
                           alignment: Alignment.center,
                           child: Text(
                             'No Trainer With This Category Exist.'.tr,
-                            style: TextStyle(color: white.withOpacity(0.5)),
                           ))
                       : ListView.builder(
                           shrinkWrap: true,

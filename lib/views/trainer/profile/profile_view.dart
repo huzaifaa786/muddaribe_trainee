@@ -48,14 +48,14 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
         textDirection: ui.TextDirection.ltr,
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.black,
+            backgroundColor: Get.isDarkMode ? black : white,
             leading: InkWell(
               onTap: () {
                 Get.back();
               },
               child: Icon(
                 Icons.arrow_back_ios_new,
-                color: white,
+                color: Get.isDarkMode ? white  :black,
               ),
             ),
           ),
@@ -66,7 +66,6 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                   height: MediaQuery.of(context).size.height * 0.12,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Colors.black,
                   ),
                   width: MediaQuery.of(context).size.width,
                   child: Padding(
@@ -84,8 +83,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                   controller.selectedPrice ?? '',
                                   style: TextStyle(
                                       fontSize: 20,
-                                      fontWeight: FontWeight.w700,
-                                      color: whitewithopacity1),
+                                      fontWeight: FontWeight.w700),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(top: 10, left: 6),
@@ -93,8 +91,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                     'AED'.tr,
                                     style: TextStyle(
                                         fontSize: 12,
-                                        fontWeight: FontWeight.w700,
-                                        color: whitewithopacity1),
+                                        fontWeight: FontWeight.w700),
                                   ),
                                 ),
                               ],
@@ -125,7 +122,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                     topRight: Radius.circular(10), topLeft: Radius.circular(10)),
-                color: bgContainer,
+                color: Get.isDarkMode ? black : grey.withOpacity(0.2),
               ),
               child: SingleChildScrollView(
                 child: Column(
@@ -240,6 +237,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                       'assets/images/chat.svg',
                                       width: 32,
                                       height: 33,
+                                      color: Get.isDarkMode ?  white : black,
                                       fit: BoxFit.scaleDown,
                                     ),
                                   ),
@@ -257,22 +255,22 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                             children: [
                               Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
+                                    const EdgeInsets.symmetric(horizontal: 20),
                                 child: Text(
                                   'Posts'.tr,
                                   style: TextStyle(
                                     color: controller.indexs == 0
-                                        ? white
+                                        ? Get.isDarkMode ?  white : black
                                         : Colors.grey,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
                               ),
-                              VerticalDivider(
-                                color: Colors.grey,
-                                thickness: 1,
-                              ),
+                              // VerticalDivider(
+                              //   color: Colors.grey,
+                              //   thickness: 1,
+                              // ),
                             ],
                           ),
                           Padding(
@@ -280,10 +278,14 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Image.asset(
-                                  'assets/images/events.png',
-                                  width: 18,
-                                  height: 18,
+                                Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                  child: Image.asset(
+                                    'assets/images/events.png',
+                                    width: 18,
+                                    height: 18,
+                                  ),
                                 ),
                                 Padding(
                                   padding:
@@ -292,27 +294,30 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                     'Events'.tr,
                                     style: TextStyle(
                                       color: controller.indexs == 1
-                                          ? white
+                                          ? Get.isDarkMode ?  white : black
                                           : Colors.grey,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                 ),
-                                VerticalDivider(
-                                  color: Colors.grey,
-                                  thickness: 1,
-                                ),
+                                // VerticalDivider(
+                                //   color: Colors.grey,
+                                //   thickness: 1,
+                                // ),
                               ],
                             ),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image.asset(
-                                'assets/images/packages.png',
-                                width: 18,
-                                height: 18,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal : 8.0),
+                                child: Image.asset(
+                                  'assets/images/packages.png',
+                                  width: 18,
+                                  height: 18,
+                                ),
                               ),
                               Padding(
                                 padding:
@@ -321,7 +326,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                   'Packages'.tr,
                                   style: TextStyle(
                                     color: controller.indexs == 2
-                                        ? white
+                                        ? Get.isDarkMode ?  white : black
                                         : Colors.grey,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
@@ -335,9 +340,9 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                         onPressed: (int index) {
                           controller.handleToggleButtons(index);
                         },
-                        color: Colors.grey,
-                        selectedColor: Colors.white,
-                        selectedBorderColor: Colors.transparent,
+                        color:  Get.isDarkMode ? Colors.grey : black,
+                        selectedColor: Get.isDarkMode ? white : grey,
+                        selectedBorderColor: Get.isDarkMode ? Colors.transparent : grey,
                         fillColor: Colors.transparent,
                         borderRadius: BorderRadius.circular(8),
                       ),

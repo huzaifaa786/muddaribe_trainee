@@ -334,7 +334,7 @@ class ChatPageState extends State<ChatPage> {
                           maxWidth: 200,
                         ),
                         decoration: BoxDecoration(
-                            color: white,
+                            color:  Get.isDarkMode ? white : grey.withOpacity(0.2),
                             borderRadius: BorderRadius.circular(8)),
                         margin: EdgeInsets.only(bottom: 10, right: 10),
                       )
@@ -1462,16 +1462,14 @@ class ChatPageState extends State<ChatPage> {
     return Directionality(
       textDirection: ui.TextDirection.ltr,
       child: Scaffold(
-        backgroundColor: Colors.black,
         appBar: AppBar(
-          backgroundColor: Colors.black,
           leading: GestureDetector(
               onTap: () {
                 Get.back();
               },
               child: Icon(
                 Icons.arrow_back_ios_new,
-                color: white,
+                color: Get.isDarkMode ? white : black,
               )),
           title: Container(
             constraints: BoxConstraints(
@@ -1496,7 +1494,6 @@ class ChatPageState extends State<ChatPage> {
                     maxLines: 1,
                     style: TextStyle(
                       fontFamily: "Poppins",
-                      color: white,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
@@ -1550,7 +1547,8 @@ class ChatPageState extends State<ChatPage> {
             Material(
               child: Container(
                 child: IconButton(
-                  icon: Icon(Icons.more_vert),
+                  icon: Icon(Icons.more_vert,
+                  color: Get.isDarkMode ? white : black,),
                   // onPressed: getImage,
                   onPressed: () {
                     _showBottomSheet(context);
@@ -1558,7 +1556,7 @@ class ChatPageState extends State<ChatPage> {
                   color: white,
                 ),
               ),
-              color: Colors.black,
+              color: Get.isDarkMode ? black : white,
             ),
             Flexible(
               child: Container(
@@ -1566,12 +1564,12 @@ class ChatPageState extends State<ChatPage> {
                   onSubmitted: (value) {
                     onSendMessage(textEditingController.text, TypeMessage.text);
                   },
-                  style: TextStyle(color: Colors.white, fontSize: 15),
+                  style: TextStyle(color: Get.isDarkMode ? white : black, fontSize: 15),
                   controller: textEditingController,
                   decoration: InputDecoration.collapsed(
                       hintText: 'Type here ...'.tr,
                       hintStyle: TextStyle(color: Colors.grey[300]),
-                      fillColor: Colors.black,
+                      fillColor: Get.isDarkMode ? black : white,
                       filled: true),
                   focusNode: focusNode,
                   autofocus: true,
@@ -1601,7 +1599,7 @@ class ChatPageState extends State<ChatPage> {
                       fit: BoxFit.scaleDown,
                     )),
               ),
-              color: Colors.black,
+              color:  Get.isDarkMode ? black : white,
             ),
           ],
         ),
@@ -1610,7 +1608,7 @@ class ChatPageState extends State<ChatPage> {
         decoration: BoxDecoration(
             border:
                 Border(top: BorderSide(color: Colors.grey[300]!, width: 0.5)),
-            color: Colors.black),
+            color: Get.isDarkMode ? black : white),
       ),
     );
   }

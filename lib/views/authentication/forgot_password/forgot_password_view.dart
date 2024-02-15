@@ -41,7 +41,6 @@ class ForgotPasswordView extends StatelessWidget {
                             fontFamily: "Poppins",
                             fontSize: 26,
                             fontWeight: FontWeight.w600,
-                            color: Colors.white,
                           ),
                           textAlign: TextAlign.start,
                         ),
@@ -51,7 +50,7 @@ class ForgotPasswordView extends StatelessWidget {
                         padding: EdgeInsets.only(left: 15, right: 15),
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 15, 15, 15),
+                            color: Get.isDarkMode ?  Color.fromARGB(255, 15, 15, 15) : grey.withOpacity(0.2),
                             borderRadius: BorderRadius.circular(10)),
                         child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -63,7 +62,6 @@ class ForgotPasswordView extends StatelessWidget {
                                   fontFamily: "Montserrat",
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
-                                  color: Colors.white.withOpacity(0.45),
                                   height: 28 / 14,
                                 ),
                                 textAlign: TextAlign.left,

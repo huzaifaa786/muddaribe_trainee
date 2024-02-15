@@ -68,7 +68,6 @@ class _SignUpViewState extends State<SignUpView> {
                                 fontFamily: "Poppins",
                                 fontSize: 26,
                                 fontWeight: FontWeight.w600,
-                                color: Colors.white,
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -78,7 +77,7 @@ class _SignUpViewState extends State<SignUpView> {
                                 left: 15, right: 15, bottom: 40),
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 15, 15, 15),
+                                color: Get.isDarkMode ? Color.fromARGB(255, 15, 15, 15) : grey.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(10)),
                             child: Column(children: [
                               InputField(
@@ -136,8 +135,7 @@ class _SignUpViewState extends State<SignUpView> {
                                 style: const TextStyle(
                                     fontFamily: "Poppins",
                                     fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: white),
+                                    fontWeight: FontWeight.w500,),
                               ),
                               Expanded(
                                   child: Container(
@@ -173,7 +171,6 @@ class _SignUpViewState extends State<SignUpView> {
                                   fontFamily: "Poppins",
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500,
-                                  color: white,
                                 ),
                                 textAlign: TextAlign.center,
                               ),
@@ -194,33 +191,36 @@ class _SignUpViewState extends State<SignUpView> {
                                           fontSize: 12,
                                           fontFamily: "Poppins",
                                           fontWeight: FontWeight.w400,
-                                          decoration: TextDecoration.underline,
-                                          color: white),
+                                          color: Get.isDarkMode ? white : black,
+                                          decoration: TextDecoration.underline),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {},
                                     ),
                                     TextSpan(
                                       text: '  ',
                                       style: TextStyle(
-                                          fontSize: 12, color: Colors.white),
+                                          color: Get.isDarkMode ? white : black,
+                                          fontSize: 12, ),
                                     ),
                                     TextSpan(
                                       text: 'and'.tr,
                                       style: TextStyle(
-                                          fontSize: 12, color: Colors.white),
+                                          color: Get.isDarkMode ? white : black,
+                                          fontSize: 12,),
                                     ),
                                     TextSpan(
                                       text: '  ',
                                       style: TextStyle(
-                                          fontSize: 12, color: Colors.white),
+                                          color: Get.isDarkMode ? white : black,
+                                          fontSize: 12),
                                     ),
                                     TextSpan(
                                       text: 'Terms & Conditions'.tr,
                                       style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
-                                          decoration: TextDecoration.underline,
-                                          color: Colors.white),
+                                          color: Get.isDarkMode ? white : black,
+                                          decoration: TextDecoration.underline),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {},
                                     ),
@@ -243,8 +243,8 @@ class _SignUpViewState extends State<SignUpView> {
                                       style: TextStyle(
                                           fontSize: 12,
                                           fontFamily: "Poppins",
-                                          fontWeight: FontWeight.w500,
-                                          color: white),
+                                          color: Get.isDarkMode ? white : black,
+                                          fontWeight: FontWeight.w500),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {},
                                     ),

@@ -36,7 +36,6 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
         },
         builder: (controller) => Scaffold(
               appBar: AppBar(
-                  backgroundColor: Colors.black,
                   automaticallyImplyLeading: false,
                   title: TopBar(text: 'Package Check out'.tr)),
               body: SafeArea(
@@ -67,7 +66,7 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                   height: 191,
                                   width: MediaQuery.sizeOf(context).width,
                                   decoration: BoxDecoration(
-                                    color: bgContainer,
+                                    color: Get.isDarkMode ? bgContainer : grey.withOpacity(0.2),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Column(
@@ -147,7 +146,6 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                                                 'Montserrat',
                                                             fontWeight:
                                                                 FontWeight.w600,
-                                                            color: Colors.white,
                                                           ),
                                                         ),
                                                       ),
@@ -163,9 +161,6 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                                                 'Montserrat',
                                                             fontWeight:
                                                                 FontWeight.w400,
-                                                            color: Colors.white
-                                                                .withOpacity(
-                                                                    0.6000000238418579),
                                                           ),
                                                         ),
                                                       ),
@@ -213,7 +208,6 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                                                             Text(
                                                                           '+',
                                                                           style: TextStyle(
-                                                                              color: white,
                                                                               fontSize: 20,
                                                                               fontWeight: FontWeight.w700),
                                                                         ),
@@ -234,9 +228,7 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                                         style: TextStyle(
                                                             fontSize: 16,
                                                             fontWeight:
-                                                                FontWeight.w700,
-                                                            color:
-                                                                whitewithopacity1),
+                                                                FontWeight.w700,),
                                                       ),
                                                       Padding(
                                                         padding:
@@ -253,9 +245,7 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                                                 fontSize: 12,
                                                                 fontWeight:
                                                                     FontWeight
-                                                                        .w600,
-                                                                color:
-                                                                    whitewithopacity1)),
+                                                                        .w600)),
                                                       ),
                                                     ],
                                                   ),
@@ -280,7 +270,6 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                                         .package.price
                                                         .toString(),
                                                     style: TextStyle(
-                                                      color: Colors.white,
                                                       fontFamily: 'Montserrat',
                                                       fontSize: 20,
                                                       fontWeight:
@@ -290,7 +279,6 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                                   Text(
                                                     'AED'.tr,
                                                     style: TextStyle(
-                                                      color: Colors.white,
                                                       fontFamily: 'Montserrat',
                                                       fontSize: 12,
                                                       fontWeight:
@@ -312,7 +300,7 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                   height: 67,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color: bgContainer,
+                                    color: Get.isDarkMode ? bgContainer : grey.withOpacity(0.2),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.only(
@@ -324,7 +312,6 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                         Text(
                                           'Promo Code'.tr,
                                           style: TextStyle(
-                                            color: white,
                                             fontSize: 14,
                                             fontWeight: FontWeight.w600,
                                           ),
@@ -343,8 +330,10 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                                               EdgeInsets.all(2),
                                                           decoration:
                                                               BoxDecoration(
-                                                                  color: Colors
-                                                                      .grey),
+                                                                  color:  Get.isDarkMode
+                                                                      ? Colors
+                                                                          .grey
+                                                                      : white),
                                                           child: TextField(
                                                             controller:
                                                                 controller
@@ -357,10 +346,13 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                                                     InputBorder
                                                                         .none,
                                                                 fillColor:
-                                                                    Colors.grey,
+                                                                    Get.isDarkMode ? Colors.grey : white,
                                                                 focusColor:
-                                                                    Colors
-                                                                        .grey),
+                                                                    Get
+                                                                        .isDarkMode
+                                                                    ? Colors
+                                                                        .grey
+                                                                    : white),
                                                           )),
                                                       Padding(
                                                         padding:
@@ -404,7 +396,6 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                     Text(
                                       'Summary'.tr,
                                       style: TextStyle(
-                                        color: white,
                                         fontSize: 16,
                                         fontWeight: FontWeight.w700,
                                       ),
@@ -416,7 +407,7 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                 height: 216,
                                 width: MediaQuery.of(context).size.width,
                                 decoration: BoxDecoration(
-                                  color: bgContainer,
+                                  color: Get.isDarkMode ? bgContainer : grey.withOpacity(0.2),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Column(
@@ -433,7 +424,6 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                           Text(
                                             'Price'.tr,
                                             style: TextStyle(
-                                              color: white,
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -442,7 +432,6 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                             '${combinedPackagetData.package.price} ' +
                                                 'AED'.tr,
                                             style: TextStyle(
-                                              color: white,
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -468,7 +457,6 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                           Text(
                                             'Offer'.tr,
                                             style: TextStyle(
-                                              color: white,
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -477,7 +465,6 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                             '${controller.discount.toString()} ' +
                                                 'AED'.tr,
                                             style: TextStyle(
-                                              color: white,
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -503,7 +490,6 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                           Text(
                                             'Total'.tr,
                                             style: TextStyle(
-                                              color: white,
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600,
                                             ),
