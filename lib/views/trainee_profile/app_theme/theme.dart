@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'dart:ui' as ui;
 import 'package:mudarribe_trainee/components/topbar.dart';
+import 'package:mudarribe_trainee/views/trainee_profile/app_theme/theme_loading.dart';
 import 'package:mudarribe_trainee/views/trainee_profile/app_theme/theme_method.dart';
 
 class ThemeScreen extends StatefulWidget {
@@ -61,6 +62,7 @@ class _ThemeScreenState extends State<ThemeScreen> {
                   box.read('theme');
                   Get.changeThemeMode(ThemeMode.light);
                   setState(() {});
+                  Get.off(() => ThemeChangeLoading());
                 },
               ),
               ThemeMethod(
@@ -74,6 +76,7 @@ class _ThemeScreenState extends State<ThemeScreen> {
                   box.read('theme');
                    Get.changeThemeMode(ThemeMode.dark);
                   setState(() {});
+                  Get.off(() => ThemeChangeLoading());
                 },
               ),
             ],
