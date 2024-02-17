@@ -95,7 +95,7 @@ class TraineeProfileView extends StatelessWidget {
                                         text: 'Saved'.tr,
                                       ),
                                       ProfileTile(
-                                        img: 'assets/images/saved.svg',
+                                        img: 'assets/images/theme.svg',
                                         ontap: () {
                                           Get.to(() => ThemeScreen());
                                         },

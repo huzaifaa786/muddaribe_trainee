@@ -253,9 +253,15 @@ class LocaleString extends Translations {
           'Rehabilitation Coach': 'Rehabilitation Coach',
           'Aerobics': 'Aerobics',
           'Plates': 'Plates',
-          'Kettle bell': 'Kettle bell'
+          'Kettle bell': 'Kettle bell',
+          'Dark': 'Dark',
+          'Theme': 'Theme',
+          'Light': 'Light'
         },
         'ar_AE': {
+          'Dark': 'غامق',
+          'Light': 'فاتح',
+          'Theme': 'نمط',
           'CrossFit': 'كروس فت',
           'Indoor Cycling': 'العجلة الداخلية',
           'Fitness Trainer': 'العجلة الداخلية',
