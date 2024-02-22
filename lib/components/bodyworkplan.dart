@@ -23,7 +23,7 @@ class Bodyworkplan extends StatelessWidget {
       height: 75,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: Get.isDarkMode ? black : grey.withOpacity(0.2),
+        color: Get.isDarkMode ? black : lightbgColor,
         borderRadius: BorderRadius.circular(10),
       ),
       child: InkWell(
@@ -59,12 +59,15 @@ class Bodyworkplan extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        mytext,
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: 'Poppins',),
+                      SizedBox(
+                        width: Get.width * 0.5,
+                        child: Text(
+                          mytext,
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Poppins',),
+                        ),
                       ),
                       Image.asset(
                         'assets/images/workplan1.png',

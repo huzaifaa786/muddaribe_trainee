@@ -33,18 +33,20 @@ class BoxingTrainersCard extends StatelessWidget {
           margin: EdgeInsets.only(top: 10),
           padding: EdgeInsets.all(8.0),
           decoration: BoxDecoration(
-              color: Get.isDarkMode
-                                      ? Color(0xFF0F0F0F)
-                                      : grey.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
+              color: Get.isDarkMode ? Color(0xFF0F0F0F) : lightbgColor,
+              borderRadius: BorderRadius.circular(10)),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Row(
               children: [
-                CachedNetworkImage(
-                    imageUrl: imgpath1,
-                    height: 90,
-                    width: 90,
-                    fit: BoxFit.cover),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: CachedNetworkImage(
+                      imageUrl: imgpath1,
+                      height: 90,
+                      width: 90,
+                      fit: BoxFit.cover),
+                ),
                 SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

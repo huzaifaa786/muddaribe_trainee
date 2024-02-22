@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:gif_view/gif_view.dart';
+import 'package:mudarribe_trainee/utils/colors.dart';
 
 class BasicLoader extends StatelessWidget {
   final bool background;
@@ -10,12 +12,11 @@ class BasicLoader extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => background
-      ? Material(
-        color: Colors.black,
+  Widget build(BuildContext context) =>  Material(
+        color: Get.isDarkMode?  Colors.black : white,
           child: progressIndicator,
-        )
-      : progressIndicator;
+        );
+      // : progressIndicator;
 }
 
 Widget progressIndicator = Center(

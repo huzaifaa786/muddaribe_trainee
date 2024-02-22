@@ -15,13 +15,10 @@ const appbarbckground = Color(4279175686);
 const profilesubheading = Color(0x99FFFFFF);
 const shadowBlack = Color(0x92343434);
 const bgcontainer1 = Color(0x872C2723);
-
+const lightbgColor = Color(4294375158);
 const black = Colors.black;
 const grey = Colors.grey;
 const transparent = Colors.transparent;
-
-// const dividercolor = Colors.white.withOpacity(0.2);
 const dividercolor = Color(0x33FFFFFF);
 const borderdividercolor = Color.fromARGB(51, 90, 85, 85);
-
 const whitewithopacity1 = Color.fromRGBO(255, 255, 255, 1);

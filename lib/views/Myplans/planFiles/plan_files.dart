@@ -76,7 +76,7 @@ class _PlanFilesState extends State<PlanFiles> {
                                 height: 100,
                                 width: MediaQuery.of(context).size.width,
                                 decoration: BoxDecoration(
-                                  color: Get.isDarkMode ? black : grey.withOpacity(0.2),
+                                  color: Get.isDarkMode ? black : lightbgColor,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Padding(
@@ -196,7 +196,7 @@ class _PlanFilesState extends State<PlanFiles> {
                                   height: 136,
                                   width: MediaQuery.of(context).size.width,
                                   decoration: BoxDecoration(
-                                    color: Get.isDarkMode ? black : grey.withOpacity(0.2),
+                                    color: Get.isDarkMode ? black :lightbgColor,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Padding(

@@ -37,12 +37,11 @@ class UiUtilites {
     );
   }
 
-  static successAlert(context,title) {
+  static successAlert(context, title) {
     return showDialog(
-
         context: context,
         builder: (BuildContext context) {
-          Future.delayed(Duration(seconds: 2),(){
+          Future.delayed(Duration(seconds: 2), () {
             Get.back();
           });
           return AlertDialog(
@@ -55,24 +54,46 @@ class UiUtilites {
             content: Container(
               width: 300.0,
               decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.01),
+                color: Get.isDarkMode
+                    ? Colors.grey.withOpacity(0.01)
+                    : lightbgColor,
                 boxShadow: [
-                  BoxShadow(
-                      blurRadius: 20,
-                      offset: Offset(12, 15),
-                      color: Colors.black),
-                  BoxShadow(
-                      blurRadius: 20,
-                      offset: Offset(12, -15),
-                      color: Colors.black),
-                  BoxShadow(
-                      blurRadius: 20,
-                      offset: Offset(-12, 15),
-                      color: Colors.black),
-                  BoxShadow(
-                      blurRadius: 20,
-                      offset: Offset(-12, -15),
-                      color: Colors.black)
+                  Get.isDarkMode
+                      ? BoxShadow(
+                          blurRadius: 20,
+                          offset: Offset(12, 15),
+                          color: Colors.black)
+                      : BoxShadow(
+                          blurRadius: 0,
+                          offset: Offset(0, 0),
+                          color: Colors.white),
+                  Get.isDarkMode
+                      ? BoxShadow(
+                          blurRadius: 20,
+                          offset: Offset(12, -15),
+                          color: Colors.black)
+                      : BoxShadow(
+                          blurRadius: 0,
+                          offset: Offset(0, 0),
+                          color: Colors.white),
+                  Get.isDarkMode
+                      ? BoxShadow(
+                          blurRadius: 20,
+                          offset: Offset(-12, 15),
+                          color: Colors.black)
+                      : BoxShadow(
+                          blurRadius: 0,
+                          offset: Offset(0, 0),
+                          color: Colors.white),
+                  Get.isDarkMode
+                      ? BoxShadow(
+                          blurRadius: 20,
+                          offset: Offset(-12, -15),
+                          color: Colors.black)
+                      : BoxShadow(
+                          blurRadius: 0,
+                          offset: Offset(0, 0),
+                          color: Colors.white)
                 ],
                 border: GradientBoxBorder(
                   gradient: LinearGradient(colors: [Colors.blue, Colors.red]),
@@ -91,11 +112,11 @@ class UiUtilites {
                   Gap(10),
                   Text(
                     title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: "Montserrat",
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
-                      color: Colors.white,
+                      color: Get.isDarkMode ? Colors.white : black,
                       // height: 52 / 12,
                     ),
                     textAlign: TextAlign.center,

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:badges/badges.dart' as badges;
 
@@ -56,7 +57,7 @@ class ChatTile extends StatelessWidget {
                         fontFamily: 'Poppins',
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
-                        color: white),
+                        color: Get.isDarkMode ? white : black),
                   ),
                 ),
                 Padding(
@@ -74,7 +75,7 @@ class ChatTile extends StatelessWidget {
                   fontFamily: "Poppins",
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
-                  color: white),
+                  color:  Get.isDarkMode ? white.withOpacity(0.5) : black.withOpacity(0.5)),
             ),
             onTap: ontap,
           ),

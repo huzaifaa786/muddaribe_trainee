@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, sort_child_properties_last
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
@@ -46,8 +47,8 @@ class _RemainderViewState extends State<RemainderView> {
                   children: [
                     Text(
                       '${widget.name}',
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: Get.isDarkMode? white : black,
                         fontSize: 16,
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w700,
@@ -59,8 +60,8 @@ class _RemainderViewState extends State<RemainderView> {
                   children: [
                     Text(
                       '${widget.content}',
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: Get.isDarkMode? white : black,
                         fontSize: 14,
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,

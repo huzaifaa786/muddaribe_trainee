@@ -17,7 +17,7 @@ class ExcercisePlan extends StatefulWidget {
 }
 
 class _ExcercisePlanState extends State<ExcercisePlan> {
-@override
+  @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -48,8 +48,8 @@ class _ExcercisePlanState extends State<ExcercisePlan> {
                     children: [
                       Text(
                         widget.name,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: Get.isDarkMode ? white : black,
                           fontSize: 16,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w700,
@@ -64,7 +64,7 @@ class _ExcercisePlanState extends State<ExcercisePlan> {
                         Text(
                           widget.content,
                           style: TextStyle(
-                            color: white,
+                            color: Get.isDarkMode ? white : black,
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
                           ),

@@ -44,13 +44,13 @@ class _MyplansViewState extends State<MyplansView> {
                         'assets/images/excersize image.png',
                         width: 20,
                         height: 20,
+                        color: Get.isDarkMode ? white : black,
                       ),
                       SizedBox(width: 8),
                       Text(
                         'Exercises'.tr,
                         style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700),
+                            fontSize: 16, fontWeight: FontWeight.w700),
                       ),
                     ],
                   ),
@@ -63,13 +63,13 @@ class _MyplansViewState extends State<MyplansView> {
                         'assets/images/nutritionsimage.png',
                         width: 20,
                         height: 20,
+                        color: Get.isDarkMode ? white : black,
                       ),
                       SizedBox(width: 8),
                       Text(
                         'Nutrition'.tr,
                         style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600),
+                            fontSize: 16, fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
@@ -84,7 +84,7 @@ class _MyplansViewState extends State<MyplansView> {
                 //   "category": "excercise",
                 // });
                 Get.toNamed(AppRoutes.packagePlans, parameters: {
-                  "orderId":'345',
+                  "orderId": '345',
                   "category": 'excercise',
                 });
               },
@@ -97,7 +97,7 @@ class _MyplansViewState extends State<MyplansView> {
             ),
             Plancontainer(
               onButtonTap: () {
-                 Get.toNamed(AppRoutes.packagePlans, parameters: {
+                Get.toNamed(AppRoutes.packagePlans, parameters: {
                   "category": 'nutrition',
                 });
               },

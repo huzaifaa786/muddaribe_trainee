@@ -91,274 +91,291 @@ class EventDetailsCard extends StatelessWidget {
       await Geolocator.getCurrentPosition();
       return true;
     }
-GetStorage box = GetStorage();
-    return Card(
-      color: Get.isDarkMode ? Color(0xFF0F0F0F) : white.withOpacity(0.9),
-      child: Container(
-        width: MediaQuery.sizeOf(context).width * 0.9,
-        padding: EdgeInsets.only(bottom: 20, top: 20),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      GestureDetector(
-                        onTap: onProfileTap,
-                        child: ClipOval(
-                          child: Container(
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: const GradientBoxBorder(
-                                gradient: LinearGradient(
-                                  colors: [
-                                    Color.fromARGB(255, 184, 66, 186),
-                                    Color.fromARGB(255, 111, 127, 247),
-                                    borderDown,
-                                    borderDown
-                                  ],
-                                ),
-                                width: 1,
+
+    GetStorage box = GetStorage();
+    return Container(
+      // padding: EdgeInsets.only(left: 6,right: 6),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Get.isDarkMode ? bgContainer : grey.withOpacity(0.1)),
+      margin: EdgeInsets.only(left: 6, right: 6),
+      width: MediaQuery.sizeOf(context).width * 0.9,
+      padding: EdgeInsets.only(bottom: 20, top: 20),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                      onTap: onProfileTap,
+                      child: ClipOval(
+                        child: Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: const GradientBoxBorder(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Color.fromARGB(255, 184, 66, 186),
+                                  Color.fromARGB(255, 111, 127, 247),
+                                  borderDown,
+                                  borderDown
+                                ],
                               ),
-                              image: DecorationImage(
-                                image: NetworkImage(image),
-                                fit: BoxFit.contain,
-                              ),
+                              width: 1,
+                            ),
+                            image: DecorationImage(
+                              image: NetworkImage(image),
+                              fit: BoxFit.contain,
                             ),
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 2.0, left: 10, right: 10),
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.5,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              GestureDetector(
-                                onTap: onProfileTap,
-                                child: Text(
-                                  name,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: 'Montserrat',
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                category,
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: 2.0, left: 10, right: 10),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            GestureDetector(
+                              onTap: onProfileTap,
+                              child: Text(
+                                name,
                                 style: TextStyle(
-                                  fontSize: 12,
+                                  fontSize: 16,
                                   fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w400,
-                                  color: Get.isDarkMode ? Colors.white
-                                      .withOpacity(0.6000000238418579) : black.withOpacity(0.6000000238418579),
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                            Text(
+                              category,
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w400,
+                                color: Get.isDarkMode
+                                    ? Colors.white
+                                        .withOpacity(0.6000000238418579)
+                                    : black.withOpacity(0.6000000238418579),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                  InkWell(
-                    onTap: onSave,
-                    child: isSaved == false
-                        ? Image.asset('assets/images/bookmark1.png')
-                        : Image.asset('assets/images/bookmark-light.png'),
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+                InkWell(
+                  onTap: onSave,
+                  child: isSaved == false
+                      ? Image.asset('assets/images/bookmark1.png')
+                      : Image.asset('assets/images/bookmark-light.png'),
+                ),
+              ],
             ),
-            Container(
-              height: 190,
-              padding: EdgeInsets.only(left: 20, right: 20, top: 7.0),
-              width: MediaQuery.sizeOf(context).width,
-              child: Image.network(
-                eventimg,
-                fit: BoxFit.cover,
-              ),
+          ),
+          Container(
+            height: 190,
+            padding: EdgeInsets.only(left: 20, right: 20, top: 7.0),
+            width: MediaQuery.sizeOf(context).width,
+            child: Image.network(
+              eventimg,
+              fit: BoxFit.cover,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20,right: 20, top: 7.0),
-              child: Column(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset('assets/images/location.svg',
-                      color: Get.isDarkMode ? white : black,
-                          fit: BoxFit.scaleDown, height: 24, width: 24),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.7,
-                        padding: const EdgeInsets.only(left: 8, bottom: 3),
-                        child: Text(
-                          address,
-                          maxLines: 1,
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20, top: 7.0),
+            child: Column(
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset('assets/images/location.svg',
+                        color: Get.isDarkMode ? white : black,
+                        fit: BoxFit.scaleDown,
+                        height: 24,
+                        width: 24),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      padding: const EdgeInsets.only(left: 8, bottom: 3),
+                      child: Text(
+                        address,
+                        maxLines: 1,
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset('assets/images/timeline.svg',
-                      color: Get.isDarkMode ? white : black,
-                          fit: BoxFit.scaleDown, height: 24, width: 24),
-                      Directionality(
-                        textDirection: box.read('locale') == 'ar'? TextDirection.rtl :TextDirection.ltr,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8, bottom: 6),
-                          child: Text(
-                            'from'.tr + ' $startTime ' + 'to'.tr + ' $endTime',
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SvgPicture.asset('assets/images/calender1.svg',
-                      color: Get.isDarkMode ? white : black,
-                          fit: BoxFit.scaleDown, height: 24, width: 24),
-                      Directionality(
-                        textDirection: box.read('locale') == 'ar'? TextDirection.rtl :TextDirection.ltr,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8, bottom: 6),
-                          child: Text(
-                            'from'.tr + ' $date ' + 'to'.tr + ' $endDate',
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset('assets/images/peoplesharp.svg',
-                      color: Get.isDarkMode ? white : black,
-                          fit: BoxFit.scaleDown, height: 24, width: 24),
-                      Padding(
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SvgPicture.asset('assets/images/timeline.svg',
+                        color: Get.isDarkMode ? white : black,
+                        fit: BoxFit.scaleDown,
+                        height: 24,
+                        width: 24),
+                    Directionality(
+                      textDirection: box.read('locale') == 'ar'
+                          ? TextDirection.rtl
+                          : TextDirection.ltr,
+                      child: Padding(
                         padding: const EdgeInsets.only(left: 8, bottom: 6),
                         child: Text(
-                          'Total People amount'.tr +
-                              ':' +
-                              ' $attendees / $capacity',
+                          'from'.tr + ' $startTime ' + 'to'.tr + ' $endTime',
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w400,
                             fontSize: 12,
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        'Price'.tr +':',
+                      ),
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    SvgPicture.asset('assets/images/calender1.svg',
+                        color: Get.isDarkMode ? white : black,
+                        fit: BoxFit.scaleDown,
+                        height: 24,
+                        width: 24),
+                    Directionality(
+                      textDirection: box.read('locale') == 'ar'
+                          ? TextDirection.rtl
+                          : TextDirection.ltr,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8, bottom: 6),
+                        child: Text(
+                          'from'.tr + ' $date ' + 'to'.tr + ' $endDate',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w400,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SvgPicture.asset('assets/images/peoplesharp.svg',
+                        color: Get.isDarkMode ? white : black,
+                        fit: BoxFit.scaleDown,
+                        height: 24,
+                        width: 24),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8, bottom: 6),
+                      child: Text(
+                        'Total People amount'.tr +
+                            ':' +
+                            ' $attendees / $capacity',
                         style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontSize: 12,
                           fontWeight: FontWeight.w400,
+                          fontSize: 12,
                         ),
                       ),
-                      Text(
-                        ' $price '+'AED'.tr,
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      )
-                    ],
-                  ),
-                  // Gap(5),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      InkWell(
-                        onTap: () async {
-                          if (await getpermission() == true) {
-                            List<Location> locations =
-                                await locationFromAddress(address);
-                            if (locations.isNotEmpty) {
-                              Location location = locations.first;
-                              double latitude = location.latitude;
-                              double longitude = location.longitude;
-                              Get.to(() => MapView(
-                                  latitude: latitude, longitude: longitude));
-                            }
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text(
+                      'Price'.tr + ':',
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    Text(
+                      ' $price ' + 'AED'.tr,
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    )
+                  ],
+                ),
+                // Gap(5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: () async {
+                        if (await getpermission() == true) {
+                          List<Location> locations =
+                              await locationFromAddress(address);
+                          if (locations.isNotEmpty) {
+                            Location location = locations.first;
+                            double latitude = location.latitude;
+                            double longitude = location.longitude;
+                            Get.to(() => MapView(
+                                latitude: latitude, longitude: longitude));
                           }
-                        },
-                        child: GradientText1(
-                          text: 'View Location'.tr,
-                        ),
+                        }
+                      },
+                      child: GradientText1(
+                        text: 'View Location'.tr,
                       ),
-                      int.parse(attendees) < int.parse(capacity) &&
-                              isJoined == false
-                          ? Padding(
-                              padding: const EdgeInsets.only(right: 25),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.toNamed(AppRoutes.eventcheckout,
-                                          arguments: eventId,
-                                          parameters: {'trainerId': trainerId});
-                                    },
-                                    child: GradientText1(
-                                      text: 'Join Event'.tr,
-                                    ),
+                    ),
+                    int.parse(attendees) < int.parse(capacity) &&
+                            isJoined == false
+                        ? Padding(
+                            padding: const EdgeInsets.only(right: 25),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed(AppRoutes.eventcheckout,
+                                        arguments: eventId,
+                                        parameters: {'trainerId': trainerId});
+                                  },
+                                  child: GradientText1(
+                                    text: 'Join Event'.tr,
                                   ),
-                                ],
-                              ),
-                            )
-                          : Padding(
-                              padding: const EdgeInsets.only(right: 25),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  GradientText1(
-                                    text: 'Joined'.tr,
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                    ],
-                  )
-                ],
-              ),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.only(right: 25),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                GradientText1(
+                                  text: 'Joined'.tr,
+                                ),
+                              ],
+                            ),
+                          ),
+                  ],
+                )
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

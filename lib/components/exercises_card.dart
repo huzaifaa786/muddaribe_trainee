@@ -20,7 +20,7 @@ class ExercisesCard extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.only(left: 8,right: 8,bottom: 12,top: 12),
           decoration: BoxDecoration(
-              color: Get.isDarkMode ? black : grey.withOpacity(0.2),
+              color: Get.isDarkMode ? black : lightbgColor,
               borderRadius: BorderRadius.circular(10)),
           child: Row(
             children: [

@@ -62,7 +62,9 @@ class _SerachViewState extends State<SerachView> {
               child: Stack(
             children: [
               Directionality(
-                textDirection:box.read('locale') == 'ar'? TextDirection.rtl: TextDirection.ltr,
+                textDirection: box.read('locale') == 'ar'
+                    ? TextDirection.rtl
+                    : TextDirection.ltr,
                 child: InkWell(
                   highlightColor: Colors.transparent,
                   focusColor: Colors.transparent,
@@ -86,7 +88,8 @@ class _SerachViewState extends State<SerachView> {
                                 Flexible(
                                   child: TextField(
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color:
+                                          Get.isDarkMode ? Colors.white : black,
                                       fontFamily: "Montserrat",
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,
@@ -98,19 +101,31 @@ class _SerachViewState extends State<SerachView> {
                                       });
                                     },
                                     decoration: InputDecoration(
-                                        fillColor: bgContainer,
+                                        fillColor: Get.isDarkMode
+                                            ? bgContainer
+                                            : lightbgColor,
                                         filled: true,
                                         contentPadding: EdgeInsets.symmetric(
                                             vertical: 14, horizontal: 14),
                                         enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Get.isDarkMode
+                                                    ? black
+                                                    : lightbgColor),
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(25))),
                                         focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Get.isDarkMode
+                                                    ? black
+                                                    : lightbgColor),
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(25))),
                                         hintText: 'Search trainer by name'.tr,
                                         hintStyle: TextStyle(
-                                          color: Colors.white.withOpacity(0.3),
+                                          color: Get.isDarkMode
+                                              ? Colors.white.withOpacity(0.3)
+                                              : black.withOpacity(.3),
                                           fontFamily: "Montserrat",
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500,
@@ -126,6 +141,7 @@ class _SerachViewState extends State<SerachView> {
                                     child: SvgPicture.asset(
                                       'assets/images/filter.svg',
                                       fit: BoxFit.scaleDown,
+                                      color: Get.isDarkMode ? white : black,
                                     ),
                                   ),
                                 ),

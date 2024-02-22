@@ -55,7 +55,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
               },
               child: Icon(
                 Icons.arrow_back_ios_new,
-                color: Get.isDarkMode ? white  :black,
+                color: Get.isDarkMode ? white : black,
               ),
             ),
           ),
@@ -106,7 +106,8 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                 arguments: controller.selectedPlan);
                           },
                           selected: true,
-                          buttonHeight: MediaQuery.of(context).size.height * 0.07,
+                          buttonHeight:
+                              MediaQuery.of(context).size.height * 0.07,
                         )
                       ],
                     ),
@@ -114,15 +115,17 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
               : Text(''),
           body: SafeArea(
               child: Padding(
-            padding:
-                const EdgeInsets.only(left: 10, right: 10, bottom: 10.0, top: 10),
+            padding: const EdgeInsets.only(
+                left: 10, right: 10, bottom: 10.0, top: 10),
             child: Container(
-              padding: EdgeInsets.only(left: 8, right: 8, top: 15, bottom: 15.0),
+              padding:
+                  EdgeInsets.only(left: 8, right: 8, top: 15, bottom: 15.0),
               width: MediaQuery.of(context).size.width * 0.99,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(10), topLeft: Radius.circular(10)),
-                color: Get.isDarkMode ? black : grey.withOpacity(0.2),
+                    topRight: Radius.circular(10),
+                    topLeft: Radius.circular(10)),
+                color: Get.isDarkMode ? black : lightbgColor,
               ),
               child: SingleChildScrollView(
                 child: Column(
@@ -154,7 +157,8 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                 ),
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   FutureBuilder<QuerySnapshot>(
                                       future: TrainerProfileApi.checkFollowing(
@@ -170,7 +174,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                         RxBool isFollowing = docs.isNotEmpty
                                             ? true.obs
                                             : false.obs;
-      
+
                                         return Obx(
                                           () => GestureDetector(
                                               onTap: () {
@@ -181,16 +185,18 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                           : true.obs;
                                                 });
                                                 if (isFollowing.value) {
-                                                  TrainerProfileApi.followTrainer(
-                                                      trainerId);
+                                                  TrainerProfileApi
+                                                      .followTrainer(trainerId);
                                                 }
                                                 if (!isFollowing.value) {
                                                   TrainerProfileApi
-                                                      .unfollowTrainer(trainerId);
+                                                      .unfollowTrainer(
+                                                          trainerId);
                                                 }
                                               },
                                               child: Container(
-                                                padding: EdgeInsets.only(top: 10),
+                                                padding:
+                                                    EdgeInsets.only(top: 10),
                                                 width: 264,
                                                 height: 40,
                                                 decoration: BoxDecoration(
@@ -198,8 +204,8 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                         BorderRadiusDirectional
                                                             .circular(5),
                                                     gradient: LinearGradient(
-                                                      begin:
-                                                          Alignment(1.00, -0.03),
+                                                      begin: Alignment(
+                                                          1.00, -0.03),
                                                       end: Alignment(-1, 0.03),
                                                       colors: isFollowing.value
                                                           ? [
@@ -230,14 +236,15 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                       Get.off(() => ChatPage(
                                           arguments: ChatPageArguments(
                                               peerId: trainer.id,
-                                              peerAvatar: trainer.profileImageUrl,
+                                              peerAvatar:
+                                                  trainer.profileImageUrl,
                                               peerNickname: trainer.name)));
                                     },
                                     child: SvgPicture.asset(
                                       'assets/images/chat.svg',
                                       width: 32,
                                       height: 33,
-                                      color: Get.isDarkMode ?  white : black,
+                                      color: Get.isDarkMode ? white : black,
                                       fit: BoxFit.scaleDown,
                                     ),
                                   ),
@@ -260,7 +267,9 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                   'Posts'.tr,
                                   style: TextStyle(
                                     color: controller.indexs == 0
-                                        ? Get.isDarkMode ?  white : black
+                                        ? Get.isDarkMode
+                                            ? white
+                                            : black
                                         : Colors.grey,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
@@ -279,7 +288,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Padding(
-                                    padding: const EdgeInsets.symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                       horizontal: 8.0),
                                   child: Image.asset(
                                     'assets/images/events.png',
@@ -294,7 +303,9 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                     'Events'.tr,
                                     style: TextStyle(
                                       color: controller.indexs == 1
-                                          ? Get.isDarkMode ?  white : black
+                                          ? Get.isDarkMode
+                                              ? white
+                                              : black
                                           : Colors.grey,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,
@@ -312,7 +323,8 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal : 8.0),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: Image.asset(
                                   'assets/images/packages.png',
                                   width: 18,
@@ -326,7 +338,9 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                   'Packages'.tr,
                                   style: TextStyle(
                                     color: controller.indexs == 2
-                                        ? Get.isDarkMode ?  white : black
+                                        ? Get.isDarkMode
+                                            ? white
+                                            : black
                                         : Colors.grey,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
@@ -340,9 +354,10 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                         onPressed: (int index) {
                           controller.handleToggleButtons(index);
                         },
-                        color:  Get.isDarkMode ? Colors.grey : black,
+                        color: Get.isDarkMode ? Colors.grey : black,
                         selectedColor: Get.isDarkMode ? white : grey,
-                        selectedBorderColor: Get.isDarkMode ? Colors.transparent : grey,
+                        selectedBorderColor:
+                            Get.isDarkMode ? Colors.transparent : grey,
                         fillColor: Colors.transparent,
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -369,13 +384,15 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                   heightFactor: 15,
                                   child: Text(
                                     'No Posts Found !'.tr,
-                                    style:
-                                        TextStyle(color: white.withOpacity(0.7)),
+                                    style: TextStyle(
+                                        color: Get.isDarkMode
+                                            ? white.withOpacity(0.7)
+                                            : black.withOpacity(0.7)),
                                   ),
                                 );
                               }
                               List<CombinedData> posts = snapshot.data!;
-      
+
                               return posts.isNotEmpty
                                   ? GridView.builder(
                                       physics: BouncingScrollPhysics(),
@@ -415,8 +432,9 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                       posts[index].trainer.name,
                                                   postdescription:
                                                       posts[index].post.caption,
-                                                  postimg:
-                                                      posts[index].post.imageUrl,
+                                                  postimg: posts[index]
+                                                      .post
+                                                      .imageUrl,
                                                   time: time,
                                                 ));
                                             // Navigator.push(
@@ -426,7 +444,8 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                             //             ));
                                           },
                                           child: CachedNetworkImage(
-                                            imageUrl: posts[index].post.imageUrl,
+                                            imageUrl:
+                                                posts[index].post.imageUrl,
                                             fit: BoxFit.cover,
                                           ),
                                         );
@@ -435,9 +454,11 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                   : Center(
                                       heightFactor: 12,
                                       child: Text(
-                                        'No Post Found !'.tr,
+                                        'No Posts Found !'.tr,
                                         style: TextStyle(
-                                            color: white.withOpacity(0.7)),
+                                            color: Get.isDarkMode
+                                                ? white.withOpacity(0.7)
+                                                : black.withOpacity(0.7)),
                                       ),
                                     );
                             })
@@ -447,15 +468,17 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                 //     BoxConstraints(minHeight: 10, maxHeight: 450),
                                 child: FirestorePagination(
                                   shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(), 
+                                  physics: NeverScrollableScrollPhysics(),
                                   isLive: false,
                                   limit: 20,
                                   onEmpty: Center(
                                     heightFactor: 15,
                                     child: Text(
-                                      'No Events Found !'.tr,
+                                      "No Events Found !".tr,
                                       style: TextStyle(
-                                          color: white.withOpacity(0.7)),
+                                          color: Get.isDarkMode
+                                              ? white.withOpacity(0.7)
+                                              : black.withOpacity(0.7)),
                                     ),
                                   ),
                                   viewType: ViewType.list,
@@ -468,7 +491,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                       (context, documentSnapshot, index) {
                                     final eventData = documentSnapshot.data()
                                         as Map<String, dynamic>;
-      
+
                                     final trainerId = eventData['trainerId'];
                                     Events events = Events.fromMap(eventData);
                                     return FutureBuilder<CombinedEventData>(
@@ -480,7 +503,8 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                           return Container(
                                             height: Get.height * 0.5,
                                             child: Center(
-                                              child: CircularProgressIndicator(),
+                                              child:
+                                                  CircularProgressIndicator(),
                                             ),
                                           );
                                         }
@@ -491,13 +515,15 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                           return Center(
                                               heightFactor: 15,
                                               child: Text(
-                                                'No Events Found !'.tr,
+                                                "No Events Found !".tr,
                                                 style: TextStyle(
-                                                    color:
-                                                        white.withOpacity(0.7)),
+                                                    color: Get.isDarkMode
+                                                        ? white.withOpacity(0.7)
+                                                        : black
+                                                            .withOpacity(0.7)),
                                               ));
                                         }
-      
+
                                         CombinedEventData combineEvent =
                                             snapshot.data!;
                                         return FutureBuilder<QuerySnapshot>(
@@ -527,40 +553,43 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                               } else if (snapshot.hasError) {
                                                 return Text('');
                                               } else {
-                                                final docs = snapshot.data!.docs;
+                                                final docs =
+                                                    snapshot.data!.docs;
                                                 bool saved = docs.isNotEmpty
                                                     ? true
                                                     : false;
-      
+
                                                 return EventDetailsCard(
-                                                  eventId:
-                                                      combineEvent.event.eventId,
+                                                  eventId: combineEvent
+                                                      .event.eventId,
                                                   category: combineEvent
                                                       .trainer.category
                                                       .join(' & '),
                                                   trainerId:
                                                       combineEvent.trainer.id,
-                                                  name: combineEvent.trainer.name,
+                                                  name:
+                                                      combineEvent.trainer.name,
                                                   image: combineEvent
                                                       .trainer.profileImageUrl,
-                                                  eventimg:
-                                                      combineEvent.event.imageUrl,
-                                                  address:
-                                                      combineEvent.event.address,
+                                                  eventimg: combineEvent
+                                                      .event.imageUrl,
+                                                  address: combineEvent
+                                                      .event.address,
                                                   startTime: combineEvent
                                                       .event.startTime,
-                                                  endTime:
-                                                      combineEvent.event.endTime,
+                                                  endTime: combineEvent
+                                                      .event.endTime,
                                                   date: combineEvent.event.date,
-                                                  capacity:
-                                                      combineEvent.event.capacity,
+                                                  capacity: combineEvent
+                                                      .event.capacity,
                                                   attendees: combineEvent
                                                       .eventOtherData
                                                       .totalAttendees,
                                                   isJoined: combineEvent
                                                       .eventOtherData
                                                       .isCurrentUserAttendee,
-                                                  price: combineEvent.event.price,
+                                                  price:
+                                                      combineEvent.event.price,
                                                   isSaved: saved,
                                                   onSave: () {
                                                     setState(() {
@@ -592,7 +621,8 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                         if (snapshot.connectionState ==
                                             ConnectionState.waiting) {
                                           return Center(
-                                              child: CircularProgressIndicator());
+                                              child:
+                                                  CircularProgressIndicator());
                                         }
                                         if (snapshot.hasError) {
                                           return Text('');
@@ -603,33 +633,40 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                             child: Text(
                                               'No Packages Found !'.tr,
                                               style: TextStyle(
-                                                  color: white.withOpacity(0.7)),
+                                                  color: Get.isDarkMode
+                                                      ? white.withOpacity(0.7)
+                                                      : black.withOpacity(0.7)),
                                             ),
                                           );
                                         }
                                         List<TrainerPackage> packages =
                                             snapshot.data!;
-      
+
                                         return snapshot.data!.isNotEmpty
                                             ? ListView.builder(
-                                                physics: BouncingScrollPhysics(),
+                                                physics:
+                                                    BouncingScrollPhysics(),
                                                 shrinkWrap: true,
                                                 itemCount: packages.length,
                                                 itemBuilder: (context, index) {
                                                   return TrainerPackageCard(
-                                                    duration: packages[index].duration,
+                                                    duration: packages[index]
+                                                        .duration,
                                                     name: packages[index].name,
                                                     description: packages[index]
                                                         .discription,
-                                                    price: packages[index].price,
-                                                    category:
-                                                        packages[index].category,
+                                                    price:
+                                                        packages[index].price,
+                                                    category: packages[index]
+                                                        .category,
                                                     id: packages[index].id,
                                                     selectedPlan:
                                                         controller.selectedPlan,
                                                     onTap: () async {
-                                                      await controller.toggleplan(
-                                                          packages[index].id);
+                                                      await controller
+                                                          .toggleplan(
+                                                              packages[index]
+                                                                  .id);
                                                       await controller
                                                           .toggleprice(
                                                               packages[index]
@@ -644,8 +681,11 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                 child: Text(
                                                   'No Packages Found !'.tr,
                                                   style: TextStyle(
-                                                      color:
-                                                          white.withOpacity(0.7)),
+                                                      color: Get.isDarkMode
+                                                          ? white
+                                                              .withOpacity(0.7)
+                                                          : black.withOpacity(
+                                                              0.7)),
                                                 ),
                                               );
                                       }),
@@ -661,7 +701,8 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                 Expanded(
                                                     child: Container(
                                                         margin: EdgeInsets.only(
-                                                            left: 10, right: 10),
+                                                            left: 10,
+                                                            right: 10),
                                                         child: Divider(
                                                             color:
                                                                 dividercolor))),
@@ -670,13 +711,15 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                   style: const TextStyle(
                                                       fontFamily: "Poppins",
                                                       fontSize: 16,
-                                                      fontWeight: FontWeight.w500,
+                                                      fontWeight:
+                                                          FontWeight.w500,
                                                       color: white),
                                                 ),
                                                 Expanded(
                                                     child: Container(
                                                         margin: EdgeInsets.only(
-                                                            left: 10, right: 10),
+                                                            left: 10,
+                                                            right: 10),
                                                         child: Divider(
                                                             color:
                                                                 dividercolor))),
@@ -687,9 +730,8 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                       : Text(''),
                                   controller.indexs == 2
                                       ? FutureBuilder<Trainer?>(
-                                          future:
-                                              TrainerProfileApi.fetchTrainerData(
-                                                  trainerId),
+                                          future: TrainerProfileApi
+                                              .fetchTrainerData(trainerId),
                                           builder: (context, snapshot) {
                                             if (snapshot.hasError) {
                                               return Text('');
@@ -702,7 +744,8 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                               userimg: trainer.profileImageUrl,
                                               username: trainer.name,
                                               chatText:
-                                                  'Chat With me for a personal plan'.tr,
+                                                  'Chat With me for a personal plan'
+                                                      .tr,
                                               onChatClick: () {
                                                 Get.off(() => ChatPage(
                                                     arguments: ChatPageArguments(

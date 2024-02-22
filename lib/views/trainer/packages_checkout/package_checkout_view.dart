@@ -66,7 +66,9 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                   height: 191,
                                   width: MediaQuery.sizeOf(context).width,
                                   decoration: BoxDecoration(
-                                    color: Get.isDarkMode ? bgContainer : grey.withOpacity(0.2),
+                                    color: Get.isDarkMode
+                                        ? bgContainer
+                                        : lightbgColor,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Column(
@@ -226,9 +228,10 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                                             .package.name
                                                             .toString(),
                                                         style: TextStyle(
-                                                            fontSize: 16,
-                                                            fontWeight:
-                                                                FontWeight.w700,),
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                        ),
                                                       ),
                                                       Padding(
                                                         padding:
@@ -300,7 +303,9 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                   height: 67,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color: Get.isDarkMode ? bgContainer : grey.withOpacity(0.2),
+                                    color: Get.isDarkMode
+                                        ? bgContainer
+                                        : lightbgColor,
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.only(
@@ -328,9 +333,9 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                                           width: 110,
                                                           padding:
                                                               EdgeInsets.all(2),
-                                                          decoration:
-                                                              BoxDecoration(
-                                                                  color:  Get.isDarkMode
+                                                          decoration: BoxDecoration(
+                                                              color:
+                                                                  Get.isDarkMode
                                                                       ? Colors
                                                                           .grey
                                                                       : white),
@@ -345,10 +350,12 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                                                 border:
                                                                     InputBorder
                                                                         .none,
-                                                                fillColor:
-                                                                    Get.isDarkMode ? Colors.grey : white,
-                                                                focusColor:
-                                                                    Get
+                                                                fillColor: Get
+                                                                        .isDarkMode
+                                                                    ? Colors
+                                                                        .grey
+                                                                    : white,
+                                                                focusColor: Get
                                                                         .isDarkMode
                                                                     ? Colors
                                                                         .grey
@@ -407,7 +414,9 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                 height: 216,
                                 width: MediaQuery.of(context).size.width,
                                 decoration: BoxDecoration(
-                                  color: Get.isDarkMode ? bgContainer : grey.withOpacity(0.2),
+                                  color: Get.isDarkMode
+                                      ? bgContainer
+                                      : lightbgColor,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Column(
@@ -444,7 +453,9 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                           left: 5, right: 5),
                                       child: Divider(
                                         thickness: 1,
-                                        color: dividercolor,
+                                        color: Get.isDarkMode
+                                            ? dividercolor
+                                            : white,
                                       ),
                                     ),
                                     Padding(
@@ -477,7 +488,9 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                           left: 5, right: 5),
                                       child: Divider(
                                         thickness: 1,
-                                        color: dividercolor,
+                                        color: Get.isDarkMode
+                                            ? dividercolor
+                                            : white,
                                       ),
                                     ),
                                     Padding(

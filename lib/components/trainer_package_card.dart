@@ -35,7 +35,7 @@ class TrainerPackageCard extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Get.isDarkMode ? black : grey.withOpacity(0.2),
+              color: Get.isDarkMode ? black : grey.withOpacity(0.1),
               border:
                   selectedPlan == id ? Border.all(color: Colors.white) : null,
             ),

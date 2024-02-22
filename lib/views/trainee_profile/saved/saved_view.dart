@@ -110,7 +110,7 @@ class _SavedViewsState extends State<SavedViews> {
                                   return Center(
                                       child: Text(
                                     'Error: ${snapshot.error}',
-                                    style: TextStyle(color: white),
+                                    style: TextStyle(color: Get.isDarkMode? white: black),
                                   ));
                                 } else if (!snapshot.hasData) {
                                   return SizedBox(
@@ -119,7 +119,7 @@ class _SavedViewsState extends State<SavedViews> {
                                     child: Center(
                                         child: Text(
                                       'No Saved Trainer'.tr,
-                                      style: TextStyle(color: white),
+                                      style: TextStyle(color: Get.isDarkMode? white: black),
                                     )),
                                   );
                                 } else {
@@ -142,7 +142,7 @@ class _SavedViewsState extends State<SavedViews> {
                                                     child: Text(
                                                   'No Saved Trainer'.tr,
                                                   style:
-                                                      TextStyle(color: white),
+                                                      TextStyle(color: Get.isDarkMode? white: black),
                                                 )),
                                               );
                                             } else {
@@ -211,7 +211,7 @@ class _SavedViewsState extends State<SavedViews> {
                                           child: Center(
                                               child: Text(
                                             'No Saved Trainer'.tr,
-                                            style: TextStyle(color: white),
+                                            style: TextStyle(color: Get.isDarkMode? white: black),
                                           )),
                                         );
                                 }
@@ -224,7 +224,7 @@ class _SavedViewsState extends State<SavedViews> {
                                   return Center(
                                       child: Text(
                                     'Error: ${snapshot.error}',
-                                    style: TextStyle(color: white),
+                                    style: TextStyle(color: Get.isDarkMode? white: black),
                                   ));
                                 } else if (!snapshot.hasData) {
                                   print('no event data');
@@ -234,7 +234,7 @@ class _SavedViewsState extends State<SavedViews> {
                                     child: Center(
                                         child: Text(
                                       'No Saved Event'.tr,
-                                      style: TextStyle(color: white),
+                                      style: TextStyle(color: Get.isDarkMode? white: black),
                                     )),
                                   );
                                 } else {
@@ -258,7 +258,7 @@ class _SavedViewsState extends State<SavedViews> {
                                                     child: Text(
                                                   'No Saved Event'.tr,
                                                   style:
-                                                      TextStyle(color: white),
+                                                      TextStyle(color: Get.isDarkMode? white: black),
                                                 )),
                                               );
                                             } else {
@@ -344,7 +344,7 @@ class _SavedViewsState extends State<SavedViews> {
                                           child: Center(
                                               child: Text(
                                             'No Saved Event'.tr,
-                                            style: TextStyle(color: white),
+                                            style: TextStyle(color: Get.isDarkMode? white: black),
                                           )),
                                         );
                                 }
@@ -357,7 +357,7 @@ class _SavedViewsState extends State<SavedViews> {
                                   return Center(
                                       child: Text(
                                     'Error: ${snapshot.error}',
-                                    style: TextStyle(color: white),
+                                    style: TextStyle(color: Get.isDarkMode? white: black),
                                   ));
                                 } else if (!snapshot.hasData) {
                                   return SizedBox(
@@ -366,7 +366,7 @@ class _SavedViewsState extends State<SavedViews> {
                                     child: Center(
                                         child: Text(
                                       'No Saved Posts'.tr,
-                                      style: TextStyle(color: white),
+                                      style: TextStyle(color: Get.isDarkMode? white: black),
                                     )),
                                   );
                                 } else {
@@ -380,7 +380,7 @@ class _SavedViewsState extends State<SavedViews> {
                                               return Center(
                                                   child: Text(
                                                 'Error: ${combinedPostData.error}',
-                                                style: TextStyle(color: white),
+                                                style: TextStyle(color: Get.isDarkMode? white: black),
                                               ));
                                             } else if (!combinedPostData
                                                 .hasData) {
@@ -391,7 +391,7 @@ class _SavedViewsState extends State<SavedViews> {
                                                     child: Text(
                                                   'No Saved Posts'.tr,
                                                   style:
-                                                      TextStyle(color: white),
+                                                      TextStyle(color: Get.isDarkMode? white: black),
                                                 )),
                                               );
                                             } else {
@@ -482,7 +482,7 @@ class _SavedViewsState extends State<SavedViews> {
                                           child: Center(
                                               child: Text(
                                             'No Saved Posts'.tr,
-                                            style: TextStyle(color: white),
+                                            style: TextStyle(color: Get.isDarkMode? white: black),
                                           )),
                                         );
                                 }

@@ -23,7 +23,7 @@ class ChatMeCard extends StatelessWidget {
       onTap: onChatClick,
       child: Container(
         decoration: BoxDecoration(
-          color: Get.isDarkMode ? black : grey.withOpacity(0.2),
+          color: Get.isDarkMode ? black : grey.withOpacity(0.1),
           borderRadius: BorderRadius.circular(5),
         ),
         padding: EdgeInsets.only(left: 6, right: 6, bottom: 8 ,),

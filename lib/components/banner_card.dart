@@ -36,14 +36,17 @@ class BannerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10), color: bgContainer),
+          borderRadius: BorderRadius.circular(10), color: Get.isDarkMode?  bgContainer : Color(4294375158)),
       child: Column(
         children: [
-          CachedNetworkImage(
-            imageUrl: image,
-            height: 150,
-            width: Get.width,
-            fit: BoxFit.cover,
+          ClipRRect(
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10)),
+            child: CachedNetworkImage(
+              imageUrl: image,
+              height: 150,
+              width: Get.width,
+              fit: BoxFit.cover,
+            ),
           ),
           Container(
             width: MediaQuery.of(context).size.width * 0.9,
@@ -62,7 +65,7 @@ class BannerCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                              color: Colors.white,
+                              color: Get.isDarkMode ? Colors.white: black,
                               fontSize: 20,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w600),
@@ -85,11 +88,11 @@ class BannerCard extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(left: 15.0),
+                                padding: const EdgeInsets.only(left: 15.0,right: 15),
                                 child: Text(
                                   '$date - $enddate',
                                   style: TextStyle(
-                                    color: white,
+                                    color: Get.isDarkMode ? Colors.white: black,
                                     fontSize: 12,
                                     fontFamily: 'Poppins',
                                     fontWeight: FontWeight.w600,
@@ -103,7 +106,7 @@ class BannerCard extends StatelessWidget {
                               Text(
                                 '$price ' + 'AED'.tr,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    color: Get.isDarkMode ? Colors.white: black,
                                     fontSize: 30,
                                     fontFamily: 'Poppins',
                                     fontWeight: FontWeight.w700),
@@ -129,11 +132,11 @@ class BannerCard extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(left: 15.0),
+                                padding: const EdgeInsets.only(left: 15.0,right: 15),
                                 child: Text(
                                   '$startTime - $endTime',
                                   style: TextStyle(
-                                    color: white,
+                                    color: Get.isDarkMode ? Colors.white: black,
                                     fontSize: 11,
                                     fontFamily: 'Poppins',
                                     fontWeight: FontWeight.w600,

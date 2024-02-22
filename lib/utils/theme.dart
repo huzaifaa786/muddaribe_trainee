@@ -80,7 +80,7 @@ class CustomTheme {
     ),
   );
 
-    static Color lightThemeColor = Colors.black,
+  static Color lightThemeColor = Colors.black,
       white = Colors.white,
       black = Colors.black,
       darkThemeColor = Colors.blue;

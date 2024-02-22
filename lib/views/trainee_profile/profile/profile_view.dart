@@ -51,7 +51,7 @@ class TraineeProfileView extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(10),
                                       color: Get.isDarkMode
                                       ? Color(0xFF0F0F0F)
-                                      : white,),
+                                      : lightbgColor,),
                                       
                                   child: Column(
                                     crossAxisAlignment:

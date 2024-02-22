@@ -44,7 +44,7 @@ class _OrderCardState extends State<OrderCard> {
           height: 344,
           width: MediaQuery.sizeOf(context).width,
           decoration: BoxDecoration(
-            color: Get.isDarkMode ? black : grey.withOpacity(0.2),
+            color: Get.isDarkMode ? black : lightbgColor,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Column(
@@ -96,7 +96,7 @@ class _OrderCardState extends State<OrderCard> {
                               ),
                             ),
                             Container(
-                              width: Get.width * 0.63,
+                              width: Get.width * 0.6,
                               child: Text(
                                 widget.trainer.category.join('& '),
                                 style: TextStyle(

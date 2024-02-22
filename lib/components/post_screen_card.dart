@@ -47,7 +47,7 @@ class PostScreenCard extends StatelessWidget {
             margin: EdgeInsets.only(bottom: 12,left: 15,right: 15),
             padding: EdgeInsets.only(top: 20, bottom: 20),
             decoration: BoxDecoration(
-              color: bgContainer,
+              color: Get.isDarkMode? bgContainer:lightbgColor,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Column(
@@ -92,7 +92,7 @@ class PostScreenCard extends StatelessWidget {
                             child: Text(
                               username,
                               style: TextStyle(
-                                color: Colors.white,
+                                color:Get.isDarkMode?  Colors.white:black,
                                 fontSize: 14,
                                 fontFamily: 'Poppins',
                                 fontWeight: FontWeight.w500,
@@ -160,7 +160,7 @@ class PostScreenCard extends StatelessWidget {
                             TextSpan(
                               text: username,
                               style: TextStyle(
-                                color: Colors.white,
+                                color: Get.isDarkMode? Colors.white:black,
                                 fontSize: 14,
                                 fontFamily: 'Poppins',
                                 fontWeight: FontWeight.w500,
@@ -170,7 +170,7 @@ class PostScreenCard extends StatelessWidget {
                             TextSpan(
                               text: postdescription,
                               style: TextStyle(
-                                color: Colors.white.withOpacity(0.6),
+                                color: Get.isDarkMode? Colors.white.withOpacity(0.6):black.withOpacity(0.6),
                                 fontSize: 12,
                                 fontFamily: 'Poppins',
                                 fontWeight: FontWeight.w500,

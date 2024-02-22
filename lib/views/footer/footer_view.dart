@@ -14,8 +14,7 @@ import 'package:mudarribe_trainee/views/home/home_view.dart';
 import 'package:mudarribe_trainee/views/trainee_profile/profile/profile_view.dart';
 
 class FooterView extends StatefulWidget {
-  const FooterView({Key? key, this.selectedIndex}) : super(key: key);
-  final selectedIndex;
+  const FooterView({Key? key}) : super(key: key);
 
   @override
   State<FooterView> createState() => _FooterViewState();

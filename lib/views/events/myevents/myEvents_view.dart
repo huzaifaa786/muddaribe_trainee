@@ -51,8 +51,10 @@ class _MyEventsViewState extends State<MyEventsView> {
             shrinkWrap: true,
             isLive: false,
             limit: 20,
-            onEmpty: Text(
-              'No event joined yet.'.tr,
+            onEmpty: Center(
+              child: Text(
+                'No event joined yet.'.tr,
+              ),
             ),
             viewType: ViewType.list,
             physics: BouncingScrollPhysics(),

@@ -21,12 +21,15 @@ class Workoutvideocard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top:5,bottom: 5,),
+      margin: EdgeInsets.only(
+        top: 5,
+        bottom: 5,
+      ),
       padding: EdgeInsets.only(left: 10),
       height: 105,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: Get.isDarkMode ? black : grey.withOpacity(0.2),
+        color: Get.isDarkMode ? black : lightbgColor,
         borderRadius: BorderRadius.circular(10),
       ),
       child: InkWell(
@@ -40,17 +43,19 @@ class Workoutvideocard extends StatelessWidget {
                     future: func,
                     builder: (context, snapshot) {
                       return ClipRRect(
-                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
                         child: snapshot.data != null
                             ? Image.file(
                                 File(snapshot.data!),
+                                width: 80,
+                                height: 80,
+                                fit: BoxFit.cover,
                               )
                             : Image.asset(
                                 'assets/images/containimg.png',
-                                width:
-                                    120, // Specify the width of the image to fit the Container
-                                height:
-                                    77, // Specify the height of the image to fit the Container
+                                width: 80,
+                                height: 80,
                                 fit: BoxFit.fill,
                               ),
                       );
@@ -70,13 +75,16 @@ class Workoutvideocard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    videoName,
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: Get.isDarkMode ? white : black,
-                        fontFamily: 'Poppins'),
+                  SizedBox(
+                    width: Get.width * 0.5,
+                    child: Text(
+                      videoName,
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Get.isDarkMode ? white : black,
+                          fontFamily: 'Poppins'),
+                    ),
                   ),
                   // Padding(
                   //   padding: const EdgeInsets.only(top: 5, bottom: 5),

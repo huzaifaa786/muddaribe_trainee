@@ -52,7 +52,7 @@ class _TraineeEditProfileViewState extends State<TraineeEditProfileView> {
                                   decoration: BoxDecoration(
                                       color: Get.isDarkMode
                                       ? Color(0xFF0F0F0F)
-                                      : grey.withOpacity(0.3),
+                                      : lightbgColor,
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Column(
                                     crossAxisAlignment:

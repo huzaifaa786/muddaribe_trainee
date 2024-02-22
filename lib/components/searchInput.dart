@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
-import 'package:mudarribe_trainee/utils/theme.dart'; // Assuming CustomTheme is defined here
 
 class SearchInput extends StatelessWidget {
   const SearchInput({Key? key, this.ontap}) : super(key: key);
@@ -16,7 +15,7 @@ class SearchInput extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.9,
         height: 48,
         decoration: ShapeDecoration(
-          color: Get.isDarkMode ? black : Colors.grey.withOpacity(0.2), 
+          color: Get.isDarkMode ? black : lightbgColor, 
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25),
           ),

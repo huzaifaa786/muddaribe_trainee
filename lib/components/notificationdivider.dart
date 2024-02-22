@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
 class DividerNotification extends StatefulWidget {
@@ -17,7 +18,7 @@ class _DividerNotificationState extends State<DividerNotification> {
       padding: const EdgeInsets.only(left: 20, right: 20),
       child: Divider(
         thickness: 1,
-        color: dividercolor,
+        color: Get.isDarkMode ? dividercolor : black,
       ),
     );
   }
