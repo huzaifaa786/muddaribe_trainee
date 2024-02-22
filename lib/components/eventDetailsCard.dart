@@ -241,8 +241,8 @@ class EventDetailsCard extends StatelessWidget {
                           'from'.tr + ' $startTime ' + 'to'.tr + ' $endTime',
                           style: TextStyle(
                             fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w400,
-                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
                           ),
                         ),
                       ),
@@ -266,8 +266,8 @@ class EventDetailsCard extends StatelessWidget {
                           'from'.tr + ' $date ' + 'to'.tr + ' $endDate',
                           style: TextStyle(
                             fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w400,
-                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
                           ),
                         ),
                       ),
@@ -290,8 +290,8 @@ class EventDetailsCard extends StatelessWidget {
                             ' $attendees / $capacity',
                         style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w400,
-                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
                         ),
                       ),
                     )

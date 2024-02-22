@@ -10,34 +10,41 @@ class NotificationApi {
     final traineeId = FirebaseAuth.instance.currentUser!.uid;
 
     List<CombinedTrainerNotification> combinedData = [];
+
     QuerySnapshot notificationDocs = await FirebaseFirestore.instance
         .collection('notifications')
-        .where("userId", isEqualTo: traineeId).orderBy('id', descending: true)
+        .where("userId", isEqualTo: traineeId)
+        .orderBy('id', descending: true)
         .get();
 
-    if (notificationDocs.docs.isNotEmpty) {
-      for (var notificationDoc in notificationDocs.docs) {
-        if (notificationDoc.exists) {
-          Map<String, dynamic> notificationData =
-              notificationDoc.data()! as Map<String, dynamic>;
-          Notifications notification = Notifications.fromJson(notificationData);
+    List<String> trainerIds =
+        notificationDocs.docs.map((doc) => doc['trainerId'] as String).toList();
 
-          // Fetch trainer data
-          DocumentSnapshot trainerSnapshot = await FirebaseFirestore.instance
-              .collection('users')
-              .doc(notification.trainerId)
-              .get();
-          Map<String, dynamic> trainerData =
-              trainerSnapshot.data()! as Map<String, dynamic>;
-          Trainer trainer = Trainer.fromMap(trainerData);
+    Map<String, Trainer> trainersMap = {};
 
-          combinedData.add(CombinedTrainerNotification(
-            trainer: trainer,
-            notification: notification,
-          ));
-        }
-      }
-    }
+    await FirebaseFirestore.instance
+        .collection('users')
+        .where(FieldPath.documentId, whereIn: trainerIds)
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        trainersMap[doc.id] =
+            Trainer.fromMap(doc.data() as Map<String, dynamic>);
+      });
+    });
+
+    combinedData = notificationDocs.docs.map((notificationDoc) {
+      final notificationData = notificationDoc.data() as Map<String, dynamic>;
+      final notification = Notifications.fromJson(notificationData);
+
+      final trainerId = notificationData['trainerId'];
+      final trainer = trainersMap[trainerId]!;
+
+      return CombinedTrainerNotification(
+        trainer: trainer,
+        notification: notification,
+      );
+    }).toList();
 
     return combinedData;
   }

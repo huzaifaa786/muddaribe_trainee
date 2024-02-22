@@ -26,7 +26,15 @@ enum Categories {
   Tennis,
   Swimming,
   medical_Fitness,
-  Lifting,
+  CrossFit,
+  indoor_Cycling,
+  Paddle,
+  Calisthenics,
+  animal_flow,
+  rehabilitation_Coach, 
+  Aerobics,
+  Plates,
+  kettle_bell
 }
 
 class HomeController extends GetxController {
@@ -215,7 +223,8 @@ class HomeController extends GetxController {
       'beginY': '-0.32',
       'endX': '-0.5',
       'endY': '0.32'
-    },        {
+    },
+    {
       'title': 'Animal flow',
       'image': 'assets/images/animal.png',
       'firstColor': '0xFFDD432C',

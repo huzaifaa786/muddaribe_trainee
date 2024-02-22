@@ -29,18 +29,23 @@ class TSearchController extends GetxController {
       List<Trainer> trainers =
           querySnapshot.docs.map((doc) => Trainer.fromMap(doc.data())).toList();
 
-      for (var trainer in trainers) {
-        QuerySnapshot savedTrainerSnapshot = await FirebaseFirestore.instance
-            .collection('savedTrainer')
-            .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-            .where('tarinerId', isEqualTo: trainer.id)
+      List<Future<void>> fetchRatingsFutures = trainers.map((trainer) async {
+        QuerySnapshot ratingSnapshot = await FirebaseFirestore.instance
+            .collection('ratings')
+            .where('trainerId', isEqualTo: trainer.id)
             .get();
-        if (savedTrainerSnapshot.docs.isNotEmpty) {
-          trainer.isSaved = true;
-        }
-        double ratingSum = await fetchCompanyRatingSum(trainer.id);
-        trainer.rating = ratingSum;
-      }
+
+        double sum = ratingSnapshot.docs.fold(0.0,
+            (previousValue, doc) => previousValue + (doc['rating'] ?? 0.0));
+
+        int totalRatings = ratingSnapshot.docs.length;
+        double averageRating = totalRatings > 0 ? sum / totalRatings : 0.0;
+
+        trainer.rating = averageRating;
+      }).toList();
+
+      await Future.wait(fetchRatingsFutures);
+
       allItems = trainers;
       updateTrainers(trainers);
     } catch (e) {

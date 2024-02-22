@@ -65,8 +65,9 @@ class _ExcercisePlanState extends State<ExcercisePlan> {
                           widget.content,
                           style: TextStyle(
                             color: Get.isDarkMode ? white : black,
-                            fontWeight: FontWeight.w400,
                             fontSize: 14,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ],

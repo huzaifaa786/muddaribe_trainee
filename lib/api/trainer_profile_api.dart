@@ -30,7 +30,7 @@ class TrainerProfileApi {
         .collection('trainer_events')
         .where('date',
             isGreaterThan:
-                DateFormat('dd/MM/y').format(DateTime.now()).toString())
+                DateTime.now().millisecondsSinceEpoch.toString())
         .where('trainerId', isEqualTo: trainerId)
         .orderBy('date', descending: true);
     return eventquery;

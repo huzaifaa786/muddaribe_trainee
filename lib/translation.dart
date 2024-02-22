@@ -110,10 +110,10 @@ class LocaleString extends Translations {
           "Notifications": "Notifications",
           "View chat": "View chat",
           "You have received new exercises plan":
-              "You have received new exercises plan",
+              "You have received a new exercise plan",
           "View Plan": "View Plan",
           "You have received new Nutrition plan":
-              "You have received new Nutrition plan",
+              "You have received a new Nutrition plan",
           "Reminder!": "Reminder",
           "You have an event for": "You have an event for",
           "View event": "View event",

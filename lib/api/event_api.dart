@@ -11,8 +11,8 @@ class EventApi {
   static var eventquery = FirebaseFirestore.instance
       .collection('trainer_events')
       .where('date',
-          isGreaterThanOrEqualTo:
-              DateFormat('dd/MM/y').format(DateTime.now()).toString())
+          isGreaterThan:
+              DateTime.now().millisecondsSinceEpoch.toString())
       .where('eventStatus', isEqualTo: 'open')
       .orderBy('date', descending: true);
 

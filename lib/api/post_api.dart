@@ -46,6 +46,7 @@ class HomeApi {
 
   static Stream<CombinedEventData> fetchCombineEventDataAsStream(
       String trainerId, Events event) async* {
+   
     final attendeeApi = AttendeeApi();
 
     // Fetch trainer data

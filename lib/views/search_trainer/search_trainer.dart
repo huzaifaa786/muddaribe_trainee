@@ -37,7 +37,7 @@ class _SerachViewState extends State<SerachView> {
     GetStorage box = GetStorage();
     return GetBuilder<TSearchController>(
       initState: (state) {
-        Future.delayed(Duration(milliseconds: 100), () {
+        Future.delayed(Duration(milliseconds: 10), () {
           state.controller!.fetchTrainers();
           // state.controller!.orderStream?.listen((List<Trainer>? data) {
           //   if (data != null) {
@@ -202,66 +202,70 @@ class _SerachViewState extends State<SerachView> {
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 6.0),
                         child: Container(
+                          height: MediaQuery.of(context).size.height * 0.8,
                           decoration: BoxDecoration(
                               color: Colors.black87,
                               borderRadius: BorderRadius.circular(15)),
-                          child: Container(
-                            padding: EdgeInsets.all(15),
-                            width: 200,
-                            color: Colors.transparent,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Categories'.tr,
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: white),
-                                ),
-                                Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: _buildCategoryButtons()),
-                                Text(
-                                  'Languages'.tr,
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: white),
-                                ),
-                                Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: _buildRadioButtons()),
-                                Text(
-                                  'Gender'.tr,
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: white),
-                                ),
-                                Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: _buildGenderButtons()),
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: GradientButton(
-                                    title: 'Search'.tr,
-                                    onPressed: () async {
-                                      controller.lang = lang;
-                                      controller.gender = gender;
-                                      controller.category = category;
-                                      controller.filterTrainers('');
-                                      controller.toggleShow();
-                                    },
-                                    selected: true,
-                                    buttonwidth: 0.3,
-                                    buttonHeight: 40.0,
+                          child: SingleChildScrollView(
+                            
+                            child: Container(
+                              padding: EdgeInsets.all(15),
+                              width: 200,
+                              color: Colors.transparent,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Categories'.tr,
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: white),
                                   ),
-                                )
-                              ],
+                                  Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: _buildCategoryButtons()),
+                                  Text(
+                                    'Languages'.tr,
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: white),
+                                  ),
+                                  Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: _buildRadioButtons()),
+                                  Text(
+                                    'Gender'.tr,
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: white),
+                                  ),
+                                  Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: _buildGenderButtons()),
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: GradientButton(
+                                      title: 'Search'.tr,
+                                      onPressed: () async {
+                                        controller.lang = lang;
+                                        controller.gender = gender;
+                                        controller.category = category;
+                                        controller.filterTrainers('');
+                                        controller.toggleShow();
+                                      },
+                                      selected: true,
+                                      buttonwidth: 0.3,
+                                      buttonHeight: 40.0,
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -362,6 +366,7 @@ class _SerachViewState extends State<SerachView> {
       radioButtons.add(
         SizedBox(
           height: 30,
+          
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -378,17 +383,29 @@ class _SerachViewState extends State<SerachView> {
                       });
                     },
                   )),
-              Text(
-                option.toString().split('.').last == 'body_Building'
-                    ? "Body Building".tr
-                    : option.toString().split('.').last == 'medical_Fitness'
-                        ? 'Medical fitness'.tr
-                        : option.toString().split('.').last.tr,
-                style: TextStyle(
-                    fontFamily: "Poppins",
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: white),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.32,
+                child: Text(
+                  option.toString().split('.').last == 'body_Building'
+                      ? "Body Building".tr
+                      : option.toString().split('.').last == 'medical_Fitness'
+                          ? 'Medical fitness'.tr
+                          : option.toString().split('.').last == 'indoor_Cycling'
+                              ? 'Indoor Cycling'.tr
+                          : option.toString().split('.').last == 'animal_flow'
+                              ? 'Animal flow'.tr
+                          : option.toString().split('.').last == 'rehabilitation_Coach'
+                              ? 'Rehabilitation Coach'.tr
+                          : option.toString().split('.').last == 'kettle_bell'
+                              ? 'Kettle bell'.tr
+                              : option.toString().split('.').last.tr,
+                  style: TextStyle(
+                      fontFamily: "Poppins",
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      overflow: TextOverflow.ellipsis,
+                      color: white),
+                ),
               ),
               Text(
                 '',
