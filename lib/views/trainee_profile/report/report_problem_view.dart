@@ -61,8 +61,9 @@ class _ReportProblemViewState extends State<ReportProblemView> {
                           child: Text(
                             'What’s the problem?'.tr,
                             style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w600,),
+                              fontSize: 24,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ],
@@ -79,10 +80,19 @@ class _ReportProblemViewState extends State<ReportProblemView> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            InputField(
-                              lable: 'Problem Text'.tr,
-                              maxlines: 5,
-                              controller: controller.report,
+                            Form(
+                              key: controller.formKey,
+                              child: InputField(
+                                lable: 'Problem Text'.tr,
+                                maxlines: 5,
+                                controller: controller.report,
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return '';
+                                  }
+                                  return null;
+                                },
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 43),
@@ -95,7 +105,8 @@ class _ReportProblemViewState extends State<ReportProblemView> {
                                     border: Border.all(color: gradientblue),
                                   ),
                                   child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
@@ -143,11 +154,16 @@ class _ReportProblemViewState extends State<ReportProblemView> {
                     GradientButton(
                       title: 'Report'.tr,
                       selected: controller.areFieldsFilled.value,
-                      onPressed: () {
-                        controller.areFieldsFilled.value == true;
-                        controller.reportfun();
-                        // : null;
-                      },
+                      onPressed: controller.areFieldsFilled.value
+                          ? () {
+                              if (controller.formKey.currentState!.validate()) {
+                                controller.reportfun();
+                              }
+                            }
+                          : () {
+                              if (controller.formKey.currentState!
+                                  .validate()) {}
+                            },
                     ),
                   ],
                 ),

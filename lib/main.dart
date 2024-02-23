@@ -86,9 +86,10 @@ class MyApp extends StatelessWidget {
         fallbackLocale: box.read('locale') != 'ar'
             ? Locale('en', 'US')
             : Locale('ar', 'AE'),
-         theme: CustomTheme.lightTheme,
+        theme: CustomTheme.lightTheme,
         darkTheme: CustomTheme.darkTheme,
-        themeMode: box.read('theme') == 'light' ? ThemeMode.light : ThemeMode.dark,
+        themeMode:
+            box.read('theme') == 'light' ? ThemeMode.light : ThemeMode.dark,
         debugShowCheckedModeBanner: false,
         title: "Mudarribe",
         initialBinding: SplashBinding(),

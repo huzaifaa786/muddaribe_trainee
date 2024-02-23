@@ -131,15 +131,17 @@ class BannerCard extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 15.0,right: 15),
-                                child: Text(
-                                  '$startTime - $endTime',
-                                  style: TextStyle(
-                                    color: Get.isDarkMode ? Colors.white: black,
-                                    fontSize: 11,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w600,
+                              Directionality(textDirection: TextDirection.ltr,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 15.0,right: 15),
+                                  child: Text(
+                                    '$startTime - $endTime',
+                                    style: TextStyle(
+                                      color: Get.isDarkMode ? Colors.white: black,
+                                      fontSize: 11,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
                               ),

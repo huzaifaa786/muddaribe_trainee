@@ -31,7 +31,8 @@ class _FragmentOneState extends State<FragmentOne> {
                       'assets/images/onboard1.png',
                     ),
                     fit: BoxFit.cover,
-                    height: MediaQuery.of(context).size.height * 0.45,
+                    height: MediaQuery.of(context).size.height * 0.5,
+                    width: MediaQuery.of(context).size.width,
                   ),
                   Positioned(
                       bottom: 0.1,
@@ -44,7 +45,7 @@ class _FragmentOneState extends State<FragmentOne> {
                                   spreadRadius: 30,
                                   color: Colors.black)
                             ]),
-                        height: 40,
+                        height: 10,
                         child: Text(
                           'sadsoirweruewuroiewuioooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooiwueroiwueoiruwe',
                           style: TextStyle(
@@ -56,12 +57,12 @@ class _FragmentOneState extends State<FragmentOne> {
               ),
               Container(
                   padding:
-                      EdgeInsets.only(top: 10, right: 8, left: 8, bottom: 40),
+                      EdgeInsets.only(top: 10, right: 8, left: 8, bottom: 10),
                   child: Text(
                     "Find the best trainers",
                     style: const TextStyle(
                       fontFamily: "Poppins",
-                      fontSize: 28,
+                      fontSize: 22,
                       fontWeight: FontWeight.w600,
                       color: white,
                       // height: 84 / 28,
@@ -75,7 +76,7 @@ class _FragmentOneState extends State<FragmentOne> {
                     "البحث عن أفضل المدربين",
                     style: const TextStyle(
                       fontFamily: "Poppins",
-                      fontSize: 28,
+                      fontSize: 22,
                       fontWeight: FontWeight.w600,
                       color: white,
                       // height: 84 / 28,

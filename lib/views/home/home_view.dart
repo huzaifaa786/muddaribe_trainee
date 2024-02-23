@@ -221,8 +221,8 @@ class _HomeViewState extends State<HomeView> {
                                                       trainer.name,
                                                       textAlign:
                                                           TextAlign.center,
-                                                      style: const TextStyle(
-                                                          color: white,
+                                                      style:  TextStyle(
+                                                          color: Get.isDarkMode ? white : black,
                                                           fontSize: 12,
                                                           fontFamily: 'Poppins',
                                                           fontWeight: weight500,

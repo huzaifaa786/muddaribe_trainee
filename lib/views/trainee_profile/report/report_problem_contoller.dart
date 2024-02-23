@@ -14,6 +14,7 @@ import 'package:mudarribe_trainee/utils/ui_utils.dart';
 class ReportProblemController extends GetxController {
   static ReportProblemController instance = Get.find();
   final BusyController busyController = Get.find();
+  final formKey = GlobalKey<FormState>();
   final _imageSelectorApi = ImageSelectorApi();
   final _reportStorageApi = ReportStorageApi();
   final _reportService = ReportService();
@@ -31,7 +32,7 @@ class ReportProblemController extends GetxController {
   RxBool areFieldsFilled = false.obs;
 
   void checkFields() {
-    if (report.text.isNotEmpty && reportImage != null) {
+    if (report.text.isNotEmpty) {
       areFieldsFilled.value = true;
       update();
     } else {

@@ -28,8 +28,9 @@ class _FragmentThreeState extends State<FragmentThree> {
                     image: AssetImage(
                       'assets/images/onboard3.png',
                     ),
+                    width: MediaQuery.of(context).size.width,
                     fit: BoxFit.cover,
-                    height: MediaQuery.of(context).size.height * 0.45,
+                    height: MediaQuery.of(context).size.height * 0.5,
                   ),
                   Positioned(
                       bottom: 0.1,
@@ -42,7 +43,7 @@ class _FragmentThreeState extends State<FragmentThree> {
                                   spreadRadius: 30,
                                   color: Colors.black)
                             ]),
-                        height: 40,
+                        height: 10,
                         child: Text(
                           'sadsoirweruewuroiewuioooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooiwueroiwueoiruwe',
                           style: TextStyle(
@@ -54,24 +55,26 @@ class _FragmentThreeState extends State<FragmentThree> {
               ),
               Container(
                   padding:
-                      EdgeInsets.only(top: 10, right: 8, left: 8, bottom: 40),
-                  child: Text("Provides you with the best exercises that suit your goals !",
+                      EdgeInsets.only(top: 10, right: 8, left: 8, bottom: 10),
+                  child: Text(
+                    "Provides you with the best exercises that suit your goals !",
                     style: const TextStyle(
                       fontFamily: "Poppins",
-                      fontSize: 28,
+                      fontSize: 22,
                       fontWeight: FontWeight.w600,
                       color: white,
                       // height: 84 / 28,
                     ),
                     textAlign: TextAlign.center,
                   )),
-                   Container(
+              Container(
                   padding:
                       EdgeInsets.only(top: 10, right: 8, left: 8, bottom: 40),
-                  child: Text("يوفر لك أفضل التمارين التي تناسب أهدافك!",
+                  child: Text(
+                    "يوفر لك أفضل التمارين التي تناسب أهدافك!",
                     style: const TextStyle(
                       fontFamily: "Poppins",
-                      fontSize: 28,
+                      fontSize: 22,
                       fontWeight: FontWeight.w600,
                       color: white,
                       // height: 84 / 28,

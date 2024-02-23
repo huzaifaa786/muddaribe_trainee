@@ -65,6 +65,11 @@ class _InputFieldState extends State<InputField> {
                       colors: [Color(4285693389), Color(4278253801)]),
                   width: 1,
                 ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Colors.red), // Customize the error border color
+                ),
+                errorStyle: TextStyle(fontSize: 0),
                 hoverColor: Colors.grey,
                 focusColor: Colors.grey,
                 labelText: widget.lable,

@@ -29,19 +29,20 @@ class _FragmentTwoState extends State<FragmentTwo> {
                         'assets/images/onboard2.png',
                       ),
                       fit: BoxFit.cover,
-                      height: MediaQuery.of(context).size.height * 0.45),
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.5),
                       Positioned(
                       bottom: 0.1,
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(0.9),
+                            color: Color(0xFF000000).withOpacity(0.9),
                             boxShadow: const [
                               BoxShadow(
                                   blurRadius: 40,
                                   spreadRadius: 30,
                                   color: Colors.black)
                             ]),
-                        height: 40,
+                        height: 10,
                         child: Text(
                           'sadsoirweruewuroiewuioooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooiwueroiwueoiruwe',
                           style: TextStyle(
@@ -53,12 +54,12 @@ class _FragmentTwoState extends State<FragmentTwo> {
               ),
               Container(
                   padding:
-                      EdgeInsets.only(top: 10, right: 8, left: 8, bottom: 40),
+                      EdgeInsets.only(top: 10, right: 8, left: 8, bottom: 10),
                   child: Text(
                     'We provide meal plans\nthat suits your goals!',
                     style: const TextStyle(
                       fontFamily: "Poppins",
-                      fontSize: 28,
+                      fontSize: 22,
                       fontWeight: FontWeight.w600,
                       color: white,
                     ),
@@ -71,7 +72,7 @@ class _FragmentTwoState extends State<FragmentTwo> {
                     'نحن نقدم خطط الوجبات\nالتي تناسب أهدافك!',
                     style: const TextStyle(
                       fontFamily: "Poppins",
-                      fontSize: 28,
+                      fontSize: 22,
                       fontWeight: FontWeight.w600,
                       color: white,
                     ),

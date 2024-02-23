@@ -13,6 +13,8 @@ enum Languages {
   Arabic,
   German,
   Spanish,
+  Filipino,
+  Urdu,
 }
 
 enum Gender { male, female }
