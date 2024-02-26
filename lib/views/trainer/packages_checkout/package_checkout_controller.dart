@@ -51,7 +51,7 @@ class Packagecheckoutcontroller extends GetxController {
             packageId, trainerId, userid, orderId, intent, int.parse(price));
         notificationService.postNotification(
             title: 'New order placed',
-            body: 'Order placed with an Order Id #$orderId',
+            body: 'Order has been placed successfully.',
             receiverToken: firebaseToken);
         String notiId = DateTime.now().millisecondsSinceEpoch.toString();
 
@@ -70,23 +70,26 @@ class Packagecheckoutcontroller extends GetxController {
           'type': 'package'
         });
         Get.back();
-        UiUtilites.successAlert(Get.context, 'Package Subscribed Successfully'.tr);
+        UiUtilites.successAlert(
+            Get.context, 'Package Subscribed Successfully'.tr);
       } else {
         await _packageApi.orderPlacement(
             packageId, trainerId, userid, orderId, intent, int.parse(total));
         notificationService.postNotification(
             title: 'New order placed',
-            body: 'Order placed with an Order Id #$orderId',
+            body: 'Order has been placed successfully.',
             receiverToken: firebaseToken);
         Get.back();
-        UiUtilites.successAlert(Get.context, 'Package Subscribed Successfully'.tr);
+        UiUtilites.successAlert(
+            Get.context, 'Package Subscribed Successfully'.tr);
       }
     }
   }
 
   void applyPromoCode(trainerId) async {
     if (promoCode.text.isEmpty) {
-      UiUtilites.errorSnackbar('Empty Promo Code'.tr, 'Please enter code first'.tr);
+      UiUtilites.errorSnackbar(
+          'Empty Promo Code'.tr, 'Please enter code first'.tr);
       return;
     }
     CouponCode? couponCode =

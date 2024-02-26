@@ -54,7 +54,6 @@ class AppPages {
       name: AppRoutes.stories,
       page: () => const StoriesView(),
       binding: TrainerStoryBinding(),
-
     ),
     GetPage(
       name: AppRoutes.onBoarding,
@@ -80,11 +79,6 @@ class AppPages {
       page: () => const TrainerprofileView(),
       binding: Trainerprofilebinding(),
     ),
-    // GetPage(
-    //   name: AppRoutes.eventsDetails,
-    //   page: () => const EventsDetailsView(),
-    //   // binding: Trainerprounfbinding(),
-    // ),
     GetPage(
       name: AppRoutes.signin,
       page: () => const SignInView(),
@@ -108,7 +102,7 @@ class AppPages {
     GetPage(
       name: AppRoutes.editProfile,
       page: () => const TraineeEditProfileView(),
-       binding: EditProfileBinding(),
+      binding: EditProfileBinding(),
     ),
     GetPage(
       name: AppRoutes.eventcheckout,
@@ -145,36 +139,26 @@ class AppPages {
       page: () => const PlanFiles(),
       binding: PlanFilesBinding(),
     ),
-    // GetPage(
-    //   name: AppRoutes.nutritionplan,
-    //   page: () => const NutritionplanView(),
-    //   binding: NutritionplanBinding(),
-    // ),
     GetPage(
       name: AppRoutes.search,
       page: () => const SerachView(),
       binding: SearchBinding(),
     ),
-  
-     GetPage(
+
+    GetPage(
       name: AppRoutes.reports,
       page: () => const ReportProblemView(),
       binding: ReportProblemBinding(),
-     ),
+    ),
     GetPage(
       name: AppRoutes.changepassword,
       page: () => const ChangePasswordView(),
       binding: ChangePasswordBinding(),
     ),
-     GetPage(
+    GetPage(
       name: AppRoutes.report,
       page: () => const ReportProblemView(),
       binding: ReportProblemBinding(),
     ),
-    // GetPage(
-    //   name: AppRoutes.nutritionplan,
-    //   page: () => const MyplansView(),
-    //   binding: MyplansBinding(),
-    // ),
   ];
 }

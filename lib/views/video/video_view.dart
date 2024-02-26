@@ -18,6 +18,7 @@ class VideoPlay extends StatefulWidget {
 class _VideoPlayState extends State<VideoPlay> {
   @override
   Widget build(BuildContext context) {
+    print(widget.path);
     return Scaffold(
        appBar: AppBar(
         forceMaterialTransparency: true,
@@ -29,9 +30,10 @@ class _VideoPlayState extends State<VideoPlay> {
       body: SafeArea(
         child: Center(
           child: YoYoPlayer(
-            aspectRatio: 16 / 9,
+            aspectRatio: 16 / 13,
             url: widget.path,
             videoStyle: VideoStyle(
+              fullScreenIconColor: Colors.black,
               qualityStyle: TextStyle(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w500,

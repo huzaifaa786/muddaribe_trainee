@@ -19,6 +19,7 @@ import 'package:mudarribe_trainee/views/authentication/signin/signin_view.dart';
 import 'package:mudarribe_trainee/views/chat/controller.dart';
 import 'package:mudarribe_trainee/views/events/allevents/allevents_view.dart';
 import 'package:mudarribe_trainee/views/events/eventsdetail/eventsDetail_view.dart';
+import 'package:mudarribe_trainee/views/events/myevents/myEvents_controller.dart';
 import 'package:mudarribe_trainee/views/events/myevents/myEvents_view.dart';
 import 'package:mudarribe_trainee/views/Myplans/PacakgePlan/package_plan.dart';
 import 'package:mudarribe_trainee/views/Myplans/myPackages/my_packages.dart';
@@ -65,7 +66,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GetStorage box = GetStorage();
-    box.read('theme') == null ? box.write('theme', 'dark') : null;
+    box.read('theme') == null ? box.write('theme', 'light') : null;
     // String locale = box.read('Locale') == null ? 'en' : box.read('Locale');
     // return GoogleTranslatorInit('AIzaSyBOr3bXgN2bj9eECzSudyj_rgIFjyXkdn8',
     //     translateFrom: box.read('Locale') == 'en' ? Locale('ur') : Locale('en'),

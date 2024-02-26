@@ -40,6 +40,7 @@ class EditProfileContoller extends GetxController {
   }
 
   Future getAppUser() async {
+    
     final User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       currentUser = await _userService.getAuthUser();

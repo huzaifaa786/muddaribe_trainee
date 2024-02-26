@@ -30,7 +30,7 @@ enum Categories {
   medical_Fitness,
   CrossFit,
   indoor_Cycling,
-  Paddle,
+  Padel,
   Calisthenics,
   animal_flow,
   rehabilitation_Coach, 
@@ -197,7 +197,7 @@ class HomeController extends GetxController {
       'endY': '0.32'
     },
     {
-      'title': 'Rehabilitation Coach',
+      'title': 'Rehabilitation',
       'image': 'assets/images/rehab.png',
       'firstColor': '0xFFB937E1',
       'secondColor': '0xFF8967D3',
@@ -207,7 +207,7 @@ class HomeController extends GetxController {
       'endY': '0.32'
     },
     {
-      'title': 'Paddle',
+      'title': 'Padel',
       'image': 'assets/images/padel.png',
       'firstColor': '0xFF50CDC5',
       'secondColor': '0xFF3B9931',

@@ -32,7 +32,7 @@ class Events {
   });
 
   factory Events.fromMap(Map<String, dynamic> map) {
-        int timestamp = int.parse(map['date'].toString());
+    int timestamp = int.parse(map['date'].toString());
     DateTime date1 = DateTime.fromMillisecondsSinceEpoch(timestamp);
 
     // Format the DateTime object to the desired format
@@ -41,7 +41,7 @@ class Events {
         eventId: map['id'],
         address: map['address'],
         capacity: map['capacity'],
-        date:formattedDate,
+        date: formattedDate,
         todate: map['toDate'] ?? '',
         endTime: map['endTime'],
         eventStatus: map['eventStatus'],

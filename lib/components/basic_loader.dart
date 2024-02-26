@@ -12,11 +12,11 @@ class BasicLoader extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) =>  Material(
-        color: Get.isDarkMode?  Colors.black : white,
-          child: progressIndicator,
-        );
-      // : progressIndicator;
+  Widget build(BuildContext context) => Material(
+        color: Get.isDarkMode ? Colors.black : white,
+        child: progressIndicator,
+      );
+  // : progressIndicator;
 }
 
 Widget progressIndicator = Center(

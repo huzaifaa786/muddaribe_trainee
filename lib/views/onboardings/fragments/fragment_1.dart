@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 // import 'package:klicks_app/values/colors.dart';
 
@@ -31,25 +32,34 @@ class _FragmentOneState extends State<FragmentOne> {
                       'assets/images/onboard1.png',
                     ),
                     fit: BoxFit.cover,
-                    height: MediaQuery.of(context).size.height * 0.5,
+                    height: MediaQuery.of(context).size.height * 0.55,
                     width: MediaQuery.of(context).size.width,
                   ),
                   Positioned(
                       bottom: 0.1,
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(0.9),
-                            boxShadow: const [
-                              BoxShadow(
-                                  blurRadius: 40,
-                                  spreadRadius: 30,
-                                  color: Colors.black)
+                            color: Get.isDarkMode
+                                ? Colors.black.withOpacity(0.9)
+                                : Colors.grey.withOpacity(0.4),
+                            boxShadow: [
+                              Get.isDarkMode
+                                  ? BoxShadow(
+                                      blurRadius: 40,
+                                      spreadRadius: 30,
+                                      color: Colors.black)
+                                  : BoxShadow(
+                                      blurRadius: 40,
+                                      spreadRadius: 30,
+                                      color: Colors.grey)
                             ]),
                         height: 10,
                         child: Text(
                           'sadsoirweruewuroiewuioooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooiwueroiwueoiruwe',
                           style: TextStyle(
-                            color: Colors.black.withOpacity(0.9),
+                            color: Get.isDarkMode
+                                ? Colors.black.withOpacity(0.9)
+                                : Colors.grey.withOpacity(0.4),
                           ),
                         ),
                       ))
@@ -59,26 +69,26 @@ class _FragmentOneState extends State<FragmentOne> {
                   padding:
                       EdgeInsets.only(top: 10, right: 8, left: 8, bottom: 10),
                   child: Text(
-                    "Find the best trainers",
-                    style: const TextStyle(
+                    "Find the best trainer for you",
+                    style: TextStyle(
                       fontFamily: "Poppins",
                       fontSize: 22,
                       fontWeight: FontWeight.w600,
-                      color: white,
+                      color: Get.isDarkMode ? white : black,
                       // height: 84 / 28,
                     ),
                     textAlign: TextAlign.center,
                   )),
-                   Container(
+              Container(
                   padding:
                       EdgeInsets.only(top: 10, right: 8, left: 8, bottom: 40),
                   child: Text(
-                    "البحث عن أفضل المدربين",
-                    style: const TextStyle(
+                    "إبحث على أفضل مدرب لك",
+                    style: TextStyle(
                       fontFamily: "Poppins",
                       fontSize: 22,
                       fontWeight: FontWeight.w600,
-                      color: white,
+                      color: Get.isDarkMode ? white : black,
                       // height: 84 / 28,
                     ),
                     textAlign: TextAlign.center,

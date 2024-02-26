@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
 class FragmentTwo extends StatefulWidget {
@@ -30,23 +31,32 @@ class _FragmentTwoState extends State<FragmentTwo> {
                       ),
                       fit: BoxFit.cover,
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.5),
-                      Positioned(
+                      height: MediaQuery.of(context).size.height * 0.55),
+                  Positioned(
                       bottom: 0.1,
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Color(0xFF000000).withOpacity(0.9),
-                            boxShadow: const [
-                              BoxShadow(
-                                  blurRadius: 40,
-                                  spreadRadius: 30,
-                                  color: Colors.black)
+                            color: Get.isDarkMode
+                                ? Colors.black.withOpacity(0.9)
+                                : Colors.grey.withOpacity(0.4),
+                            boxShadow: [
+                              Get.isDarkMode
+                                  ? BoxShadow(
+                                      blurRadius: 40,
+                                      spreadRadius: 30,
+                                      color: Colors.black)
+                                  : BoxShadow(
+                                      blurRadius: 40,
+                                      spreadRadius: 30,
+                                      color: Colors.grey)
                             ]),
                         height: 10,
                         child: Text(
                           'sadsoirweruewuroiewuioooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooiwueroiwueoiruwe',
                           style: TextStyle(
-                            color: Colors.black.withOpacity(0.9),
+                            color: Get.isDarkMode
+                                ? Colors.black.withOpacity(0.9)
+                                : Colors.grey.withOpacity(0.4),
                           ),
                         ),
                       ))
@@ -56,25 +66,25 @@ class _FragmentTwoState extends State<FragmentTwo> {
                   padding:
                       EdgeInsets.only(top: 10, right: 8, left: 8, bottom: 10),
                   child: Text(
-                    'We provide meal plans\nthat suits your goals!',
-                    style: const TextStyle(
+                    'Your diet plan is here',
+                    style: TextStyle(
                       fontFamily: "Poppins",
                       fontSize: 22,
                       fontWeight: FontWeight.w600,
-                      color: white,
+                      color: Get.isDarkMode ? white : black,
                     ),
                     textAlign: TextAlign.center,
                   )),
-                   Container(
+              Container(
                   padding:
                       EdgeInsets.only(top: 10, right: 8, left: 8, bottom: 40),
                   child: Text(
-                    'نحن نقدم خطط الوجبات\nالتي تناسب أهدافك!',
-                    style: const TextStyle(
+                    'خطتك الغذائية هنا',
+                    style: TextStyle(
                       fontFamily: "Poppins",
                       fontSize: 22,
                       fontWeight: FontWeight.w600,
-                      color: white,
+                      color: Get.isDarkMode ? white : black,
                     ),
                     textAlign: TextAlign.center,
                   )),

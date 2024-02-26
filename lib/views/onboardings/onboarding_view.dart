@@ -29,74 +29,77 @@ class _OnBoardingViewState extends State<OnBoardingView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.75,
-                  child: PageView(
-                    controller: controller,
-                    onPageChanged: (index) {
-                      setState(() {
-                        slideIndex = index;
-                      });
-                    },
-                    children: <Widget>[
-                      FragmentOne(controller: controller!),
-                      FragmentTwo(controller: controller!),
-                      FragmentThree(controller: controller!),
-                    ],
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Scaffold(
+        body: SafeArea(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.75,
+                    child: PageView(
+                      controller: controller,
+                      onPageChanged: (index) {
+                        setState(() {
+                          slideIndex = index;
+                        });
+                      },
+                      children: <Widget>[
+                        FragmentOne(controller: controller!),
+                        FragmentTwo(controller: controller!),
+                        FragmentThree(controller: controller!),
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 30),
-                  padding: const EdgeInsets.only(top: 0.0, bottom: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      for (int i = 0; i < 3; i++)
-                        i == slideIndex
-                            ? _buildPageIndicator(true)
-                            : _buildPageIndicator(false),
-                    ],
+                  Container(
+                    margin: EdgeInsets.only(bottom: 30),
+                    padding: const EdgeInsets.only(top: 0.0, bottom: 10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        for (int i = 0; i < 3; i++)
+                          i == slideIndex
+                              ? _buildPageIndicator(true)
+                              : _buildPageIndicator(false),
+                      ],
+                    ),
                   ),
-                ),
-                for (int i = 0; i < 2; i++)
-                  slideIndex == i
+                  for (int i = 0; i < 2; i++)
+                    slideIndex == i
+                        ? Padding(
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            child: GradientButton(
+                              title: 'Next',
+                              selected: true,
+                              onPressed: () {
+                                setState(() {
+                                  slideIndex++;
+                                  controller!.animateToPage(slideIndex,
+                                      duration: Duration(milliseconds: 400),
+                                      curve: Curves.ease);
+                                });
+                              },
+                            ),
+                          )
+                        : Container(),
+                  slideIndex == 2
                       ? Padding(
                           padding: const EdgeInsets.only(left: 20, right: 20),
                           child: GradientButton(
-                            title: 'Next',
+                            title: 'Get Started',
                             selected: true,
                             onPressed: () {
-                              setState(() {
-                                slideIndex++;
-                                controller!.animateToPage(slideIndex,
-                                    duration: Duration(milliseconds: 400),
-                                    curve: Curves.ease);
-                              });
+                              // UiUtilites.successSnackbar('fyuuiu','sdasdsafd');
+                              Get.offNamed(AppRoutes.signup);
                             },
                           ),
                         )
                       : Container(),
-                slideIndex == 2
-                    ? Padding(
-                        padding: const EdgeInsets.only(left: 20, right: 20),
-                        child: GradientButton(
-                          title: 'Get Started',
-                          selected: true,
-                          onPressed: () {
-                            // UiUtilites.successSnackbar('fyuuiu','sdasdsafd');
-                            Get.offNamed(AppRoutes.signup);
-                          },
-                        ),
-                      )
-                    : Container(),
-              ],
+                ],
+              ),
             ),
           ),
         ),

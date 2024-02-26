@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mudarribe_trainee/api/event_api.dart';
 import 'package:mudarribe_trainee/components/Eventcheckoutcontainer.dart';
-import 'package:mudarribe_trainee/components/basic_loader%20copy.dart';
+import 'package:mudarribe_trainee/components/basic_loader.dart';
 import 'package:mudarribe_trainee/components/location.dart';
 import 'package:mudarribe_trainee/components/textgradient.dart';
 import 'package:mudarribe_trainee/components/topbar.dart';

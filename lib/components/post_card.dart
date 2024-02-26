@@ -135,40 +135,40 @@ class PostCard extends StatelessWidget {
           Row(
             children: [
               Container(
-                constraints: BoxConstraints(maxWidth: Get.width * 0.9),
-                padding: EdgeInsets.only(
-                  left: 10,
-                  right: 10,
-                  top: 18,
+                constraints: BoxConstraints(maxWidth: Get.width * 0.6),
+                padding: EdgeInsets.only(left: 10, right: 10, top: 18),
+                child: Text(
+                  username + '  ',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Get.isDarkMode ? Colors.white : Colors.black,
+                    fontSize: 14,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-                child: RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: username,
-                        style: TextStyle(
-                          color: Get.isDarkMode ? Colors.white : Colors.black,
-                          fontSize: 14,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      TextSpan(text: '  '),
-                      TextSpan(
-                        text: postdescription,
+              ),
+              
+            ],
+          ),
+          Row(
+            children: [
+              Container(
+                      constraints: BoxConstraints(maxWidth: Get.width * 0.5),
+                      padding: EdgeInsets.only(left: 10, right: 10, top: 8),
+                      child: Text(
+                        postdescription,
                         style: TextStyle(
                           color: Get.isDarkMode
-                              ? Colors.white
-                              : Colors.black.withOpacity(0.5),
+                              ? Colors.white.withOpacity(0.6)
+                              : Colors.black.withOpacity(0.6),
                           fontSize: 12,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
+                    ),
             ],
           ),
           Padding(
@@ -185,7 +185,7 @@ class PostCard extends StatelessWidget {
                     color: Get.isDarkMode
                         ? Colors.white.withOpacity(0.5)
                         : Colors.black.withOpacity(0.5),
-                    fontSize: 12,
+                    fontSize: 10,
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
                   ),

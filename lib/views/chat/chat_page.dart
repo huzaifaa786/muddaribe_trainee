@@ -334,7 +334,8 @@ class ChatPageState extends State<ChatPage> {
                           maxWidth: 200,
                         ),
                         decoration: BoxDecoration(
-                            color:  Get.isDarkMode ? white : grey.withOpacity(0.2),
+                            color:
+                                Get.isDarkMode ? white : grey.withOpacity(0.2),
                             borderRadius: BorderRadius.circular(8)),
                         margin: EdgeInsets.only(bottom: 10, right: 10),
                       )
@@ -1011,16 +1012,20 @@ class ChatPageState extends State<ChatPage> {
                                                           print(
                                                               '*************************** $i');
                                                           if (i == true) {
-                                                            notificationService.postNotification(
-                                                                title:
-                                                                    'New order placed',
-                                                                body:
-                                                                    'Order placed with an Order Id #$orderId',
-                                                                receiverToken:
-                                                                    trainerToken);
+                                                            notificationService
+                                                                .postNotification(
+                                                                    title:
+                                                                        'New order placed',
+                                                                    body:
+                                                                        'Order has been placed successfully.',
+                                                                    // 'Thank you , your order has been confirmed',
+                                                                    // 'Order placed with an Order Id #$orderId',
+                                                                    receiverToken:
+                                                                        trainerToken);
                                                             String content =
-                                                                'Order has been created with Order Id # ' +
-                                                                    orderId;
+                                                                'Thank you , your order has been confirmed';
+                                                            // 'Order has been created with Order Id # ' +
+                                                            //     orderId;
                                                             onSendMessage(
                                                                 content,
                                                                 TypeMessage
@@ -1476,15 +1481,38 @@ class ChatPageState extends State<ChatPage> {
                 maxWidth: MediaQuery.of(context).size.width * 0.7),
             child: Row(
               children: [
-                CircleAvatar(
-                    child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
+                Material(
                   child: Image.network(
                     widget.arguments.peerAvatar,
-                    height: 30,
+                    loadingBuilder: (BuildContext context, Widget child,
+                        ImageChunkEvent? loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.grey[300],
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes!
+                              : null,
+                        ),
+                      );
+                    },
+                    errorBuilder: (context, object, stackTrace) {
+                      return Icon(
+                        Icons.account_circle,
+                        size: 35,
+                        color: Colors.grey[300],
+                      );
+                    },
+                    width: 35,
+                    height: 35,
                     fit: BoxFit.cover,
                   ),
-                )),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(18),
+                  ),
+                  clipBehavior: Clip.hardEdge,
+                ),
                 Gap(12),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.4,
@@ -1547,8 +1575,10 @@ class ChatPageState extends State<ChatPage> {
             Material(
               child: Container(
                 child: IconButton(
-                  icon: Icon(Icons.more_vert,
-                  color: Get.isDarkMode ? white : black,),
+                  icon: Icon(
+                    Icons.more_vert,
+                    color: Get.isDarkMode ? white : black,
+                  ),
                   // onPressed: getImage,
                   onPressed: () {
                     _showBottomSheet(context);
@@ -1564,7 +1594,8 @@ class ChatPageState extends State<ChatPage> {
                   onSubmitted: (value) {
                     onSendMessage(textEditingController.text, TypeMessage.text);
                   },
-                  style: TextStyle(color: Get.isDarkMode ? white : black, fontSize: 15),
+                  style: TextStyle(
+                      color: Get.isDarkMode ? white : black, fontSize: 15),
                   controller: textEditingController,
                   decoration: InputDecoration.collapsed(
                       hintText: 'Type here ...'.tr,
@@ -1599,7 +1630,7 @@ class ChatPageState extends State<ChatPage> {
                       fit: BoxFit.scaleDown,
                     )),
               ),
-              color:  Get.isDarkMode ? black : white,
+              color: Get.isDarkMode ? black : white,
             ),
           ],
         ),
@@ -1684,7 +1715,7 @@ class ChatPageState extends State<ChatPage> {
                     fontFamily: "Poppins",
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xff0f0a06),
+                    color: Get.isDarkMode ? white : Color(0xff0f0a06),
                   ),
                 ),
               ),
@@ -1710,7 +1741,7 @@ class ChatPageState extends State<ChatPage> {
                     fontFamily: "Poppins",
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xff0f0a06),
+                    color: Get.isDarkMode ? white : Color(0xff0f0a06),
                   ),
                 ),
               ),
@@ -1736,7 +1767,7 @@ class ChatPageState extends State<ChatPage> {
                     fontFamily: "Poppins",
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xff0f0a06),
+                    color: Get.isDarkMode ? white : Color(0xff0f0a06),
                   ),
                 ),
               ),
@@ -1759,7 +1790,7 @@ class ChatPageState extends State<ChatPage> {
                     fontFamily: "Poppins",
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xff0f0a06),
+                    color: Get.isDarkMode ? white : Color(0xff0f0a06),
                   ),
                 ),
               ),

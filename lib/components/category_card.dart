@@ -23,7 +23,6 @@ class CategoryCard extends StatelessWidget {
   final endX;
   final endY;
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -44,7 +43,6 @@ class CategoryCard extends StatelessWidget {
         image: DecorationImage(
           image: AssetImage(image),
           fit: BoxFit.fill,
-          
         ),
       ),
       child: Align(
@@ -54,7 +52,11 @@ class CategoryCard extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.white,
-            fontSize: 18,
+            fontSize: title == 'Calisthenics'
+                ? 16
+                : title == 'Rehabilitation'
+                    ? 14
+                    : 18,
             fontWeight: FontWeight.w700,
           ),
         ),

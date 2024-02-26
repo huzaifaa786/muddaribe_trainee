@@ -395,7 +395,7 @@ class _SerachViewState extends State<SerachView> {
                           : option.toString().split('.').last == 'animal_flow'
                               ? 'Animal flow'.tr
                           : option.toString().split('.').last == 'rehabilitation_Coach'
-                              ? 'Rehabilitation Coach'.tr
+                              ? 'Rehabilitation'.tr
                           : option.toString().split('.').last == 'kettle_bell'
                               ? 'Kettle bell'.tr
                               : option.toString().split('.').last.tr,

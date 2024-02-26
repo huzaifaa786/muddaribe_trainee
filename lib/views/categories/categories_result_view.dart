@@ -9,9 +9,7 @@ import 'package:mudarribe_trainee/components/boxing_trainers_card.dart';
 import 'package:mudarribe_trainee/components/loading_indicator.dart';
 import 'package:mudarribe_trainee/components/topbar.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
-import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/views/categories/categories_result_%20controller.dart';
-import 'package:provider/provider.dart';
 
 // import 'package:mudarribe_trainee/components/topbar.dart';
 

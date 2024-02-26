@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
 class FragmentThree extends StatefulWidget {
@@ -30,24 +31,33 @@ class _FragmentThreeState extends State<FragmentThree> {
                     ),
                     width: MediaQuery.of(context).size.width,
                     fit: BoxFit.cover,
-                    height: MediaQuery.of(context).size.height * 0.5,
+                    height: MediaQuery.of(context).size.height * 0.55,
                   ),
-                  Positioned(
+                 Positioned(
                       bottom: 0.1,
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(0.9),
-                            boxShadow: const [
-                              BoxShadow(
-                                  blurRadius: 40,
-                                  spreadRadius: 30,
-                                  color: Colors.black)
+                            color: Get.isDarkMode
+                                ? Colors.black.withOpacity(0.9)
+                                : Colors.grey.withOpacity(0.4),
+                            boxShadow: [
+                              Get.isDarkMode
+                                  ? BoxShadow(
+                                      blurRadius: 40,
+                                      spreadRadius: 30,
+                                      color: Colors.black)
+                                  : BoxShadow(
+                                      blurRadius: 40,
+                                      spreadRadius: 30,
+                                      color: Colors.grey)
                             ]),
                         height: 10,
                         child: Text(
                           'sadsoirweruewuroiewuioooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooiwueroiwueoiruwe',
                           style: TextStyle(
-                            color: Colors.black.withOpacity(0.9),
+                            color: Get.isDarkMode
+                                ? Colors.black.withOpacity(0.9)
+                                : Colors.grey.withOpacity(0.4),
                           ),
                         ),
                       ))
@@ -57,12 +67,12 @@ class _FragmentThreeState extends State<FragmentThree> {
                   padding:
                       EdgeInsets.only(top: 10, right: 8, left: 8, bottom: 10),
                   child: Text(
-                    "Provides you with the best exercises that suit your goals !",
-                    style: const TextStyle(
+                    "Prepare your tools and let's\nget started !",
+                    style: TextStyle(
                       fontFamily: "Poppins",
                       fontSize: 22,
                       fontWeight: FontWeight.w600,
-                      color: white,
+                      color: Get.isDarkMode ? white : black,
                       // height: 84 / 28,
                     ),
                     textAlign: TextAlign.center,
@@ -71,12 +81,12 @@ class _FragmentThreeState extends State<FragmentThree> {
                   padding:
                       EdgeInsets.only(top: 10, right: 8, left: 8, bottom: 40),
                   child: Text(
-                    "يوفر لك أفضل التمارين التي تناسب أهدافك!",
-                    style: const TextStyle(
+                    "! حضر أدواتك و لنبدأ",
+                    style: TextStyle(
                       fontFamily: "Poppins",
                       fontSize: 22,
                       fontWeight: FontWeight.w600,
-                      color: white,
+                      color: Get.isDarkMode ? white : black,
                       // height: 84 / 28,
                     ),
                     textAlign: TextAlign.center,

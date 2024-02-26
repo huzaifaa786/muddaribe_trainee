@@ -9,7 +9,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/api/notification_api.dart';
 import 'package:mudarribe_trainee/components/appbar.dart';
-import 'package:mudarribe_trainee/components/basic_loader%20copy.dart';
+import 'package:mudarribe_trainee/components/basic_loader.dart';
 import 'package:mudarribe_trainee/components/notificationView/excerciseplan.dart';
 import 'package:mudarribe_trainee/components/notificationView/newmessage.dart';
 import 'package:mudarribe_trainee/components/notificationView/nutritionplan.dart';

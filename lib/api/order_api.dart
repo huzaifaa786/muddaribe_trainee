@@ -83,63 +83,63 @@ class OrderApi {
 
   static Future<List<CombinedOrderData>> fetchOrders() async {
     final traineeId = FirebaseAuth.instance.currentUser!.uid;
-// .orderBy('orderId',descending: true)
-    List<CombinedOrderData> combineOrders = [];
+
+    // Fetch orders
     QuerySnapshot orders = await FirebaseFirestore.instance
         .collection('orders')
         .where("userId", isEqualTo: traineeId)
         .orderBy('orderId', descending: true)
         .get();
 
-    if (orders.docs.isNotEmpty) {
-      for (var orderDoc in orders.docs) {
-        if (orderDoc.exists) {
-          Map<String, dynamic> orderData =
-              orderDoc.data()! as Map<String, dynamic>;
-          TrainerOrder order = TrainerOrder.fromJson(orderData);
-          DocumentSnapshot trainerSnapshot = await FirebaseFirestore.instance
-              .collection('users')
-              .doc(order.trainerId)
-              .get();
-          Map<String, dynamic> trainerData =
-              trainerSnapshot.data()! as Map<String, dynamic>;
-          Trainer trainer = Trainer.fromMap(trainerData);
+    List<Future<CombinedOrderData>> futures = [];
 
-          if (order.type == 'My_Plan') {
-            DocumentSnapshot personalPlanSnapshot = await FirebaseFirestore
-                .instance
+    for (var orderDoc in orders.docs) {
+      if (orderDoc.exists) {
+        Map<String, dynamic> orderData =
+            orderDoc.data()! as Map<String, dynamic>;
+        TrainerOrder order = TrainerOrder.fromJson(orderData);
+
+        // Fetch trainer data
+        Future<DocumentSnapshot> trainerSnapshot = FirebaseFirestore.instance
+            .collection('users')
+            .doc(order.trainerId)
+            .get();
+
+        // Fetch package data (either personal plan or general package)
+        Future<DocumentSnapshot> packageSnapshot = order.type == 'My_Plan'
+            ? FirebaseFirestore.instance
                 .collection('personalplans')
                 .doc(order.planId)
-                .get();
-            Map<String, dynamic> personalPlanData =
-                personalPlanSnapshot.data()! as Map<String, dynamic>;
-
-            TrainerPackage personalPlan =
-                TrainerPackage.fromJson(personalPlanData);
-
-            combineOrders.add(CombinedOrderData(
-                order: order,
-                combinedPackageData: CombinedPackageData(
-                    trainer: trainer, package: personalPlan)));
-          } else {
-            DocumentSnapshot pacakageSnapshot = await FirebaseFirestore.instance
+                .get()
+            : FirebaseFirestore.instance
                 .collection('packages')
                 .doc(order.planId)
                 .get();
 
-            Map<String, dynamic> pacakageData =
-                pacakageSnapshot.data()! as Map<String, dynamic>;
+        futures.add(Future.wait([trainerSnapshot, packageSnapshot])
+            .then((List<DocumentSnapshot> snapshots) {
+          Map<String, dynamic> trainerData =
+              snapshots[0].data()! as Map<String, dynamic>;
+          Trainer trainer = Trainer.fromMap(trainerData);
 
-            TrainerPackage package = TrainerPackage.fromJson(pacakageData);
+          Map<String, dynamic> packageData =
+              snapshots[1].data()! as Map<String, dynamic>;
 
-            combineOrders.add(CombinedOrderData(
-                order: order,
-                combinedPackageData:
-                    CombinedPackageData(trainer: trainer, package: package)));
-          }
-        }
+          TrainerPackage package = order.type == 'My_Plan'
+              ? TrainerPackage.fromJson(packageData)
+              : TrainerPackage.fromJson(packageData);
+
+          return CombinedOrderData(
+              order: order,
+              combinedPackageData:
+                  CombinedPackageData(trainer: trainer, package: package));
+        }));
       }
     }
+
+    // Wait for all futures to complete
+    List<CombinedOrderData> combineOrders = await Future.wait(futures);
+
     return combineOrders;
   }
 
@@ -151,50 +151,49 @@ class OrderApi {
         _firestore.collection("trainer_plan_files");
     final CollectionReference _trainerCollection =
         _firestore.collection("users");
+
     try {
       print(FirebaseAuth.instance.currentUser!.uid);
       final result = await _trainerplanCollection
           .where('category', isEqualTo: category)
           .where('traineeId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .orderBy('id', descending: true)
           .get();
 
       List<Plan> plans = [];
       List<CombinedTraineeFileData> combinedata = [];
-      for (var userPlan in result.docs) {
+
+      await Future.wait(result.docs.map((userPlan) async {
         var datadoc = userPlan.data() as Map<String, dynamic>;
+
+        final fileAndVideoResult = await _trainerFilesCollection
+            .where('planId', isEqualTo: datadoc['id'])
+            .where('fileType', whereIn: ['pdf', 'mp4']).get();
 
         String fileLength = '0';
         String videoLength = '0';
-        final fileResult = await _trainerFilesCollection
-            .where('planId', isEqualTo: datadoc['id'])
-            .where('fileType', isEqualTo: 'pdf')
-            .get();
-        final videoResult = await _trainerFilesCollection
-            .where('planId', isEqualTo: datadoc['id'])
-            .where('fileType', isEqualTo: 'mp4')
-            .get();
-        if (fileResult.docs.isNotEmpty || videoResult.docs.isNotEmpty) {
-          fileLength = fileResult.docs.length.toString();
-          videoLength = videoResult.docs.length.toString();
+
+        for (var fileResult in fileAndVideoResult.docs) {
+          if (fileResult['fileType'] == 'pdf') {
+            fileLength = (int.parse(fileLength) + 1).toString();
+          } else if (fileResult['fileType'] == 'mp4') {
+            videoLength = (int.parse(videoLength) + 1).toString();
+          }
         }
-        // datadoc['description'] = '$fileLength files.tr ,$videoLength videos';
+
         datadoc['description'] = '${'files'.tr} ' +
             '$fileLength ,' +
             '${'videos'.tr} ' +
             '$videoLength';
 
-        print(datadoc);
-        // plans.add(Plan.fromJson(datadoc));
-        DocumentSnapshot trainerSnapshot = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(datadoc['trainerId'])
-            .get();
+        DocumentSnapshot trainerSnapshot =
+            await _trainerCollection.doc(datadoc['trainerId']).get();
         Map<String, dynamic> trainerData =
             trainerSnapshot.data()! as Map<String, dynamic>;
         Trainer trainer = Trainer.fromMap(trainerData);
         combinedata.add(CombinedTraineeFileData(
             trainer: trainer, plan: Plan.fromJson(datadoc)));
-      }
+      }));
 
       return combinedata;
     } on PlatformException catch (e) {
@@ -255,11 +254,10 @@ class OrderApi {
   // }
 
   static Future<List<PlanFile>> getFilesByPlanId(planId) async {
-    print('object********************************');
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('trainer_plan_files')
-          .where('planId', isEqualTo: planId)
+          .where('planId', isEqualTo: planId).orderBy('id',descending: true)
           .get();
       print('$querySnapshot querySnapshot');
       List<PlanFile> files = querySnapshot.docs

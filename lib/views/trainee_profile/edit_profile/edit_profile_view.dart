@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:mudarribe_trainee/components/basic_loader.dart';
 import 'package:mudarribe_trainee/components/color_button.dart';
 import 'package:mudarribe_trainee/components/topbar.dart';
 import 'package:mudarribe_trainee/components/underline_input.dart';
@@ -185,7 +186,7 @@ class _TraineeEditProfileViewState extends State<TraineeEditProfileView> {
                 ),
               ),
             )
-          : SizedBox(),
+          : BasicLoader(),
     );
   }
 }

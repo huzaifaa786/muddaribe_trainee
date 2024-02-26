@@ -13,7 +13,7 @@ class CategoriesController extends GetxController {
 
   // Assuming you're setting these collections somewhere in your code...
 
-  fetchDataFromFirebase(String category) async {
+  Future<void> fetchDataFromFirebase(String category) async {
     busyController.setBusy(true);
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
@@ -22,22 +22,27 @@ class CategoriesController extends GetxController {
               .where('categories', arrayContains: category)
               .get() as QuerySnapshot<Map<String, dynamic>>;
 
-      List<Trainer> fetchedTrainers = [];
-
-      for (var doc in querySnapshot.docs) {
+      List<Future<Trainer>> trainerFutures =
+          querySnapshot.docs.map((doc) async {
         Trainer trainer = Trainer.fromMap(doc.data());
+
         QuerySnapshot savedTrainerSnapshot = await FirebaseFirestore.instance
             .collection('savedTrainer')
             .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
             .where('tarinerId', isEqualTo: trainer.id)
             .get();
+
         if (savedTrainerSnapshot.docs.isNotEmpty) {
           trainer.isSaved = true;
         }
+
         double ratingSum = await fetchCompanyRatingSum(trainer.id);
         trainer.rating = ratingSum;
-        fetchedTrainers.add(trainer);
-      }
+
+        return trainer;
+      }).toList();
+
+      List<Trainer> fetchedTrainers = await Future.wait(trainerFutures);
 
       trainersList = fetchedTrainers;
       update();
@@ -48,24 +53,21 @@ class CategoriesController extends GetxController {
   }
 
   Future<double> fetchCompanyRatingSum(String trainerId) async {
-    double sum = 0.0;
-    int totalRatings = 0;
-
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('ratings')
           .where('trainerId', isEqualTo: trainerId)
           .get();
 
-      totalRatings = querySnapshot.docs.length;
-
-      sum = querySnapshot.docs.fold(
+      int totalRatings = querySnapshot.docs.length;
+      double sum = querySnapshot.docs.fold(
           0.0, (previousValue, doc) => previousValue + (doc['rating'] ?? 0.0));
+
+      double averageRating = totalRatings > 0 ? sum / totalRatings : 0.0;
+      return averageRating;
     } catch (e) {
       print('Error fetching rating sum for company $trainerId: $e');
+      return 0.0; // Handle error by returning a default value
     }
-
-    double averageRating = totalRatings > 0 ? sum / totalRatings : 0.0;
-    return averageRating;
   }
 }

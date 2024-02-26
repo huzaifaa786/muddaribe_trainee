@@ -1,4 +1,3 @@
-import 'package:mudarribe_trainee/models/notification.dart';
 import 'package:mudarribe_trainee/models/plan.dart';
 import 'package:mudarribe_trainee/models/trainer.dart';
 

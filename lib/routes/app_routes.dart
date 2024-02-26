@@ -27,5 +27,4 @@ class AppRoutes {
   static const reports = '/reports';
   static const stories = '/stories';
   static const search = '/search';
-
 }

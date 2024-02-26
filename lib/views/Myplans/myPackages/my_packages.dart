@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mudarribe_trainee/api/order_api.dart';
-import 'package:mudarribe_trainee/components/basic_loader%20copy.dart';
+import 'package:mudarribe_trainee/components/basic_loader.dart';
 import 'package:mudarribe_trainee/components/exercises_card2.dart';
 import 'package:mudarribe_trainee/components/topbar.dart';
 import 'package:mudarribe_trainee/models/combine_order.dart';

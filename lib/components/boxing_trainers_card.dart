@@ -97,7 +97,7 @@ class BoxingTrainersCard extends StatelessWidget {
                         : Row(
                             children: [
                               Icon(Icons.star, color: borderDown, size: 20),
-                              Text(' $rating',
+                              Text(' ${rating.toStringAsFixed(1)}',
                                   style: TextStyle(
                                     fontSize: 10,
                                     fontWeight: FontWeight.w500,
