@@ -12,6 +12,7 @@ SplashController splashController = SplashController.instance;
 SignUpController signUpController = SignUpController.instance;
 SignInController signInController = SignInController.instance;
 SavedController savedController = SavedController.instance;
+// HomeController homeController = HomeController.instance;
 ForgotPasswordContoller forgotPasswordContoller =
     ForgotPasswordContoller.instance;
 EventcheckoutController eventcheckoutController =

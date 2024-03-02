@@ -6,7 +6,8 @@ import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:badges/badges.dart' as badges;
 
 class ChatTile extends StatelessWidget {
-  const ChatTile({super.key, this.ontap, this.time, this.image,this.name, this.seen});
+  const ChatTile(
+      {super.key, this.ontap, this.time, this.image, this.name, this.seen});
   final ontap;
   final time;
   final image;
@@ -19,14 +20,10 @@ class ChatTile extends StatelessWidget {
       padding: EdgeInsets.only(top: 8, bottom: 2),
       child: Container(
         // decoration: BoxDecoration(
+        //   color: white,
         //   boxShadow: [
-        //     BoxShadow(
-        //       color: Color(0x21000000),
-        //       blurRadius: 28,
-        //       offset: Offset(2, 2),
-        //       spreadRadius: 0,
-        //     )
-        //   ],
+        //       BoxShadow(color: Colors.grey.withOpacity(0.4), blurRadius: 12),
+        //     ],
         // ),
         child: Center(
           child: ListTile(
@@ -48,7 +45,7 @@ class ChatTile extends StatelessWidget {
               children: [
                 Container(
                   constraints: BoxConstraints(
-                      maxWidth: MediaQuery.of(context).size.width * 0.4),
+                      maxWidth: MediaQuery.of(context).size.width * 0.5),
                   child: Text(
                     name,
                     maxLines: 2,
@@ -75,7 +72,9 @@ class ChatTile extends StatelessWidget {
                   fontFamily: "Poppins",
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
-                  color:  Get.isDarkMode ? white.withOpacity(0.5) : black.withOpacity(0.5)),
+                  color: Get.isDarkMode
+                      ? white.withOpacity(0.5)
+                      : black.withOpacity(0.5)),
             ),
             onTap: ontap,
           ),

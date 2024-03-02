@@ -38,11 +38,11 @@ class CategoryCard extends StatelessWidget {
           ],
         ),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+          // borderRadius: BorderRadius.circular(10),
         ),
         image: DecorationImage(
           image: AssetImage(image),
-          fit: BoxFit.fill,
+          fit: BoxFit.scaleDown,
         ),
       ),
       child: Align(
@@ -53,10 +53,10 @@ class CategoryCard extends StatelessWidget {
           style: TextStyle(
             color: Colors.white,
             fontSize: title == 'Calisthenics'
-                ? 16
+                ? 12
                 : title == 'Rehabilitation'
-                    ? 14
-                    : 18,
+                    ? 10
+                    : 14,
             fontWeight: FontWeight.w700,
           ),
         ),

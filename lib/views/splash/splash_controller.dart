@@ -23,7 +23,7 @@ class SplashController extends GetxController {
       if (user != null) {
         Get.offNamed(AppRoutes.footer);
       } else {
-        Get.offNamed(AppRoutes.signin);
+        Get.offNamed(AppRoutes.footer);
       }
     }
   }

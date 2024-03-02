@@ -39,22 +39,20 @@ class PostScreenCard extends StatelessWidget {
           text: "",
         ),
       ),
-      body: Directionality(
-        textDirection: TextDirection.ltr,
+      body: SingleChildScrollView(
         child: SafeArea(
           child: Container(
             width: double.infinity,
-            margin: EdgeInsets.only(bottom: 12,left: 15,right: 15),
+            margin: EdgeInsets.only(bottom: 12, left: 15, right: 15),
             padding: EdgeInsets.only(top: 20, bottom: 20),
             decoration: BoxDecoration(
-              color: Get.isDarkMode? bgContainer:lightbgColor,
-              borderRadius: BorderRadius.circular(10),
-            ),
+                borderRadius: BorderRadius.circular(10),
+                color: Get.isDarkMode ? Color(0xFF0F0F0F) : lightbgColor),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left: 14),
+                  padding: EdgeInsets.only(left: 14, right: 14),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -85,52 +83,35 @@ class PostScreenCard extends StatelessWidget {
                                   // Image.network(userimg),
                                 )),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: 8,
-                            ),
-                            child: Text(
-                              username,
-                              style: TextStyle(
-                                color:Get.isDarkMode?  Colors.white:black,
-                                fontSize: 14,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w500,
+                          InkWell(
+                            onTap: onProfileImageTap,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 8, right: 8),
+                              child: Text(
+                                username,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
                           ),
                         ],
                       ),
                       // InkWell(
-                      //   hoverColor: white,
                       //   onTap: onsaved,
-                      //   child: Padding(
-                      //     padding: EdgeInsets.all(13),
-                      //     child: save == false
-                      //         ? Image.asset('assets/images/bookmark1.png')
-                      //         : Image.asset('assets/images/bookmark-light.png'),
-                      //   ),
-                      // )
-                      // : InkWell(
-                      //     onTap: onsaved,
-                      //     child: Padding(
-                      //       padding: EdgeInsets.all(13),
-                      //       child:
-                      //           Image.asset('assets/images/bookmark-light.png'),
-                      //     ),
-                      //   ),
+                      //   child: save == false
+                      //       ? SvgPicture.asset('assets/images/unsaved.svg')
+                      //       : SvgPicture.asset('assets/images/post_saved2.svg'),
+                      // ),
                     ],
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(
-                    left: 10,
-                    right: 10,
-                    top: 16,
-                  ),
+                  padding: EdgeInsets.only(left: 10, right: 10, top: 16),
                   child: Container(
                     height: 353,
-                    // width: 370,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: CachedNetworkImage(
@@ -141,60 +122,59 @@ class PostScreenCard extends StatelessWidget {
                       ),
                     ),
                     decoration: BoxDecoration(
-                      color: bgContainer,
+                      color: Get.isDarkMode ? bgContainer : lightbgColor,
                     ),
                   ),
                 ),
                 Row(
                   children: [
                     Container(
-                      constraints: BoxConstraints(maxWidth: Get.width*0.89),
-                      padding: EdgeInsets.only(
-                        left: 10,
-                        right: 10,
-                        top: 18,
+                      constraints: BoxConstraints(maxWidth: Get.width * 0.8),
+                      padding: EdgeInsets.only(left: 10, right: 10, top: 18),
+                      child: Text(
+                        username + '  ',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: Get.isDarkMode ? Colors.white : Colors.black,
+                          fontSize: 14,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                      child: RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: username,
-                              style: TextStyle(
-                                color: Get.isDarkMode? Colors.white:black,
-                                fontSize: 14,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            TextSpan(text: '  '),
-                            TextSpan(
-                              text: postdescription,
-                              style: TextStyle(
-                                color: Get.isDarkMode? Colors.white.withOpacity(0.6):black.withOpacity(0.6),
-                                fontSize: 12,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Container(
+                      constraints: BoxConstraints(maxWidth: Get.width * 0.9),
+                      padding: EdgeInsets.only(left: 10, right: 10, top: 8),
+                      child: Text(
+                        postdescription,
+                        style: TextStyle(
+                          color: Get.isDarkMode
+                              ? Colors.white.withOpacity(0.6)
+                              : Colors.black.withOpacity(0.6),
+                          fontSize: 12,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsets.only(
-                    left: 10,
-                    right: 10,
-                    top: 5,
-                  ),
+                  padding: EdgeInsets.only(left: 10, right: 10, top: 5),
                   child: Row(
                     children: [
                       Text(
                         time,
                         style: TextStyle(
-                          color: Colors.white.withOpacity(0.5),
-                          fontSize: 12,
+                          color: Get.isDarkMode
+                              ? Colors.white.withOpacity(0.5)
+                              : Colors.black.withOpacity(0.5),
+                          fontSize: 10,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
                         ),

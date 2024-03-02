@@ -16,9 +16,6 @@ import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/views/home/home_controller.dart';
 import 'package:mudarribe_trainee/views/search_trainer/search_trianer_binding.dart';
-import 'package:provider/provider.dart';
-
-// import 'package:mudarribe_trainee/components/topbar.dart';
 
 class SerachView extends StatefulWidget {
   const SerachView({super.key});
@@ -39,13 +36,6 @@ class _SerachViewState extends State<SerachView> {
       initState: (state) {
         Future.delayed(Duration(milliseconds: 10), () {
           state.controller!.fetchTrainers();
-          // state.controller!.orderStream?.listen((List<Trainer>? data) {
-          //   if (data != null) {
-          //     setState(() {
-          //       state.controller!.items = data;
-          //     });
-          //   }
-          // });
         });
       },
       autoRemove: false,
@@ -82,7 +72,7 @@ class _SerachViewState extends State<SerachView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(top: 15, bottom: 15),
+                            padding: EdgeInsets.only( bottom: 10),
                             child: Row(
                               children: [
                                 Flexible(

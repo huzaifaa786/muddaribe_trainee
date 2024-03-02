@@ -2,6 +2,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mudarribe_trainee/api/attenddee_api.dart';
 import 'package:mudarribe_trainee/components/button.dart';
@@ -76,19 +77,20 @@ class BannerCard extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Container(
-                                height: 15,
-                                width: 15,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                        "assets/images/calender.png"),
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              ),
+                              SvgPicture.asset('assets/images/date.svg'),
+                              // Container(
+                              //   height: 15,
+                              //   width: 15,
+                              //   decoration: BoxDecoration(
+                              //     image: DecorationImage(
+                              //       image: AssetImage(
+                              //           "assets/images/calender.png"),
+                              //       fit: BoxFit.fill,
+                              //     ),
+                              //   ),
+                              // ),
                               Padding(
-                                padding: const EdgeInsets.only(left: 15.0,right: 15),
+                                padding: const EdgeInsets.only(left: 8,right: 8),
                                 child: Text(
                                   '$date - $enddate',
                                   style: TextStyle(
@@ -120,20 +122,21 @@ class BannerCard extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Container(
-                                height: 15,
-                                width: 15,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image:
-                                        AssetImage("assets/images/clock.png"),
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              ),
+                              SvgPicture.asset('assets/images/time.svg'),
+                              // Container(
+                              //   height: 15,
+                              //   width: 15,
+                              //   decoration: BoxDecoration(
+                              //     image: DecorationImage(
+                              //       image:
+                              //           AssetImage("assets/images/clock.png"),
+                              //       fit: BoxFit.fill,
+                              //     ),
+                              //   ),
+                              // ),
                               Directionality(textDirection: TextDirection.ltr,
                                 child: Padding(
-                                  padding: const EdgeInsets.only(left: 15.0,right: 15),
+                                  padding: const EdgeInsets.only(left: 8,right: 8),
                                   child: Text(
                                     '$startTime - $endTime',
                                     style: TextStyle(

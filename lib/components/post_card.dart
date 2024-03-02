@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last, prefer_typing_uninitialized_variables
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
@@ -36,7 +39,7 @@ class PostCard extends StatelessWidget {
       padding: EdgeInsets.only(top: 20, bottom: 20),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Get.isDarkMode ? Color(0xFF0F0F0F) : lightbgColor),
+          color: Get.isDarkMode ? bgContainer : lightbgColor),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -88,24 +91,14 @@ class PostCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                InkWell(
-                  hoverColor: white,
-                  onTap: onsaved,
-                  child: Padding(
-                    padding: EdgeInsets.all(13),
-                    child: save == false
-                        ? Image.asset('assets/images/bookmark1.png')
-                        : Image.asset('assets/images/bookmark-light.png'),
-                  ),
-                )
-                // : InkWell(
-                //     onTap: onsaved,
-                //     child: Padding(
-                //       padding: EdgeInsets.all(13),
-                //       child:
-                //           Image.asset('assets/images/bookmark-light.png'),
-                //     ),
-                //   ),
+                FirebaseAuth.instance.currentUser == null
+                    ? Container()
+                    : InkWell(
+                        onTap: onsaved,
+                        child: save == false
+                            ? SvgPicture.asset('assets/images/unsaved.svg')
+                            : SvgPicture.asset('assets/images/post_saved2.svg'),
+                      ),
               ],
             ),
           ),
@@ -135,7 +128,7 @@ class PostCard extends StatelessWidget {
           Row(
             children: [
               Container(
-                constraints: BoxConstraints(maxWidth: Get.width * 0.6),
+                constraints: BoxConstraints(maxWidth: Get.width * 0.8),
                 padding: EdgeInsets.only(left: 10, right: 10, top: 18),
                 child: Text(
                   username + '  ',
@@ -149,34 +142,29 @@ class PostCard extends StatelessWidget {
                   ),
                 ),
               ),
-              
             ],
           ),
           Row(
             children: [
               Container(
-                      constraints: BoxConstraints(maxWidth: Get.width * 0.5),
-                      padding: EdgeInsets.only(left: 10, right: 10, top: 8),
-                      child: Text(
-                        postdescription,
-                        style: TextStyle(
-                          color: Get.isDarkMode
-                              ? Colors.white.withOpacity(0.6)
-                              : Colors.black.withOpacity(0.6),
-                          fontSize: 12,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
+                constraints: BoxConstraints(maxWidth: Get.width * 0.9),
+                padding: EdgeInsets.only(left: 10, right: 10, top: 8),
+                child: Text(
+                  postdescription,
+                  style: TextStyle(
+                    color: Get.isDarkMode
+                        ? Colors.white.withOpacity(0.6)
+                        : Colors.black.withOpacity(0.6),
+                    fontSize: 12,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
             ],
           ),
           Padding(
-            padding: EdgeInsets.only(
-              left: 10,
-              right: 10,
-              top: 5,
-            ),
+            padding: EdgeInsets.only(left: 10, right: 10, top: 5),
             child: Row(
               children: [
                 Text(

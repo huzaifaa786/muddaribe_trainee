@@ -31,16 +31,16 @@ class ProfileController extends GetxController {
   Future logout() async {
     try {
       await _authApi.logout();
-          Get.updateLocale(const Locale('en', 'US'));
-    GetStorage box = GetStorage();
-    await box.write('locale', 'en');
-    box.read('locale');
+      Get.updateLocale(const Locale('en', 'US'));
+      GetStorage box = GetStorage();
+      await box.write('locale', 'en');
+      box.read('locale');
       // GetStorage box = GetStorage();
       // await box.write('Locale', 'en');
       // GoogleTranslatorController.init(
       //     'AIzaSyBOr3bXgN2bj9eECzSudyj_rgIFjyXkdn8', Locale('ur'),
       //     cacheDuration: Duration(), translateTo: Locale('en'));
-      Get.offAllNamed(AppRoutes.signin);
+      Get.offAllNamed(AppRoutes.footer);
     } on AuthApiException catch (e) {
       UiUtilites.errorSnackbar('Logout Failed'.tr, e.toString());
     }

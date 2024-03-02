@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
@@ -114,11 +116,12 @@ class BoxingTrainersCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
+                  FirebaseAuth.instance.currentUser == null ? Container():
                   InkWell(
                     onTap: ontap,
                     child: isSaved == false
-                        ? Image.asset('assets/images/bookmark1.png')
-                        : Image.asset('assets/images/bookmark-light.png'),
+                      ? SvgPicture.asset('assets/images/unsaved.svg')
+                      : SvgPicture.asset('assets/images/post_saved2.svg'),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 7),

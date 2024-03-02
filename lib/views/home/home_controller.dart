@@ -1,8 +1,7 @@
 // ignore_for_file: unused_field, constant_identifier_names
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:intl/intl.dart';
 import 'package:mudarribe_trainee/api/post_api.dart';
 import 'package:mudarribe_trainee/models/event.dart';
 
@@ -33,7 +32,7 @@ enum Categories {
   Padel,
   Calisthenics,
   animal_flow,
-  rehabilitation_Coach, 
+  rehabilitation_Coach,
   Aerobics,
   Plates,
   kettle_bell
@@ -49,12 +48,32 @@ class HomeController extends GetxController {
     update();
   }
 
-  @override
-  void onInit() async {
-    print("call onInit"); // this line not printing
-    print(DateFormat('dd/MM/yyyy').format(DateTime.now()).toString());
-    fetchDataFromFirestore();
-    super.onInit();
+  int chatlength = 0;
+  int notilength = 0;
+  void countListener() {
+    FirebaseFirestore.instance
+        .collection('messages')
+        .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .where('userSeen', isEqualTo: false)
+        .snapshots()
+        .listen((QuerySnapshot<Map<String, dynamic>> querySnapshot) {
+      chatlength = querySnapshot.docs.length;
+      print('Number of documents: $chatlength');
+      update();
+    });
+  }
+
+  void notiCountListener() {
+    FirebaseFirestore.instance
+        .collection('notifications')
+        .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .where('seen', isEqualTo: false)
+        .snapshots()
+        .listen((QuerySnapshot<Map<String, dynamic>> querySnapshot) {
+      notilength = querySnapshot.docs.length;
+      print('Number of notifications: $notilength');
+      update();
+    });
   }
 
   List<Events> bannersList = [];
@@ -66,8 +85,7 @@ class HomeController extends GetxController {
         .map((documentSnapshot) =>
             Events.fromMap(documentSnapshot.data() as Map<String, dynamic>))
         .toList();
-    print("BAnner Fetched");
-
+    print("BAnner Fetched ${bannersList.length}");
     update();
   }
 

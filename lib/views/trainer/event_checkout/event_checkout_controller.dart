@@ -38,7 +38,7 @@ class EventcheckoutController extends GetxController {
     super.onInit();
   }
 
-  void payEventCharges(pricetotal,trainerId) async {
+  void payEventCharges(pricetotal, trainerId) async {
     bool isPayment = await _paymentService.makePayment(int.parse(pricetotal));
 
     if (isPayment) {
@@ -58,6 +58,7 @@ class EventcheckoutController extends GetxController {
         'content': 'Event joined successfully.',
         'orderId': '',
         'seen': false,
+        'trainerSeen': false,
         "planId": '',
         'planName': '',
         'type': 'event'
@@ -69,14 +70,14 @@ class EventcheckoutController extends GetxController {
 
   void applyPromoCode(String trainerId) async {
     if (promoCode.text.isEmpty) {
-      UiUtilites.errorSnackbar('Empty Promo Code'.tr, 'Please enter code first'.tr);
+      UiUtilites.errorSnackbar(
+          'Empty Promo Code'.tr, 'Please enter code first'.tr);
       return;
     }
     CouponCode? couponCode =
         await _couponCodeApi.getPromoCode(promoCode.text, trainerId);
     if (couponCode != null) {
-      discount =
-          int.parse(price) * int.parse(couponCode.percentage) ~/ 100;
+      discount = int.parse(price) * int.parse(couponCode.percentage) ~/ 100;
       total = (int.parse(price) - discount).toString();
       isCode = !isCode;
       update();

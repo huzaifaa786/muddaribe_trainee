@@ -5,6 +5,7 @@ class Notifications {
   final String planId;
   final String planName;
   final bool seen;
+  final bool trainerSeen;
   final String trainerId;
   final String userId;
   final String type;
@@ -16,6 +17,7 @@ class Notifications {
       required this.planId,
       required this.planName,
       required this.seen,
+      required this.trainerSeen,
       required this.trainerId,
       required this.userId,
       required this.type});
@@ -27,7 +29,8 @@ class Notifications {
       orderId: json['orderId'] ?? '',
       planId: json['planId'] ?? '',
       planName: json['planName'] ?? '',
-      seen: json['seen'],
+      seen: json['seen'] ?? false,
+      trainerSeen: json['trainerSeen'] ?? false,
       trainerId: json['trainerId'],
       type: json['type'],
       userId: json['userId'] ?? '',

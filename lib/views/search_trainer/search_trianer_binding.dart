@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:mudarribe_trainee/helper/loading_helper.dart';
 import 'package:mudarribe_trainee/models/trainer.dart';
@@ -10,8 +9,8 @@ import 'package:mudarribe_trainee/views/home/home_controller.dart';
 class TSearchController extends GetxController {
   static TSearchController get instance => Get.find();
   final BusyController busyController = Get.find();
-  List<Trainer> allItems = []; // Store all trainers
-  List<Trainer> items = []; // Current displayed trainers
+  List<Trainer> allItems = [];
+  List<Trainer> items = [];
   Languages lang = Languages.English;
   Gender gender = Gender.male;
   Categories category = Categories.body_Building;

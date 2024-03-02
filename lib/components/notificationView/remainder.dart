@@ -6,13 +6,14 @@ import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class RemainderView extends StatefulWidget {
-  const RemainderView({Key? key, this.name, this.ontap, this.content, this.img,this.text})
+  const RemainderView({Key? key, this.name, this.ontap, this.content, this.img,this.text,this.isRead})
       : super(key: key);
   final content;
   final name;
   final ontap;
   final img;
   final text;
+  final isRead;
   @override
   State<RemainderView> createState() => _RemainderViewState();
 }
@@ -54,6 +55,15 @@ class _RemainderViewState extends State<RemainderView> {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
+                    widget.isRead != false
+                          ? Container()
+                          : Container(
+                              margin: EdgeInsets.only(left: 4, right: 4),
+                              height: 10,
+                              width: 10,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle, color: Colors.red),
+                            )
                   ],
                 ),
                 Row(

@@ -36,25 +36,28 @@ class TrainerprofileController extends GetxController {
   String? selectedPlan = '';
   toggleplan(value) {
     selectedPlan = value;
-    
+
     update();
   }
+
   String? selectedPrice;
   toggleprice(value) {
     selectedPrice = value;
     update();
   }
 
+  String trainerId = '';
+
   @override
   void onInit() {
-    
+    if (trainerId == '') {
+      trainerId = Get.arguments;
+    }
     update();
     super.onInit();
   }
 
-    Future getTrainerData(id) async {
-
+  Future getTrainerData(id) async {
     update();
-  
   }
 }

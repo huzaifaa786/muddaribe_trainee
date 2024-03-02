@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -38,7 +41,9 @@ class _SavedViewsState extends State<SavedViews> {
         child: Scaffold(
           appBar: AppBar(
             leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios_new,),
+              icon: Icon(
+                Icons.arrow_back_ios_new,
+              ),
               onPressed: () {
                 Get.back();
               },
@@ -65,6 +70,7 @@ class _SavedViewsState extends State<SavedViews> {
                       indicatorColor: borderTop,
                       indicatorWeight: 4,
                       dividerColor: Colors.transparent,
+                      dragStartBehavior: DragStartBehavior.down,
                       tabs: [
                         Tab(
                           child: Text(
@@ -100,8 +106,10 @@ class _SavedViewsState extends State<SavedViews> {
                     ),
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 26),
+                        padding: const EdgeInsets.only(
+                            top: 26, left: 10, right: 10),
                         child: TabBarView(
+                          
                           children: [
                             StreamBuilder<QuerySnapshot>(
                               stream: SaveApi.trainerStream,
@@ -110,7 +118,9 @@ class _SavedViewsState extends State<SavedViews> {
                                   return Center(
                                       child: Text(
                                     'Error: ${snapshot.error}',
-                                    style: TextStyle(color: Get.isDarkMode? white: black),
+                                    style: TextStyle(
+                                        color:
+                                            Get.isDarkMode ? white : black),
                                   ));
                                 } else if (!snapshot.hasData) {
                                   return SizedBox(
@@ -119,12 +129,14 @@ class _SavedViewsState extends State<SavedViews> {
                                     child: Center(
                                         child: Text(
                                       'No Saved Trainer'.tr,
-                                      style: TextStyle(color: Get.isDarkMode? white: black),
+                                      style: TextStyle(
+                                          color:
+                                              Get.isDarkMode ? white : black),
                                     )),
                                   );
                                 } else {
                                   final saveTrainerSnapshot = snapshot.data;
-
+                            
                                   return snapshot.data!.docs.isNotEmpty
                                       ? FutureBuilder<List<Trainer>>(
                                           future: SaveApi.fetchTrainerData(
@@ -141,20 +153,23 @@ class _SavedViewsState extends State<SavedViews> {
                                                 child: Center(
                                                     child: Text(
                                                   'No Saved Trainer'.tr,
-                                                  style:
-                                                      TextStyle(color: Get.isDarkMode? white: black),
+                                                  style: TextStyle(
+                                                      color: Get.isDarkMode
+                                                          ? white
+                                                          : black),
                                                 )),
                                               );
                                             } else {
                                               List<Trainer> trainerss =
                                                   trainers.data!;
-
+                            
                                               return SizedBox(
                                                 height: MediaQuery.of(context)
                                                     .size
                                                     .height,
                                                 child: ListView.builder(
-                                                    itemCount: trainerss.length,
+                                                    itemCount:
+                                                        trainerss.length,
                                                     itemBuilder:
                                                         (context, index) {
                                                       Trainer trainer =
@@ -172,7 +187,8 @@ class _SavedViewsState extends State<SavedViews> {
                                                                 AppRoutes
                                                                     .trainerprofile,
                                                                 arguments:
-                                                                    trainer.id);
+                                                                    trainer
+                                                                        .id);
                                                           },
                                                           title: trainer.name,
                                                           description: trainer
@@ -211,7 +227,10 @@ class _SavedViewsState extends State<SavedViews> {
                                           child: Center(
                                               child: Text(
                                             'No Saved Trainer'.tr,
-                                            style: TextStyle(color: Get.isDarkMode? white: black),
+                                            style: TextStyle(
+                                                color: Get.isDarkMode
+                                                    ? white
+                                                    : black),
                                           )),
                                         );
                                 }
@@ -224,7 +243,9 @@ class _SavedViewsState extends State<SavedViews> {
                                   return Center(
                                       child: Text(
                                     'Error: ${snapshot.error}',
-                                    style: TextStyle(color: Get.isDarkMode? white: black),
+                                    style: TextStyle(
+                                        color:
+                                            Get.isDarkMode ? white : black),
                                   ));
                                 } else if (!snapshot.hasData) {
                                   print('no event data');
@@ -234,13 +255,16 @@ class _SavedViewsState extends State<SavedViews> {
                                     child: Center(
                                         child: Text(
                                       'No Saved Event'.tr,
-                                      style: TextStyle(color: Get.isDarkMode? white: black),
+                                      style: TextStyle(
+                                          color:
+                                              Get.isDarkMode ? white : black),
                                     )),
                                   );
                                 } else {
                                   final saveEventSnapshot = snapshot.data;
                                   return snapshot.data!.docs.isNotEmpty
-                                      ? FutureBuilder<List<CombinedEventData>>(
+                                      ? FutureBuilder<
+                                          List<CombinedEventData>>(
                                           future: SaveApi.fetchEventsData(
                                               saveEventSnapshot!),
                                           builder:
@@ -257,8 +281,10 @@ class _SavedViewsState extends State<SavedViews> {
                                                 child: Center(
                                                     child: Text(
                                                   'No Saved Event'.tr,
-                                                  style:
-                                                      TextStyle(color: Get.isDarkMode? white: black),
+                                                  style: TextStyle(
+                                                      color: Get.isDarkMode
+                                                          ? white
+                                                          : black),
                                                 )),
                                               );
                                             } else {
@@ -283,13 +309,16 @@ class _SavedViewsState extends State<SavedViews> {
                                                               ? true
                                                               : false;
                                                       return EventDetailsCard(
+                                                        endDate: combineEvent
+                                                            .event.todate,
                                                         eventId: combineEvent
                                                             .event.eventId,
                                                         category: combineEvent
                                                             .trainer.category
                                                             .join(' & '),
-                                                        trainerId: combineEvent
-                                                            .trainer.id,
+                                                        trainerId:
+                                                            combineEvent
+                                                                .trainer.id,
                                                         name: combineEvent
                                                             .trainer.name,
                                                         image: combineEvent
@@ -299,8 +328,9 @@ class _SavedViewsState extends State<SavedViews> {
                                                             .event.imageUrl,
                                                         address: combineEvent
                                                             .event.address,
-                                                        startTime: combineEvent
-                                                            .event.startTime,
+                                                        startTime:
+                                                            combineEvent.event
+                                                                .startTime,
                                                         endTime: combineEvent
                                                             .event.endTime,
                                                         date: combineEvent
@@ -344,7 +374,10 @@ class _SavedViewsState extends State<SavedViews> {
                                           child: Center(
                                               child: Text(
                                             'No Saved Event'.tr,
-                                            style: TextStyle(color: Get.isDarkMode? white: black),
+                                            style: TextStyle(
+                                                color: Get.isDarkMode
+                                                    ? white
+                                                    : black),
                                           )),
                                         );
                                 }
@@ -357,7 +390,9 @@ class _SavedViewsState extends State<SavedViews> {
                                   return Center(
                                       child: Text(
                                     'Error: ${snapshot.error}',
-                                    style: TextStyle(color: Get.isDarkMode? white: black),
+                                    style: TextStyle(
+                                        color:
+                                            Get.isDarkMode ? white : black),
                                   ));
                                 } else if (!snapshot.hasData) {
                                   return SizedBox(
@@ -366,7 +401,9 @@ class _SavedViewsState extends State<SavedViews> {
                                     child: Center(
                                         child: Text(
                                       'No Saved Posts'.tr,
-                                      style: TextStyle(color: Get.isDarkMode? white: black),
+                                      style: TextStyle(
+                                          color:
+                                              Get.isDarkMode ? white : black),
                                     )),
                                   );
                                 } else {
@@ -375,12 +412,16 @@ class _SavedViewsState extends State<SavedViews> {
                                       ? FutureBuilder<List<CombinedData>>(
                                           future: SaveApi.fetchPostsData(
                                               savePostSnapshot!),
-                                          builder: (context, combinedPostData) {
+                                          builder:
+                                              (context, combinedPostData) {
                                             if (combinedPostData.hasError) {
                                               return Center(
                                                   child: Text(
                                                 'Error: ${combinedPostData.error}',
-                                                style: TextStyle(color: Get.isDarkMode? white: black),
+                                                style: TextStyle(
+                                                    color: Get.isDarkMode
+                                                        ? white
+                                                        : black),
                                               ));
                                             } else if (!combinedPostData
                                                 .hasData) {
@@ -390,8 +431,10 @@ class _SavedViewsState extends State<SavedViews> {
                                                 child: Center(
                                                     child: Text(
                                                   'No Saved Posts'.tr,
-                                                  style:
-                                                      TextStyle(color: Get.isDarkMode? white: black),
+                                                  style: TextStyle(
+                                                      color: Get.isDarkMode
+                                                          ? white
+                                                          : black),
                                                 )),
                                               );
                                             } else {
@@ -408,16 +451,19 @@ class _SavedViewsState extends State<SavedViews> {
                                                       CombinedData postdata =
                                                           posts[index];
                                                       String time;
-                                                      int timestamp = int.parse(
-                                                          postdata.post.postId);
+                                                      int timestamp =
+                                                          int.parse(postdata
+                                                              .post.postId);
                                                       DateTime dateTime = DateTime
                                                           .fromMillisecondsSinceEpoch(
                                                               timestamp);
                                                       DateTime now =
                                                           DateTime.now();
-                                                      Duration difference = now
-                                                          .difference(dateTime);
-                                                      if (difference.inSeconds <
+                                                      Duration difference =
+                                                          now.difference(
+                                                              dateTime);
+                                                      if (difference
+                                                              .inSeconds <
                                                           60) {
                                                         time = 'just now';
                                                       } else if (difference
@@ -436,7 +482,8 @@ class _SavedViewsState extends State<SavedViews> {
                                                             .format(dateTime);
                                                       }
                                                       final docs =
-                                                          savePostSnapshot.docs;
+                                                          savePostSnapshot
+                                                              .docs;
                                                       bool saved =
                                                           docs.isNotEmpty
                                                               ? true
@@ -482,7 +529,10 @@ class _SavedViewsState extends State<SavedViews> {
                                           child: Center(
                                               child: Text(
                                             'No Saved Posts'.tr,
-                                            style: TextStyle(color: Get.isDarkMode? white: black),
+                                            style: TextStyle(
+                                                color: Get.isDarkMode
+                                                    ? white
+                                                    : black),
                                           )),
                                         );
                                 }

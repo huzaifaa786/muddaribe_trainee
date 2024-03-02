@@ -2,31 +2,27 @@
 
 import 'dart:async';
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:mudarribe_trainee/services/notification_service.dart';
 import 'package:mudarribe_trainee/utils/controller_initlization.dart';
 import 'package:mudarribe_trainee/utils/ui_utils.dart';
 import 'package:mudarribe_trainee/views/chat/chat_plan_card.dart';
-import 'package:mudarribe_trainee/views/video/video_view.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:mudarribe_trainee/views/chat/full_photo_page.dart';
+import 'package:mudarribe_trainee/views/chat/partials/btn.dart';
+import 'package:mudarribe_trainee/views/chat/partials/receive_messages.dart';
+import 'package:mudarribe_trainee/views/chat/partials/send_messages.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:mudarribe_trainee/models/message_chat.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/views/chat/constants.dart';
 import 'package:mudarribe_trainee/views/chat/controller.dart';
-import 'package:mudarribe_trainee/views/chat/pdf_view.dart';
 import 'package:provider/provider.dart';
 import 'dart:ui' as ui;
 import 'widgets.dart';
@@ -58,9 +54,9 @@ class ChatPageState extends State<ChatPage> {
   final TextEditingController textEditingController = TextEditingController();
   final ScrollController listScrollController = ScrollController();
   final FocusNode focusNode = FocusNode();
-
+  StreamSubscription<DocumentSnapshot>? chatSubscription;
+  StreamSubscription<QuerySnapshot>? messageSubscription;
   late final ChatProvider chatProvider = context.read<ChatProvider>();
-
   String trainerToken = '';
   bool isDeleted = false;
 
@@ -71,6 +67,13 @@ class ChatPageState extends State<ChatPage> {
     listScrollController.addListener(_scrollListener);
     readLocal();
     fetchtrainerToken();
+  }
+
+  @override
+  void dispose() {
+    chatSubscription?.cancel();
+    messageSubscription?.cancel();
+    super.dispose();
   }
 
   void fetchtrainerToken() async {
@@ -93,17 +96,6 @@ class ChatPageState extends State<ChatPage> {
   }
 
   double? ratings;
-  storeRating(trainerId, rating) async {
-    try {
-      String ratingId = DateTime.now().millisecondsSinceEpoch.toString();
-      await FirebaseFirestore.instance
-          .collection('ratings')
-          .doc(ratingId)
-          .set({"id": ratingId, 'trainerId': trainerId, 'rating': rating});
-    } catch (e) {
-      print('Error occurred while setting data: $e');
-    }
-  }
 
   _scrollListener() {
     if (!listScrollController.hasClients) return;
@@ -143,7 +135,8 @@ class ChatPageState extends State<ChatPage> {
         .collection(FirestoreConstants.pathMessageCollection)
         .doc(groupChatId);
 
-    docRef.get().then((docSnapshot) {
+    // Listen for changes in the document
+    chatSubscription = docRef.snapshots().listen((docSnapshot) {
       if (docSnapshot.exists) {
         docRef.update({'userSeen': true}).then((_) {
           print('Update successful');
@@ -153,19 +146,26 @@ class ChatPageState extends State<ChatPage> {
       } else {
         print('Document does not exist');
       }
-    }).catchError((error) {
-      print('Error fetching document: $error');
     });
 
-    final docRef1 =
-        FirebaseFirestore.instance.collection('companies').doc(peerId);
-    docRef1.get().then((docSnapshot) {
-      if (docSnapshot.exists) {
-        isDeleted = docSnapshot.data()!['delete'];
-        setState(() {});
-      }
-    }).catchError((error) {
-      print('Error fetching document: $error');
+    final collectionRef = FirebaseFirestore.instance
+        .collection(FirestoreConstants.pathMessageCollection)
+        .doc(groupChatId)
+        .collection(groupChatId);
+
+    // Listen for changes in the messages collection
+    final query = collectionRef.where('idFrom', isNotEqualTo: currentUserId);
+
+    // Update the seen status for each message
+    messageSubscription = query.snapshots().listen((querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        // Update the seen field for each document
+        doc.reference.update({'seen': true}).then((_) {
+          print('Update successful');
+        }).catchError((error) {
+          print('Error updating document: $error');
+        });
+      });
     });
   }
 
@@ -301,18 +301,6 @@ class ChatPageState extends State<ChatPage> {
     }
   }
 
-  get_text_between(text, start, end) {
-    var index = text.indexOf(start);
-    if (index == -1) {
-      return "";
-    }
-    var index2 = text.indexOf(end, index + start.length);
-    if (index2 == -1) {
-      return "";
-    }
-    return text.substring(index + start.length, index2);
-  }
-
   Widget buildItem(int index, DocumentSnapshot? document) {
     if (document != null) {
       MessageChat messageChat = MessageChat.fromDocument(document);
@@ -322,231 +310,15 @@ class ChatPageState extends State<ChatPage> {
           children: [
             Row(
               children: <Widget>[
-                messageChat.type == TypeMessage.text
-                    // Text
-                    ? Container(
-                        child: Text(
-                          messageChat.content,
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-                        constraints: BoxConstraints(
-                          maxWidth: 200,
-                        ),
-                        decoration: BoxDecoration(
-                            color:
-                                Get.isDarkMode ? white : grey.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(8)),
-                        margin: EdgeInsets.only(bottom: 10, right: 10),
-                      )
-                    : messageChat.type == TypeMessage.image
-                        // Image
-                        ? Container(
-                            child: TextButton(
-                              child: Material(
-                                child: Image.network(
-                                  messageChat.content,
-                                  loadingBuilder: (BuildContext context,
-                                      Widget child,
-                                      ImageChunkEvent? loadingProgress) {
-                                    if (loadingProgress == null) return child;
-                                    return Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey[300],
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(8),
-                                        ),
-                                      ),
-                                      width: 200,
-                                      height: 200,
-                                      child: Center(
-                                        child: CircularProgressIndicator(
-                                          value: loadingProgress
-                                                      .expectedTotalBytes !=
-                                                  null
-                                              ? loadingProgress
-                                                      .cumulativeBytesLoaded /
-                                                  loadingProgress
-                                                      .expectedTotalBytes!
-                                              : null,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  errorBuilder: (context, object, stackTrace) {
-                                    return Material(
-                                      child: Image.asset(
-                                        'assets/images/img_not_available.jpeg',
-                                        width: 200,
-                                        height: 200,
-                                        fit: BoxFit.cover,
-                                      ),
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(8),
-                                      ),
-                                      clipBehavior: Clip.hardEdge,
-                                    );
-                                  },
-                                  width: 200,
-                                  height: 200,
-                                  fit: BoxFit.cover,
-                                ),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8)),
-                                clipBehavior: Clip.hardEdge,
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => FullPhotoPage(
-                                      url: messageChat.content,
-                                    ),
-                                  ),
-                                );
-                              },
-                              style: ButtonStyle(
-                                  padding:
-                                      MaterialStateProperty.all<EdgeInsets>(
-                                          EdgeInsets.all(0))),
-                            ),
-                            margin: EdgeInsets.only(bottom: 10, right: 10),
-                          )
-                        : messageChat.type == TypeMessage.document
-                            ? InkWell(
-                                onTap: () {
-                                  String remotePDFpath;
-                                  createFileOfPdfUrl(messageChat.content)
-                                      .then((f) {
-                                    setState(() {
-                                      remotePDFpath = f.path;
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => PDFScreen(
-                                            path: remotePDFpath,
-                                          ),
-                                        ),
-                                      );
-                                    });
-                                  });
-                                },
-                                child: Container(
-                                  width: 250,
-                                  height: 60,
-                                  margin: EdgeInsets.only(left: 10, bottom: 10),
-                                  decoration: BoxDecoration(
-                                      color: white,
-                                      borderRadius: BorderRadius.circular(8)),
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                          padding: EdgeInsets.all(8),
-                                          margin: EdgeInsets.only(
-                                              right: 4, left: 4),
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(45),
-                                            gradient: LinearGradient(
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight,
-                                              colors: [borderTop, borderDown],
-                                              stops: [0.0, 1.0],
-                                            ),
-                                          ),
-                                          child: SvgPicture.asset(
-                                            'assets/images/document.svg',
-                                            fit: BoxFit.scaleDown,
-                                          )),
-                                      SizedBox(
-                                        width: 200,
-                                        child: Text(
-                                          get_text_between(
-                                              messageChat.content, "/o/", "?"),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )
-                            : messageChat.type == TypeMessage.video
-                                ? InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => VideoPlay(
-                                              path: messageChat.content),
-                                        ),
-                                      );
-                                    },
-                                    child: Container(
-                                      width: 250,
-                                      height: 60,
-                                      margin:
-                                          EdgeInsets.only(left: 10, bottom: 10),
-                                      decoration: BoxDecoration(
-                                          color: white,
-                                          borderRadius:
-                                              BorderRadius.circular(8)),
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                              padding: EdgeInsets.all(8),
-                                              margin: EdgeInsets.only(
-                                                  right: 4, left: 4),
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(45),
-                                                gradient: LinearGradient(
-                                                  begin: Alignment.topLeft,
-                                                  end: Alignment.bottomRight,
-                                                  colors: [
-                                                    borderTop,
-                                                    borderDown
-                                                  ],
-                                                  stops: [0.0, 1.0],
-                                                ),
-                                              ),
-                                              child: Icon(
-                                                  CupertinoIcons.video_camera)),
-                                          SizedBox(
-                                            width: 200,
-                                            child: Text(
-                                                get_text_between(
-                                                    messageChat.content,
-                                                    "/o/",
-                                                    "?"),
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(
-                                                    color: Colors.black)),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  )
-                                : SizedBox()
+                buildMessageStatusIcon(messageChat.seen),
+                buildRightMessageContent(context, messageChat),
               ],
               mainAxisAlignment: MainAxisAlignment.end,
             ),
-            isLastMessageRight(index)
-                ? Container(
-                    child: Text(
-                      DateFormat('dd MMM kk:mm').format(
-                          DateTime.fromMillisecondsSinceEpoch(
-                              int.parse(messageChat.timestamp))),
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 12,
-                          fontStyle: FontStyle.italic),
-                    ),
-                    margin: EdgeInsets.only(right: 20, bottom: 10),
-                  )
-                : SizedBox.shrink()
+            if (isLastMessageRight(index))
+              buildMessageTimestamp(messageChat.timestamp),
           ],
           crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.start,
         );
       } else {
         // Left (peer message)
@@ -557,39 +329,7 @@ class ChatPageState extends State<ChatPage> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   isLastMessageLeft(index)
-                      ? Material(
-                          child: Image.network(
-                            widget.arguments.peerAvatar,
-                            loadingBuilder: (BuildContext context, Widget child,
-                                ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) return child;
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  color: Colors.grey[300],
-                                  value: loadingProgress.expectedTotalBytes !=
-                                          null
-                                      ? loadingProgress.cumulativeBytesLoaded /
-                                          loadingProgress.expectedTotalBytes!
-                                      : null,
-                                ),
-                              );
-                            },
-                            errorBuilder: (context, object, stackTrace) {
-                              return Icon(
-                                Icons.account_circle,
-                                size: 35,
-                                color: Colors.grey[300],
-                              );
-                            },
-                            width: 35,
-                            height: 35,
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(18),
-                          ),
-                          clipBehavior: Clip.hardEdge,
-                        )
+                      ? buildPeerImage(context, widget.arguments.peerAvatar)
                       : Container(width: 35),
                   messageChat.type == TypeMessage.text
                       ? Container(
@@ -607,137 +347,11 @@ class ChatPageState extends State<ChatPage> {
                           margin: EdgeInsets.only(left: 10),
                         )
                       : messageChat.type == TypeMessage.image
-                          ? Container(
-                              child: TextButton(
-                                child: Material(
-                                  child: Image.network(
-                                    messageChat.content,
-                                    loadingBuilder: (BuildContext context,
-                                        Widget child,
-                                        ImageChunkEvent? loadingProgress) {
-                                      if (loadingProgress == null) return child;
-                                      return Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey[300],
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(8),
-                                          ),
-                                        ),
-                                        width: 200,
-                                        height: 200,
-                                        child: Center(
-                                          child: CircularProgressIndicator(
-                                            value: loadingProgress
-                                                        .expectedTotalBytes !=
-                                                    null
-                                                ? loadingProgress
-                                                        .cumulativeBytesLoaded /
-                                                    loadingProgress
-                                                        .expectedTotalBytes!
-                                                : null,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    errorBuilder:
-                                        (context, object, stackTrace) =>
-                                            Material(
-                                      child: Image.asset(
-                                        'images/img_not_available.jpeg',
-                                        width: 200,
-                                        height: 200,
-                                        fit: BoxFit.cover,
-                                      ),
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(8),
-                                      ),
-                                      clipBehavior: Clip.hardEdge,
-                                    ),
-                                    width: 200,
-                                    height: 200,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(8)),
-                                  clipBehavior: Clip.hardEdge,
-                                ),
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => FullPhotoPage(
-                                          url: messageChat.content),
-                                    ),
-                                  );
-                                },
-                                style: ButtonStyle(
-                                    padding:
-                                        MaterialStateProperty.all<EdgeInsets>(
-                                            EdgeInsets.all(0))),
-                              ),
-                              margin: EdgeInsets.only(left: 10),
-                            )
+                          ? buildLeftImageMessageContent(
+                              context, messageChat.content)
                           : messageChat.type == TypeMessage.document
-                              ? InkWell(
-                                  onTap: () {
-                                    String remotePDFpath;
-                                    createFileOfPdfUrl(messageChat.content)
-                                        .then((f) {
-                                      setState(() {
-                                        remotePDFpath = f.path;
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                PDFScreen(path: remotePDFpath),
-                                          ),
-                                        );
-                                      });
-                                    });
-                                  },
-                                  child: Container(
-                                    width: 250,
-                                    height: 60,
-                                    margin:
-                                        EdgeInsets.only(left: 10, bottom: 10),
-                                    decoration: BoxDecoration(
-                                        color: bgContainer,
-                                        borderRadius: BorderRadius.circular(8)),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                            padding: EdgeInsets.all(8),
-                                            margin: EdgeInsets.only(
-                                                right: 4, left: 4),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(45),
-                                              gradient: LinearGradient(
-                                                begin: Alignment.topLeft,
-                                                end: Alignment.bottomRight,
-                                                colors: [borderTop, borderDown],
-                                                stops: [0.0, 1.0],
-                                              ),
-                                            ),
-                                            child: SvgPicture.asset(
-                                              'assets/images/document.svg',
-                                              fit: BoxFit.scaleDown,
-                                            )),
-                                        SizedBox(
-                                          width: 200,
-                                          child: Text(
-                                            get_text_between(
-                                                messageChat.content,
-                                                "/o/",
-                                                "?"),
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(color: white),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                )
+                              ? buildLeftDocumentMessageContent(
+                                  context, messageChat.content)
                               : messageChat.type == TypeMessage.myplan
                                   ? Container(
                                       width: 270,
@@ -773,48 +387,8 @@ class ChatPageState extends State<ChatPage> {
                                           Gap(12),
                                           Row(
                                             children: [
-                                              Material(
-                                                child: Image.network(
-                                                  widget.arguments.peerAvatar,
-                                                  loadingBuilder:
-                                                      (BuildContext context,
-                                                          Widget child,
-                                                          ImageChunkEvent?
-                                                              loadingProgress) {
-                                                    if (loadingProgress == null)
-                                                      return child;
-                                                    return Center(
-                                                      child:
-                                                          CircularProgressIndicator(
-                                                        color: Colors.grey[300],
-                                                        value: loadingProgress
-                                                                    .expectedTotalBytes !=
-                                                                null
-                                                            ? loadingProgress
-                                                                    .cumulativeBytesLoaded /
-                                                                loadingProgress
-                                                                    .expectedTotalBytes!
-                                                            : null,
-                                                      ),
-                                                    );
-                                                  },
-                                                  errorBuilder: (context,
-                                                      object, stackTrace) {
-                                                    return Icon(
-                                                      Icons.account_circle,
-                                                      size: 35,
-                                                      color: Colors.grey[300],
-                                                    );
-                                                  },
-                                                  width: 35,
-                                                  height: 35,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(18),
-                                                ),
-                                                clipBehavior: Clip.hardEdge,
-                                              ),
+                                              buildPeerImage(context,
+                                                  widget.arguments.peerAvatar),
                                               Gap(12),
                                               SizedBox(
                                                 width: 150,
@@ -1086,15 +660,6 @@ class ChatPageState extends State<ChatPage> {
                                                             }).then((value) =>
                                                                     print(
                                                                         'update hu gya hu !'));
-                                                            // chatProvider
-                                                            //     .notificationCreated(
-                                                            //         noti,
-                                                            //         currentUserId,
-                                                            //         widget
-                                                            //             .arguments
-                                                            //             .peerId,
-                                                            //         notiId,
-                                                            //         orderId);
                                                           }
                                                         }
                                                       },
@@ -1116,65 +681,8 @@ class ChatPageState extends State<ChatPage> {
                                       ),
                                     )
                                   : messageChat.type == TypeMessage.video
-                                      ? InkWell(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) => VideoPlay(
-                                                    path: messageChat.content),
-                                              ),
-                                            );
-                                          },
-                                          child: Container(
-                                            width: 250,
-                                            height: 60,
-                                            margin: EdgeInsets.only(
-                                                left: 10, bottom: 10),
-                                            decoration: BoxDecoration(
-                                                color: bgContainer,
-                                                borderRadius:
-                                                    BorderRadius.circular(8)),
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                    padding: EdgeInsets.all(8),
-                                                    margin: EdgeInsets.only(
-                                                        right: 4, left: 4),
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              45),
-                                                      gradient: LinearGradient(
-                                                        begin:
-                                                            Alignment.topLeft,
-                                                        end: Alignment
-                                                            .bottomRight,
-                                                        colors: [
-                                                          borderTop,
-                                                          borderDown
-                                                        ],
-                                                        stops: [0.0, 1.0],
-                                                      ),
-                                                    ),
-                                                    child: Icon(CupertinoIcons
-                                                        .video_camera)),
-                                                SizedBox(
-                                                  width: 200,
-                                                  child: Text(
-                                                      get_text_between(
-                                                          messageChat.content,
-                                                          "/o/",
-                                                          "?"),
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: TextStyle(
-                                                          color: Colors.white)),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        )
+                                      ? buildLeftVideoMessageContent(
+                                          context, messageChat.content)
                                       : Container(
                                           width: 250,
                                           margin: EdgeInsets.only(
@@ -1364,7 +872,7 @@ class ChatPageState extends State<ChatPage> {
                                                                         'content':
                                                                             content,
                                                                       });
-                                                                      storeRating(
+                                                                      chatProvider.storeRating(
                                                                           widget
                                                                               .arguments
                                                                               .peerId,
@@ -1401,21 +909,9 @@ class ChatPageState extends State<ChatPage> {
                                         )
                 ],
               ),
-
               // Time
               isLastMessageLeft(index)
-                  ? Container(
-                      child: Text(
-                        DateFormat('dd MMM kk:mm').format(
-                            DateTime.fromMillisecondsSinceEpoch(
-                                int.parse(messageChat.timestamp))),
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 12,
-                            fontStyle: FontStyle.italic),
-                      ),
-                      margin: EdgeInsets.only(left: 50, top: 5, bottom: 5),
-                    )
+                  ? buildLastMessageTime(messageChat.timestamp)
                   : SizedBox.shrink()
             ],
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1452,16 +948,11 @@ class ChatPageState extends State<ChatPage> {
 
   Future<bool> onBackPress() {
     FocusScope.of(context).unfocus();
-    if (isShowSticker) {
-      setState(() {
-        isShowSticker = false;
-      });
-    } else {
-      Navigator.pop(context);
-    }
+    Get.back();
     return Future.value(false);
   }
 
+  //! Main Widget
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -1481,38 +972,7 @@ class ChatPageState extends State<ChatPage> {
                 maxWidth: MediaQuery.of(context).size.width * 0.7),
             child: Row(
               children: [
-                Material(
-                  child: Image.network(
-                    widget.arguments.peerAvatar,
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent? loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.grey[300],
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes!
-                              : null,
-                        ),
-                      );
-                    },
-                    errorBuilder: (context, object, stackTrace) {
-                      return Icon(
-                        Icons.account_circle,
-                        size: 35,
-                        color: Colors.grey[300],
-                      );
-                    },
-                    width: 35,
-                    height: 35,
-                    fit: BoxFit.cover,
-                  ),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(18),
-                  ),
-                  clipBehavior: Clip.hardEdge,
-                ),
+                buildPeerImage(context, widget.arguments.peerAvatar),
                 Gap(12),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.4,
@@ -1555,14 +1015,14 @@ class ChatPageState extends State<ChatPage> {
     );
   }
 
-//////////////////////////////// Loading ////////////////////////////////////////
+//! Loading
   Widget buildLoading() {
     return Positioned(
       child: isLoading ? LoadingView() : SizedBox.shrink(),
     );
   }
 
-///////////////////////// Message Input Fields ///////////////////////////////////
+//! Message Input Fields
   Widget buildInput() {
     GetStorage box = GetStorage();
     return Directionality(
@@ -1644,7 +1104,7 @@ class ChatPageState extends State<ChatPage> {
     );
   }
 
-///////////////////////////////// build Message List ///////////////////////////
+//! build Message List
 
   Widget buildListMessage() {
     return Flexible(
@@ -1684,6 +1144,7 @@ class ChatPageState extends State<ChatPage> {
     );
   }
 
+//! Build model sheet to send Messages
   void _showBottomSheet(BuildContext context) {
     showModalBottomSheet(
       backgroundColor: Colors.transparent,
@@ -1691,139 +1152,33 @@ class ChatPageState extends State<ChatPage> {
       builder: (BuildContext builder) {
         return Container(
           width: double.infinity,
-          // You can customize the appearance of your bottom sheet here
           padding: EdgeInsets.all(16.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              ElevatedButton(
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(5),
-                            topRight: Radius.circular(5))),
-                  ),
-                  minimumSize:
-                      MaterialStateProperty.all(Size(double.infinity, 50)),
-                ),
-                onPressed: getImage,
-                child: Text(
-                  'Photos'.tr,
-                  style: TextStyle(
-                    fontFamily: "Poppins",
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Get.isDarkMode ? white : Color(0xff0f0a06),
-                  ),
-                ),
-              ),
+              BottomSheetButton(text: 'Photos'.tr, ontap: getImage),
               Container(
                   width: double.infinity,
                   color: bgContainer.withOpacity(0.45),
                   height: 0.5),
-              ElevatedButton(
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(5),
-                            bottomRight: Radius.circular(5))),
-                  ),
-                  minimumSize:
-                      MaterialStateProperty.all(Size(double.infinity, 50)),
-                ),
-                onPressed: getPdf,
-                child: Text(
-                  'Video'.tr,
-                  style: TextStyle(
-                    fontFamily: "Poppins",
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Get.isDarkMode ? white : Color(0xff0f0a06),
-                  ),
-                ),
-              ),
+              BottomSheetButton(text: 'Video'.tr, ontap: getMp4),
               Container(
                   width: double.infinity,
                   color: bgContainer.withOpacity(0.45),
                   height: 0.5),
-              ElevatedButton(
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(5),
-                            bottomRight: Radius.circular(5))),
-                  ),
-                  minimumSize:
-                      MaterialStateProperty.all(Size(double.infinity, 50)),
-                ),
-                onPressed: getPdf,
-                child: Text(
-                  'Document'.tr,
-                  style: TextStyle(
-                    fontFamily: "Poppins",
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Get.isDarkMode ? white : Color(0xff0f0a06),
-                  ),
-                ),
-              ),
+              BottomSheetButton(text: 'Document'.tr, ontap: getPdf),
               SizedBox(height: 20),
-              ElevatedButton(
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0)),
-                  ),
-                  minimumSize:
-                      MaterialStateProperty.all(Size(double.infinity, 50)),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text(
-                  'Cancel'.tr,
-                  style: TextStyle(
-                    fontFamily: "Poppins",
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Get.isDarkMode ? white : Color(0xff0f0a06),
-                  ),
-                ),
-              ),
+              BottomSheetButton(
+                  text: 'Cancel'.tr,
+                  ontap: () {
+                    Navigator.of(context).pop();
+                  }),
             ],
           ),
         );
       },
     );
-  }
-
-  Future<File> createFileOfPdfUrl(pdf) async {
-    Completer<File> completer = Completer();
-    print("Start download file from internet!");
-    try {
-      // "https://berlin2017.droidcon.cod.newthinking.net/sites/global.droidcon.cod.newthinking.net/files/media/documents/Flutter%20-%2060FPS%20UI%20of%20the%20future%20%20-%20DroidconDE%2017.pdf";
-      // final url = "https://pdfkit.org/docs/guide.pdf";
-      final url = pdf;
-      final filename = url.substring(url.lastIndexOf("/") + 1);
-      var request = await HttpClient().getUrl(Uri.parse(url));
-      var response = await request.close();
-      var bytes = await consolidateHttpClientResponseBytes(response);
-      var dir = await getApplicationDocumentsDirectory();
-      print("Download files");
-      print("${dir.path}/$filename");
-      File file = File("${dir.path}/$filename");
-
-      await file.writeAsBytes(bytes, flush: true);
-      completer.complete(file);
-    } catch (e) {
-      throw Exception('Error parsing asset file!');
-    }
-
-    return completer.future;
   }
 }
 

@@ -180,8 +180,8 @@ class EventDetailsCard extends StatelessWidget {
                 InkWell(
                   onTap: onSave,
                   child: isSaved == false
-                      ? Image.asset('assets/images/bookmark1.png')
-                      : Image.asset('assets/images/bookmark-light.png'),
+                      ? SvgPicture.asset('assets/images/unsaved.svg')
+                      : SvgPicture.asset('assets/images/post_saved2.svg'),
                 ),
               ],
             ),
@@ -342,7 +342,7 @@ class EventDetailsCard extends StatelessWidget {
                     int.parse(attendees) < int.parse(capacity) &&
                             isJoined == false
                         ? Padding(
-                            padding: const EdgeInsets.only(right: 25),
+                            padding: const EdgeInsets.only(right: 0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
@@ -360,7 +360,7 @@ class EventDetailsCard extends StatelessWidget {
                             ),
                           )
                         : Padding(
-                            padding: const EdgeInsets.only(right: 25),
+                            padding: const EdgeInsets.only(right:0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [

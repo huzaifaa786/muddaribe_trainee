@@ -18,7 +18,7 @@ class _DividerNotificationState extends State<DividerNotification> {
       padding: const EdgeInsets.only(left: 20, right: 20),
       child: Divider(
         thickness: 1,
-        color: Get.isDarkMode ? dividercolor : black,
+        color: Get.isDarkMode ? dividercolor : grey.withOpacity(0.3),
       ),
     );
   }

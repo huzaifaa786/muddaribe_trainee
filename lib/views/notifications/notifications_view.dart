@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -40,7 +41,8 @@ class _NotificationsViewState extends State<NotificationsView> {
         title: TopBar(text: 'Notifications'.tr),
       ),
       body: Directionality(
-        textDirection: box.read('locale') == 'ar'? TextDirection.rtl :TextDirection.ltr,
+        textDirection:
+            box.read('locale') == 'ar' ? TextDirection.rtl : TextDirection.ltr,
         child: SafeArea(
           child: Padding(
             padding: EdgeInsets.only(top: 12),
@@ -76,6 +78,8 @@ class _NotificationsViewState extends State<NotificationsView> {
                             ? Column(
                                 children: [
                                   ExcercisePlan(
+                                    isRead:
+                                        notifications[index].notification.seen,
                                     content: notifications[index]
                                         .notification
                                         .content
@@ -84,9 +88,17 @@ class _NotificationsViewState extends State<NotificationsView> {
                                         .trainer
                                         .profileImageUrl,
                                     name: notifications[index].trainer.name,
-                                    ontap: () {
+                                    ontap: () async {
+                                      await FirebaseFirestore.instance
+                                          .collection('notifications')
+                                          .doc(notifications[index]
+                                              .notification
+                                              .notificationId)
+                                          .update({'seen': true}).then(
+                                              (value) => print(
+                                                  'sdkjdskfdsfsdfsdfsdfs'));
                                       Get.toNamed(AppRoutes.planFiles,
-                                          parameters: {
+                                              parameters: {
                                             'planId': notifications[index]
                                                 .notification
                                                 .planId,
@@ -96,7 +108,11 @@ class _NotificationsViewState extends State<NotificationsView> {
                                             'trainerId': notifications[index]
                                                 .notification
                                                 .trainerId,
-                                          });
+                                          })!
+                                          .then((value) {
+                                        Get.back();
+                                        Get.to(() => const NotificationsView());
+                                      });
                                     },
                                   ),
                                   DividerNotification(),
@@ -105,6 +121,8 @@ class _NotificationsViewState extends State<NotificationsView> {
                             : Column(
                                 children: [
                                   RemainderView(
+                                    isRead:
+                                        notifications[index].notification.seen,
                                     text: notifications[index]
                                                 .notification
                                                 .content ==
@@ -120,41 +138,35 @@ class _NotificationsViewState extends State<NotificationsView> {
                                         .profileImageUrl,
                                     name: notifications[index].trainer.name,
                                     ontap: () {
+                                      FirebaseFirestore.instance
+                                          .collection('notifications')
+                                          .doc(notifications[index]
+                                              .notification
+                                              .notificationId)
+                                          .update({'seen': true});
                                       if (notifications[index]
                                               .notification
                                               .content ==
                                           'Event joined successfully.') {
                                         Get.to(() => MyEventsView(),
-                                            arguments: notifications[index]
-                                                .trainer
-                                                .id);
+                                                arguments: notifications[index]
+                                                    .trainer
+                                                    .id)!
+                                            .then((value) {
+                                          Get.back();
+                                          Get.to(
+                                              () => const NotificationsView());
+                                        });
                                       } else
                                         Get.toNamed(AppRoutes.trainerprofile,
-                                            arguments: notifications[index]
-                                                .trainer
-                                                .id);
-                                      // .then((value) async {
-                                      //   //                                     try {
-                                      //   //   // Reference to the "followed_trainers" collection
-                                      //   //   final CollectionReference followedTrainersRef =
-                                      //   //       FirebaseFirestore.instance.collection('followed_trainers');
-                                      //   //   final QuerySnapshot querySnapshot = await followedTrainersRef
-                                      //   //       .where('userId', isEqualTo: FirebaseAuth.instance.)
-                                      //   //       .limit(1)
-                                      //   //       .get();
-                                      //   //   if (querySnapshot.docs.isNotEmpty) {
-                                      //   //     follewed = true;
-                                      //   //     update();
-                                      //   //   } else {
-                                      //   //     follewed = false;
-                                      //   //     update();
-                                      //   //   }
-                                      //   // } catch (e) {
-                                      //   //   follewed = false;
-                                      //   //   update();
-                                      //   //   // return false;
-                                      //   // }
-                                      // });
+                                                arguments: notifications[index]
+                                                    .trainer
+                                                    .id)!
+                                            .then((value) {
+                                          Get.back();
+                                          Get.to(
+                                              () => const NotificationsView());
+                                        });
                                     },
                                   ),
                                   DividerNotification(),
@@ -163,19 +175,6 @@ class _NotificationsViewState extends State<NotificationsView> {
                       });
                 }),
           ),
-          // child: Column(
-          //   children: [
-
-          // NewMessage(),
-          // DividerNotification(),
-          // ExcercisePlan(),
-          // DividerNotification(),
-          // NutritionPlan(),
-          // DividerNotification(),
-          // RemainderView(),
-          // DividerNotification(),
-          //   ],
-          // ),
         ),
       ),
     );

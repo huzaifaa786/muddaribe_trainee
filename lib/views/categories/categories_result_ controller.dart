@@ -25,15 +25,17 @@ class CategoriesController extends GetxController {
       List<Future<Trainer>> trainerFutures =
           querySnapshot.docs.map((doc) async {
         Trainer trainer = Trainer.fromMap(doc.data());
+        if (FirebaseAuth.instance.currentUser != null) {
+          QuerySnapshot savedTrainerSnapshot = await FirebaseFirestore.instance
+              .collection('savedTrainer')
+              .where('userId',
+                  isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+              .where('tarinerId', isEqualTo: trainer.id)
+              .get();
 
-        QuerySnapshot savedTrainerSnapshot = await FirebaseFirestore.instance
-            .collection('savedTrainer')
-            .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-            .where('tarinerId', isEqualTo: trainer.id)
-            .get();
-
-        if (savedTrainerSnapshot.docs.isNotEmpty) {
-          trainer.isSaved = true;
+          if (savedTrainerSnapshot.docs.isNotEmpty) {
+            trainer.isSaved = true;
+          }
         }
 
         double ratingSum = await fetchCompanyRatingSum(trainer.id);

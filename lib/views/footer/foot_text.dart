@@ -13,9 +13,10 @@ class FooterText extends StatefulWidget {
 }
 
 class _FooterTextState extends State<FooterText> {
- @override
+  @override
   Widget build(BuildContext context) {
     return GradientText(widget.text,
+        textAlign: TextAlign.center,
         style: const TextStyle(
           fontSize: 10.0,
         ),

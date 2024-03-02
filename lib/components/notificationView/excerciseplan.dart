@@ -6,12 +6,14 @@ import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class ExcercisePlan extends StatefulWidget {
-  const ExcercisePlan({Key? key, this.name, this.content, this.ontap, this.img})
+  const ExcercisePlan(
+      {Key? key, this.name, this.content, this.ontap, this.img, this.isRead})
       : super(key: key);
   final img;
   final name;
   final content;
   final ontap;
+  final isRead;
   @override
   State<ExcercisePlan> createState() => _ExcercisePlanState();
 }
@@ -55,6 +57,15 @@ class _ExcercisePlanState extends State<ExcercisePlan> {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
+                      widget.isRead != false
+                          ? Container()
+                          : Container(
+                              margin: EdgeInsets.only(left: 4, right: 4),
+                              height: 10,
+                              width: 10,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle, color: Colors.red),
+                            )
                     ],
                   ),
                   Padding(

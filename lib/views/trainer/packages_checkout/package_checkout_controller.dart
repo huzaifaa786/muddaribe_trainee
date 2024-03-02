@@ -65,6 +65,7 @@ class Packagecheckoutcontroller extends GetxController {
           'content': 'Your order has been placed.',
           'orderId': orderId,
           'seen': false,
+          'trainerSeen': false,
           "planId": packageId,
           'planName': '',
           'type': 'package'

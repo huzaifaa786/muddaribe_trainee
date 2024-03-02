@@ -1,7 +1,6 @@
 // ignore_for_file: use_full_hex_values_for_flutter_colors
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 const borderTop = Color(4285693389);
 const borderDown = Color(4278253801);
@@ -10,7 +9,7 @@ const gradientpurple1 = Color(0xF4AAB3F6);
 const gradientred = Color.fromARGB(255, 252, 63, 255);
 const gradientblue1 = Color(0xFF75E6FF);
 const white = Colors.white;
-var bgContainer =  Color(0xFF0F0F0F);
+var bgContainer = Color(0xFF0F0F0F);
 const appbarbckground = Color(4279175686);
 const profilesubheading = Color(0x99FFFFFF);
 const shadowBlack = Color(0x92343434);

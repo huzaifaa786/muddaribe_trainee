@@ -67,6 +67,7 @@ class ChatProvider {
       timestamp: timestamp,
       content: content,
       type: type,
+      seen: false,
     );
 
     FirebaseFirestore.instance.runTransaction((transaction) async {
@@ -92,6 +93,18 @@ class ChatProvider {
       return true;
     } catch (e) {
       return false;
+    }
+  }
+
+  storeRating(trainerId, rating) async {
+    try {
+      String ratingId = DateTime.now().millisecondsSinceEpoch.toString();
+      await FirebaseFirestore.instance
+          .collection('ratings')
+          .doc(ratingId)
+          .set({"id": ratingId, 'trainerId': trainerId, 'rating': rating});
+    } catch (e) {
+      print('Error occurred while setting data: $e');
     }
   }
 
