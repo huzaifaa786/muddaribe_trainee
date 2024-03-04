@@ -7,7 +7,6 @@ import 'package:mudarribe_trainee/helper/data_model.dart';
 // import 'package:mudarribe_trainer/exceptions/storage_api_exception.dart';
 // import 'package:mudarribe_trainer/helpers/data_models.dart';
 
-
 class StorageApi {
   Future<CloudStorageResult> uploadProfileImage({
     required String userId,
@@ -46,15 +45,14 @@ class StorageApi {
         message: e.message,
       );
     }
-  }  
-  
-  Future<bool> deleteProfileImage({
-    required String userId,
-    required String fileName,
-  }) async {
-   final storage.Reference storageReference = storage.FirebaseStorage.instance
+  }
+
+  Future<bool> deleteProfileImage(
+      {required String userId, required String fileName}) async {
+    final storage.Reference storageReference = storage.FirebaseStorage.instance
         .ref()
         .child("profileImages/$userId/$fileName");
+    print('$storageReference +slkjddddddddddd');
 
     try {
       bool result = false;
@@ -62,7 +60,7 @@ class StorageApi {
       await storageReference.delete().then(
             (_) => result = true,
           );
-
+      print('$result ++++++++++++++++++++++++++++++++++++++++');
       return result;
     } on PlatformException catch (e) {
       throw StorageApiException(
@@ -122,8 +120,7 @@ class StorageApi {
         .child("passports/$userId/$imageFileName");
 
     try {
-      final storage.UploadTask uploadTask =
-          storageReference.putFile(passport);
+      final storage.UploadTask uploadTask = storageReference.putFile(passport);
 
       final storage.TaskSnapshot storageTaskSnapshot =
           await Future.value(uploadTask);
@@ -244,15 +241,13 @@ class StorageApi {
         .child("serviceImages/$serviceId/$imageNumber/$imageFileName");
 
     try {
-     
-        final result = await _uploadImage(
-          storageReference,
-          imageToUpload,
-          imageFileName,
-        );
+      final result = await _uploadImage(
+        storageReference,
+        imageToUpload,
+        imageFileName,
+      );
 
-        return result;
-     
+      return result;
     } on PlatformException catch (e) {
       throw StorageApiException(
         title: 'Failed to upload image',
@@ -341,8 +336,6 @@ class StorageApi {
       );
     }
   }
-
-
 
   Future<bool> deleteServiceImage(
     String userId,

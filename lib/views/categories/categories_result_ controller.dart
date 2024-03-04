@@ -72,4 +72,14 @@ class CategoriesController extends GetxController {
       return 0.0; // Handle error by returning a default value
     }
   }
+
+  void sortTrainersByRating() {
+    trainersList.sort((a, b) => (b.rating ?? 0.0).compareTo(a.rating ?? 0.0));
+    update();
+  }
+
+    void sortTrainersByRatingDownToUp() {
+    trainersList.sort((a, b) => (a.rating ?? 0.0).compareTo(b.rating ?? 0.0));
+    update();
+  }
 }

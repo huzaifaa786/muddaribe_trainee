@@ -22,7 +22,7 @@ import 'package:mudarribe_trainee/views/home/home_view.dart';
 import 'package:mudarribe_trainee/views/footer/footer_view.dart';
 import 'package:mudarribe_trainee/views/onboardings/onboarding_view.dart';
 import 'package:mudarribe_trainee/views/search_trainer/search_trainer.dart';
-import 'package:mudarribe_trainee/views/search_trainer/search_trianer_controller.dart';
+import 'package:mudarribe_trainee/views/search_trainer/search_trianer_binding.dart';
 import 'package:mudarribe_trainee/views/splash/splash_binding.dart';
 import 'package:mudarribe_trainee/views/splash/splash_view.dart';
 import 'package:mudarribe_trainee/views/story/story_binding.dart';

@@ -7,12 +7,14 @@ import 'package:get/get.dart';
 import 'package:mudarribe_trainee/api/image_selector_api.dart';
 import 'package:mudarribe_trainee/api/storage_api.dart';
 import 'package:mudarribe_trainee/helper/data_model.dart';
+import 'package:mudarribe_trainee/helper/loading_helper.dart';
 import 'package:mudarribe_trainee/models/app_user.dart';
 import 'package:mudarribe_trainee/services/user_service.dart';
 import 'package:mudarribe_trainee/utils/ui_utils.dart';
 
 class EditProfileContoller extends GetxController {
   static EditProfileContoller instance = Get.find();
+  final BusyController busyController = Get.find();
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -24,6 +26,7 @@ class EditProfileContoller extends GetxController {
   List<String> selectedCategories = [];
   RxBool areFieldsFilled = false.obs;
   File? profileImage;
+  String? img;
   List<String>? providerNames;
 
   @override
@@ -40,7 +43,6 @@ class EditProfileContoller extends GetxController {
   }
 
   Future getAppUser() async {
-    
     final User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       currentUser = await _userService.getAuthUser();
@@ -51,7 +53,7 @@ class EditProfileContoller extends GetxController {
   }
 
   Future updateTrainee() async {
-    // busyController.setBusy(true);
+    busyController.setBusy(true);
     if (profileImage != null) {
       CloudStorageResult? imageResult = await updateProfileImg(currentUser!);
       if (imageResult!.imageUrl != '') {
@@ -60,7 +62,8 @@ class EditProfileContoller extends GetxController {
           'profileImageFileName': imageResult.imageFileName,
           'profileImageUrl': imageResult.imageUrl,
         });
-        UiUtilites.successSnackbar('Update User'.tr, 'User updated successfully'.tr);
+        UiUtilites.successSnackbar(
+            'Update User'.tr, 'User updated successfully'.tr);
       }
     } else {
       await _userService.updateUser(
@@ -69,28 +72,31 @@ class EditProfileContoller extends GetxController {
           'name': nameController.text,
         },
       );
-      UiUtilites.successSnackbar('Update User'.tr, 'User updated successfully'.tr);
+      UiUtilites.successSnackbar(
+          'Update User'.tr, 'User updated successfully'.tr);
     }
-    // busyController.setBusy(false);
+    busyController.setBusy(false);
   }
 
   Future updateProfileImg(AppUser appUser) async {
     if (profileImage != null) {
-      if (currentUser!.imageUrl != null) {
+      if (currentUser!.imageUrl != '') {
         final result = await _storageApi.deleteProfileImage(
-            userId: currentUser!.id, fileName: currentUser!.imageUrl!);
+            userId: currentUser!.id, fileName: currentUser!.imageName!);
         if (result) {
+          // The file existed and has been deleted, proceed to upload the new image
           final CloudStorageResult storageResult =
               await _storageApi.uploadProfileImage(
                   userId: currentUser!.id, imageToUpload: profileImage!);
           return storageResult;
         }
-      } else {
-        final CloudStorageResult storageResult =
-            await _storageApi.uploadProfileImage(
-                userId: currentUser!.id, imageToUpload: profileImage!);
-        return storageResult;
       }
+
+      // If the file did not exist or deletion was not successful, proceed to upload
+      final CloudStorageResult storageResult =
+          await _storageApi.uploadProfileImage(
+              userId: currentUser!.id, imageToUpload: profileImage!);
+      return storageResult;
     }
   }
 

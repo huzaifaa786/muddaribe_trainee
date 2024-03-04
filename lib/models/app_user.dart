@@ -6,11 +6,13 @@ class AppUser {
   String? name;
   String? email;
   String? imageUrl;
+  String? imageName;
   String? firebaseToken;
   AppUser(
       {required this.id,
       this.name,
       this.email,
+      this.imageName,
       required this.userType,
       this.imageUrl,this.firebaseToken,
       });
@@ -20,7 +22,8 @@ class AppUser {
     name = json['name'];
     email = json['email'];
     userType = json['userType'];
-    imageUrl = json['profileImageUrl'];
+    imageUrl = json['profileImageUrl'] ?? '';
+    imageName= json['profileImageFileName'] ?? '';
     firebaseToken = json['firebaseToken'] ?? '';
   }
 
@@ -41,7 +44,8 @@ class AppUser {
       userType: map['userType'],
       name: map['name'],
       email: map['email'],
-      imageUrl: map['profileImageUrl'],
+      imageUrl: map['profileImageUrl'] ?? '',
+      imageName: map['profileImageFileName']??'',
       firebaseToken: map['firebaseToken'] ?? '',
     );
   }

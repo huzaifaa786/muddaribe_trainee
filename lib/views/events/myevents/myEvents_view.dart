@@ -201,8 +201,7 @@ class _MyEventsViewState extends State<MyEventsView> {
                                                     endDate: combineEvent
                                                         .event.todate,
                                                     category: combineEvent
-                                                        .trainer.category
-                                                        .join(' & '),
+                                                        .trainer.category,
                                                     name: combineEvent
                                                         .trainer.name,
                                                     trainerId:
@@ -308,8 +307,7 @@ class _MyEventsViewState extends State<MyEventsView> {
                                                     top: 10),
                                                 child: EventDetailsCard(
                                                   category: combineEvent
-                                                      .trainer.category
-                                                      .join(' & '),
+                                                      .trainer.category,
                                                   name:
                                                       combineEvent.trainer.name,
                                                   trainerId:

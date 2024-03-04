@@ -50,13 +50,18 @@ class _ProfileTileState extends State<ProfileTile> {
                     fit: BoxFit.scaleDown,
                   ),
                   Gap(12),
-                  Text(
-                    widget.text,
-                    style: TextStyle(
-                        fontSize: 16.0,
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.w500),
-                    // colors: [borderDown, borderTop],
+                  SizedBox(
+                    width: Get.width * 0.65,
+                    child: Text(
+                      widget.text,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 15.0,
+                          fontFamily: "Poppins",
+                          fontWeight: FontWeight.w500),
+                      // colors: [borderDown, borderTop],
+                    ),
                   ),
                 ],
               ),

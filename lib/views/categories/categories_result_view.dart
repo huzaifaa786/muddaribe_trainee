@@ -1,7 +1,9 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, deprecated_member_use
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mudarribe_trainee/api/trainer_saved.dart';
@@ -9,6 +11,7 @@ import 'package:mudarribe_trainee/components/boxing_trainers_card.dart';
 import 'package:mudarribe_trainee/components/loading_indicator.dart';
 import 'package:mudarribe_trainee/components/topbar.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
+import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/views/categories/categories_result_%20controller.dart';
 
 // import 'package:mudarribe_trainee/components/topbar.dart';
@@ -62,6 +65,7 @@ class _CategoriesResultViewState extends State<CategoriesResultView> {
                               ? TextDirection.rtl
                               : TextDirection.ltr,
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                   "${controller.trainersList.length.toString()} " +
@@ -70,6 +74,24 @@ class _CategoriesResultViewState extends State<CategoriesResultView> {
                                     fontSize: 12,
                                     fontWeight: FontWeight.w600,
                                   )),
+                              IconButton(
+                                icon: SvgPicture.asset(
+                                  'assets/images/arrow-sort.svg',
+                                  color: borderTop,
+                                ),
+                                onPressed: () async {
+                                  String? selectedOption =
+                                      await _showSortOptionsBottomSheet(
+                                          context);
+                                  if (selectedOption != null) {
+                                    if (selectedOption == 'highToLow') {
+                                      controller.sortTrainersByRating();
+                                    } else if (selectedOption == 'lowToHigh') {
+                                      controller.sortTrainersByRatingDownToUp();
+                                    }
+                                  }
+                                },
+                              ),
                             ],
                           ),
                         ),
@@ -119,6 +141,42 @@ class _CategoriesResultViewState extends State<CategoriesResultView> {
         ),
       ),
     );
+  }
+
+  Future<String?> _showSortOptionsBottomSheet(BuildContext context) async {
+    String? selectedOption = await showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: Text(
+                  'Sort by Rating'.tr,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+                // tileColor: Colors.grey.shade300,
+              ),
+              ListTile(
+                title: Text('Highest to Lowest'.tr),
+                onTap: () {
+                  Navigator.pop(context, 'highToLow');
+                },
+              ),
+              ListTile(
+                title: Text('Lowest to Highest'.tr),
+                onTap: () {
+                  Navigator.pop(context, 'lowToHigh');
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    return selectedOption;
   }
 }
 

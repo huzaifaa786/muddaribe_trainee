@@ -6,14 +6,14 @@ import 'package:mudarribe_trainee/api/post_api.dart';
 import 'package:mudarribe_trainee/models/event.dart';
 
 enum Languages {
-  English,
-  Italian,
-  French,
   Arabic,
-  German,
-  Spanish,
-  Filipino,
+  English,
   Urdu,
+  Filipino,
+  Spanish,
+  French,
+  German,
+  Italian,
 }
 
 enum Gender { male, female }
@@ -32,7 +32,7 @@ enum Categories {
   Padel,
   Calisthenics,
   animal_flow,
-  rehabilitation_Coach,
+  Rehabilitation,
   Aerobics,
   Plates,
   kettle_bell

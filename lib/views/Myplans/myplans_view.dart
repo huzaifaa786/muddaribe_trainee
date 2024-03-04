@@ -2,6 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:mudarribe_trainee/components/plancontainer.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
@@ -58,8 +59,8 @@ class _MyplansViewState extends State<MyplansView> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset(
-                              'assets/images/excersize image.png',
+                            SvgPicture.asset(
+                              'assets/images/dumbel.svg',
                               width: 20,
                               height: 20,
                               color: Get.isDarkMode ? white : black,
@@ -77,8 +78,8 @@ class _MyplansViewState extends State<MyplansView> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset(
-                              'assets/images/nutritionsimage.png',
+                            SvgPicture.asset(
+                              'assets/images/nutri.svg',
                               width: 20,
                               height: 20,
                               color: Get.isDarkMode ? white : black,

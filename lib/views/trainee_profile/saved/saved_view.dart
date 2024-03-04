@@ -314,8 +314,7 @@ class _SavedViewsState extends State<SavedViews> {
                                                         eventId: combineEvent
                                                             .event.eventId,
                                                         category: combineEvent
-                                                            .trainer.category
-                                                            .join(' & '),
+                                                            .trainer.category,
                                                         trainerId:
                                                             combineEvent
                                                                 .trainer.id,

@@ -125,8 +125,7 @@ class _AllEventsViewState extends State<AllEventsView> {
                                   ),
                                   child: EventDetailsCard(
                                     endDate: combineEvent.event.todate,
-                                    category: combineEvent.trainer.category
-                                        .join(' & '),
+                                    category: combineEvent.trainer.category,
                                     name: combineEvent.trainer.name,
                                     trainerId: combineEvent.trainer.id,
                                     image: combineEvent.trainer.profileImageUrl,

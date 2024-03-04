@@ -48,7 +48,7 @@ class EventDetailsCard extends StatelessWidget {
   final price;
   final onProfileTap;
   final name;
-  final category;
+  final List<String>? category;
   final eventimg;
   final isSaved;
   final onSave;
@@ -159,16 +159,45 @@ class EventDetailsCard extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            Text(
-                              category,
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w400,
-                                color: Get.isDarkMode
-                                    ? Colors.white
-                                        .withOpacity(0.6000000238418579)
-                                    : black.withOpacity(0.6000000238418579),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              padding: const EdgeInsets.only(top: 2, bottom: 8),
+                              child: Wrap(
+                                spacing: 10,
+                                children: category!.map((category) {
+                                  return Directionality(
+                                    textDirection: box.read('locale') == 'ar'
+                                        ? TextDirection.rtl
+                                        : TextDirection.ltr,
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(
+                                          Icons.circle,
+                                          color: Get.isDarkMode
+                                              ? Colors.white.withOpacity(
+                                                  0.6000000238418579)
+                                              : black.withOpacity(
+                                                  0.6000000238418579),
+                                          size: 10,
+                                        ),
+                                        SizedBox(width: 4),
+                                        Text(
+                                          category,
+                                          style: TextStyle(
+                                            color: Get.isDarkMode
+                                                ? Colors.white.withOpacity(
+                                                    0.6000000238418579)
+                                                : black.withOpacity(
+                                                    0.6000000238418579),
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }).toList(),
                               ),
                             ),
                           ],
@@ -360,7 +389,7 @@ class EventDetailsCard extends StatelessWidget {
                             ),
                           )
                         : Padding(
-                            padding: const EdgeInsets.only(right:0),
+                            padding: const EdgeInsets.only(right: 0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [

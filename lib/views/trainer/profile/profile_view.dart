@@ -138,7 +138,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                       left: 10, right: 10, bottom: 10.0, top: 10),
                   child: Container(
                     padding: EdgeInsets.only(
-                        left: 8, right: 8, top: 15, bottom: 15.0),
+                        left: 4, right: 4, top: 15, bottom: 15.0),
                     width: MediaQuery.of(context).size.width * 0.99,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
@@ -166,7 +166,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                       userimg: trainer.profileImageUrl,
                                       username: trainer.name,
                                       bio: trainer.bio,
-                                      categories: trainer.category.join(' & '),
+                                      categories: trainer.category,
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(
@@ -329,9 +329,9 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
-                                            horizontal: 8.0),
-                                        child: Image.asset(
-                                          'assets/images/events.png',
+                                            horizontal: 4.0),
+                                        child: SvgPicture.asset(
+                                          'assets/images/event-star.svg',
                                           width: 18,
                                           height: 18,
                                         ),
@@ -365,8 +365,8 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 8.0),
-                                      child: Image.asset(
-                                        'assets/images/packages.png',
+                                      child: SvgPicture.asset(
+                                        'assets/images/three_box.svg',
                                         width: 18,
                                         height: 18,
                                       ),
@@ -626,52 +626,61 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                               ? true
                                                               : false;
 
-                                                      return EventDetailsCard(
-                                                        eventId: combineEvent
-                                                            .event.eventId,
-                                                        category: combineEvent
-                                                            .trainer.category
-                                                            .join(' & '),
-                                                        trainerId: combineEvent
-                                                            .trainer.id,
-                                                        name: combineEvent
-                                                            .trainer.name,
-                                                        image: combineEvent
-                                                            .trainer
-                                                            .profileImageUrl,
-                                                        eventimg: combineEvent
-                                                            .event.imageUrl,
-                                                        address: combineEvent
-                                                            .event.address,
-                                                        startTime: combineEvent
-                                                            .event.startTime,
-                                                        endTime: combineEvent
-                                                            .event.endTime,
-                                                        date: combineEvent
-                                                            .event.date,
-                                                        capacity: combineEvent
-                                                            .event.capacity,
-                                                        attendees: combineEvent
-                                                            .eventOtherData
-                                                            .totalAttendees,
-                                                        isJoined: combineEvent
-                                                            .eventOtherData
-                                                            .isCurrentUserAttendee,
-                                                        price: combineEvent
-                                                            .event.price,
-                                                        isSaved: saved,
-                                                        onSave: () {
-                                                          setState(() {
-                                                            saved = !saved;
-                                                          });
-                                                          if (saved) {
-                                                            HomeApi.eventSaved(
-                                                                events.eventId);
-                                                          } else {
-                                                            HomeApi.eventUnsaved(
-                                                                events.eventId);
-                                                          }
-                                                        },
+                                                      return Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                bottom: 8),
+                                                        child: EventDetailsCard(
+                                                          eventId: combineEvent
+                                                              .event.eventId,
+                                                          category: combineEvent
+                                                              .trainer.category,
+                                                          trainerId:
+                                                              combineEvent
+                                                                  .trainer.id,
+                                                          name: combineEvent
+                                                              .trainer.name,
+                                                          image: combineEvent
+                                                              .trainer
+                                                              .profileImageUrl,
+                                                          eventimg: combineEvent
+                                                              .event.imageUrl,
+                                                          address: combineEvent
+                                                              .event.address,
+                                                          startTime:
+                                                              combineEvent.event
+                                                                  .startTime,
+                                                          endTime: combineEvent
+                                                              .event.endTime,
+                                                          date: combineEvent
+                                                              .event.date,
+                                                          capacity: combineEvent
+                                                              .event.capacity,
+                                                          attendees: combineEvent
+                                                              .eventOtherData
+                                                              .totalAttendees,
+                                                          isJoined: combineEvent
+                                                              .eventOtherData
+                                                              .isCurrentUserAttendee,
+                                                          price: combineEvent
+                                                              .event.price,
+                                                          isSaved: saved,
+                                                          onSave: () {
+                                                            setState(() {
+                                                              saved = !saved;
+                                                            });
+                                                            if (saved) {
+                                                              HomeApi.eventSaved(
+                                                                  events
+                                                                      .eventId);
+                                                            } else {
+                                                              HomeApi.eventUnsaved(
+                                                                  events
+                                                                      .eventId);
+                                                            }
+                                                          },
+                                                        ),
                                                       );
                                                     }
                                                   });
@@ -723,6 +732,10 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                       itemBuilder:
                                                           (context, index) {
                                                         return TrainerPackageCard(
+                                                          img2: packages[index]
+                                                              .image2,
+                                                          img: packages[index]
+                                                              .image1,
                                                           duration:
                                                               packages[index]
                                                                   .duration,
@@ -798,7 +811,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                                   color:
                                                                       dividercolor))),
                                                       GradientText1(
-                                                       text: "Or ",
+                                                        text: "Or ",
                                                         // style: const TextStyle(
                                                         //     fontFamily:
                                                         //         "Poppins",

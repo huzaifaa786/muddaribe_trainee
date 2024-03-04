@@ -47,7 +47,7 @@ class PostScreenCard extends StatelessWidget {
             padding: EdgeInsets.only(top: 20, bottom: 20),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Get.isDarkMode ? Color(0xFF0F0F0F) : lightbgColor),
+                color: Get.isDarkMode ? bgContainer : lightbgColor),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [

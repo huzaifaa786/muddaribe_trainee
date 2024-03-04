@@ -162,7 +162,7 @@ class _EventcheckoutViewState extends State<EventcheckoutView> {
                             userimg: combinedEventData.trainer.profileImageUrl,
                             username: combinedEventData.trainer.name,
                             categories:
-                                combinedEventData.trainer.category.join(' & '),
+                                combinedEventData.trainer.category,
                             price: combinedEventData.event.price,
                             eventDate: combinedEventData.event.date,
                           ),

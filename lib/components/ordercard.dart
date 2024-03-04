@@ -2,6 +2,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:gradient_borders/gradient_borders.dart';
@@ -165,8 +166,8 @@ class _OrderCardState extends State<OrderCard> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
-                                          Image.asset(
-                                            'assets/images/packageplanimage.png',
+                                          SvgPicture.asset(
+                                            'assets/images/dumbel.svg',
                                             height: 19,
                                             width: 20,
                                           ),
@@ -180,8 +181,8 @@ class _OrderCardState extends State<OrderCard> {
                                                   fontWeight: FontWeight.w700),
                                             ),
                                           ),
-                                          Image.asset(
-                                              'assets/images/packageplanimage1.png',
+                                          SvgPicture.asset(
+                                              'assets/images/nutri.svg',
                                               height: 18,
                                               width: 20),
                                         ],
@@ -191,12 +192,12 @@ class _OrderCardState extends State<OrderCard> {
                                             left: 20, right: 20, bottom: 10),
                                         child: widget.package.category ==
                                                 'excercise'
-                                            ? Image.asset(
-                                                'assets/images/packageplanimage.png',
+                                            ? SvgPicture.asset(
+                                                'assets/images/dumbel.svg',
                                                 height: 18,
                                                 width: 20)
-                                            : Image.asset(
-                                                'assets/images/packageplanimage1.png',
+                                            : SvgPicture.asset(
+                                                'assets/images/nutri.svg',
                                                 height: 18,
                                                 width: 20),
                                       ),

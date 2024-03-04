@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 
@@ -15,10 +16,11 @@ class TrainerProfileCard extends StatelessWidget {
   final userimg;
   final username;
   final bio;
-  final categories;
+  final List<String>? categories;
 
   @override
   Widget build(BuildContext context) {
+    GetStorage box = GetStorage();
     return Row(
       children: [
         Container(
@@ -57,9 +59,8 @@ class TrainerProfileCard extends StatelessWidget {
                     child: Text(
                       username,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600),
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                     ),
                   ),
                   Padding(
@@ -72,17 +73,50 @@ class TrainerProfileCard extends StatelessWidget {
                   )
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8, bottom: 8),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.6,
-                  child: Text(
-                    categories,
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400),
-                    maxLines: 2,
-                  ),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 8, bottom: 8),
+              //   child: SizedBox(
+              //     width: MediaQuery.of(context).size.width * 0.6,
+              //     child: Text(
+              //       categories,
+              //       style: TextStyle(
+              //           fontSize: 14,
+              //           fontWeight: FontWeight.w400),
+              //       maxLines: 2,
+              //     ),
+              //   ),
+              // ),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.6,
+                padding: const EdgeInsets.only(top: 2, bottom: 8),
+                child: Wrap(
+                  spacing: 10,
+                  children: categories!.map((category) {
+                    return Directionality(
+                      textDirection: box.read('locale') == 'ar'
+                          ? TextDirection.rtl
+                          : TextDirection.ltr,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.circle,
+                            color: Get.isDarkMode ? white : black,
+                            size: 10,
+                          ),
+                          SizedBox(width: 4),
+                          Text(
+                            category,
+                            style: TextStyle(
+                              color: Get.isDarkMode ? white : black,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
                 ),
               ),
               SizedBox(

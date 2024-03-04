@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:mudarribe_trainee/services/notification_service.dart';
 import 'package:mudarribe_trainee/utils/controller_initlization.dart';
 import 'package:mudarribe_trainee/utils/ui_utils.dart';
@@ -1036,8 +1037,8 @@ class ChatPageState extends State<ChatPage> {
               child: Container(
                 child: IconButton(
                   icon: Icon(
-                    Icons.more_vert,
-                    color: Get.isDarkMode ? white : black,
+                    Icons.attach_file,
+                    color: borderTop,
                   ),
                   // onPressed: getImage,
                   onPressed: () {

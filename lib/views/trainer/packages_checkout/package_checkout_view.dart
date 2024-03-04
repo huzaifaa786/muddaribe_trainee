@@ -2,7 +2,9 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:mudarribe_trainee/api/package_api.dart';
 import 'package:mudarribe_trainee/components/textgradient.dart';
@@ -26,6 +28,7 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
   @override
   Widget build(BuildContext context) {
     String packageId = Get.arguments;
+    GetStorage box = GetStorage();
 
     return GetBuilder<Packagecheckoutcontroller>(
         initState: (state) {
@@ -151,19 +154,84 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                                           ),
                                                         ),
                                                       ),
-                                                      SizedBox(
-                                                        width: Get.width * 0.5,
-                                                        child: Text(
-                                                          combinedPackagetData
-                                                              .trainer.category
-                                                              .join('& '),
-                                                          style: TextStyle(
-                                                            fontSize: 10,
-                                                            fontFamily:
-                                                                'Montserrat',
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                          ),
+                                                      // SizedBox(
+                                                      //   width: Get.width * 0.5,
+                                                      //   child: Text(
+                                                      //     combinedPackagetData
+                                                      //         .trainer.category
+                                                      //         .join('& '),
+                                                      //     style: TextStyle(
+                                                      //       fontSize: 10,
+                                                      //       fontFamily:
+                                                      //           'Montserrat',
+                                                      //       fontWeight:
+                                                      //           FontWeight.w400,
+                                                      //     ),
+                                                      //   ),
+                                                      // ),
+                                                      Container(
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.7,
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                top: 2,
+                                                                bottom: 8),
+                                                        child: Wrap(
+                                                          spacing: 10,
+                                                          children:
+                                                              combinedPackagetData
+                                                                  .trainer
+                                                                  .category
+                                                                  .map(
+                                                                      (category) {
+                                                            return Directionality(
+                                                              textDirection: box
+                                                                          .read(
+                                                                              'locale') ==
+                                                                      'ar'
+                                                                  ? TextDirection
+                                                                      .rtl
+                                                                  : TextDirection
+                                                                      .ltr,
+                                                              child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .min,
+                                                                children: [
+                                                                  Icon(
+                                                                    Icons
+                                                                        .circle,
+                                                                    color: Get
+                                                                            .isDarkMode
+                                                                        ? white
+                                                                        : black,
+                                                                    size: 10,
+                                                                  ),
+                                                                  SizedBox(
+                                                                      width: 4),
+                                                                  Text(
+                                                                    category,
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Get
+                                                                              .isDarkMode
+                                                                          ? white
+                                                                          : black,
+                                                                      fontSize:
+                                                                          12,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            );
+                                                          }).toList(),
                                                         ),
                                                       ),
                                                       Padding(
@@ -176,24 +244,24 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                                                     .package
                                                                     .category ==
                                                                 "nutrition"
-                                                            ? Image.asset(
-                                                                'assets/images/packageplanimage1.png',
+                                                            ? SvgPicture.asset(
+                                                                'assets/images/nutri.svg',
                                                                 height: 18,
                                                                 width: 20)
                                                             : combinedPackagetData
                                                                         .package
                                                                         .category ==
                                                                     'excercise'
-                                                                ? Image.asset(
-                                                                    'assets/images/packageplanimage.png',
+                                                                ? SvgPicture.asset(
+                                                                    'assets/images/dumbel.svg',
                                                                     height: 19,
                                                                     width: 20,
                                                                   )
                                                                 : Row(
                                                                     children: [
-                                                                      Image
+                                                                      SvgPicture
                                                                           .asset(
-                                                                        'assets/images/packageplanimage.png',
+                                                                        'assets/images/dumbel.svg',
                                                                         height:
                                                                             19,
                                                                         width:
@@ -214,8 +282,8 @@ class _PackagecheckoutViewState extends State<PackagecheckoutView> {
                                                                               fontWeight: FontWeight.w700),
                                                                         ),
                                                                       ),
-                                                                      Image.asset(
-                                                                          'assets/images/packageplanimage1.png',
+                                                                      SvgPicture.asset(
+                                                                          'assets/images/nutri.svg',
                                                                           height:
                                                                               18,
                                                                           width:

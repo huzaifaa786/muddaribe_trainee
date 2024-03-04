@@ -15,7 +15,7 @@ import 'package:mudarribe_trainee/models/trainer.dart';
 import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/views/home/home_controller.dart';
-import 'package:mudarribe_trainee/views/search_trainer/search_trianer_binding.dart';
+import 'package:mudarribe_trainee/views/search_trainer/search_trianer_controller.dart';
 
 class SerachView extends StatefulWidget {
   const SerachView({super.key});
@@ -26,9 +26,13 @@ class SerachView extends StatefulWidget {
 
 class _SerachViewState extends State<SerachView> {
   String? search;
-  Languages lang = Languages.English;
-  Gender gender = Gender.male;
-  Categories category = Categories.body_Building;
+  // Languages lang = Languages.English;
+  // Gender gender = Gender.male;
+  // Categories? category = Categories.body_Building;
+  Set<Categories> selectedCategories = Set<Categories>();
+  Set<Languages> lang = Set<Languages>();
+  Set<Gender> gender = Set<Gender>();
+
   @override
   Widget build(BuildContext context) {
     GetStorage box = GetStorage();
@@ -72,7 +76,7 @@ class _SerachViewState extends State<SerachView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: EdgeInsets.only( bottom: 10),
+                            padding: EdgeInsets.only(bottom: 10),
                             child: Row(
                               children: [
                                 Flexible(
@@ -112,6 +116,28 @@ class _SerachViewState extends State<SerachView> {
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(25))),
                                         hintText: 'Search trainer by name'.tr,
+                                        suffixIcon: IconButton(
+                                          icon: SvgPicture.asset(
+                                            'assets/images/arrow-sort.svg',
+                                            color: borderTop,
+                                          ),
+                                          onPressed: () async {
+                                            String? selectedOption =
+                                                await showSortOptionsBottomSheet(
+                                                    context);
+                                            if (selectedOption != null) {
+                                              if (selectedOption ==
+                                                  'highToLow') {
+                                                controller
+                                                    .sortTrainersByRating();
+                                              } else if (selectedOption ==
+                                                  'lowToHigh') {
+                                                controller
+                                                    .sortTrainersByRatingDownToUp();
+                                              }
+                                            }
+                                          },
+                                        ),
                                         hintStyle: TextStyle(
                                           color: Get.isDarkMode
                                               ? Colors.white.withOpacity(0.3)
@@ -178,7 +204,11 @@ class _SerachViewState extends State<SerachView> {
                                         },
                                       )),
                                 )
-                              : SizedBox.shrink(),
+                              : SizedBox(
+                                  width: Get.width,
+                                  height: Get.height * 0.7,
+                                  child: Center(
+                                      child: Text('No trainer found'.tr))),
                         ],
                       ),
                     ),
@@ -197,7 +227,6 @@ class _SerachViewState extends State<SerachView> {
                               color: Colors.black87,
                               borderRadius: BorderRadius.circular(15)),
                           child: SingleChildScrollView(
-                            
                             child: Container(
                               padding: EdgeInsets.all(15),
                               width: 200,
@@ -215,7 +244,7 @@ class _SerachViewState extends State<SerachView> {
                                   Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                      children: _buildCategoryButtons()),
+                                      children: _buildCategoryCheckboxes()),
                                   Text(
                                     'Languages'.tr,
                                     style: TextStyle(
@@ -226,7 +255,7 @@ class _SerachViewState extends State<SerachView> {
                                   Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                      children: _buildRadioButtons()),
+                                      children: _buildLanguageCheckboxes()),
                                   Text(
                                     'Gender'.tr,
                                     style: TextStyle(
@@ -244,8 +273,11 @@ class _SerachViewState extends State<SerachView> {
                                       title: 'Search'.tr,
                                       onPressed: () async {
                                         controller.lang = lang;
-                                        controller.gender = gender;
-                                        controller.category = category;
+                                        controller.selectedGenders = gender;
+                                        controller.selectedCategories =
+                                            selectedCategories;
+                                        print(selectedCategories);
+                                        print(lang);
                                         controller.filterTrainers('');
                                         controller.toggleShow();
                                       },
@@ -268,47 +300,54 @@ class _SerachViewState extends State<SerachView> {
     );
   }
 
-  List<Widget> _buildRadioButtons() {
-    List<Widget> radioButtons = [];
+  //! Language Filteration Widget
+  List<Widget> _buildLanguageCheckboxes() {
+    List<Widget> checkboxes = [];
     for (Languages option in Languages.values) {
-      radioButtons.add(
+      checkboxes.add(
         SizedBox(
           height: 30,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Transform.scale(
-                  scale: 1.0,
-                  child: Radio(
-                    value: option,
-                    groupValue: lang,
-                    fillColor:
-                        MaterialStateColor.resolveWith((states) => borderDown),
-                    onChanged: (value) {
-                      setState(() {
-                        lang = value!;
-                      });
-                    },
-                  )),
-              Text(
-                option.toString().split('.').last.tr,
-                style: TextStyle(
+              Checkbox(
+                activeColor: borderTop,
+                value: lang.contains(option),
+                onChanged: (value) {
+                  setState(() {
+                    if (value != null) {
+                      if (value) {
+                        lang.add(option);
+                      } else {
+                        lang.remove(option);
+                      }
+                    }
+                  });
+                },
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.32,
+                child: Text(
+                  option.toString().split('.').last.tr,
+                  style: TextStyle(
                     fontFamily: "Poppins",
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
-                    color: white),
+                    overflow: TextOverflow.ellipsis,
+                    color: white,
+                  ),
+                ),
               ),
-              Text(
-                '',
-              ),
+              Text(''),
             ],
           ),
         ),
       );
     }
-    return radioButtons;
+    return checkboxes;
   }
 
+  //! Gender Filteration Widget
   List<Widget> _buildGenderButtons() {
     List<Widget> radioButtons = [];
     for (Gender option in Gender.values) {
@@ -319,18 +358,23 @@ class _SerachViewState extends State<SerachView> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Transform.scale(
-                  scale: 1.0,
-                  child: Radio(
-                    value: option,
-                    groupValue: gender,
-                    fillColor:
-                        MaterialStateColor.resolveWith((states) => borderDown),
-                    onChanged: (value) {
-                      setState(() {
-                        gender = value!;
-                      });
-                    },
-                  )),
+                scale: 1.0,
+                child: Checkbox(
+                  activeColor: borderTop,
+                  value: gender.contains(option),
+                  onChanged: (value) {
+                    setState(() {
+                      if (value != null) {
+                        if (value) {
+                          gender.add(option);
+                        } else {
+                          gender.remove(option);
+                        }
+                      }
+                    });
+                  },
+                ),
+              ),
               Text(
                 option.toString().split('.').last.tr,
                 style: TextStyle(
@@ -350,29 +394,34 @@ class _SerachViewState extends State<SerachView> {
     return radioButtons;
   }
 
-  List<Widget> _buildCategoryButtons() {
-    List<Widget> radioButtons = [];
+  //! Category Filteration Widget
+  List<Widget> _buildCategoryCheckboxes() {
+    List<Widget> checkboxes = [];
     for (Categories option in Categories.values) {
-      radioButtons.add(
+      checkboxes.add(
         SizedBox(
           height: 30,
-          
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Transform.scale(
-                  scale: 1.0,
-                  child: Radio(
-                    value: option,
-                    groupValue: category,
-                    fillColor:
-                        MaterialStateColor.resolveWith((states) => borderDown),
-                    onChanged: (value) {
-                      setState(() {
-                        category = value!;
-                      });
-                    },
-                  )),
+                scale: 1.0,
+                child: Checkbox(
+                  activeColor: borderTop,
+                  value: selectedCategories.contains(option),
+                  onChanged: (value) {
+                    setState(() {
+                      if (value != null) {
+                        if (value) {
+                          selectedCategories.add(option);
+                        } else {
+                          selectedCategories.remove(option);
+                        }
+                      }
+                    });
+                  },
+                ),
+              ),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.32,
                 child: Text(
@@ -380,31 +429,68 @@ class _SerachViewState extends State<SerachView> {
                       ? "Body Building".tr
                       : option.toString().split('.').last == 'medical_Fitness'
                           ? 'Medical fitness'.tr
-                          : option.toString().split('.').last == 'indoor_Cycling'
+                          : option.toString().split('.').last ==
+                                  'indoor_Cycling'
                               ? 'Indoor Cycling'.tr
-                          : option.toString().split('.').last == 'animal_flow'
-                              ? 'Animal flow'.tr
-                          : option.toString().split('.').last == 'rehabilitation_Coach'
-                              ? 'Rehabilitation'.tr
-                          : option.toString().split('.').last == 'kettle_bell'
-                              ? 'Kettle bell'.tr
-                              : option.toString().split('.').last.tr,
+                              : option.toString().split('.').last ==
+                                      'animal_flow'
+                                  ? 'Animal flow'.tr
+                                  : option.toString().split('.').last ==
+                                          'kettle_bell'
+                                      ? 'Kettle bell'.tr
+                                      : option.toString().split('.').last.tr,
                   style: TextStyle(
-                      fontFamily: "Poppins",
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      overflow: TextOverflow.ellipsis,
-                      color: white),
+                    fontFamily: "Poppins",
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    overflow: TextOverflow.ellipsis,
+                    color: white,
+                  ),
                 ),
               ),
-              Text(
-                '',
-              ),
+              Text(''),
             ],
           ),
         ),
       );
     }
-    return radioButtons;
+    return checkboxes;
+  }
+
+  //! Sorting bottomSheet
+  Future<String?> showSortOptionsBottomSheet(BuildContext context) async {
+    String? selectedOption = await showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: Text(
+                  'Sort by Rating'.tr,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+                // tileColor: Colors.grey.shade300,
+              ),
+              ListTile(
+                title: Text('Highest to Lowest'.tr),
+                onTap: () {
+                  Navigator.pop(context, 'highToLow');
+                },
+              ),
+              ListTile(
+                title: Text('Lowest to Highest'.tr),
+                onTap: () {
+                  Navigator.pop(context, 'lowToHigh');
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    return selectedOption;
   }
 }

@@ -44,6 +44,7 @@ class PackageApi {
         'type': 'Package',
         'intent': intent,
         'amount': amount,
+        'seen': false
       });
       return true;
     } catch (e) {

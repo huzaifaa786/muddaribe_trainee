@@ -5,7 +5,7 @@ class Trainer {
   final String name;
   final String profileImageUrl;
   final String? bio;
-  final List category;
+  final List<String> category;
   final List languages;
   final String gender;
   final String? firebaseToken;
@@ -26,10 +26,10 @@ class Trainer {
   });
 
   factory Trainer.fromMap(Map<String, dynamic> map) {
-    List<dynamic> translatedCategories = [];
+    List<String> translatedCategories = [];
 
     if (map['categories'] != null) {
-      List<dynamic> arabicCategories = List<String>.from(map['categories']);
+      List<String> arabicCategories = List<String>.from(map['categories']);
       for (String category in arabicCategories) {
         var i = category.tr;
         translatedCategories.add(i);

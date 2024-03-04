@@ -1,5 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -77,14 +80,24 @@ class _TraineeProfileViewState extends State<TraineeProfileView> {
                                   ),
                                 ),
                               ),
-                              ClipRRect(
+                              CircleAvatar(
+                                radius: 45,
+                                backgroundColor:
+                                    white,
+                                child: ClipRRect(
                                   borderRadius: BorderRadius.circular(45),
-                                  child: Image.asset(
-                                    'assets/images/dummyUser.png',
-                                    fit: BoxFit.cover,
-                                    height: 90,
-                                    width: 90,
-                                  )),
+                                  child: controller.currentUser!.imageUrl == ''
+                                      ? Image.asset(
+                                          'assets/images/dummyUser.png',
+                                        )
+                                      : CachedNetworkImage(
+                                          imageUrl:
+                                              controller.currentUser!.imageUrl!,
+                                          height: 90,
+                                          width: 90,
+                                        ),
+                                ),
+                              ),
                               Text(
                                 controller.currentUser!.name!,
                                 style: const TextStyle(

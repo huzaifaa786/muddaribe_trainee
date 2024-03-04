@@ -35,7 +35,7 @@ class BoxingTrainersCard extends StatelessWidget {
           margin: EdgeInsets.only(top: 10),
           padding: EdgeInsets.all(8.0),
           decoration: BoxDecoration(
-              color: Get.isDarkMode ? Color(0xFF0F0F0F) : lightbgColor,
+              color: Get.isDarkMode ? bgContainer : lightbgColor,
               borderRadius: BorderRadius.circular(10)),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [

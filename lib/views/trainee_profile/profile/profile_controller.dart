@@ -25,6 +25,7 @@ class ProfileController extends GetxController {
     if (user != null) {
       currentUser = await _userService.getAuthUser();
       update();
+      print('object');
     }
   }
 

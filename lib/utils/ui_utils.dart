@@ -15,7 +15,7 @@ class UiUtilites {
     Get.snackbar(
       title,
       message,
-      colorText: white,
+      colorText: Get.isDarkMode ? white : black,
       backgroundGradient: const LinearGradient(
         colors: [Colors.red, Colors.redAccent],
         begin: Alignment.topCenter,
@@ -30,12 +30,12 @@ class UiUtilites {
     Get.snackbar(
       title,
       message,
-      backgroundGradient: const LinearGradient(
+      backgroundGradient: LinearGradient(
         colors: [borderDown, borderTop],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ),
-      colorText: white,
+      colorText: Get.isDarkMode ? white : black,
       duration: const Duration(seconds: 2),
       snackPosition: SnackPosition.BOTTOM,
     );

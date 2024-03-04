@@ -88,7 +88,8 @@ class ChatProvider {
         'orderId': orderId,
         'type': 'My_Plan',
         'intent': intent,
-        'amount': amount
+        'amount': amount,
+        'seen': false,
       });
       return true;
     } catch (e) {
