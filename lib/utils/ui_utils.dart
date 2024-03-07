@@ -265,3 +265,32 @@ class UiUtilites {
         });
   }
 }
+
+Future<bool> showConfirmationDialog(BuildContext context) async {
+  // Implement your own confirmation dialog using showDialog
+  // For example, you can use the `AlertDialog` widget
+  return await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Confirmation".tr),
+            content: Text("Are you sure you want to upload this media.".tr),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false); // User declined
+                },
+                child: Text("Cancel".tr),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(true); // User confirmed
+                },
+                child: Text("Send".tr),
+              ),
+            ],
+          );
+        },
+      ) ??
+      false; // Return false if the dialog is dismissed without making a choice
+}

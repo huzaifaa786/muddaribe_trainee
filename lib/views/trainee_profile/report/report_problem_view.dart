@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:google_translator/google_translator.dart';
 import 'package:mudarribe_trainee/components/color_button.dart';
@@ -54,12 +55,70 @@ class _ReportProblemViewState extends State<ReportProblemView> {
                         ],
                       ),
                     ),
+                    Gap(30),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              controller.i = 0;
+                            });
+                          },
+                          child: Container(
+                              height: 40,
+                              width: Get.width * 0.35,
+                              decoration: BoxDecoration(
+                                  color: Get.isDarkMode
+                                      ? controller.i == 0
+                                          ? lightbgColor
+                                          : bgContainer1
+                                      : controller.i == 0
+                                          ? bgContainer1
+                                          : lightbgColor,
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: Center(
+                                child: GradientText1(
+                                  size: 16.0,
+                                  text: 'Report'.tr,
+                                ),
+                              )),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              controller.i = 1;
+                            });
+                          },
+                          child: Container(
+                              height: 40,
+                              width: Get.width * 0.35,
+                              decoration: BoxDecoration(
+                                  color: Get.isDarkMode
+                                      ? controller.i == 1
+                                          ? lightbgColor
+                                          : bgContainer1
+                                      : controller.i == 1
+                                          ? bgContainer1
+                                          : lightbgColor,
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: Center(
+                                child: GradientText1(
+                                  size: 16.0,
+                                  text: 'Suggestion'.tr,
+                                ),
+                              )),
+                        ),
+                      ],
+                    ),
                     Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(top: 40, bottom: 50),
+                          padding: const EdgeInsets.only(top: 20, bottom: 30),
                           child: Text(
-                            'What’s the problem?'.tr,
+                            controller.i == 0
+                                ? 'What’s the problem?'.tr
+                                : 'What’s the suggestion?'.tr,
                             style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.w600,
@@ -74,7 +133,7 @@ class _ReportProblemViewState extends State<ReportProblemView> {
                           left: 15, right: 15, top: 40, bottom: 40),
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
-                          color: Get.isDarkMode ? black : lightbgColor,
+                          color: Get.isDarkMode ? bgContainer : lightbgColor,
                           borderRadius: BorderRadius.circular(10)),
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -83,7 +142,9 @@ class _ReportProblemViewState extends State<ReportProblemView> {
                             Form(
                               key: controller.formKey,
                               child: InputField(
-                                lable: 'Problem Text'.tr,
+                                lable: controller.i == 0
+                                    ? 'Problem Text'.tr
+                                    : 'Suggestion Text'.tr,
                                 maxlines: 5,
                                 controller: controller.report,
                                 validator: (value) {
@@ -152,7 +213,7 @@ class _ReportProblemViewState extends State<ReportProblemView> {
                       height: 50,
                     ),
                     GradientButton(
-                      title: 'Report'.tr,
+                      title: 'Submit'.tr,
                       selected: controller.areFieldsFilled.value,
                       onPressed: controller.areFieldsFilled.value
                           ? () {

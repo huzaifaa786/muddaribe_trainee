@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mudarribe_trainee/api/chat_api.dart';
@@ -47,11 +49,23 @@ class _ChatLsitScreenState extends State<ChatLsitScreen> {
                 appBar: AppBar(
                   forceMaterialTransparency: true,
                   automaticallyImplyLeading: false,
-                  title: TopBar(
-                    text: 'Chats'.tr,
+                  title: Text(
+                    'Chats'.tr,
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800,
+                        fontFamily: 'Poppins'),
                   ),
                 ),
                 body: SafeArea(
+                  // child: CustomMaterialIndicator(
+                  //   onRefresh: () async {
+                  //     setState(() {});
+                  //     Future.delayed(Duration(milliseconds: 1500));
+                  //   },
+                  //   indicatorBuilder: (context, controller) {
+                  //     return CupertinoActivityIndicator();
+                  //   },
                   child: Padding(
                     padding: const EdgeInsets.only(left: 15, right: 15),
                     child: Column(
@@ -178,6 +192,7 @@ class _ChatLsitScreenState extends State<ChatLsitScreen> {
                 ),
               ),
             ),
+            // ),
           );
   }
 }

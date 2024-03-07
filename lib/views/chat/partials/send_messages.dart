@@ -19,7 +19,12 @@ Widget buildMessageStatusIcon(bool seen) {
     padding: const EdgeInsets.symmetric(horizontal: 8.0),
     child: Icon(
       seen ? Icons.done_all : Icons.done,
-      color: Get.isDarkMode ? white : Colors.black,
+      color: seen
+          ? borderTop
+          : Get.isDarkMode
+              ? white
+              : Colors.black,
+      size: 16,
     ),
   );
 }

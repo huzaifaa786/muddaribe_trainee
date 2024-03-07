@@ -45,7 +45,7 @@ class _OrderCardState extends State<OrderCard> {
           height: 344,
           width: MediaQuery.sizeOf(context).width,
           decoration: BoxDecoration(
-            color: Get.isDarkMode ? black : lightbgColor,
+            color: Get.isDarkMode ? bgContainer : lightbgColor,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Column(

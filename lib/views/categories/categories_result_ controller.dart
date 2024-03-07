@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:mudarribe_trainee/helper/loading_helper.dart';
 import 'package:mudarribe_trainee/models/trainer.dart';
+import 'package:mudarribe_trainee/views/home/home_controller.dart';
 
 class CategoriesController extends GetxController {
   late CollectionReference trainersCollection;
@@ -10,6 +11,10 @@ class CategoriesController extends GetxController {
   final BusyController busyController = Get.find();
 
   List<Trainer> trainersList = [];
+  List<Trainer> serachedtrainersList = [];
+  bool show = false;
+  Set<Languages> lang = Set<Languages>();
+  Set<Gender> selectedGenders = Set<Gender>();
 
   // Assuming you're setting these collections somewhere in your code...
 
@@ -47,6 +52,7 @@ class CategoriesController extends GetxController {
       List<Trainer> fetchedTrainers = await Future.wait(trainerFutures);
 
       trainersList = fetchedTrainers;
+      updateTrainers(trainersList);
       update();
     } catch (error) {
       print("Error fetching trainers: $error");
@@ -78,8 +84,56 @@ class CategoriesController extends GetxController {
     update();
   }
 
-    void sortTrainersByRatingDownToUp() {
-    trainersList.sort((a, b) => (a.rating ?? 0.0).compareTo(b.rating ?? 0.0));
+  void sortTrainersByNameAToZ() {
+    trainersList.sort((a, b) => (a.name).compareTo(b.name));
+    update();
+  }
+
+  updateTrainers(List<Trainer> trainers) {
+    serachedtrainersList = trainers;
+    update();
+  }
+
+  void filterTrainers(String search) {
+    if (search.isNotEmpty) {
+      List<Trainer> filteredTrainers = [];
+      filteredTrainers = trainersList.where((trainer) {
+        return trainer.name.toLowerCase().contains(search.toLowerCase());
+      }).toList();
+      updateTrainers(filteredTrainers);
+    } else {
+      Set<String> languages = {};
+      Set<String> genders = {};
+      for (Languages langs in lang) {
+        languages.add(langs.toString().split('.').last);
+      }
+
+      for (Gender gendr in selectedGenders) {
+        genders.add(gendr.toString().split('.').last);
+      }
+
+      List<Trainer> filteredTrainers = [];
+      if (languages.isEmpty && genders.isEmpty) {
+        filteredTrainers = trainersList;
+      } else {
+        filteredTrainers = trainersList.where((trainer) {
+          bool languageCondition = languages.isEmpty ||
+              languages.any((lang) => trainer.languages.contains(lang));
+
+          bool genderCondition = genders.isEmpty ||
+              genders.any((gender) => trainer.gender.contains(gender));
+
+          return languageCondition && genderCondition;
+        }).toList();
+      }
+
+      update();
+      updateTrainers(filteredTrainers);
+    }
+  }
+
+  void toggleShow() {
+    show = !show;
     update();
   }
 }

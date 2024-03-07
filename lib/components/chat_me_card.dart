@@ -23,10 +23,14 @@ class ChatMeCard extends StatelessWidget {
       onTap: onChatClick,
       child: Container(
         decoration: BoxDecoration(
-          color: Get.isDarkMode ? black : grey.withOpacity(0.1),
+          color: Get.isDarkMode ? bgContainer : grey.withOpacity(0.1),
           borderRadius: BorderRadius.circular(5),
         ),
-        padding: EdgeInsets.only(left: 6, right: 6, bottom: 8 ,),
+        padding: EdgeInsets.only(
+          left: 6,
+          right: 6,
+          bottom: 8,
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -69,8 +73,7 @@ class ChatMeCard extends StatelessWidget {
                           Text(
                             username,
                             style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600),
+                                fontSize: 14, fontWeight: FontWeight.w600),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 7),
@@ -89,8 +92,7 @@ class ChatMeCard extends StatelessWidget {
                           child: Text(
                             chatText,
                             style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400),
+                                fontSize: 12, fontWeight: FontWeight.w400),
                             maxLines: 2,
                           ),
                         ),

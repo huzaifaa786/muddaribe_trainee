@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:mudarribe_trainee/components/packagecheckbox.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
+import 'package:mudarribe_trainee/utils/gallery_image_view.dart';
 import 'package:mudarribe_trainee/views/chat/full_photo_page.dart';
 
 class TrainerPackageCard extends StatelessWidget {
@@ -43,7 +44,7 @@ class TrainerPackageCard extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Get.isDarkMode ? black : grey.withOpacity(0.1),
+              color: Get.isDarkMode ? bgContainer : grey.withOpacity(0.1),
               border: selectedPlan == id
                   ? GradientBoxBorder(
                       gradient: LinearGradient(colors: [borderTop, borderDown]),
@@ -80,10 +81,8 @@ class TrainerPackageCard extends StatelessWidget {
                                           fontWeight: FontWeight.w700),
                                     ),
                                   ),
-                                  SvgPicture.asset(
-                                      'assets/images/nutri.svg',
-                                      height: 18,
-                                      width: 20),
+                                  SvgPicture.asset('assets/images/nutri.svg',
+                                      height: 18, width: 20),
                                 ],
                               ),
                             )
@@ -147,32 +146,43 @@ class TrainerPackageCard extends StatelessWidget {
                                   children: [
                                     img != ''
                                         ? InkWell(
-                                          onTap: (){
-                                            Get.to(()=>FullPhotoPage(url: img));
-                                          },
-
-                                          child: Image.network(
-                                              img,
-                                              height: 40,
-                                              width: 40,
-                                              fit: BoxFit.cover,
+                                            onTap: () {
+                                              Get.to(() => GalleryView(
+                                                    imageUrls: [img, img2],
+                                                    initialIndex: 0,
+                                                  ));
+                                            },
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(6),
+                                              child: Image.network(
+                                                img,
+                                                height: 40,
+                                                width: 40,
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
-                                        )
+                                          )
                                         : SizedBox(),
                                     Gap(4),
                                     img2 != ''
                                         ? InkWell(
-                                          onTap: (){
-                                            Get.to(()=>FullPhotoPage(url: img2));
-
-                                          },
-                                          child: Image.network(
-                                              img2,
-                                              height: 40,
-                                              width: 40,
-                                              fit: BoxFit.cover,
+                                            onTap: () {
+                                              Get.to(() => GalleryView(
+                                                  imageUrls: [img, img2],
+                                                  initialIndex: 1));
+                                            },
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(6),
+                                              child: Image.network(
+                                                img2,
+                                                height: 40,
+                                                width: 40,
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
-                                        )
+                                          )
                                         : SizedBox()
                                   ],
                                 )

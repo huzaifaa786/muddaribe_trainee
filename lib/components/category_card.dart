@@ -38,7 +38,7 @@ class CategoryCard extends StatelessWidget {
           ],
         ),
         shape: RoundedRectangleBorder(
-          // borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10),
         ),
         image: DecorationImage(
           image: AssetImage(image),
@@ -53,10 +53,10 @@ class CategoryCard extends StatelessWidget {
           style: TextStyle(
             color: Colors.white,
             fontSize: title == 'Calisthenics'
-                ? 12
+                ? 10
                 : title == 'Rehabilitation'
-                    ? 10
-                    : 14,
+                    ? 9
+                    : 11,
             fontWeight: FontWeight.w700,
           ),
         ),

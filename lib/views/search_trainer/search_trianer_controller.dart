@@ -147,13 +147,13 @@ class TSearchController extends GetxController {
     }
   }
 
-    void sortTrainersByRating() {
+  void sortTrainersByRating() {
     items.sort((a, b) => (b.rating ?? 0.0).compareTo(a.rating ?? 0.0));
     update();
   }
 
-    void sortTrainersByRatingDownToUp() {
-    items.sort((a, b) => (a.rating ?? 0.0).compareTo(b.rating ?? 0.0));
+  void sortTrainersByNameAToZ() {
+    items.sort((a, b) => (a.name).compareTo(b.name));
     update();
   }
 }

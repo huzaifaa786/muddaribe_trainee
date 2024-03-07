@@ -35,10 +35,13 @@ class _PlanFilesState extends State<PlanFiles> {
     return GetBuilder<PlanFilesController>(
         initState: (state) async {
           Future.delayed(const Duration(milliseconds: 100), () {
-            state.controller!.planId = planId;
-            state.controller!.planName = planName;
-            state.controller!.trainerId = trainerId;
-
+            if (state.controller!.planId == '' &&
+                state.controller!.planName == '' &&
+                state.controller!.trainerId == '') {
+              state.controller!.planId = planId;
+              state.controller!.planName = planName;
+              state.controller!.trainerId = trainerId;
+            }
             setState(() {});
           });
         },
@@ -76,7 +79,9 @@ class _PlanFilesState extends State<PlanFiles> {
                                 height: 100,
                                 width: MediaQuery.of(context).size.width,
                                 decoration: BoxDecoration(
-                                  color: Get.isDarkMode ? black : lightbgColor,
+                                  color: Get.isDarkMode
+                                      ? bgContainer
+                                      : lightbgColor,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Padding(
@@ -100,7 +105,7 @@ class _PlanFilesState extends State<PlanFiles> {
                                           ),
                                           InkWell(
                                             onTap: () {
-                                              Get.off(() => ChatPage(
+                                              Get.to(() => ChatPage(
                                                   arguments: ChatPageArguments(
                                                       peerId: trainer.id,
                                                       peerAvatar: trainer
@@ -112,7 +117,9 @@ class _PlanFilesState extends State<PlanFiles> {
                                               'assets/images/chat.svg',
                                               width: 26,
                                               height: 23,
-                                              color: Get.isDarkMode ? white : black,
+                                              color: Get.isDarkMode
+                                                  ? white
+                                                  : black,
                                               fit: BoxFit.scaleDown,
                                             ),
                                           ),
@@ -196,7 +203,9 @@ class _PlanFilesState extends State<PlanFiles> {
                                   height: 136,
                                   width: MediaQuery.of(context).size.width,
                                   decoration: BoxDecoration(
-                                    color: Get.isDarkMode ? black :lightbgColor,
+                                    color: Get.isDarkMode
+                                        ? bgContainer
+                                        : lightbgColor,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Padding(
@@ -209,9 +218,10 @@ class _PlanFilesState extends State<PlanFiles> {
                                           child: Text(
                                             'Description'.tr,
                                             style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w700,
-                                                fontFamily: 'Poppins',),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w700,
+                                              fontFamily: 'Poppins',
+                                            ),
                                           ),
                                         ),
                                         Padding(

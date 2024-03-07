@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, deprecated_member_use
 
 import 'dart:ui';
 
@@ -133,7 +133,7 @@ class _SerachViewState extends State<SerachView> {
                                               } else if (selectedOption ==
                                                   'lowToHigh') {
                                                 controller
-                                                    .sortTrainersByRatingDownToUp();
+                                                    .sortTrainersByNameAToZ();
                                               }
                                             }
                                           },
@@ -468,19 +468,19 @@ class _SerachViewState extends State<SerachView> {
             children: [
               ListTile(
                 title: Text(
-                  'Sort by Rating'.tr,
+                  'Sort by'.tr,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
                 // tileColor: Colors.grey.shade300,
               ),
               ListTile(
-                title: Text('Highest to Lowest'.tr),
+                title: Text('By rating'.tr),
                 onTap: () {
                   Navigator.pop(context, 'highToLow');
                 },
               ),
               ListTile(
-                title: Text('Lowest to Highest'.tr),
+                title: Text('By alphabets'.tr),
                 onTap: () {
                   Navigator.pop(context, 'lowToHigh');
                 },

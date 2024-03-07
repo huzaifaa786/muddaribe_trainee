@@ -41,7 +41,7 @@ class MainTopBar extends StatelessWidget {
                         child: badges.Badge(
                           badgeContent: Text(
                             notiCount.toString(),
-                            style: TextStyle(fontSize: 10),
+                            style: TextStyle(fontSize: 10,color: black),
                           ),
                           badgeStyle: badges.BadgeStyle(badgeColor: borderDown),
                           showBadge: notiCount == 0 ? false : true,

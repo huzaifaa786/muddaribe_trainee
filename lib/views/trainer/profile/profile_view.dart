@@ -11,6 +11,7 @@ import 'dart:ui' as ui;
 import 'package:intl/intl.dart';
 import 'package:mudarribe_trainee/api/post_api.dart';
 import 'package:mudarribe_trainee/api/trainer_profile_api.dart';
+import 'package:mudarribe_trainee/api/trainer_saved.dart';
 import 'package:mudarribe_trainee/components/chat_me_card.dart';
 import 'package:mudarribe_trainee/components/color_button.dart';
 import 'package:mudarribe_trainee/components/eventDetailsCard.dart';
@@ -41,7 +42,6 @@ enum PackageType { monthBoth, month1, month2 }
 class _TrainerprofileViewState extends State<TrainerprofileView> {
   @override
   void initState() {
-    // TODO: implement initState
     if (FirebaseAuth.instance.currentUser == null) {
       Future.delayed(Duration.zero, () {
         setState(() {
@@ -137,14 +137,13 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                   padding: const EdgeInsets.only(
                       left: 10, right: 10, bottom: 10.0, top: 10),
                   child: Container(
-                    padding: EdgeInsets.only(
-                        left: 4, right: 4, top: 15, bottom: 15.0),
+                    padding: EdgeInsets.only(bottom: 15.0),
                     width: MediaQuery.of(context).size.width * 0.99,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(10),
                           topLeft: Radius.circular(10)),
-                      color: Get.isDarkMode ? black : lightbgColor,
+                      color: Get.isDarkMode ? bgContainer : lightbgColor,
                     ),
                     child: SingleChildScrollView(
                       child: Column(
@@ -173,7 +172,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                           left: 15,
                                           right: 15,
                                           bottom: 10,
-                                          top: 35),
+                                          top: 4),
                                       child: Divider(
                                         thickness: 1,
                                         color: dividercolor,
@@ -215,10 +214,19 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                             .followTrainer(
                                                                 controller
                                                                     .trainerId);
+                                                        setState(() {});
+                                                        TrainerSaved
+                                                            .trainerSaved(
+                                                                controller
+                                                                    .trainerId);
                                                       }
                                                       if (!isFollowing.value) {
                                                         TrainerProfileApi
                                                             .unfollowTrainer(
+                                                                controller
+                                                                    .trainerId);
+                                                        TrainerSaved
+                                                            .trainerUnsaved(
                                                                 controller
                                                                     .trainerId);
                                                       }
@@ -241,9 +249,8 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                             colors: isFollowing
                                                                     .value
                                                                 ? [
-                                                                    Colors
-                                                                        .black,
-                                                                    Colors.black
+                                                                    bgContainer,
+                                                                    bgContainer
                                                                   ]
                                                                 : [
                                                                     Color(
@@ -259,7 +266,12 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                         textAlign:
                                                             TextAlign.center,
                                                         style: TextStyle(
-                                                          color: Colors.white,
+                                                          color: Get.isDarkMode
+                                                              ? Colors.white
+                                                              : isFollowing
+                                                                      .value
+                                                                  ? black
+                                                                  : white,
                                                           fontSize: 12,
                                                           fontWeight:
                                                               FontWeight.w700,
@@ -270,7 +282,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                             }),
                                         InkWell(
                                           onTap: () {
-                                            Get.off(() => ChatPage(
+                                            Get.to(() => ChatPage(
                                                 arguments: ChatPageArguments(
                                                     peerId: trainer.id,
                                                     peerAvatar:
@@ -397,8 +409,8 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                               color: Get.isDarkMode ? Colors.grey : black,
                               selectedColor: Get.isDarkMode ? white : grey,
                               selectedBorderColor:
-                                  Get.isDarkMode ? Colors.transparent : grey,
-                              fillColor: Colors.transparent,
+                                  Get.isDarkMode ? bgContainer : grey,
+                              fillColor: bgContainer,
                               borderRadius: BorderRadius.circular(8),
                             ),
                           ),
@@ -731,42 +743,53 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                           packages.length,
                                                       itemBuilder:
                                                           (context, index) {
-                                                        return TrainerPackageCard(
-                                                          img2: packages[index]
-                                                              .image2,
-                                                          img: packages[index]
-                                                              .image1,
-                                                          duration:
-                                                              packages[index]
-                                                                  .duration,
-                                                          name: packages[index]
-                                                              .name,
-                                                          description:
-                                                              packages[index]
-                                                                  .discription,
-                                                          price: packages[index]
-                                                              .price,
-                                                          category:
-                                                              packages[index]
-                                                                  .category,
-                                                          id: packages[index]
-                                                              .id,
-                                                          selectedPlan:
-                                                              controller
-                                                                  .selectedPlan,
-                                                          onTap: () async {
-                                                            await controller
-                                                                .toggleplan(
-                                                                    packages[
-                                                                            index]
-                                                                        .id);
-                                                            await controller
-                                                                .toggleprice(
-                                                                    packages[
-                                                                            index]
-                                                                        .price);
-                                                            setState(() {});
-                                                          },
+                                                        return Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  left: 6,
+                                                                  right: 6),
+                                                          child:
+                                                              TrainerPackageCard(
+                                                            img2:
+                                                                packages[index]
+                                                                    .image2,
+                                                            img: packages[index]
+                                                                .image1,
+                                                            duration:
+                                                                packages[index]
+                                                                    .duration,
+                                                            name:
+                                                                packages[index]
+                                                                    .name,
+                                                            description:
+                                                                packages[index]
+                                                                    .discription,
+                                                            price:
+                                                                packages[index]
+                                                                    .price,
+                                                            category:
+                                                                packages[index]
+                                                                    .category,
+                                                            id: packages[index]
+                                                                .id,
+                                                            selectedPlan:
+                                                                controller
+                                                                    .selectedPlan,
+                                                            onTap: () async {
+                                                              await controller
+                                                                  .toggleplan(
+                                                                      packages[
+                                                                              index]
+                                                                          .id);
+                                                              await controller
+                                                                  .toggleprice(
+                                                                      packages[
+                                                                              index]
+                                                                          .price);
+                                                              setState(() {});
+                                                            },
+                                                          ),
                                                         );
                                                       },
                                                     )
@@ -787,17 +810,14 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                       ),
                                                     );
                                             }),
-                                        controller.indexs == 2 &&
-                                                controller.selectedPlan !=
-                                                    null &&
-                                                controller.selectedPrice != null
+                                        controller.indexs == 2 
                                             ? Column(
                                                 children: [
                                                   Padding(
                                                     padding:
                                                         const EdgeInsets.only(
-                                                            top: 40,
-                                                            bottom: 35),
+                                                            top: 20,
+                                                            bottom: 25),
                                                     child:
                                                         Row(children: <Widget>[
                                                       Expanded(
@@ -849,24 +869,29 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                   }
                                                   Trainer trainer =
                                                       snapshot.data!;
-                                                  return ChatMeCard(
-                                                    userimg:
-                                                        trainer.profileImageUrl,
-                                                    username: trainer.name,
-                                                    chatText:
-                                                        'Chat With me for a personal plan'
-                                                            .tr,
-                                                    onChatClick: () {
-                                                      Get.off(() => ChatPage(
-                                                          arguments: ChatPageArguments(
-                                                              peerId:
-                                                                  trainer.id,
-                                                              peerAvatar: trainer
-                                                                  .profileImageUrl,
-                                                              peerNickname:
-                                                                  trainer
-                                                                      .name)));
-                                                    },
+                                                  return Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 6, right: 6),
+                                                    child: ChatMeCard(
+                                                      userimg: trainer
+                                                          .profileImageUrl,
+                                                      username: trainer.name,
+                                                      chatText:
+                                                          'Chat With me for a personal plan'
+                                                              .tr,
+                                                      onChatClick: () {
+                                                        Get.to(() => ChatPage(
+                                                            arguments: ChatPageArguments(
+                                                                peerId:
+                                                                    trainer.id,
+                                                                peerAvatar: trainer
+                                                                    .profileImageUrl,
+                                                                peerNickname:
+                                                                    trainer
+                                                                        .name)));
+                                                      },
+                                                    ),
                                                   );
                                                 })
                                             : Text(''),

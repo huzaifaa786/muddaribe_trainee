@@ -255,11 +255,12 @@ class OrderApi {
 
   static Future<List<PlanFile>> getFilesByPlanId(planId) async {
     try {
+      print(planId);
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('trainer_plan_files')
-          .where('planId', isEqualTo: planId).orderBy('id',descending: true)
+          .where('planId', isEqualTo: planId)
+          .orderBy('id', descending: true)
           .get();
-      print('$querySnapshot querySnapshot');
       List<PlanFile> files = querySnapshot.docs
           .map((doc) => PlanFile.fromJson(doc.data() as Map<String, dynamic>))
           .toList();

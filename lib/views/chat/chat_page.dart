@@ -176,12 +176,16 @@ class ChatPageState extends State<ChatPage> {
         await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       imageFile = File(pickedFile.path);
-      if (imageFile != null) {
-        setState(() {
-          isLoading = true;
-        });
-        uploadFile();
-      }
+      bool userConfirmed = await showConfirmationDialog(context);
+
+      if (userConfirmed) {
+        if (imageFile != null) {
+          setState(() {
+            isLoading = true;
+          });
+          uploadFile();
+        }
+      } else {}
     }
   }
 
@@ -196,11 +200,15 @@ class ChatPageState extends State<ChatPage> {
       if (pickedFiles.isNotEmpty) {
         pdfFile = pickedFiles.first;
         String? fileName = result.files.first.name;
-        setState(() {
-          isLoading = true;
-        });
-        uploadPdf(pdfFile!, fileName);
-        // Process your PDF file (e.g., uploadFile(pdfFile))
+
+        bool userConfirmed = await showConfirmationDialog(context);
+
+        if (userConfirmed) {
+          setState(() {
+            isLoading = true;
+          });
+          uploadPdf(pdfFile!, fileName);
+        } else {}
       }
     }
   }
@@ -235,10 +243,15 @@ class ChatPageState extends State<ChatPage> {
       if (pickedFiles.isNotEmpty) {
         videoFile = pickedFiles.first;
         String? fileName = result.files.first.name;
-        setState(() {
-          isLoading = true;
-        });
-        uploadVideo(videoFile!, fileName);
+
+        bool userConfirmed = await showConfirmationDialog(context);
+
+        if (userConfirmed) {
+          setState(() {
+            isLoading = true;
+          });
+          uploadVideo(videoFile!, fileName);
+        } else {}
       }
     }
   }
@@ -343,7 +356,7 @@ class ChatPageState extends State<ChatPage> {
                             maxWidth: 200,
                           ),
                           decoration: BoxDecoration(
-                              color: bgContainer,
+                              color: bgContainer1,
                               borderRadius: BorderRadius.circular(8)),
                           margin: EdgeInsets.only(left: 10),
                         )
@@ -360,7 +373,7 @@ class ChatPageState extends State<ChatPage> {
                                           EdgeInsets.only(left: 10, bottom: 10),
                                       padding: EdgeInsets.all(12),
                                       decoration: BoxDecoration(
-                                          color: bgContainer,
+                                          color: bgContainer1,
                                           borderRadius:
                                               BorderRadius.circular(10)),
                                       child: Column(
@@ -690,7 +703,7 @@ class ChatPageState extends State<ChatPage> {
                                               left: 10, bottom: 10),
                                           padding: EdgeInsets.all(12),
                                           decoration: BoxDecoration(
-                                              color: bgContainer,
+                                              color: bgContainer1,
                                               borderRadius:
                                                   BorderRadius.circular(10)),
                                           child: Column(
@@ -1161,12 +1174,12 @@ class ChatPageState extends State<ChatPage> {
               BottomSheetButton(text: 'Photos'.tr, ontap: getImage),
               Container(
                   width: double.infinity,
-                  color: bgContainer.withOpacity(0.45),
+                  color: bgContainer1.withOpacity(0.45),
                   height: 0.5),
               BottomSheetButton(text: 'Video'.tr, ontap: getMp4),
               Container(
                   width: double.infinity,
-                  color: bgContainer.withOpacity(0.45),
+                  color: bgContainer1.withOpacity(0.45),
                   height: 0.5),
               BottomSheetButton(text: 'Document'.tr, ontap: getPdf),
               SizedBox(height: 20),

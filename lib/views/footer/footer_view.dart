@@ -133,7 +133,7 @@ class _FooterViewState extends State<FooterView> with RouteAware {
                                     controller.chatlength == 0 ? false : true,
                                 badgeContent: Text(
                                   controller.chatlength.toString(),
-                                  style: TextStyle(fontSize: 10),
+                                  style: TextStyle(fontSize: 10,color: black),
                                 ),
                                 child: _navigationMenuIndex == 1
                                     ? SvgPicture.asset(

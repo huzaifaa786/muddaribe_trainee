@@ -6,6 +6,7 @@ import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:mudarribe_trainee/views/story/story_controller.dart';
 import 'package:story_view/story_view.dart';
+import 'package:mudarribe_trainee/components/topbar.dart';
 
 class StoriesView extends StatefulWidget {
   const StoriesView({super.key});
@@ -28,6 +29,20 @@ class _StoriesViewState extends State<StoriesView> {
           ? Directionality(
               textDirection: TextDirection.ltr,
               child: Scaffold(
+                appBar: AppBar(
+                      automaticallyImplyLeading: false,
+                      forceMaterialTransparency: true,
+                      title: controller.stories.isNotEmpty
+                          ? Directionality(
+                              textDirection: TextDirection.ltr,
+                              child: TopBar(
+                                text: "",
+                              ),
+                            )
+                          : TopBar(
+                              text: "",
+                            ),
+                    ),
                   body: SafeArea(
                 child: SizedBox(
                     height: MediaQuery.of(context).size.height,
@@ -37,7 +52,7 @@ class _StoriesViewState extends State<StoriesView> {
                           controller: controller.storyController,
                           storyItems: controller.stories,
                           onComplete: () {
-                            Get.back();
+                            // Get.back();
                           },
                           onStoryShow: controller.onStoryShow,
                         ),

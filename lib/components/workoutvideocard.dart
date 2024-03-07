@@ -29,7 +29,7 @@ class Workoutvideocard extends StatelessWidget {
       height: 105,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: Get.isDarkMode ? black : lightbgColor,
+        color: Get.isDarkMode ? bgContainer : lightbgColor,
         borderRadius: BorderRadius.circular(10),
       ),
       child: InkWell(
