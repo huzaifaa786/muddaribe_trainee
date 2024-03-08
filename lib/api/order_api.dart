@@ -160,7 +160,7 @@ class OrderApi {
           .orderBy('id', descending: true)
           .get();
 
-      List<Plan> plans = [];
+      // List<Plan> plans = [];
       List<CombinedTraineeFileData> combinedata = [];
 
       await Future.wait(result.docs.map((userPlan) async {
@@ -194,6 +194,7 @@ class OrderApi {
         combinedata.add(CombinedTraineeFileData(
             trainer: trainer, plan: Plan.fromJson(datadoc)));
       }));
+    combinedata.sort((a, b) => b.plan.id.compareTo(a.plan.id));
 
       return combinedata;
     } on PlatformException catch (e) {

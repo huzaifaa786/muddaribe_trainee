@@ -95,6 +95,8 @@ class _TraineeProfileViewState extends State<TraineeProfileView> {
                                               controller.currentUser!.imageUrl!,
                                           height: 90,
                                           width: 90,
+                                                              fit: BoxFit.cover,
+
                                         ),
                                 ),
                               ),

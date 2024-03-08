@@ -316,7 +316,7 @@ class _HomeViewState extends State<HomeView> {
                             },
                             child: Text(
                               controller.showAllCards
-                                  ? 'View less'
+                                  ? 'View less'.tr
                                   : 'View all'.tr,
                               style: TextStyle(
                                 color: Color(0xFF727DCD),

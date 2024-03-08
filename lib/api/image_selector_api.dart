@@ -8,9 +8,7 @@ class ImageSelectorApi {
   final picker = ImagePicker();
 
   selectImage() async {
-    final pickedFile = await picker.pickImage(
-      source: ImageSource.gallery,
-    );
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       bool userConfirmed = await showConfirmationDialog(Get.context!);
@@ -18,6 +16,17 @@ class ImageSelectorApi {
       if (userConfirmed) {
         return File(pickedFile.path);
       }
+    } else {
+      UiUtilites.errorSnackbar('Image selection failed'.tr,
+          'Failed to select image, please try again.'.tr);
+    }
+  }
+
+  selectImageForCropper() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      return File(pickedFile.path);
     } else {
       UiUtilites.errorSnackbar('Image selection failed'.tr,
           'Failed to select image, please try again.'.tr);

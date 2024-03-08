@@ -94,6 +94,7 @@ class _TraineeEditProfileViewState extends State<TraineeEditProfileView> {
                                                                   .imageUrl!,
                                                               height: 115,
                                                               width: 115,
+                                                              fit: BoxFit.cover,
                                                             )
                                                       : Image.file(
                                                           File(controller

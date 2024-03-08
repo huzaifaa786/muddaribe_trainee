@@ -55,7 +55,7 @@ class _NotificationsViewState extends State<NotificationsView> {
           },
           child: SafeArea(
             child: Padding(
-              padding: EdgeInsets.only(top: 12),
+              padding: EdgeInsets.only(top: 2),
               child: FutureBuilder<List<CombinedTrainerNotification>>(
                   future: NotificationApi.fetchCombinedTrainerNotifications(),
                   builder: (context, snapshot) {
@@ -72,10 +72,8 @@ class _NotificationsViewState extends State<NotificationsView> {
                     }
                     if (!snapshot.hasData) {
                       return Center(
-                        heightFactor: 15,
                         child: Text(
                           'No Notification Found!'.tr,
-                          style: TextStyle(color: white.withOpacity(0.7)),
                         ),
                       );
                     }

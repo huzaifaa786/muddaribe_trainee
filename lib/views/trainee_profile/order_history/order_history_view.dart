@@ -44,7 +44,7 @@ class _OrderhistoryViewState extends State<OrderhistoryView> {
                   return Center(
                     heightFactor: 15,
                     child: Text(
-                      'No Order Found !',
+                      'No Order Found !'.tr,
                       style: TextStyle(color: white.withOpacity(0.7)),
                     ),
                   );

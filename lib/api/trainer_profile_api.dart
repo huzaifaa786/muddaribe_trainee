@@ -28,8 +28,7 @@ class TrainerProfileApi {
     var eventquery = FirebaseFirestore.instance
         .collection('trainer_events')
         .where('date',
-            isGreaterThan:
-                DateTime.now().millisecondsSinceEpoch.toString())
+            isGreaterThan: DateTime.now().millisecondsSinceEpoch.toString())
         .where('trainerId', isEqualTo: trainerId)
         .orderBy('date', descending: true);
     return eventquery;
@@ -49,35 +48,73 @@ class TrainerProfileApi {
     return posts;
   }
 
+  // static Future<List<CombinedData>> fetchTrainerPostsData(trainerId) async {
+  //   final savePostSnapshot = await FirebaseFirestore.instance
+  //       .collection('trainer_posts')
+  //       .where("trainerId", isEqualTo: trainerId).orderBy('id', descending: true)
+  //       .get();
+  //   List<CombinedData> combinedData = [];
+  //   for (var savePost in savePostSnapshot.docs) {
+  //     DocumentSnapshot postSnapshot = await FirebaseFirestore.instance
+  //         .collection('trainer_posts')
+  //         .doc(savePost['id'])
+  //         .get();
+  //     if (postSnapshot.exists) {
+  //       Map<String, dynamic> postData =
+  //           postSnapshot.data()! as Map<String, dynamic>;
+
+  //       Post post = Post.fromMap(postData);
+  //       DocumentSnapshot trainerSnapshot = await FirebaseFirestore.instance
+  //           .collection('users')
+  //           .doc(post.trainerId)
+  //           .get();
+  //       if (trainerSnapshot.exists) {
+  //         Map<String, dynamic> trainerData =
+  //             trainerSnapshot.data()! as Map<String, dynamic>;
+  //         Trainer trainer = Trainer.fromMap(trainerData);
+  //         combinedData.add(CombinedData(trainer: trainer, post: post));
+  //       }
+  //     }
+  //   }
+  //   return combinedData;
+  // }
+
   static Future<List<CombinedData>> fetchTrainerPostsData(trainerId) async {
-    final savePostSnapshot = await FirebaseFirestore.instance
+    final QuerySnapshot savePostSnapshot = await FirebaseFirestore.instance
         .collection('trainer_posts')
-        .where("trainerId", isEqualTo: trainerId).orderBy('id', descending: true)
+        .where("trainerId", isEqualTo: trainerId)
+        .orderBy('id', descending: true)
+        // .limit(50) // Adjust the limit based on your data size
         .get();
-    List<CombinedData> combinedData = [];
-    for (var savePost in savePostSnapshot.docs) {
+
+    List<Future<CombinedData?>> fetchTasks =
+        savePostSnapshot.docs.map((savePost) async {
       DocumentSnapshot postSnapshot = await FirebaseFirestore.instance
           .collection('trainer_posts')
           .doc(savePost['id'])
           .get();
-      if (postSnapshot.exists) {
-        Map<String, dynamic> postData =
-            postSnapshot.data()! as Map<String, dynamic>;
 
-        Post post = Post.fromMap(postData);
+      if (postSnapshot.exists) {
+        Post post = Post.fromMap(postSnapshot.data()! as Map<String, dynamic>);
+
         DocumentSnapshot trainerSnapshot = await FirebaseFirestore.instance
             .collection('users')
             .doc(post.trainerId)
             .get();
+
         if (trainerSnapshot.exists) {
-          Map<String, dynamic> trainerData =
-              trainerSnapshot.data()! as Map<String, dynamic>;
-          Trainer trainer = Trainer.fromMap(trainerData);
-          combinedData.add(CombinedData(trainer: trainer, post: post));
+          Trainer trainer =
+              Trainer.fromMap(trainerSnapshot.data()! as Map<String, dynamic>);
+          return CombinedData(trainer: trainer, post: post);
         }
       }
-    }
-    return combinedData;
+      return null;
+    }).toList();
+
+    List<CombinedData?> results = await Future.wait(fetchTasks);
+
+    // Remove null values (failed fetches) from the results
+    return results.where((data) => data != null).toList().cast<CombinedData>();
   }
 
   static Future<List<TrainerPackage>> getTrainerPackages(trainerId) async {

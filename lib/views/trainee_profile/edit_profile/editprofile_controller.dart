@@ -4,12 +4,14 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:mudarribe_trainee/api/image_selector_api.dart';
 import 'package:mudarribe_trainee/api/storage_api.dart';
 import 'package:mudarribe_trainee/helper/data_model.dart';
 import 'package:mudarribe_trainee/helper/loading_helper.dart';
 import 'package:mudarribe_trainee/models/app_user.dart';
 import 'package:mudarribe_trainee/services/user_service.dart';
+import 'package:mudarribe_trainee/utils/cropper.dart';
 import 'package:mudarribe_trainee/utils/ui_utils.dart';
 
 class EditProfileContoller extends GetxController {
@@ -100,9 +102,35 @@ class EditProfileContoller extends GetxController {
     }
   }
 
+  // Future selectProfileImage() async {
+  //   final tempImage = await _imageSelectorApi.selectImage();
+  //   profileImage = tempImage;
+  //   checkFields();
+  //   update();
+  // }
+
   Future selectProfileImage() async {
-    final tempImage = await _imageSelectorApi.selectImage();
-    profileImage = tempImage;
+    final tempImage = await _imageSelectorApi.selectImageForCropper();
+    cropImage(tempImage);
+    update();
+  }
+
+  cropImage(pickedImage) async {
+    CroppedFile? croppedImage = await ImageCropper().cropImage(
+      sourcePath: pickedImage.path,
+      aspectRatioPresets: aspectRatios,
+      uiSettings: uiSetting(androidTitle: 'Crop Image', iosTitle: 'Crop Image'),
+    );
+    if (croppedImage != null) {
+      // bool userConfirmed = await showConfirmationDialog(Get.context!);
+
+      // if (userConfirmed) {
+      profileImage = File(croppedImage.path);
+      // }
+    } else {
+      UiUtilites.errorSnackbar('Image selection failed'.tr,
+          'Failed to select image, please try again.'.tr);
+    }
     checkFields();
     update();
   }

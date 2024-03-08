@@ -96,16 +96,40 @@ class _OrderCardState extends State<OrderCard> {
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                            Container(
-                              width: Get.width * 0.6,
-                              child: Text(
-                                widget.trainer.category.join('& '),
-                                style: TextStyle(
-                                  overflow: TextOverflow.ellipsis,
-                                  fontSize: 12,
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w400,
-                                ),
+                           Container(
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              padding: const EdgeInsets.only(top: 2, bottom: 8),
+                              child: Wrap(
+                                spacing: 10,
+                                children: widget.trainer.category.map((category) {
+                                  return Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.circle,
+                                        color: Get.isDarkMode
+                                            ? Colors.white.withOpacity(
+                                                0.6000000238418579)
+                                            : black.withOpacity(
+                                                0.6000000238418579),
+                                        size: 10,
+                                      ),
+                                      SizedBox(width: 4),
+                                      Text(
+                                        category,
+                                        style: TextStyle(
+                                          color: Get.isDarkMode
+                                              ? Colors.white.withOpacity(
+                                                  0.6000000238418579)
+                                              : black.withOpacity(
+                                                  0.6000000238418579),
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }).toList(),
                               ),
                             ),
                           ],
