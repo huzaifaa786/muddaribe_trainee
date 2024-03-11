@@ -218,7 +218,7 @@ class TrainerPackageCard extends StatelessWidget {
                                     ));
                               },
                               child: Text(
-                                'view',
+                                'View'.tr,
                                 style: TextStyle(
                                   color: Color(0xFF727DCD),
                                   fontSize: 14,

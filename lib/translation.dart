@@ -307,7 +307,7 @@ class LocaleString extends Translations {
           "Animal flow": "انسيابية الحيوانات",
           "Rehabilitation": "إعادة التأهيل",
           "Aerobics": "تمارين هوائية",
-          "Kettle bell": "الكيتلبيل",
+          "Kettle bell": "الكيتل بيل",
           "Duration": "المدة",
           "One Month": "شهر واحد",
           "Two Months": 'شهرين',
