@@ -359,16 +359,22 @@ class _CategoriesResultViewState extends State<CategoriesResultView> {
                   'Sort by'.tr,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
+                leading: SvgPicture.asset(
+                  'assets/images/arrow-sort.svg',
+                  color: black,
+                ),
                 // tileColor: Colors.grey.shade300,
               ),
               ListTile(
                 title: Text('By rating '.tr),
+                leading: Icon(Icons.star),
                 onTap: () {
                   Navigator.pop(context, 'highToLow');
                 },
               ),
               ListTile(
                 title: Text('By alphabets'.tr),
+                 leading: Icon(Icons.sort_by_alpha),
                 onTap: () {
                   Navigator.pop(context, 'lowToHigh');
                 },

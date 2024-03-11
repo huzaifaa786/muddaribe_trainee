@@ -55,6 +55,7 @@ class EventApi {
       "userId": FirebaseAuth.instance.currentUser!.uid,
       'trainerId': trainerId,
       'amount': amount,
+      'seen': false,
     });
   }
 }

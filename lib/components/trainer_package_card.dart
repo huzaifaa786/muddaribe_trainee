@@ -193,12 +193,41 @@ class TrainerPackageCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Text(description,
-                      style:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
-                  Text(
-                    '$duration'.tr,
-                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(description,
+                              style: TextStyle(
+                                  fontSize: 12, fontWeight: FontWeight.w600)),
+                          Text(
+                            '$duration'.tr,
+                            style: TextStyle(
+                                fontSize: 12, fontWeight: FontWeight.w600),
+                          ),
+                        ],
+                      ),
+                      img != '' && img2 != ''
+                          ? GestureDetector(
+                              onTap: () {
+                                Get.to(() => GalleryView(
+                                      imageUrls: [img, img2],
+                                      initialIndex: 0,
+                                    ));
+                              },
+                              child: Text(
+                                'view',
+                                style: TextStyle(
+                                  color: Color(0xFF727DCD),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            )
+                          : Container(),
+                    ],
                   ),
                 ],
               ),

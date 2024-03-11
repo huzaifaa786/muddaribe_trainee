@@ -29,7 +29,7 @@ class _FragmentOneState extends State<FragmentOne> {
                 children: [
                   Image(
                     image: AssetImage(
-                      'assets/images/onboard1.png',
+                      'assets/images/banner1.jpeg',
                     ),
                     fit: BoxFit.cover,
                     height: MediaQuery.of(context).size.height * 0.55,

@@ -143,7 +143,7 @@ class _ReportProblemViewState extends State<ReportProblemView> {
                               key: controller.formKey,
                               child: InputField(
                                 lable: controller.i == 0
-                                    ? 'Problem Text'.tr
+                                    ? 'Text'.tr
                                     : 'Suggestion Text'.tr,
                                 maxlines: 5,
                                 controller: controller.report,

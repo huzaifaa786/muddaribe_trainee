@@ -355,14 +355,6 @@ class _HomeViewState extends State<HomeView> {
                             child: CategoryCard(
                               title: controller.cards[index]['title'],
                               image: controller.cards[index]['image'],
-                              firstColor: Color(int.parse(
-                                  controller.cards[index]['firstColor']!)),
-                              secondColor: Color(int.parse(
-                                  controller.cards[index]['secondColor']!)),
-                              beginX: controller.cards[index]['beginX'],
-                              beginY: controller.cards[index]['beginY'],
-                              endX: controller.cards[index]['endX'],
-                              endY: controller.cards[index]['endY'],
                             ),
                           );
                         },
