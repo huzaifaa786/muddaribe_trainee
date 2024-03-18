@@ -427,11 +427,15 @@ class _SerachViewState extends State<SerachView> {
                 child: Text(
                   option.toString().split('.').last == 'body_Building'
                       ? "Body Building".tr
-                      : option.toString().split('.').last == 'medical_Fitness'
-                          ? 'Medical fitness'.tr
                           : option.toString().split('.').last ==
                                   'indoor_Cycling'
                               ? 'Indoor Cycling'.tr
+                              : option.toString().split('.').last ==
+                                  'Stick_mobility'
+                              ? 'Stick mobility'.tr
+                              : option.toString().split('.').last ==
+                                  'Women_fitness'
+                              ? 'Women fitness'.tr
                               : option.toString().split('.').last ==
                                       'animal_flow'
                                   ? 'Animal flow'.tr
@@ -471,16 +475,22 @@ class _SerachViewState extends State<SerachView> {
                   'Sort by'.tr,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
+                leading: SvgPicture.asset(
+                  'assets/images/arrow-sort.svg',
+                  color: black,
+                ),
                 // tileColor: Colors.grey.shade300,
               ),
               ListTile(
                 title: Text('By rating'.tr),
+                leading: Icon(Icons.star),
                 onTap: () {
                   Navigator.pop(context, 'highToLow');
                 },
               ),
               ListTile(
                 title: Text('By alphabets'.tr),
+                leading: Icon(Icons.sort_by_alpha),
                 onTap: () {
                   Navigator.pop(context, 'lowToHigh');
                 },

@@ -103,8 +103,6 @@ class TSearchController extends GetxController {
       for (Categories cat in selectedCategories) {
         if (cat == Categories.body_Building) {
           categories.add('Body Building');
-        } else if (cat == Categories.medical_Fitness) {
-          categories.add('Medical Fitness');
         } else if (cat == Categories.kettle_bell) {
           categories.add('Kettle bell');
         } else if (cat == Categories.indoor_Cycling) {

@@ -1,65 +1,57 @@
-// ignore_for_file: prefer_const_constructors, prefer_typing_uninitialized_variables
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CategoryCard extends StatelessWidget {
-  const CategoryCard(
-      {super.key,
-      @required this.title,
-      @required this.image,
-      @required this.firstColor,
-      @required this.beginX,
-      @required this.beginY,
-      @required this.endX,
-      @required this.endY,
-      @required this.secondColor});
+  const CategoryCard({super.key, @required this.title, @required this.image});
   final title;
   final image;
-  final firstColor;
-  final secondColor;
-  final beginX;
-  final beginY;
-  final endX;
-  final endY;
-
-  @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.3,
-      // padding: EdgeInsets.only(top:30,bottom: 30,left: 10,right: 10),
-      decoration: ShapeDecoration(
-        gradient: LinearGradient(
-          begin: Alignment(double.parse(beginX), double.parse(beginY)),
-          end: Alignment(double.parse(endX), double.parse(endY)),
-          colors: [
-            firstColor,
-            secondColor,
-          ],
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
         image: DecorationImage(
           image: AssetImage(image),
-          fit: BoxFit.scaleDown,
+          fit: BoxFit.fill,
         ),
       ),
-      child: Align(
-        alignment: Alignment.center,
-        child: Text(
-          "$title".tr,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: title == 'Calisthenics'
-                ? 10
-                : title == 'Rehabilitation'
-                    ? 9
-                    : 11,
-            fontWeight: FontWeight.w700,
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: Align(
+              alignment: Alignment.center,
+              child: Container(
+                width: Get.width,
+                padding: EdgeInsets.symmetric(vertical: 2),
+                color: Colors.black.withOpacity(0.10),
+                child: Text(
+                  "$title".tr,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize:
+                        title == 'Calisthenics' || title == 'Stick mobility'
+                            ? 10
+                            : title == 'Rehabilitation' ||
+                                    title == 'Body Building' ||
+                                    title == 'Indoor Cycling' ||
+                                    title == 'Women fitness'
+                                ? 9
+                                : 11,
+                    fontWeight: FontWeight.w700,
+                    shadows: [
+                      Shadow(
+                        blurRadius: 8,
+                        color: Colors.black,
+                        offset: Offset(0, 0),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

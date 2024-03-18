@@ -26,7 +26,6 @@ enum Categories {
   Fitness,
   Tennis,
   Swimming,
-  medical_Fitness,
   CrossFit,
   indoor_Cycling,
   Padel,
@@ -34,8 +33,14 @@ enum Categories {
   animal_flow,
   Rehabilitation,
   Aerobics,
-  Plates,
-  kettle_bell
+  kettle_bell,
+  Stick_mobility,
+  Hiking,
+  Women_fitness,
+  Football,
+  Cycling,
+  Dancing,
+  Running,
 }
 
 class HomeController extends GetxController {
@@ -114,175 +119,34 @@ class HomeController extends GetxController {
   }
 
   List<Map<String, String>> cards = [
-    {
-      'title': 'Body Building',
-      'image': 'assets/images/tumble.png',
-      'firstColor': '0xFF727DCD',
-      'secondColor': '0xFF58E0FF',
-      'beginX': '0.95',
-      'beginY': '-0.32',
-      'endX': '-0.95',
-      'endY': '0.32'
-    },
-    {
-      'title': 'Fitness',
-      'image': 'assets/images/fitness.png',
-      'firstColor': '0xFFBF00C3',
-      'secondColor': '0xFFFFC337',
-      'beginX': '0.95',
-      'beginY': '-0.32',
-      'endX': '-0.95',
-      'endY': '0.32'
-    },
-    {
-      'title': 'Boxing',
-      'image': 'assets/images/boxcing.png',
-      'firstColor': '0xFF727DCD',
-      'secondColor': '0xFF58E0FF',
-      'beginX': '0.95',
-      'beginY': '-0.32',
-      'endX': '-0.95',
-      'endY': '0.32'
-    },
-    {
-      'title': 'Tennis',
-      'image': 'assets/images/tennis.png',
-      'firstColor': '0xFF41A95E',
-      'secondColor': '0xFF58E0FF',
-      'beginX': '0.95',
-      'beginY': '-0.32',
-      'endX': '-0.95',
-      'endY': '0.32'
-    },
+    {'title': 'Body Building', 'image': 'assets/images/bodybuilding.jpg'},
+    {'title': 'Fitness', 'image': 'assets/images/fitness.jpg'},
+    {'title': 'Boxing', 'image': 'assets/images/boxing.jpg'},
+    {'title': 'Tennis', 'image': 'assets/images/tennis.jpg'},
     {
       'title': 'Yoga',
-      'image': 'assets/images/yoga.png',
-      'firstColor': '0xFF9113DE',
-      'secondColor': '0xFFFF9541',
-      'beginX': '0.95',
-      'beginY': '-0.32',
-      'endX': '-0.95',
-      'endY': '0.32'
+      'image': 'assets/images/yoga.jpg',
     },
-    {
-      'title': 'BasketBall',
-      'image': 'assets/images/basketball.png',
-      'firstColor': '0xFF58E0FF',
-      'secondColor': '0xFF727DCD',
-      'beginX': '0.95',
-      'beginY': '-0.32',
-      'endX': '-0.95',
-      'endY': '0.32'
-    },
+    {'title': 'BasketBall', 'image': 'assets/images/basketball.jpg'},
     {
       'title': 'Swimming',
-      'image': 'assets/images/swimming.png',
-      'firstColor': '0xFF970909',
-      'secondColor': '0xFFB4250F',
-      'beginX': '0.95',
-      'beginY': '-0.32',
-      'endX': '-0.95',
-      'endY': '0.32'
+      'image': 'assets/images/swimming.jpg',
     },
-    {
-      'title': 'Medical Fitness',
-      'image': 'assets/images/heart.png',
-      'firstColor': '0xFF727DCD',
-      'secondColor': '0xFFBF31E3',
-      'beginX': '0.95',
-      'beginY': '-0.32',
-      'endX': '-0.95',
-      'endY': '0.32'
-    },
-    {
-      'title': 'Indoor Cycling',
-      'image': 'assets/images/indoor.png',
-      'firstColor': '0xFFF5A84CE',
-      'secondColor': '0xFFD54395',
-      'beginX': '0.5',
-      'beginY': '-0.32',
-      'endX': '-0.5',
-      'endY': '0.32'
-    },
-    {
-      'title': 'CrossFit',
-      'image': 'assets/images/crossFit.png',
-      'firstColor': '0xFF9113DE',
-      'secondColor': '0xFFFF9541',
-      'beginX': '0.5',
-      'beginY': '-0.32',
-      'endX': '-0.5',
-      'endY': '0.32'
-    },
-    {
-      'title': 'Rehabilitation',
-      'image': 'assets/images/rehab.png',
-      'firstColor': '0xFFB937E1',
-      'secondColor': '0xFF8967D3',
-      'beginX': '0.5',
-      'beginY': '-0.32',
-      'endX': '-0.5',
-      'endY': '0.32'
-    },
-    {
-      'title': 'Padel',
-      'image': 'assets/images/padel.png',
-      'firstColor': '0xFF50CDC5',
-      'secondColor': '0xFF3B9931',
-      'beginX': '0.5',
-      'beginY': '-0.32',
-      'endX': '-0.5',
-      'endY': '0.32'
-    },
-    {
-      'title': 'Calisthenics',
-      'image': 'assets/images/calis.png',
-      'firstColor': '0xFF5DCEF5',
-      'secondColor': '0xFF727DCD',
-      'beginX': '0.5',
-      'beginY': '-0.32',
-      'endX': '-0.5',
-      'endY': '0.32'
-    },
-    {
-      'title': 'Animal flow',
-      'image': 'assets/images/animal.png',
-      'firstColor': '0xFFDD432C',
-      'secondColor': '0xFF980A0A',
-      'beginX': '0.5',
-      'beginY': '-0.32',
-      'endX': '-0.5',
-      'endY': '0.32'
-    },
-    {
-      'title': 'Kettle bell',
-      'image': 'assets/images/kettle.png',
-      'firstColor': '0xFF4FCBBF',
-      'secondColor': '0xFF3D9C37',
-      'beginX': '0.5',
-      'beginY': '-0.32',
-      'endX': '-0.5',
-      'endY': '0.32'
-    },
-    {
-      'title': 'Aerobics',
-      'image': 'assets/images/aero.png',
-      'firstColor': '0xFFEC805D',
-      'secondColor': '0xFFA62DC0',
-      'beginX': '0.5',
-      'beginY': '-0.32',
-      'endX': '-0.5',
-      'endY': '0.32'
-    },
-    {
-      'title': 'Plates',
-      'image': 'assets/images/plates.png',
-      'firstColor': '0xFFBF32E3',
-      'secondColor': '0xFF7D74D0',
-      'beginX': '0.5',
-      'beginY': '-0.32',
-      'endX': '-0.5',
-      'endY': '0.32'
-    },
+    {'title': 'Indoor Cycling', 'image': 'assets/images/indoor-cycling.jpg'},
+    {'title': 'CrossFit', 'image': 'assets/images/crossfit.jpg'},
+    {'title': 'Rehabilitation', 'image': 'assets/images/rehabilitation.jpg'},
+    {'title': 'Padel', 'image': 'assets/images/padel.jpg'},
+    {'title': 'Calisthenics', 'image': 'assets/images/calisthenics.jpg'},
+    {'title': 'Animal flow', 'image': 'assets/images/animal-flow.jpg'},
+    {'title': 'Kettle bell', 'image': 'assets/images/kettlebell.jpg'},
+    {'title': 'Aerobics', 'image': 'assets/images/aerobics.jpg'},
+    {'title': 'Stick mobility', 'image': 'assets/images/stick-mobility.jpg'},
+    {'title': 'Hiking', 'image': 'assets/images/hiking.jpg'},
+    {'title': 'Women fitness', 'image': 'assets/images/women-fitness.jpg'},
+    {'title': 'Football', 'image': 'assets/images/football.jpg'},
+    {'title': 'Cycling', 'image': 'assets/images/cycling.jpg'},
+    {'title': 'Dancing', 'image': 'assets/images/dancing.jpg'},
+    {'title': 'TRX', 'image': 'assets/images/trx.jpg'},
+    {'title': 'Running', 'image': 'assets/images/running.jpg'},
   ];
 }

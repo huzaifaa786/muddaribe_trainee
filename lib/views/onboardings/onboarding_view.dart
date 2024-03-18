@@ -93,7 +93,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                             selected: true,
                             onPressed: () {
                               // UiUtilites.successSnackbar('fyuuiu','sdasdsafd');
-                              Get.offNamed(AppRoutes.signup);
+                              Get.offNamed(AppRoutes.home);
                             },
                           ),
                         )
