@@ -48,9 +48,7 @@ class _FooterViewState extends State<FooterView> with RouteAware {
         });
       },
       builder: (controller) => Directionality(
-        textDirection: box.read('locale') == 'ar'
-            ? ui.TextDirection.rtl
-            : ui.TextDirection.ltr,
+        textDirection: ui.TextDirection.ltr,
         child: WillPopScope(
           onWillPop: () => Future.value(false),
           child: Scaffold(
