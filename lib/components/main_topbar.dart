@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:badges/badges.dart' as badges;
@@ -15,12 +16,17 @@ class MainTopBar extends StatelessWidget {
   final notiCount;
   @override
   Widget build(BuildContext context) {
+    GetStorage box = GetStorage();
     return Padding(
-      padding: const EdgeInsets.only(top: 10, bottom: 15),
+      padding: box.read('locale') == 'ar'
+          ? const EdgeInsets.only(top: 0, bottom: 0)
+          : const EdgeInsets.only(top: 0, bottom: 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Image.asset('assets/images/logo.png', height: 21),
+          box.read('locale') == 'ar'
+              ? Image.asset('assets/images/homeLogoAr.png', width: 100)
+              : Image.asset('assets/images/home_logo.png', height: 55),
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.2,
             child: Row(
@@ -41,7 +47,7 @@ class MainTopBar extends StatelessWidget {
                         child: badges.Badge(
                           badgeContent: Text(
                             notiCount.toString(),
-                            style: TextStyle(fontSize: 10,color: black),
+                            style: TextStyle(fontSize: 10, color: black),
                           ),
                           badgeStyle: badges.BadgeStyle(badgeColor: borderDown),
                           showBadge: notiCount == 0 ? false : true,

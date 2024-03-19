@@ -280,8 +280,10 @@ class LocaleString extends Translations {
           'Cycling': 'Cycling',
           'Dancing': 'Dancing',
           'Running': 'Running',
+          'Volleyball': 'Volleyball',
         },
         'ar_AE': {
+          'Volleyball': 'كرة الطائرة',
           'No Order Found !': 'ا يوجد طلبات !',
           'Expiry date': 'تاريخ الإنتهاء',
           'Suggestion': 'إقتراح',

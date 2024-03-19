@@ -75,7 +75,9 @@ class _HomeViewState extends State<HomeView> {
               child: Column(
                 children: [
                   Directionality(
-                      textDirection: ui.TextDirection.ltr,
+                      textDirection: box.read('locale') == 'ar'
+                          ? ui.TextDirection.rtl
+                          : ui.TextDirection.ltr,
                       child: MainTopBar(
                         notiCount: controller.notilength,
                         onNotiTap: () {
