@@ -126,12 +126,12 @@ class _FooterViewState extends State<FooterView> with RouteAware {
                             children: [
                               badges.Badge(
                                 badgeStyle:
-                                    badges.BadgeStyle(badgeColor: borderDown),
+                                    badges.BadgeStyle(badgeColor: Colors.red),
                                 showBadge:
                                     controller.chatlength == 0 ? false : true,
                                 badgeContent: Text(
                                   controller.chatlength.toString(),
-                                  style: TextStyle(fontSize: 10,color: black),
+                                  style: TextStyle(fontSize: 10,color: white),
                                 ),
                                 child: _navigationMenuIndex == 1
                                     ? SvgPicture.asset(
