@@ -196,38 +196,40 @@ class _SignInViewState extends State<SignInView> {
                                           fontFamily: "Poppins",
                                           fontWeight: FontWeight.w400,
                                           decoration: TextDecoration.underline,
-                                          color: Get.isDarkMode ? white : black
-                                          ),
+                                          color:
+                                              Get.isDarkMode ? white : black),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {},
                                     ),
                                     TextSpan(
                                       text: '  ',
                                       style: TextStyle(
-                                          fontSize: 12,
+                                        fontSize: 12,
                                         color: Get.isDarkMode ? white : black,
                                       ),
                                     ),
                                     TextSpan(
                                       text: 'and'.tr,
                                       style: TextStyle(
-                                          fontSize: 12, color: Get.isDarkMode ? white : black,
+                                        fontSize: 12,
+                                        color: Get.isDarkMode ? white : black,
                                       ),
                                     ),
                                     TextSpan(
                                       text: '  ',
                                       style: TextStyle(
-                                          fontSize: 12, color: Get.isDarkMode ? white : black,
+                                        fontSize: 12,
+                                        color: Get.isDarkMode ? white : black,
                                       ),
                                     ),
                                     TextSpan(
                                       text: 'Terms & Conditions'.tr,
                                       // text: 'Terms & Conditions',
                                       style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400,
-                                          decoration: TextDecoration.underline,
-                                          color: Get.isDarkMode ? white : black,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                        decoration: TextDecoration.underline,
+                                        color: Get.isDarkMode ? white : black,
                                       ),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {},
@@ -249,10 +251,10 @@ class _SignInViewState extends State<SignInView> {
                                     TextSpan(
                                       text: 'create a new account ?'.tr,
                                       style: TextStyle(
-                                          fontSize: 12,
-                                          fontFamily: "Poppins",
-                                          fontWeight: FontWeight.w500,
-                                          color: Get.isDarkMode ? white : black,
+                                        fontSize: 12,
+                                        fontFamily: "Poppins",
+                                        fontWeight: FontWeight.w500,
+                                        color: Get.isDarkMode ? white : black,
                                       ),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {},

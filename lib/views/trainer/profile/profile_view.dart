@@ -28,6 +28,8 @@ import 'package:mudarribe_trainee/routes/app_routes.dart';
 import 'package:mudarribe_trainee/utils/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mudarribe_trainee/views/chat/chat_page.dart';
+import 'package:mudarribe_trainee/views/chat/partials/send_messages.dart';
+import 'package:mudarribe_trainee/views/chat/pdf_view.dart';
 import 'package:mudarribe_trainee/views/trainer/profile/profile_controller.dart';
 
 class TrainerprofileView extends StatefulWidget {
@@ -234,7 +236,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                     child: Container(
                                                       padding: EdgeInsets.only(
                                                           top: 10),
-                                                      width: 264,
+                                                      width: Get.width * 0.65,
                                                       height: 40,
                                                       decoration: BoxDecoration(
                                                           borderRadius:
@@ -296,6 +298,30 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                             height: 33,
                                             color:
                                                 Get.isDarkMode ? white : black,
+                                            fit: BoxFit.scaleDown,
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            print(trainer.certificateUrl);
+                                            createFileOfPdfUrl(
+                                                    trainer.certificateUrl)
+                                                .then((f) {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PDFScreen(
+                                                    path: f.path,
+                                                  ),
+                                                ),
+                                              );
+                                            });
+                                          },
+                                          child: SvgPicture.asset(
+                                            'assets/images/cover.svg',
+                                            width: 30,
+                                            height: 30,
                                             fit: BoxFit.scaleDown,
                                           ),
                                         ),
@@ -810,7 +836,7 @@ class _TrainerprofileViewState extends State<TrainerprofileView> {
                                                       ),
                                                     );
                                             }),
-                                        controller.indexs == 2 
+                                        controller.indexs == 2
                                             ? Column(
                                                 children: [
                                                   Padding(
