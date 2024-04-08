@@ -1,17 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show precacheImage;
 import 'package:get/get.dart';
 
 class CategoryCard extends StatelessWidget {
-  const CategoryCard({super.key, @required this.title, @required this.image});
-  final title;
-  final image;
+  const CategoryCard({Key? key, @required this.title, @required this.image})
+      : super(key: key);
+
+  final String? title;
+  final String? image;
+
+  // Preload the image during initialization
+  static void preloadImage(BuildContext context, String image) {
+    precacheImage(AssetImage(image), context);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // Call the preloadImage() method during initialization
+    preloadImage(context, image!);
+
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         image: DecorationImage(
-          image: AssetImage(image),
+          image: AssetImage(image!),
           fit: BoxFit.fill,
         ),
       ),
@@ -29,15 +42,7 @@ class CategoryCard extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize:
-                        title == 'Calisthenics' || title == 'Stick mobility'
-                            ? 10
-                            : title == 'Rehabilitation' ||
-                                    title == 'Body Building' ||
-                                    title == 'Indoor Cycling' ||
-                                    title == 'Women fitness'
-                                ? 9
-                                : 11,
+                    fontSize: _getTitleFontSize(title!),
                     fontWeight: FontWeight.w700,
                     shadows: [
                       Shadow(
@@ -54,5 +59,18 @@ class CategoryCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  double _getTitleFontSize(String title) {
+    if (title == 'Calisthenics' || title == 'Stick mobility') {
+      return 10;
+    } else if (title == 'Rehabilitation' ||
+        title == 'Body Building' ||
+        title == 'Indoor Cycling' ||
+        title == 'Women fitness') {
+      return 9;
+    } else {
+      return 11;
+    }
   }
 }
